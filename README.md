@@ -1,3 +1,11 @@
-# SIGVet
+# 🐾 SIGVet
 
-🛠️ Em construção.  
+🛠️ Em construção. 
+
+O SIGVet consiste em um Sistema de Gerenciamento para Clínicas Veterinárias.
+
+---
+
+## 🔧 Tecnologias
+
+🔸 Angular

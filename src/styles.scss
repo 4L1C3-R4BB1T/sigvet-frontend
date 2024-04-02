@@ -1,0 +1,15 @@
+@use 'sass';
+
+html,
+body {
+  height: 100%;
+}
+
+body {
+  margin: 0;
+  font-family: Roboto, "Helvetica Neue", sans-serif;
+}
+
+@tailwind base;
+@tailwind utilities;
+@tailwind components;

@@ -1,0 +1,27 @@
+.menu-mobile {
+  width: 35px;
+  height: 35px;
+  cursor: pointer;
+  @apply flex flex-col gap-1 items-center justify-center rounded-full bg-account-secondary p-2 relative;
+
+  &__bar {
+    height: 3px;
+    @apply rounded-md bg-brand-quaternary;
+    transition: all 0.2s ease;
+    width: 100%;
+
+    &.disabled {
+      display: none;
+    }
+
+    &--first {
+      transform-origin: center;
+      transform: translateY(3px) rotateZ(-135deg);
+    }
+
+    &--last {
+      transform-origin: center;
+      transform: translateY(-4.2px) rotateZ(135deg);
+    }
+  }
+}

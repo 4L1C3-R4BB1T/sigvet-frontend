@@ -1,0 +1,24 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: 'Roboto', sans-serif;
+
+  ::-webkit-scrollbar {
+    width: 0.6rem;
+    height: 6px;
+  }
+
+  ::-webkit-scrollbar-thumb {
+    background-color: #8894BF;
+    border-radius: 6px;
+  }
+
+  ::-webkit-scrollbar-track {
+    background-color: rgba(224, 224, 224, 0.704);
+  }
+}
+
+body {
+  @apply bg-brand-secondary overflow-hidden;
+}

@@ -1,0 +1,12 @@
+<app-sidenav>
+  <app-header/>
+  @defer(when !isLoading()) {
+    <div class="p-4 max-h-screen overflow-hidden overflow-y-auto">
+      <router-outlet/>
+    </div>
+  } @placeholder {
+    <div class="flex justify-center items-center h-full">
+      <p-progressSpinner/>
+    </div>
+  }
+</app-sidenav>

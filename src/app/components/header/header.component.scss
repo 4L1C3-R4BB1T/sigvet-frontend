@@ -1,0 +1,15 @@
+.triangle {
+  width: 0;
+  height: 0;
+  border: 10px solid transparent;
+  border-top: 10px solid #74E0D3;
+  border-left: 10px solid #74E0D3;
+  background-color: transparent;
+  position: absolute;
+  left: 50%;
+  transform: rotate(225deg) translateY(-50%);
+  top: -8%;
+  background-color: transparent;
+  background-color: #74E0D3;
+  z-index: -1;
+}
