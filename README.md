@@ -9,4 +9,5 @@ O SIGVet consiste em um Sistema de Gerenciamento para Clínicas Veterinárias.
 ## 🔧 Tecnologias
 
 🔸 Angular  
-🔸 NgRx
+🔸 NgRx  
+🔸 Tailwind CSS
