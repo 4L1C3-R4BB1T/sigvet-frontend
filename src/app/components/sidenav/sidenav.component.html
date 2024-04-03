@@ -33,7 +33,7 @@
             <div class="hover:rounded-md flex-1 relative hover:bg-[#7289DA] hover:text-white flex transition-all items-center gap-3 p-1"
               (click)="openSubmenus(i)" [routerLink]="submenu.submenus ? undefined : [submenu.routeLink]">
 
-              <div *ngIf="submenu.iconUrl" class="bg-[#fff] shadow-sm rounded-full p-1 flex items-center justify-center">
+              <div *ngIf="submenu.iconUrl" class="bg-cyan-200 shadow-sm rounded-full p-1 flex items-center justify-center">
                 <img [src]="submenu.iconUrl" [style]="submenu.iconStyles" class="min-w-5 max-w-5 object-fill" />
               </div>
               <span class=" text-center text-xs uppercase font-medium pr-4">{{ submenu.label }}</span>
@@ -46,17 +46,19 @@
 
             <ul *ngIf="submenu.submenus?.length && submenu.openSubmenu"
               class="w-full flex flex-col gap-5 absolute left-[120%] bg-opacity-95 bg-brand-primary p-2 py-5 rounded-xl shadow-xl shadow-gray-400 border border-black border-opacity-30">
+
               @for(submenu of submenu.submenus; track submenu) {
               <li class="text-sm transition-all items-center gap-3 cursor-pointer flex p-1 hover:rounded-md hover:bg-[#7289DA] hover:text-white"
                 routerLink="{{ submenu.routeLink }}">
                 <div *ngIf="submenu.iconUrl"
-                  class="bg-[#fff] shadow-sm rounded-full w-7 h-7 flex items-center justify-center">
+                  class="bg-cyan-200 shadow-sm rounded-full w-7 h-7 flex items-center justify-center">
                   <img [src]="submenu.iconUrl" [style]="submenu.iconStyles" class="min-w-5 max-w-5 object-fill" />
                 </div>
                 <span class="text-center text-xs uppercase font-medium">{{ submenu.label }}</span>
                 <div class="dot h-1 w-1 rounded-full"></div>
               </li>
               }
+
               <div class="triangle"></div>
             </ul>
           </li>
@@ -72,13 +74,13 @@
     <div class="mt-5 flex flex-col gap-2 w-full sm:items-center">
       <span (click)="showSettingMenuFnc()"
         class=" p-2 flex items-center w-full gap-3 rounded-sm cursor-pointer transition-all hover:bg-[#7289DA] hover:text-white  ">
-        <div class="bg-[#fff] shadow-sm rounded-full w-7 h-7 flex items-center justify-center">
+        <div class="bg-cyan-200 shadow-sm rounded-full w-7 h-7 flex items-center justify-center">
           <img src="assets/icons/config.svg" />
         </div>
         <span class="relative  text-sm">Configurações</span>
       </span>
       <span routerLink="/account" class="mb-3 p-2 flex items-center w-full gap-3 rounded-sm cursor-pointer transition-all hover:bg-[#7289DA] hover:text-white ">
-        <div class="bg-[#fff] shadow-sm rounded-full w-7 h-7 flex items-center justify-center">
+        <div class="bg-cyan-200 shadow-sm rounded-full w-7 h-7 flex items-center justify-center">
           <img src="assets/icons/signout.svg" />
         </div>
         <span class="relative text-sm">Sair</span>

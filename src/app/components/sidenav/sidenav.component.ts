@@ -87,7 +87,7 @@ export class SidenavComponent {
       ],
     },
     {
-      iconUrl: 'assets/icons/dashboard/google-docs.png',
+      iconUrl: 'assets/icons/dashboard/docs.svg',
       label: 'Documentos',
       submenus: [
         {
