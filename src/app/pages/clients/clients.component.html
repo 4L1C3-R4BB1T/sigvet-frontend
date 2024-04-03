@@ -3,40 +3,25 @@
     <header class="product-page-header">
       <div class="flex justify-between mt-3 flex-wrap gap-2">
         <div class="flex gap-2 max-w-[500px] w-full">
-          <input type="text" class="bg-brand-secondary border-black outline-none border text-sm px-2 rounded-md flex-1 placeholder:text-sm placeholder:text-black placeholder:opacity-90" placeholder="Nome">
+          <input type="text" class="bg-brand-secondary border-black outline-none border border-opacity-25 text-sm px-2 rounded-md flex-1 placeholder:text-sm placeholder:text-black placeholder:opacity-90" placeholder="Nome">
           <button class="bg-account-tertiary text-white p-3 rounded-md shadow text-xs hover:opacity-70">Limpar Pequisa</button>
           <button class="bg-account-secondary text-white p-3 rounded-md shadow text-xs hover:opacity-70 flex items-center gap-3">
             <img src="assets/icons/filtro.png" class="w-3">
             Mais Filtros
           </button>
         </div>
-
-        <button class="bg-account-secondary text-white p-2  shadow text-xs rounded-md px-4 hover:opacity-70" (click)="openModalCreateClient()">Adicionar Cliente</button>
+        <button class="bg-account-secondary text-white p-2 shadow text-xs rounded-md px-4 hover:opacity-70" (click)="openModalCreateClient()">Adicionar</button>
       </div>
-     <div class="flex justify-between items-center flex-wrap">
-      <ul class="flex gap-5 text-xs mt-4 flex-wrap">
-        <li class="cursor-pointer flex items-center gap-1 hover:underline">
-          <img src="assets/icons/download.png" class="w-4">
-          Baixar Planilha de Clientes
-        </li>
-        <li class="cursor-pointer flex items-center gap-1 hover:underline">
-          <img src="assets/icons/xls.png" class="w-4">
-          Atualizar Clientes via Planilha
-        </li>
-        <li class="cursor-pointer flex items-center gap-1 hover:underline">
-          <img src="assets/icons/arrow.png" class="w-4">
-          Criar clientes via Panilha
-        </li>
-      </ul>
-      <span class="mt-4">
-        <app-paginator/>
-      </span>
-     </div>
+      <div class="flex justify-end">
+        <span class="mt-4">
+          <app-paginator />
+        </span>
+      </div>
     </header>
-    <app-client-list/>
+    <app-client-list />
   </div>
 </div>
 
 @if (openModalCreateClient$()) {
-  <app-create-client/>
+<app-create-client />
 }

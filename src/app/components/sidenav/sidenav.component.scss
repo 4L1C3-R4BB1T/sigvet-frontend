@@ -1,6 +1,4 @@
-
 .sidenav {
-
   ::-webkit-scrollbar {
     width: 5px;
   }
@@ -17,7 +15,6 @@
     width: 0;
     opacity: 0;
     animation: invisible 0.25s ease-in forwards;
-
 
     &.visible {
       animation: visible 0.25s ease-out forwards;
@@ -37,6 +34,7 @@
         opacity: 1;
         z-index: 10;
       }
+
       to {
         width: 0;
         opacity: 0;
@@ -44,14 +42,15 @@
       }
     }
 
-
     @media only screen and (max-width: 30rem) {
       min-width: 100vw !important;
+
       @keyframes invisible {
         from {
           opacity: 1;
           z-index: 10;
         }
+
         to {
           width: 0;
           opacity: 0;
@@ -59,15 +58,14 @@
         }
       }
     }
-
   }
 
   .triangle {
     width: 0;
     height: 0;
     border: 10px solid transparent;
-    border-top: 10px solid #74E0D3;
-    border-left: 10px solid #74E0D3;
+    border-top: 10px solid #6CD1C5;
+    border-left: 10px solid #6CD1C5;
     background-color: transparent;
     position: absolute;
     left: 0;
