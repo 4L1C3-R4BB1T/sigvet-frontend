@@ -1,6 +1,7 @@
 import { Routes } from '@angular/router';
 import AccountComponent from './pages/account/account.component';
 import { DashboardComponent } from './pages/dashboard/dashboard.component';
+import CreateAccountComponent from './pages/account/create-account/create-account.component';
 
 export const routes: Routes = [
   {
@@ -15,7 +16,7 @@ export const routes: Routes = [
       {
         path: '',
         loadComponent: () => import('./pages/account/login-form/login-form.component'),
-      }
+      },
     ],
   },
   {

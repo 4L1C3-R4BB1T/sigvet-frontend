@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, inject } from '@angular/core';
 import { RouterLink } from '@angular/router';
 
 @Component({
@@ -8,4 +8,6 @@ import { RouterLink } from '@angular/router';
   templateUrl: './login-form.component.html',
   styleUrl: './login-form.component.scss'
 })
-export default class LoginFormComponent { }
+export default class LoginFormComponent {
+
+}

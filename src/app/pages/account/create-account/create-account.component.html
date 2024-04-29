@@ -1,0 +1,62 @@
+<div class="p-5 flex items-center justify-center bg-black absolute w-screen h-screen bg-opacity-60">
+  <form class="p-5 px-6 flex gap-5 shadow-2xl max-w-[760px] w-full bg-white rounded-md">
+    <div class="w-full">
+      <strong class="flex text-2xl">Cadastra-se</strong>
+      <span class="text-sm">
+        Já tem uma conta? Faça <strong class="text-[#3F10CA] hover:underline cursor-pointer">login</strong>
+      </span>
+
+      <section class="grid grid-cols-2 gap-6 mt-4">
+        <div
+          class="bg-brand-secondary  flex gap-2 shadow-md  shadow-gray-400 px-3 py-1 rounded-xl outline-none border border-opacity-25 border-black">
+          <img src="assets/icons/password-account.svg" class="w-5">
+          <input type="text" placeholder="Nome Completo"
+            class="bg-brand-secondary flex-1 outline-none border-none rounded-xl text-black p-2 sm:p-3 placeholder:text-base placeholder:text-black">
+        </div>
+
+        <div
+          class="bg-brand-secondary  flex gap-2 shadow-md  shadow-gray-400 px-3 py-1 rounded-xl outline-none border border-opacity-25 border-black">
+          <img src="assets/icons/password-account.svg" class="w-5">
+          <input type="text" placeholder="CPF" mask="000.000.000-00"
+            class="bg-brand-secondary flex-1 outline-none border-none rounded-xl text-black p-2 sm:p-3 placeholder:text-base placeholder:text-black">
+        </div>
+
+        <div
+          class="bg-brand-secondary  flex gap-2 shadow-md  shadow-gray-400 px-3 py-1 rounded-xl outline-none border border-opacity-25 border-black">
+          <img src="assets/icons/password-account.svg" class="w-5">
+          <input type="text" placeholder="Telefone" mask="(00) 00000-0000"
+            class="bg-brand-secondary flex-1 outline-none border-none rounded-xl text-black p-2 sm:p-3 placeholder:text-base placeholder:text-black">
+        </div>
+
+
+        <div
+          class="bg-brand-secondary  flex gap-2 shadow-md  shadow-gray-400 px-3 py-1 rounded-xl outline-none border border-opacity-25 border-black">
+          <img src="assets/icons/password-account.svg" class="w-5">
+          <input type="email" placeholder="Email"
+            class="bg-brand-secondary flex-1 outline-none border-none rounded-xl text-black p-2 sm:p-3 placeholder:text-base placeholder:text-black">
+        </div>
+
+        <div
+          class="bg-brand-secondary  flex gap-2 shadow-md  shadow-gray-400 px-3 py-1 rounded-xl outline-none border border-opacity-25 border-black">
+          <img src="assets/icons/password-account.svg" class="w-5">
+          <input type="password" placeholder="Senha"
+            class="bg-brand-secondary flex-1 outline-none border-none rounded-xl text-black p-2 sm:p-3 placeholder:text-base placeholder:text-black">
+        </div>
+
+        <div
+          class="bg-brand-secondary  flex gap-2 shadow-md  shadow-gray-400 px-3 py-1 rounded-xl outline-none border border-opacity-25 border-black">
+          <img src="assets/icons/password-account.svg" class="w-5">
+          <input type="password" placeholder="Senha de Confirmação"
+            class="bg-brand-secondary flex-1 outline-none border-none rounded-xl text-black p-2 sm:p-3 placeholder:text-base placeholder:text-black">
+        </div>
+
+      </section>
+
+      <button type="button" routerLink="/dashboard"
+        class="bg-[#3F10CA] font-medium text-white w-full mt-8 p-2 sm:p-3 rounded-xl hover:opacity-80">Cadastrar</button>
+
+    </div>
+
+  </form>
+
+</div>
