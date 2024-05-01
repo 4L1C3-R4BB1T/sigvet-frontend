@@ -1,23 +1,16 @@
 import { Routes } from '@angular/router';
-import AccountComponent from './pages/account/account.component';
 import { DashboardComponent } from './pages/dashboard/dashboard.component';
-import CreateAccountComponent from './pages/account/create-account/create-account.component';
+import LoginComponent from './pages/login/login.component';
 
 export const routes: Routes = [
   {
     path: '',
     pathMatch: 'full',
-    redirectTo: 'account',
+    redirectTo: 'login',
   },
   {
-    path: 'account',
-    component: AccountComponent,
-    children: [
-      {
-        path: '',
-        loadComponent: () => import('./pages/account/login-form/login-form.component'),
-      },
-    ],
+    path: 'login',
+    component: LoginComponent,
   },
   {
     path: 'dashboard',

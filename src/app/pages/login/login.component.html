@@ -1,0 +1,43 @@
+<div class="h-full flex justify-center items-center p-3">
+  <div id="account" class="p-2 py-5 sm:p-10 max-w-[530px] shadow-xl w-full bg-brand-quaternary rounded-xl">
+    <div class="flex flex-col gap-3">
+      <div class="flex flex-col items-center gap-1">
+        <div class="flex items-center">
+          <img src="assets/icons/logo.svg">
+          <h1 class="font-bold text-4xl">SIGVet</h1>
+        </div>
+        <p class="uppercase  text-sm font-mono opacity-85 text-center">Sistema Integrado de Gestão</p>
+      </div>
+      <form class="p-2 px-6">
+        <div class="relative bg-brand-secondary flex gap-2 shadow-md shadow-gray-400 px-3 py-1 rounded-xl outline-none border border-opacity-25 border-black">
+          <img src="assets/icons/user-account.svg" class="w-5">
+          <input type="text" placeholder="Usuário" class="bg-brand-secondary flex-1 outline-none border-none rounded-xl text-black p-2 sm:p-3 placeholder:text-base placeholder:text-black">
+        </div>
+        <div class="bg-brand-secondary mt-6 flex gap-2 shadow-md  shadow-gray-400 px-3 py-1 rounded-xl outline-none border border-opacity-25 border-black">
+          <img src="assets/icons/password-account.svg" class="w-5">
+          <input type="password" placeholder="Senha" class="bg-brand-secondary flex-1 outline-none border-none rounded-xl text-black p-2 sm:p-3 placeholder:text-base placeholder:text-black">
+        </div>
+        <div class="flex flex-col">
+          <p class="self-end text-sm mt-3 cursor-pointer hover:underline" (click)="openRecoverAccountModal.set(true)">Esqueceu sua senha?</p>
+        </div>
+        <button type="button" routerLink="/dashboard" class="bg-account-secondary font-medium text-white w-full mt-6 p-2 sm:p-3 rounded-xl hover:opacity-80">Entrar</button>
+        <span class="text-sm flex gap-2 mt-5 justify-center items-center">
+          <p>Você não tem uma conta?</p> <strong class="text-[#3d3d3d] hover:underline cursor-pointer font-medium" (click)="openAccountCreationModal.set(true)">Cadastre-se</strong>
+        </span>
+      </form>
+    </div>
+  </div>
+</div>
+
+<div class="absolute top-0 h-full w-full -z-10 flex flex-col">
+  <div class="bg-account-quaternary flex-1"></div>
+  <div class="bg-account-tertiary flex-1"></div>
+</div>
+
+@if (openAccountCreationModal()) {
+  <app-create-new-client [opened]="openAccountCreationModal()" (closedEvent)="openAccountCreationModal.set(false)"/>
+}
+
+@if (openRecoverAccountModal()) {
+  <app-recover-client-password [opened]="openRecoverAccountModal()" (closedEvent)="openRecoverAccountModal.set(false)"/>
+}

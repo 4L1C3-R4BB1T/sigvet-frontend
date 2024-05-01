@@ -3,7 +3,7 @@
   "version": "0.0.0",
   "scripts": {
     "ng": "ng",
-    "start": "ng serve",
+    "start": "ng serve --proxy-config=proxy.conf.json",
     "build": "ng build",
     "watch": "ng build --watch --configuration development",
     "test": "ng test"
@@ -22,7 +22,7 @@
     "@ngrx/store": "^17.1.0",
     "chart.js": "^4.4.1",
     "ngx-mask": "^17.0.7",
-    "primeng": "^17.7.0",
+    "primeng": "^17.15.0",
     "rxjs": "~7.8.0",
     "tslib": "^2.3.0",
     "zone.js": "~0.14.3"
