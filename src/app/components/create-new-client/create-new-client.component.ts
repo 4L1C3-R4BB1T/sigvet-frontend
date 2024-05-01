@@ -7,6 +7,7 @@ import { lastValueFrom } from 'rxjs';
 import { City } from '../../models/city';
 import CityService from '../../services/city.service';
 import { CustomValidators } from '../../validators/custom-validators';
+import BaseFormComponent from '../../base/base-form.component';
 
 @Component({
   selector: 'app-create-new-client',
@@ -16,14 +17,14 @@ import { CustomValidators } from '../../validators/custom-validators';
   styleUrl: './create-new-client.component.scss',
   providers: [provideNgxMask(), CityService],
 })
-export class CreateNewClientComponent implements OnInit {
+export class CreateNewClientComponent extends BaseFormComponent implements OnInit {
 
   isOpen = signal(false)
 
   #formBuilder = inject(FormBuilder);
   #cityService = inject(CityService);
 
-  form = this.#formBuilder.group({
+  override form = this.#formBuilder.group({
     name: ['', [Validators.maxLength(100), Validators.minLength(3), Validators.required]],
     username: ['', [Validators.maxLength(100), Validators.minLength(3), Validators.required]],
     document: ['', [Validators.maxLength(14), Validators.required]],

@@ -2,13 +2,17 @@ import { Component, EventEmitter, Input, OnInit, Output, inject, signal } from '
 import { FormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
 import { CustomValidators } from '../../validators/custom-validators';
 import { NgIf } from '@angular/common';
+import { ToastModule } from 'primeng/toast';
+import { MessageService } from 'primeng/api';
+
 
 @Component({
   selector: 'app-recover-client-password',
   standalone: true,
-  imports: [ReactiveFormsModule, NgIf],
+  imports: [ReactiveFormsModule, NgIf, ToastModule],
   templateUrl: './recover-client-password.component.html',
-  styleUrl: './recover-client-password.component.scss'
+  styleUrl: './recover-client-password.component.scss',
+  providers: [MessageService]
 })
 export class RecoverClientPasswordComponent implements OnInit {
 
@@ -17,6 +21,7 @@ export class RecoverClientPasswordComponent implements OnInit {
   isPasswordFilled = signal(false);
 
   #formBuilder = inject(FormBuilder);
+  #messageService = inject(MessageService);
 
   @Output()
   closedEvent = new EventEmitter();
@@ -38,6 +43,10 @@ export class RecoverClientPasswordComponent implements OnInit {
 
   public close() {
     this.isOpen.set(false);
+
     this.closedEvent.emit(true);
+  }
+  public show() {
+    this.#messageService.add({ severity: 'success', summary: 'Success', detail: 'Message Content' });
   }
 }
