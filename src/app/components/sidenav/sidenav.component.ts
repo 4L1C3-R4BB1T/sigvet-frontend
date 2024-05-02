@@ -4,10 +4,10 @@ import { toSignal } from '@angular/core/rxjs-interop';
 import { RouterLink, RouterLinkActive } from '@angular/router';
 import { Store } from '@ngrx/store';
 
-import SettingsPageComponent from '../../pages/settings-page/settings-page.component';
 import { AppState } from '../../store';
 import { toggle } from '../../store/actions/setting-menu.action';
 import { MenuMobileComponent } from '../menu-mobile/menu-mobile.component';
+import { ProfileComponent } from '../profile/profile.component';
 
 interface SidenavMenu {
   iconUrl: string;
@@ -21,7 +21,7 @@ interface SidenavMenu {
 @Component({
   selector: 'app-sidenav',
   standalone: true,
-  imports: [RouterLink, NgIf, MenuMobileComponent, RouterLinkActive, NgIf, SettingsPageComponent],
+  imports: [RouterLink, NgIf, MenuMobileComponent, RouterLinkActive, NgIf, ProfileComponent],
   templateUrl: './sidenav.component.html',
   styleUrl: './sidenav.component.scss'
 })

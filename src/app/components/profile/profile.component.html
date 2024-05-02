@@ -1,0 +1,84 @@
+<div id="container" class="absolute top-0 left-0 w-screen h-screen bg-black bg-opacity-70 flex flex-col items-center p-5">
+  <section class="bg-white w-full max-w-[1000px] flex gap-5 p-6 animate-slide-in shadow-md rounded-sm relative">
+    <span class="absolute top-0 right-0 mt-5 mr-4 hover:bg-black hover:bg-opacity-15 rounded-full p-1" (click)="close()">
+      <img src="assets/icons/dashboard/close.svg" class="w-6 cursor-pointer">
+    </span>
+    <aside>
+      <div class="photo relative w-44 h-32 bg-black bg-opacity-80">
+        <img class="absolute top-0 left-0 w-full h-full" src="assets/images/macaco.png" alt="">
+        <button class="absolute bottom-0 text-white flex justify-center  hover:opacity-70 w-full text-xs  bg-black bg-opacity-60 p-2">
+          Alterar foto
+          <input type="file" class="w-full h-full opacity-0 top-0 absolute cursor-pointer">
+        </button>
+      </div>
+
+
+    </aside>
+    <div class="w-full">
+      <header>
+        <h1 class="font-medium">Gabriel Cardoso Girarde</h1>
+        <h2 class="text-[#3479BF] font-medium text-sm">Administrador</h2>
+      </header>
+
+      <section class="py-5 mt-8">
+        <ul class="flex gap-4 after:block after:bg-black after:h-0.5 after:bg-opacity-10  after:w-full after:absolute after:bottom-0 relative">
+          <li class="cursor-pointer text-sm font-semibold" [class]="{ active: isAbout() }">
+            <span class="opacity-80 px-2.5 pb-2 block hover:text-blue-600 hover:font-normal transition-all" (click)="isAbout.set(true)">Sobre</span>
+          </li>
+          <li class="cursor-pointer text-sm font-semibold"  [class]="{ active: !isAbout() }">
+            <span class="opacity-80 pb-2 block hover:text-blue-600 hover:font-normal transition-all" (click)="isAbout.set(false)">Endereço</span>
+          </li>
+        </ul>
+        <div class="mt-5 info">
+        @if (isAbout()) {
+            <ul class="flex flex-col gap-5 fade-in">
+              <li class="flex justify-between">
+                <span class="font-medium text-sm">Documento</span>
+                <span class="text-sm text-[#3479BF] font-medium">173.645.097-20</span>
+              </li>
+              <li class="flex justify-between">
+                <span class="font-medium text-sm">Nome</span>
+                <span class="text-sm text-[#3479BF] font-medium">Gabriel Cardoso Girarde</span>
+              </li>
+              <li class="flex justify-between">
+                <span class="font-medium text-sm">E-mail</span>
+                <span class="text-sm text-[#3479BF] font-medium">gabrielcardosogirarde{{ "@" }}gmail.com</span>
+              </li>
+              <li class="flex justify-between">
+                <span class="font-medium text-sm">Telefone</span>
+                <span class="text-sm text-[#3479BF] font-medium">(28) 99950-5410</span>
+              </li>
+            </ul>
+        } @else {
+          <ul class="flex flex-col gap-5 fade-in">
+            <li class="flex justify-between">
+              <span class="font-medium text-sm">Rua</span>
+              <span class="text-sm text-[#3479BF] font-medium">Rod. Família Requieri</span>
+            </li>
+            <li class="flex justify-between">
+              <span class="font-medium text-sm">Bairro</span>
+              <span class="text-sm text-[#3479BF] font-medium">Santo Agostinho</span>
+            </li>
+            <li class="flex justify-between">
+              <span class="font-medium text-sm">Número</span>
+              <span class="text-sm text-[#3479BF] font-medium">95</span>
+            </li>
+            <li class="flex justify-between">
+              <span class="font-medium text-sm">Código Postal</span>
+              <span class="text-sm text-[#3479BF] font-medium">2936000-000</span>
+            </li>
+            <li class="flex justify-between">
+              <span class="font-medium text-sm">Cidade</span>
+              <span class="text-sm text-[#3479BF] font-medium">Castelo</span>
+            </li>
+            <li class="flex justify-between">
+              <span class="font-medium text-sm">Estado</span>
+              <span class="text-sm text-[#3479BF] font-medium">Espírito Santo</span>
+            </li>
+          </ul>
+        }
+        </div>
+      </section>
+    </div>
+  </section>
+</div>

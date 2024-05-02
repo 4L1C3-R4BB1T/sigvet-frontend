@@ -4,10 +4,11 @@ import { RouterLink, RouterOutlet } from '@angular/router';
 import BaseFormComponent from '../../base/base-form.component';
 import { CreateNewClientComponent } from '../../components/create-new-client/create-new-client.component';
 import { RecoverClientPasswordComponent } from '../../components/recover-client-password/recover-client-password.component';
+import { ProfileComponent } from '../../components/profile/profile.component';
 @Component({
   selector: 'app-account',
   standalone: true,
-  imports: [RouterLink, RouterOutlet, CreateNewClientComponent, RecoverClientPasswordComponent, ReactiveFormsModule],
+  imports: [ProfileComponent,RouterLink, RouterOutlet, CreateNewClientComponent, RecoverClientPasswordComponent, ReactiveFormsModule],
   templateUrl: './login.component.html',
   styleUrl: './login.component.scss'
 })
