@@ -44,7 +44,7 @@
         <select formControlName="cityId" class="border border-black border-opacity-30 rounded-md p-2 text-sm placeholder:text-black placeholder:opacity-75">
           <option selected value="" disabled>Selecione</option>
           @for (city of cities(); track city.id) {
-            <option [ngValue]="city.id">{{  city.name }}</option>
+            <option [ngValue]="city.id">{{  city.name + " - " + city.state.name }}</option>
           }
         </select>
       </span>
