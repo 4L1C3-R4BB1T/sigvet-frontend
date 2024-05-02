@@ -1,60 +1,60 @@
 <div class="sidenav min-h-screen flex">
   <div [class.visible]="!showMenu()"
-    class="sidenav__drawer border-r border-black border-opacity-50 xl:border-none px-4 sm:w-[200px] z-20 pt-5 bg-brand-primary fixed h-full transition-all flex flex-col items-center">
+    class="sidenav__drawer border-r border-black border-opacity-50 xl:border-none px-4 sm:w-[200px] z-20 pt-5  fixed h-full bg-gradient-to-b from-[#005792] to-[#0D356A] transition-all flex flex-col items-center">
     <div class="sidenav__drawer-profile w-full ps-4 flex flex-col gap-3 items-center relative -translate-x-5">
       <div class="w-[100px] h-[100px]">
         <img src="assets/images/goku.jpg" class="rounded-full object-cover h-full w-full">
       </div>
-      <span class="relative opacity-80">Gabriel Cardoso</span>
+      <span class="relative opacity-80 text-white">Gabriel Cardoso</span>
     </div>
 
     <ul class="mt-5 flex flex-col gap-5 w-full max-h-[70vh] min-h-[50vh] overflow-hidden overflow-y-auto sidenav__drawer-list">
       @for (menu of menus; track menu) {
-      <li routerLink="{{ menu.routeLink }}" [routerLinkActive]="['bg-account-quinary', 'text-white']"
+      <li routerLink="{{ menu.routeLink }}" [routerLinkActive]="['bg-[#014674]', 'text-white']"
         [routerLinkActiveOptions]="{ exact: true }"
-        class="p-2 flex gap-3 hover:bg-[#7289DA] hover:text-white items-center cursor-pointer rounded-sm transition-all">
-        <div class="bg-cyan-200 shadow-sm rounded-full w-7 h-7 flex items-center justify-center">
+        class="p-2 flex gap-3 hover:bg-[#014674] hover:text-white items-center cursor-pointer rounded-sm transition-all">
+        <div class="bg-white shadow-sm rounded-full w-7 h-7 flex items-center justify-center">
           <img [src]="menu.iconUrl" [style]="menu.iconStyles" class="min-w-5 max-w-5 object-fill" />
         </div>
-        <span class="relative text-sm">{{ menu.label }}</span>
+        <span class="relative text-sm text-white">{{ menu.label }}</span>
       </li>
       }
       <li>
         <div class="cursor-pointer hover:opacity-50 flex justify-between items-center" (click)="seeMore()">
-          <span class="text-sm ps-1">Mais opções</span>
-          <img src="assets/icons/dashboard/see-more.svg">
+          <span class="text-sm ps-1 text-white">Mais opções</span>
+          <img src="assets/icons/dashboard/see-more.svg" style="filter: invert(1);">
         </div>
 
         @if (isSeeMore()) {
-        <ul class="-translate-y-[155%] flex flex-col gap-5 absolute left-[108%] bg-opacity-95 bg-brand-primary p-2 py-5 rounded-xl shadow-xl shadow-gray-400 border border-black border-opacity-30">
+        <ul class="-translate-y-[155%]  flex flex-col gap-5 absolute left-[108%] bg-opacity-95 bg-gradient-to-b from-[#005792] to-[#0D356A] max-w-[200px] p-2 py-5 rounded-xl shadow-xl shadow-gray-400 border border-black border-opacity-30">
           @for(submenu of submenus(); track submenu; let i = $index; let last = $last) {
           <li
             class="relative text-sm transition-all items-center gap-3 cursor-pointer flex {{ !last ? 'border-b' : 'border-none'}} border-black border-opacity-30 p-1">
-            <div class="hover:rounded-md flex-1 relative hover:bg-[#7289DA] hover:text-white flex transition-all items-center gap-3 p-1"
+            <div class="hover:rounded-md flex-1 relative hover:bg-[#014674] hover:text-white flex transition-all items-center gap-3 p-1"
               (click)="openSubmenus(i)" [routerLink]="submenu.submenus ? undefined : [submenu.routeLink]">
 
-              <div *ngIf="submenu.iconUrl" class="bg-cyan-200 shadow-sm rounded-full p-1 flex items-center justify-center">
+              <div *ngIf="submenu.iconUrl" class="bg-white shadow-sm rounded-full p-1 flex items-center justify-center">
                 <img [src]="submenu.iconUrl" [style]="submenu.iconStyles" class="min-w-5 max-w-5 object-fill" />
               </div>
-              <span class=" text-center text-xs uppercase font-medium pr-4">{{ submenu.label }}</span>
+              <span class=" text-center text-xs uppercase font-medium pr-4 text-white">{{ submenu.label }}</span>
               <div *ngIf="!submenu.submenus" class="dot h-1 w-1 rounded-full"></div>
 
               @if (submenu.submenus?.length) {
-              <img src="assets/icons/dashboard/see-more.svg" class="absolute right-0 pr-1">
+              <img src="assets/icons/dashboard/see-more.svg" class="absolute right-0 pr-1" style="filter: invert(1);">
               }
             </div>
 
             <ul *ngIf="submenu.submenus?.length && submenu.openSubmenu"
-              class="w-full flex flex-col gap-5 absolute left-[120%] bg-opacity-95 bg-brand-primary p-2 py-5 rounded-xl shadow-xl shadow-gray-400 border border-black border-opacity-30">
+              class="w-full flex flex-col gap-5 absolute left-[120%] bg-opacity-95 bg-gradient-to-b from-[#005792] to-[#0D356A] max-w-[200px] p-2 py-5 rounded-xl shadow-xl shadow-gray-400 border border-black border-opacity-30">
 
               @for(submenu of submenu.submenus; track submenu) {
-              <li class="text-sm transition-all items-center gap-3 cursor-pointer flex p-1 hover:rounded-md hover:bg-[#7289DA] hover:text-white"
+              <li class="text-sm transition-all items-center gap-3 cursor-pointer flex p-1 hover:rounded-md hover:bg-[#014674] hover:text-white"
                 routerLink="{{ submenu.routeLink }}">
                 <div *ngIf="submenu.iconUrl"
-                  class="bg-cyan-200 shadow-sm rounded-full w-7 h-7 flex items-center justify-center">
+                  class="bg-white shadow-sm rounded-full w-7 h-7 flex items-center justify-center">
                   <img [src]="submenu.iconUrl" [style]="submenu.iconStyles" class="min-w-5 max-w-5 object-fill" />
                 </div>
-                <span class="text-center text-xs uppercase font-medium">{{ submenu.label }}</span>
+                <span class="text-center text-xs uppercase font-medium text-white">{{ submenu.label }}</span>
                 <div class="dot h-1 w-1 rounded-full"></div>
               </li>
               }
@@ -73,17 +73,17 @@
 
     <div class="mt-5 flex flex-col gap-2 w-full sm:items-center">
       <span (click)="showSettingMenuFnc()"
-        class=" p-2 flex items-center w-full gap-3 rounded-sm cursor-pointer transition-all hover:bg-[#7289DA] hover:text-white  ">
-        <div class="bg-cyan-200 shadow-sm rounded-full w-7 h-7 flex items-center justify-center">
+        class=" p-2 flex items-center w-full gap-3 rounded-sm cursor-pointer transition-all hover:bg-[#014674] hover:text-white  ">
+        <div class="bg-white shadow-sm rounded-full w-7 h-7 flex items-center justify-center">
           <img src="assets/icons/config.svg" />
         </div>
-        <span class="relative  text-sm">Configurações</span>
+        <span class="relative  text-sm text-white">Configurações</span>
       </span>
-      <span routerLink="/login" class="mb-3 p-2 flex items-center w-full gap-3 rounded-sm cursor-pointer transition-all hover:bg-[#7289DA] hover:text-white ">
-        <div class="bg-cyan-200 shadow-sm rounded-full w-7 h-7 flex items-center justify-center">
+      <span routerLink="/login" class="mb-3 p-2 flex items-center w-full gap-3 rounded-sm cursor-pointer transition-all hover:bg-[#014674] hover:text-white ">
+        <div class="bg-white shadow-sm rounded-full w-7 h-7 flex items-center justify-center">
           <img src="assets/icons/signout.svg" />
         </div>
-        <span class="relative text-sm">Sair</span>
+        <span class="relative text-sm text-white">Sair</span>
       </span>
     </div>
 

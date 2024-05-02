@@ -64,13 +64,13 @@
     width: 0;
     height: 0;
     border: 10px solid transparent;
-    border-top: 10px solid #6CD1C5;
-    border-left: 10px solid #6CD1C5;
+    border-top: 10px solid #005792;
+    border-left: 10px solid #005792;
     background-color: transparent;
     position: absolute;
     left: 0;
     transform: rotate(315deg) translateY(-50%);
-    z-index: -10;
+    z-index: -999;
     top: 50%;
   }
 

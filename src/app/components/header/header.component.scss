@@ -2,14 +2,14 @@
   width: 0;
   height: 0;
   border: 10px solid transparent;
-  border-top: 10px solid #6CD1C5;
-  border-left: 10px solid #6CD1C5;
+  border-top: 10px solid #005792;
+  border-left: 10px solid #005792;
   background-color: transparent;
   position: absolute;
   left: 50%;
   transform: rotate(225deg) translateY(-50%);
   top: -8%;
   background-color: transparent;
-  background-color: #6CD1C5;
-  z-index: -1;
+  background-color: #005792;
+  z-index: -99;
 }
