@@ -54,6 +54,14 @@ export class SidenavComponent {
       label: 'Vacinas',
     },
     {
+      iconUrl: 'assets/icons/dashboard/vaccinations.svg',
+      label: 'Vacinações',
+      routeLink: '/dashboard/vacinacoes'
+    }
+  ];
+
+  submenus = signal([
+    {
       iconUrl: 'assets/icons/dashboard/visits.svg',
       routeLink: '/dashboard/consultas',
       label: 'Consultas',
@@ -63,14 +71,6 @@ export class SidenavComponent {
       label: 'Diagnósticos',
       routeLink: '/dashboard/diagnosticos'
     },
-    {
-      iconUrl: 'assets/icons/dashboard/vaccinations.svg',
-      label: 'Vacinações',
-      routeLink: '/dashboard/vacinacoes'
-    }
-  ];
-
-  submenus = signal([
     {
       iconUrl: 'assets/icons/dashboard/reports.svg',
       label: 'Relatórios',
@@ -99,7 +99,7 @@ export class SidenavComponent {
           label: 'Excel (.xls)',
         },
       ],
-    }
+    },
   ] as SidenavMenu[]);
 
   #store = inject<Store<AppState>>(Store);
