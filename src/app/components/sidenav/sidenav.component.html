@@ -1,5 +1,5 @@
 <div class="sidenav min-h-screen flex">
-  <div [class.visible]="!showMenu()"
+  <div [class.visible]="!showMenuSidenav()"
     class="sidenav__drawer border-r border-black border-opacity-50 xl:border-none px-4 sm:w-[200px] z-20 pt-5  fixed h-full bg-gradient-to-b from-[#005792] to-[#0D356A] transition-all flex flex-col items-center">
     <div class="sidenav__drawer-profile w-full ps-4 flex flex-col gap-3 items-center relative -translate-x-5">
       <div class="w-[100px] h-[100px]">
@@ -26,7 +26,7 @@
         </div>
 
         @if (isSeeMore()) {
-        <ul class="-translate-y-[155%]  flex flex-col gap-5 absolute left-[108%] bg-opacity-95 bg-gradient-to-b from-[#005792] to-[#0D356A] max-w-[200px] p-2 py-5 rounded-xl shadow-xl shadow-gray-400 border border-black border-opacity-30">
+        <ul class="-translate-y-1/2  flex flex-col gap-5 absolute left-[108%] bg-opacity-95 bg-gradient-to-b from-[#005792] to-[#0D356A] max-w-[200px] p-2 py-5 rounded-xl shadow-xl shadow-gray-400 border border-black border-opacity-30">
           @for(submenu of submenus(); track submenu; let i = $index; let last = $last) {
           <li
             class="relative text-sm transition-all items-center gap-3 cursor-pointer flex {{ !last ? 'border-b' : 'border-none'}} border-black border-opacity-30 p-1">
@@ -72,7 +72,7 @@
     <div class="h-[0.07rem] w-full mt-3 bg-white bg-opacity-70"></div>
 
     <div class="mt-5 flex flex-col gap-2 w-full sm:items-center">
-      <span (click)="showSettingMenuFnc()"
+      <span
         class=" p-2 flex items-center w-full gap-3 rounded-sm cursor-pointer transition-all hover:bg-[#014674] hover:text-white  ">
         <div class="bg-white shadow-sm rounded-full w-7 h-7 flex items-center justify-center">
           <img src="assets/icons/config.svg" />
@@ -92,11 +92,7 @@
     <app-menu-mobile class="absolute left-4 top-5 xs:block hidden sm:hidden"/>
   </div>
 
-  <div class="sidenav__content bg-brand-secondary flex-1 {{ !showMenu() ? 'ps-[200px]' : ''}}">
+  <div class="sidenav__content bg-brand-secondary flex-1 {{ !showMenuSidenav() ? 'ps-[200px]' : ''}}">
     <ng-content></ng-content>
   </div>
 </div>
-
-@if (showSettingMenu()) {
-  <app-profile/>
-}

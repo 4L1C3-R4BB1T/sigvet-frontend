@@ -1,13 +1,11 @@
 import { NgIf } from '@angular/common';
-import { Component, inject, signal } from '@angular/core';
-import { toSignal } from '@angular/core/rxjs-interop';
+import { Component, OnInit, signal } from '@angular/core';
 import { RouterLink, RouterLinkActive } from '@angular/router';
-import { Store } from '@ngrx/store';
 
-import { AppState } from '../../store';
-import { toggle } from '../../store/actions/setting-menu.action';
+import { toSignal } from '@angular/core/rxjs-interop';
+import BaseComponent from '../../base/base-store.component';
 import { MenuMobileComponent } from '../menu-mobile/menu-mobile.component';
-import { ProfileComponent } from '../profile/profile.component';
+import BaseStoreComponent from '../../base/base-store.component';
 
 interface SidenavMenu {
   iconUrl: string;
@@ -21,11 +19,11 @@ interface SidenavMenu {
 @Component({
   selector: 'app-sidenav',
   standalone: true,
-  imports: [RouterLink, NgIf, MenuMobileComponent, RouterLinkActive, NgIf, ProfileComponent],
+  imports: [RouterLink, NgIf, MenuMobileComponent, RouterLinkActive, NgIf],
   templateUrl: './sidenav.component.html',
   styleUrl: './sidenav.component.scss'
 })
-export class SidenavComponent {
+export class SidenavComponent extends BaseStoreComponent implements OnInit {
 
   menus: SidenavMenu[] = [
     {
@@ -86,29 +84,16 @@ export class SidenavComponent {
         },
       ],
     },
-    {
-      iconUrl: 'assets/icons/dashboard/docs.svg',
-      label: 'Documentos',
-      submenus: [
-        {
-          routeLink: '/',
-          label: 'Word (.docx)',
-        },
-        {
-          routeLink: '/',
-          label: 'Excel (.xls)',
-        },
-      ],
-    },
   ] as SidenavMenu[]);
 
-  #store = inject<Store<AppState>>(Store);
 
   isSeeMore = signal(false);
 
-  showMenu = toSignal(this.#store.select((state: AppState) => state.menu.show));
+  showMenuSidenav = toSignal(this.store.select(state => state.menuVisibilityReducer.menuSidenav))
 
-  showSettingMenu = toSignal(this.#store.select(state => state['settingMenu'].open));
+  public ngOnInit(): void {
+
+  }
 
   public seeMore() {
     this.isSeeMore.set(!this.isSeeMore());
@@ -123,10 +108,6 @@ export class SidenavComponent {
       }
       return obj;
     }))
-  }
-
-  public showSettingMenuFnc() {
-    this.#store.dispatch(toggle());
   }
 
 }

@@ -3,6 +3,8 @@ import { NavigationEnd, Router } from '@angular/router';
 import { filter, map } from 'rxjs';
 
 import { MenuMobileComponent } from '../menu-mobile/menu-mobile.component';
+import BaseStoreComponent from '../../base/base-store.component';
+import { ProfileActions } from '../../store/reducers/menu-visibility.reducer';
 
 @Component({
   selector: 'app-header',
@@ -11,7 +13,7 @@ import { MenuMobileComponent } from '../menu-mobile/menu-mobile.component';
   templateUrl: './header.component.html',
   styleUrl: './header.component.scss'
 })
-export class HeaderComponent implements OnInit {
+export class HeaderComponent extends BaseStoreComponent implements OnInit {
 
   openProfile = signal(false);
   #router = inject(Router);
@@ -32,4 +34,7 @@ export class HeaderComponent implements OnInit {
       });
   }
 
+  showProfileMenu() {
+    this.store.dispatch(ProfileActions.toggleModal());
+  }
 }

@@ -1,7 +1,7 @@
-import { Component, inject, signal } from '@angular/core';
+import { Component, OnInit, inject, signal } from '@angular/core';
 import { Store } from '@ngrx/store';
 import { AppState } from '../../store';
-import { toggle } from '../../store/actions/setting-menu.action';
+import { ProfileActions } from '../../store/reducers/menu-visibility.reducer';
 
 @Component({
   selector: 'app-profile',
@@ -10,17 +10,21 @@ import { toggle } from '../../store/actions/setting-menu.action';
   templateUrl: './profile.component.html',
   styleUrl: './profile.component.scss'
 })
-export class ProfileComponent {
+export class ProfileComponent implements OnInit {
 
   isAbout = signal(true)
-  #store: Store<AppState> = inject(Store<AppState>)
+  #store: Store<AppState> = inject(Store)
 
   public tabChange() {
     this.isAbout.set(!this.isAbout());
   }
 
+  public ngOnInit() {
+    this.#store.select(state => state.menuVisibilityReducer).subscribe(console.log)
+  }
+
   public close() {
-    this.#store.dispatch(toggle());
+    this.#store.dispatch(ProfileActions.toggleModal());
   }
 
 }
