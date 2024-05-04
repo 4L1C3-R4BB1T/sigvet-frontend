@@ -18,8 +18,8 @@ export default class LoginComponent extends BaseFormComponent {
   openRecoverAccountModal = signal(false);
 
   override form = new FormGroup({
-    username: new FormControl('', [Validators.required, Validators.maxLength(100)]),
-    password: new FormControl('', [Validators.required, Validators.minLength(10)]),
+    username: new FormControl('', [Validators.required]),
+    password: new FormControl('', [Validators.required]),
   });
 
 
