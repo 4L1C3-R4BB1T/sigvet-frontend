@@ -6,19 +6,19 @@
           <img src="assets/icons/logo.svg">
           <h1 class="font-bold text-4xl">SIGVet</h1>
         </div>
-        <p class="uppercase  text-xs font-mono opacity-90 text-center">Sistema Integrado de Gestão</p>
+        <p class="uppercase  text-xs font-mono opacity-85 text-center">Sistema Integrado de Gestão</p>
       </div>
       <form class="p-2 px-6" [formGroup]="form">
         <div class="relative bg-brand-secondary flex gap-3 shadow-md shadow-gray-400 px-3 py-1 rounded-xl outline-none border border-opacity-25 border-black">
-          <img src="assets/icons/user-account.svg" class="w-5">
-          <input formControlName="username" type="text" placeholder="Usuário" class="bg-brand-secondary flex-1 outline-none border-none rounded-xl text-black py-2 placeholder:text-base placeholder:text-black">
+          <img src="assets/icons/user-account.svg" class="w-[18px]">
+          <input formControlName="username" type="text" placeholder="Usuário" class="bg-brand-secondary flex-1 outline-none border-none rounded-xl text-black py-2 placeholder:text-base placeholder:text-black placeholder:opacity-80">
         </div>
         @if (form.get('username')?.invalid && form.get('username')!.dirty) {
           <span class="text-xs text-red-700 mt-3 block">{{  getControlError('username') }}</span>
         }
         <div class="bg-brand-secondary mt-6 flex gap-3 shadow-md  shadow-gray-400 px-3 py-1 rounded-xl outline-none border border-opacity-25 border-black">
-          <img src="assets/icons/password-account.svg" class="w-5">
-          <input formControlName="password" type="password" placeholder="Senha" class="bg-brand-secondary flex-1 outline-none border-none rounded-xl text-black py-2  placeholder:text-base placeholder:text-black">
+          <img src="assets/icons/password-account.svg" class="w-[18px]">
+          <input formControlName="password" type="password" placeholder="Senha" class="bg-brand-secondary flex-1 outline-none border-none rounded-xl text-black py-2  placeholder:text-base placeholder:text-black placeholder:opacity-80">
         </div>
         @if (form.get('password')?.invalid && form.get('password')!.dirty) {
           <span class="text-xs text-red-700 mt-2 block">{{  getControlError('password') }}</span>
