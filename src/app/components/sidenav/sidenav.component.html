@@ -10,9 +10,9 @@
 
     <ul class="mt-5 flex flex-col gap-5 w-full  overflow-hidden overflow-y-auto sidenav__drawer-list">
       @for (menu of menus; track menu) {
-      <li routerLink="{{ menu.routeLink }}" [routerLinkActive]="['bg-[#014674]', 'text-white']"
+      <li routerLink="{{ menu.routeLink }}" [routerLinkActive]="['bg-[#014674]', 'text-white', 'after:bg-white']"
         [routerLinkActiveOptions]="{ exact: true }"
-        class="p-2 flex gap-3 hover:bg-[#014674] hover:text-white items-center cursor-pointer rounded-sm transition-all">
+        class="p-2 flex gap-3 hover:bg-[#014674] hover:text-white items-center cursor-pointer rounded-sm transition-all  after:left-0 after:block after:w-0.5 after:h-full after:absolute after:hover:bg-white relative">
         <div class="w-7 h-7 flex items-center justify-center">
           <img [src]="menu.iconUrl" [style]="menu.iconStyles" class="min-w-5 max-w-5 object-fill" />
         </div>
