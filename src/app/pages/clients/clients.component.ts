@@ -1,20 +1,23 @@
-import { Component, inject } from '@angular/core';
+import { Component, inject, signal } from '@angular/core';
 import { Store } from '@ngrx/store';
 
 import { CreateNewClientComponent } from '../../components/create-new-client/create-new-client.component';
 import { PaginatorComponent } from '../../components/paginator/paginator.component';
 import { AppState } from '../../store';
 import { ClientListComponent } from './client-list/client-list.component';
+import { FilterComponent } from '../../components/filter/filter.component';
 
 @Component({
   selector: 'app-clients',
   standalone: true,
-  imports: [ClientListComponent, PaginatorComponent, CreateNewClientComponent],
+  imports: [ClientListComponent, PaginatorComponent, CreateNewClientComponent, FilterComponent],
   templateUrl: './clients.component.html',
   styleUrl: './clients.component.scss'
 })
 export default class ClientsComponent {
 
   #store: Store<AppState> = inject(Store<AppState>);
+
+  openMoreFilterModal = signal(false);
 
 }
