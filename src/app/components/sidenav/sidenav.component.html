@@ -22,7 +22,9 @@
       <li>
         <div class="cursor-pointer hover:opacity-50 flex justify-between items-center" (click)="seeMore()">
           <span class="text-sm ps-1 text-white">Mais opções</span>
-          <img src="assets/icons/dashboard/see-more.svg" style="filter: invert(1);">
+          <span class="absolute right-0 block me-3">
+            <i class="bi bi-caret-right-fill text-white text-sm"></i>
+          </span>
         </div>
 
         @if (isSeeMore()) {
@@ -41,7 +43,9 @@
               <div *ngIf="!submenu.submenus" class="dot h-1 w-1 rounded-full"></div>
 
               @if (submenu.submenus?.length) {
-              <img src="assets/icons/dashboard/see-more.svg" class="absolute right-0 pr-1" style="filter: invert(1);">
+                <span class="absolute right-0 block me-2">
+                  <i class="bi bi-caret-right-fill text-white text-sm"></i>
+                </span>
               }
             </div>
 
