@@ -26,12 +26,12 @@
         </div>
 
         @if (isSeeMore()) {
-        <ul class="-translate-y-1/2  flex flex-col gap-5 absolute left-[108%] bg-opacity-95 bg-gradient-to-b from-[#005792] to-[#0D356A] max-w-[200px] p-2 py-5 rounded-xl shadow-xl shadow-gray-400 border border-black border-opacity-30">
-          @for(submenu of submenus(); track submenu; let i = $index; let last = $last) {
+        <ul class="-translate-y-1/2  flex flex-col absolute left-[108%] bg-opacity-95 bg-gradient-to-b from-[#005792] to-[#0D356A] max-w-[200px] py-2 rounded-xl shadow-xl shadow-gray-400 border border-black border-opacity-30">
+          @for(submenu of submenus(); track submenu; let i = $index;) {
           <li
-            class="relative text-sm transition-all items-center gap-3 cursor-pointer flex {{ !last ? 'border-b' : 'border-none'}} border-black border-opacity-30 p-1">
+            class="text-sm transition-all items-center gap-3 cursor-pointer flex  hover:text-white">
             <div
-              class="hover:rounded-md flex-1 relative hover:bg-[#014674] hover:text-white flex transition-all items-center gap-3 p-1"
+              class="hover:rounded-md flex-1 hover:bg-[#014674] hover:text-white flex transition-all items-center gap-3 p-2 after:left-0 after:block after:w-0.5 after:h-full after:absolute after:hover:bg-white relative"
               (click)="openSubmenus(i)" [routerLink]="submenu.submenus ? undefined : [submenu.routeLink]">
 
               <div *ngIf="submenu.iconUrl" class="p-1 flex items-center justify-center">
@@ -46,10 +46,10 @@
             </div>
 
             <ul *ngIf="submenu.submenus?.length && submenu.openSubmenu"
-              class="w-full flex flex-col gap-5 absolute left-[120%] bg-opacity-95 bg-gradient-to-b from-[#005792] to-[#0D356A] max-w-[200px] p-2 py-5 rounded-xl shadow-xl shadow-gray-400 border border-black border-opacity-30">
+              class="w-full flex flex-col absolute left-[120%] bg-opacity-95 bg-gradient-to-b from-[#005792] to-[#0D356A] max-w-[200px] py-2 rounded-xl shadow-xl shadow-gray-400 border border-black border-opacity-30">
               @for(submenu of submenu.submenus; track submenu) {
               <li
-                class="text-sm transition-all items-center gap-3 cursor-pointer flex p-1 hover:rounded-md hover:bg-[#014674] hover:text-white"
+                class="text-sm transition-all items-center gap-3 cursor-pointer flex p-2 hover:rounded-md hover:bg-[#014674] hover:text-white after:left-0 after:block after:w-0.5 after:h-full after:absolute after:hover:bg-white relative"
                 routerLink="{{ submenu.routeLink }}">
                 <div *ngIf="submenu.iconUrl" class="w-7 h-7 flex items-center justify-center">
                   <img [src]="submenu.iconUrl" [style]="submenu.iconStyles" class="min-w-5 max-w-5 object-fill" />
