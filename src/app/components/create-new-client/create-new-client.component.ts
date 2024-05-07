@@ -20,6 +20,7 @@ import BaseFormComponent from '../../base/base-form.component';
 export class CreateNewClientComponent extends BaseFormComponent implements OnInit {
 
   isOpen = signal(false)
+  isDetails = signal(true);
 
   #formBuilder = inject(FormBuilder);
   #cityService = inject(CityService);

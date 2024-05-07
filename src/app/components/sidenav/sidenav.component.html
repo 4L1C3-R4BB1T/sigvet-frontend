@@ -8,7 +8,7 @@
       <span class="relative opacity-80 text-white">Gabriel Cardoso</span>
     </div>
 
-    <ul class="mt-5 flex flex-col gap-5 w-full max-h-[70vh] min-h-[50vh] overflow-hidden overflow-y-auto sidenav__drawer-list">
+    <ul class="mt-5 flex flex-col gap-5 w-full  overflow-hidden overflow-y-auto sidenav__drawer-list">
       @for (menu of menus; track menu) {
       <li routerLink="{{ menu.routeLink }}" [routerLinkActive]="['bg-[#014674]', 'text-white']"
         [routerLinkActiveOptions]="{ exact: true }"

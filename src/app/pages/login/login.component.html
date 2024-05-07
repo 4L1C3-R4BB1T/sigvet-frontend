@@ -6,7 +6,7 @@
           <img src="assets/icons/logo.svg">
           <h1 class="font-bold text-4xl">SIGVet</h1>
         </div>
-        <p class="uppercase  text-sm font-mono opacity-85 text-center">Sistema Integrado de Gestão</p>
+        <p class="uppercase  text-xs font-mono opacity-90 text-center">Sistema Integrado de Gestão</p>
       </div>
       <form class="p-2 px-6" [formGroup]="form">
         <div class="relative bg-brand-secondary flex gap-2 shadow-md shadow-gray-400 px-3 py-1 rounded-xl outline-none border border-opacity-25 border-black">
@@ -21,7 +21,7 @@
           <input formControlName="password" type="password" placeholder="Senha" class="bg-brand-secondary flex-1 outline-none border-none rounded-xl text-black p-2 sm:p-3 placeholder:text-base placeholder:text-black">
         </div>
         @if (form.get('password')?.invalid && form.get('password')!.dirty) {
-          <span class="text-xs text-red-700 mt-3 block">{{  getControlError('password') }}</span>
+          <span class="text-xs text-red-700 mt-2 block">{{  getControlError('password') }}</span>
         }
         <div class="flex flex-col">
           <p class="self-end text-sm mt-3 cursor-pointer hover:underline" (click)="openRecoverAccountModal.set(true)">Esqueceu sua senha?</p>
@@ -36,7 +36,7 @@
 </div>
 
 <div class="absolute top-0 h-full w-full -z-10 flex flex-col">
-  <div class="bg-[#0D356A] flex-1"></div>
+  <div class="bg-[#183152fb] flex-1"></div>
   <div class="bg-[#005792] bg-opacity-20 flex-1"></div>
 </div>
 
