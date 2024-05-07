@@ -1,3 +1,29 @@
-<div class="w-full h-screen flex justify-center items-center text-2xl flex-col gap-3">
-  <img src="assets/images/pata.png" class="object-contain loading">
+<header>
+  <div class="flex justify-between mt-3 flex-wrap gap-2">
+    <div class="flex gap-2 max-w-[500px] w-full">
+      <input type="text"
+        class="bg-brand-secondary border-black outline-none border border-opacity-25 text-sm px-2 rounded-md flex-1"
+        placeholder="Pesquisar">
+      <button class="bg-gradient-to-b flex items-center gap-2 from-[#005792] to-[#0D356A] text-white p-3 rounded-md shadow text-xs hover:opacity-70">
+        <i class="bi bi-eraser-fill"></i>
+        Limpar Pequisa
+      </button>
+      <button class="bg-gradient-to-b from-[#005792] to-[#0D356A] text-white p-3 rounded-md shadow text-xs hover:opacity-70 flex items-center gap-3">
+        <img src="assets/icons/filtro.png" class="w-3">
+        Mais Filtros
+      </button>
+    </div>
+    <button class="bg-gradient-to-b flex gap-2 items-center from-[#005792] to-[#0D356A] text-white p-2  shadow text-xs rounded-md px-4 hover:opacity-70">
+      <i class="bi bi-person-fill-add"></i>
+      Adicionar
+    </button>
+  </div>
+  <div class="flex justify-end">
+    <span class="mt-4">
+      <app-paginator />
+    </span>
+  </div>
+</header>
+<div class="mt-5">
+  <app-animal-list />
 </div>
