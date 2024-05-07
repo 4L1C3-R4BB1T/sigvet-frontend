@@ -1,0 +1,11 @@
+:host {
+  flex: 1;
+
+  ::-webkit-scrollbar {
+    height: 0.5rem;
+  }
+
+  ::-webkit-scrollbar-thumb {
+    @apply bg-account-secondary;
+  }
+}

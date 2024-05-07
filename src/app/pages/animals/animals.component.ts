@@ -1,11 +1,12 @@
 import { Component } from '@angular/core';
 
-import TableComponent from '../table/table.component';
+import { PaginatorComponent } from '../../components/paginator/paginator.component';
+import { AnimalListComponent } from './animal-list/animal-list.component';
 
 @Component({
   selector: 'app-animals',
   standalone: true,
-  imports: [TableComponent],
+  imports: [AnimalListComponent, PaginatorComponent],
   templateUrl: './animals.component.html',
   styleUrl: './animals.component.scss'
 })
