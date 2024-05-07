@@ -1,11 +1,11 @@
 import { Component } from '@angular/core';
-
-import TableComponent from '../table/table.component';
+import { VaccineTableComponent } from './components/vaccine-table/vaccine-table.component';
+import { PaginatorComponent } from '../../components/paginator/paginator.component';
 
 @Component({
   selector: 'app-vaccines',
   standalone: true,
-  imports: [TableComponent],
+  imports: [VaccineTableComponent, PaginatorComponent],
   templateUrl: './vaccines.component.html',
   styleUrl: './vaccines.component.scss'
 })
