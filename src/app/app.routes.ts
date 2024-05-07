@@ -42,7 +42,7 @@ export const routes: Routes = [
       },
       {
         path: 'veterinarios',
-        loadComponent: () => import('./pages/veterinaries/veterinaries.component'),
+        loadComponent: () => import('./pages/veterinarian/veterinarian.component'),
         title: 'Veterinários',
       },
       {
