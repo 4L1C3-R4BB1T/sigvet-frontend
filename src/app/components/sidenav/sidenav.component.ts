@@ -27,32 +27,32 @@ export class SidenavComponent extends BaseStoreComponent implements OnInit {
 
   menus: SidenavMenu[] = [
     {
-      iconUrl: 'assets/icons/dashboard/home.svg',
+      iconUrl: 'assets/icons/sidenav/home.svg',
       routeLink: '/dashboard',
       label: 'Home',
     },
     {
-      iconUrl: 'assets/icons/dashboard/clients.svg',
+      iconUrl: 'assets/icons/sidenav/client.svg',
       routeLink: '/dashboard/clientes',
       label: 'Clientes',
     },
     {
-      iconUrl: 'assets/icons/dashboard/animals.svg',
+      iconUrl: 'assets/icons/sidenav/animal.svg',
       routeLink: '/dashboard/animais',
       label: 'Animais',
     },
     {
-      iconUrl: 'assets/icons/dashboard/vets.svg',
-      routeLink: '//dashboard/veterinarios',
+      iconUrl: 'assets/icons/sidenav/veterinary.svg',
+      routeLink: '/dashboard/veterinarios',
       label: 'Veterinários',
     },
     {
-      iconUrl: 'assets/icons/dashboard/vaccines.svg',
+      iconUrl: 'assets/icons/sidenav/vaccine.svg',
       routeLink: '/dashboard/vacinas',
       label: 'Vacinas',
     },
     {
-      iconUrl: 'assets/icons/dashboard/vaccinations.svg',
+      iconUrl: 'assets/icons/sidenav/vaccination.svg',
       label: 'Vacinações',
       routeLink: '/dashboard/vacinacoes'
     }
@@ -60,25 +60,27 @@ export class SidenavComponent extends BaseStoreComponent implements OnInit {
 
   submenus = signal([
     {
-      iconUrl: 'assets/icons/dashboard/visits.svg',
+      iconUrl: 'assets/icons/sidenav/consult.svg',
       routeLink: '/dashboard/consultas',
       label: 'Consultas',
     },
     {
-      iconUrl: 'assets/icons/dashboard/diagnoses.svg',
+      iconUrl: 'assets/icons/sidenav/diagnoses.svg',
       label: 'Diagnósticos',
       routeLink: '/dashboard/diagnosticos'
     },
     {
-      iconUrl: 'assets/icons/dashboard/reports.svg',
+      iconUrl: 'assets/icons/sidenav/reports.svg',
       label: 'Relatórios',
       openSubmenu: false,
       submenus: [
         {
+          iconUrl: 'assets/icons/sidenav/money.svg',
           routeLink: '/',
           label: 'Faturamento',
         },
         {
+          iconUrl: 'assets/icons/sidenav/consults.svg',
           routeLink: '/',
           label: 'Consultas',
         },
