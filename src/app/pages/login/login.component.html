@@ -11,10 +11,10 @@
       <form class="p-2 px-6" [formGroup]="form">
         <div class="relative bg-white hover:border-black  transition-all flex gap-3 shadow-md  px-3 py-1 rounded-xl outline-none border border-opacity-25 border-black">
           <img src="assets/icons/user-account.svg" class="w-[18px]">
-          <input formControlName="username" type="text" placeholder="Usuário" class="bg-white focus:placeholder:opacity-0 flex-1 outline-none border-none rounded-xl text-black py-2 placeholder:text-base placeholder:text-black placeholder:opacity-80">
+          <input formControlName="email" type="text" placeholder="Email" class="bg-white focus:placeholder:opacity-0 flex-1 outline-none border-none rounded-xl text-black py-2 placeholder:text-base placeholder:text-black placeholder:opacity-80">
         </div>
-        @if (form.get('username')?.invalid && form.get('username')!.dirty) {
-          <span class="text-xs text-red-700 mt-3 block">{{  getControlError('username') }}</span>
+        @if (form.get('email')?.invalid && form.get('email')!.dirty) {
+          <span class="text-xs text-red-700 mt-3 block">{{  getControlError('email') }}</span>
         }
         <div class="bg-white mt-6 flex gap-3 shadow-md transition-all hover:border-black  px-3 py-1 rounded-xl outline-none border border-opacity-25 border-black">
           <img src="assets/icons/password-account.svg" class="w-[18px]">
@@ -26,7 +26,7 @@
         <div class="flex flex-col">
           <p class="self-end text-sm mt-3 cursor-pointer hover:underline" (click)="openRecoverAccountModal.set(true)">Esqueceu sua senha?</p>
         </div>
-        <button type="button" routerLink="/dashboard" class=" bg-[#0D356A] font-medium text-white w-full mt-6 p-2 sm:p-3 rounded-xl hover:opacity-80 uppercase border hover:border-black hover:border">Entrar</button>
+        <button (click)="signIn()" type="button" class=" bg-[#0D356A] font-medium text-white w-full mt-6 p-2 sm:p-3 rounded-xl hover:opacity-80 uppercase border hover:border-black hover:border">Entrar</button>
         <span class="text-sm flex gap-2 mt-5 justify-center items-center">
           <p>Não tem uma conta?</p> <strong class="text-[#3d3d3d] hover:underline cursor-pointer font-medium" (click)="openAccountCreationModal.set(true)">Cadastre-se</strong>
         </span>
