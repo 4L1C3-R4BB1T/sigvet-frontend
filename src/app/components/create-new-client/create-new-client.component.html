@@ -1,7 +1,7 @@
 <div id="container" *ngIf="isOpen()" class="absolute left-0 top-0 bg-black bg-opacity-50 w-full h-full p-5 z-20">
   <form class="max-w-[700px] mx-auto bg-white p-5 py-7 rounded-md shadow-xl animate-slide-in" [formGroup]="form" (ngSubmit)="register()">
     <div class="flex justify-between items-center">
-      <h1 class="text-center text-2xl font-medium after:block after:w-10 after:h-0.5 after:bg-black after:bg-opacity-80">Cadastrar-se</h1>
+      <h1 class="text-center text-2xl font-medium after:block after:w-10 after:h-0.5 after:bg-black after:bg-opacity-80">Cadastre-se</h1>
       <span>
         <img src="assets/icons/dashboard/close.svg" class="w-6 cursor-pointer" (click)="close()">
       </span>
@@ -54,7 +54,7 @@
         }
       </span>
       <span class="flex flex-col gap-1">
-        <label for="" class="text-sm">Senha de Confirmação</label>
+        <label for="" class="text-sm">Confirmar Senha</label>
         <input formControlName="confirmationPassword" type="password" class=" border border-black border-opacity-30 rounded-md p-2 text-sm placeholder:text-black placeholder:opacity-75" placeholder="Senha">
         @if (this.form.controls.confirmationPassword.invalid && this.form.controls.confirmationPassword.dirty) {
           <span class="text-xs text-red-600">{{ getControlError('confirmationPassword') }}</span>
