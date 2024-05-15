@@ -11,7 +11,6 @@ export default class BaseFormComponent {
 
   protected getControlError(field: string) {
       let errors: ValidationErrors  = [];
-      console.log(field)
       if (field.includes('.')) {
         const fields = field.split('.');
         let control: AbstractControl | FormGroup | null = null;
@@ -24,17 +23,19 @@ export default class BaseFormComponent {
       } else {
         errors = this.form.get(field)?.errors!;
       }
-      
+
       if (Object.hasOwn(errors, 'required')) {
         return 'O campo é obrigatório';
       } else if (Object.hasOwn(errors, 'minlength')) {
         const minLength = errors['minlength'];
-        return `O campo deve ter no mínimo ${minLength.actualLength}/${minLength.requiredLength} caracteres`;
+        return `O campo deve ter no mínimo ${minLength.requiredLength} caracteres`;
       } else if (Object.hasOwn(errors, 'maxlength')) {
         const maxLength = errors['maxlength'];
         return `O campo deve ter no máximo ${maxLength.requiredLength} atual ${maxLength.actualLength}`;
       } else if (Object.hasOwn(errors, 'email')) {
         return 'O campo não é um e-mail válido';
+      } else if (Object.hasOwn(errors, 'passwordMatch')) {
+        return 'A senha de confirmação não bate com a senha';
       }
       return "";
     }

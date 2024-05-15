@@ -41,7 +41,7 @@
       </span>
       <span class="flex flex-col gap-1">
         <label for="" class="text-sm">Celular</label>
-        <input formControlName="phone" mask="(00) 00000-000" type="text" class="border border-black border-opacity-30 rounded-md p-2 text-sm placeholder:text-black placeholder:opacity-75" placeholder="Celular" >
+        <input formControlName="phone" mask="(00) 00000-0000" type="text" class="border border-black border-opacity-30 rounded-md p-2 text-sm placeholder:text-black placeholder:opacity-75" placeholder="Celular" >
         @if (this.form.controls.phone.invalid && this.form.controls.phone.dirty) {
           <span class="text-xs text-red-600">{{ getControlError('phone') }}</span>
         }

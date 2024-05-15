@@ -8,6 +8,8 @@ import { City } from '../../models/city';
 import CityService from '../../services/city.service';
 import { CustomValidators } from '../../validators/custom-validators';
 import BaseFormComponent from '../../base/base-form.component';
+import { AccountService } from '../../services/account.service';
+import { CreateUser } from '../../models/create-user';
 
 @Component({
   selector: 'app-create-new-client',
@@ -24,6 +26,7 @@ export class CreateNewClientComponent extends BaseFormComponent implements OnIni
 
   #formBuilder = inject(FormBuilder);
   #cityService = inject(CityService);
+  #accountService = inject(AccountService);
 
   override form = this.#formBuilder.group({
     name: ['', [Validators.maxLength(100), Validators.minLength(3), Validators.required]],
@@ -34,11 +37,11 @@ export class CreateNewClientComponent extends BaseFormComponent implements OnIni
     password: ['', [Validators.required]],
     confirmationPassword: ['', [Validators.required]],
     address: this.#formBuilder.group({
-      street: ['', [Validators.maxLength(100), Validators.required]],
-      neighborhood: ['', [Validators.maxLength(100), Validators.required]],
-      zipCode: ['', [Validators.maxLength(100), Validators.required]],
-      number: ['', [Validators.maxLength(100), Validators.required]],
-      cityId: ['', [Validators.required]],
+      street: ['', [Validators.maxLength(100)]],
+      neighborhood: ['', [Validators.maxLength(100)]],
+      zipCode: ['', [Validators.maxLength(100)]],
+      number: ['', [Validators.maxLength(100)]],
+      cityId: [''],
     }),
   });
 
@@ -54,7 +57,36 @@ export class CreateNewClientComponent extends BaseFormComponent implements OnIni
 
   public ngOnInit(): void {
     this.findAllCities();
-    this.form.controls.password.addValidators(CustomValidators.passwordMatch('confirmationPassword', this.form));
+    this.form.controls.confirmationPassword.addValidators(CustomValidators.passwordMatch('password', this.form));
+  }
+
+  public checkFormAddressControls() {
+    const address = this.form.controls.address;
+    let hasAnyFieldWithValue = false;
+
+    for (const controlName in address.controls) {
+      const control = address.get(controlName)!;
+      if (control.value !== '') {
+        hasAnyFieldWithValue = true;
+        break;
+      }
+    }
+
+    if (hasAnyFieldWithValue) {
+      for (const controlName in address.controls) {
+        const control = address.get(controlName)!;
+        control.addValidators(Validators.required);
+        control.updateValueAndValidity();
+      }
+    } else {
+      for (const controlName in address.controls) {
+        const control = address.get(controlName)!;
+        control.removeValidators(Validators.required);
+        control.updateValueAndValidity();
+      }
+    }
+
+    this.checkForm();
   }
 
   public async findAllCities() {
@@ -68,7 +100,15 @@ export class CreateNewClientComponent extends BaseFormComponent implements OnIni
   }
 
   public register() {
-    this.checkForm();
+    this.checkFormAddressControls();
+    if (this.form.invalid) return;
+    const address = this.form.controls.address;
+    let payload = { ...this.form.value };
+    if (address.controls.cityId.value === '') {
+      delete payload.address;
+    }
+    this.#accountService.create(payload as CreateUser);
+    this.close();
   }
 
 }

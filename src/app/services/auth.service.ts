@@ -1,15 +1,13 @@
-import { lastValueFrom } from 'rxjs';
-import { HttpClient } from '@angular/common/http';
 import { Injectable, inject } from '@angular/core';
-import { User } from '../models/user';
-import { environment } from '../../environments/environment';
-import BaseService from '../base/base.service';
-import { JwtHelperService } from '@auth0/angular-jwt';
-import { ToastrService } from 'ngx-toastr';
 import { Router } from '@angular/router';
+import { JwtHelperService } from '@auth0/angular-jwt';
 import { Store } from '@ngrx/store';
+import { lastValueFrom } from 'rxjs';
+import BaseService from '../base/base.service';
+import { User } from '../models/user';
 import { AppState } from '../store';
-import { UserActions, UserInfo, selectUserInfo } from '../store/reducers/user.reducer';
+import { UserActions, UserInfo } from '../store/reducers/user.reducer';
+import { APIResponseError } from '../models/api-response-error';
 
 const STORAGE_AUTH_KEY = 'sigvet_token';
 
@@ -17,12 +15,6 @@ interface TokenResponse {
   token: string;
 }
 
-export interface APIResponseError {
-  title: string;
-  statusCode: number;
-  success: boolean;
-  result: string | string[] | null;
-}
 
 @Injectable({
   providedIn: 'root'
@@ -30,7 +22,6 @@ export interface APIResponseError {
 export class AuthService extends BaseService {
 
   #jwtHelperService = inject(JwtHelperService);
-  #toastrService = inject(ToastrService);
   #router = inject(Router);
   #store = inject<Store<AppState>>(Store);
 
@@ -48,7 +39,8 @@ export class AuthService extends BaseService {
     try {
       const response = (await lastValueFrom(this.http.post(this.getEndpointV1('account/token'), user))) as { result: TokenResponse };
       this.setToken(response.result);
-      this.#toastrService.success('Login efetuado.');
+      await this.loadingUserInfo();
+      this.toastrService.success('Login efetuado.');
       this.#router.navigateByUrl('/dashboard');
     } catch (ex: any) {
       if (!ex.error) return;
@@ -56,10 +48,10 @@ export class AuthService extends BaseService {
       if (error.result instanceof Array) {
         const result = error.result as string[];
         for (const messageError of result) {
-          this.#toastrService.warning(messageError);
+          this.toastrService.warning(messageError);
         }
       } else if (typeof error.result === 'string') {
-        this.#toastrService.warning(error.result)
+        this.toastrService.warning(error.result)
       }
 
     }
@@ -69,14 +61,13 @@ export class AuthService extends BaseService {
     return this.#jwtHelperService.decodeToken(obj.token)?.user_id ?? null;
   }
 
-  private getCurrentUser(id: number) {
-    return lastValueFrom(this.http.get<UserInfo>(this.getEndpointV1(`account/${id}`)));
+  private async getCurrentUser(id: number) {
+    return ((await lastValueFrom(this.http.get<UserInfo>(this.getEndpointV1(`account/${id}`)))) as any)?.result;
   }
 
   public async loadingUserInfo() {
     if (!this.isAuthenticated) return;
     const userId = this.extractUserId(this.getToken()!);
-    console.log(userId)
     const userInfo = await this.getCurrentUser(userId!);
     this.#store.dispatch(UserActions.setUserInfo(userInfo));
   }
@@ -84,7 +75,7 @@ export class AuthService extends BaseService {
   public signOut() {
     this.setToken(null!);
     this.#router.navigateByUrl('/login');
-    this.#toastrService.warning('Saiu')
+    this.toastrService.warning('Saiu')
   }
 
   get isAuthenticated() {

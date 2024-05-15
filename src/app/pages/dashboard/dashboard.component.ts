@@ -5,6 +5,8 @@ import { HeaderComponent } from '../../components/header/header.component';
 import { SidenavComponent } from '../../components/sidenav/sidenav.component';
 import { SharedModule } from '../../shared/shared.module';
 import { AuthService } from '../../services/auth.service';
+import BaseStoreComponent from '../../base/base-store.component';
+import { selectUserInfo } from '../../store/reducers/user.reducer';
 
 @Component({
   selector: 'app-dashboard',
@@ -13,7 +15,7 @@ import { AuthService } from '../../services/auth.service';
   templateUrl: './dashboard.component.html',
   styleUrl: './dashboard.component.scss'
 })
-export class DashboardComponent implements OnInit {
+export class DashboardComponent extends BaseStoreComponent implements OnInit {
 
   isLoading = signal(false);
   #authService = inject(AuthService);
@@ -22,6 +24,7 @@ export class DashboardComponent implements OnInit {
     this.isLoading.set(true);
     setTimeout(() => this.isLoading.set(false), 300);
     this.#authService.loadingUserInfo();
+    this.store.select(selectUserInfo).subscribe(console.log)
   }
 
 }
