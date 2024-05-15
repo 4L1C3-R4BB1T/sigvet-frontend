@@ -34,11 +34,11 @@ export class CreateNewClientComponent extends BaseFormComponent implements OnIni
     password: ['', [Validators.required]],
     confirmationPassword: ['', [Validators.required]],
     address: this.#formBuilder.group({
-      street: [''],
-      neighborhood: [''],
-      zipCode: [''],
-      number: [''],
-      cityId: [''],
+      street: ['', [Validators.maxLength(100), Validators.required]],
+      neighborhood: ['', [Validators.maxLength(100), Validators.required]],
+      zipCode: ['', [Validators.maxLength(100), Validators.required]],
+      number: ['', [Validators.maxLength(100), Validators.required]],
+      cityId: ['', [Validators.required]],
     }),
   });
 
@@ -65,6 +65,10 @@ export class CreateNewClientComponent extends BaseFormComponent implements OnIni
   public close() {
     this.isOpen.set(false);
     this.closedEvent.emit(true);
+  }
+
+  public register() {
+    this.checkForm();
   }
 
 }

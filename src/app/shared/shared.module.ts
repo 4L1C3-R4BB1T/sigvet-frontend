@@ -1,13 +1,10 @@
-import { CommonModule } from '@angular/common';
 import { NgModule } from '@angular/core';
 import { ChartModule } from 'primeng/chart';
 import { ProgressSpinnerModule } from 'primeng/progressspinner';
+import { MatDialogModule } from '@angular/material/dialog';
 
 @NgModule({
   declarations: [],
-  imports: [
-    CommonModule
-  ],
-  exports: [ChartModule, ProgressSpinnerModule]
+  exports: [ChartModule, ProgressSpinnerModule, MatDialogModule]
 })
 export class SharedModule { }

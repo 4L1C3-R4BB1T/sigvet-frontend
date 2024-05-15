@@ -22,16 +22,24 @@ export default class LoginComponent extends BaseFormComponent {
   openRecoverAccountModal = signal(false);
 
   override form = new FormGroup({
-    email: new FormControl('', [Validators.required]),
+    email: new FormControl('', [Validators.required, Validators.email]),
     password: new FormControl('', [Validators.required]),
   });
 
   public signIn() {
     if (!this.form.valid) {
-      // Exibir algo
+      this.validateControls('email', 'e-mail');
+      this.validateControls('password', 'senha');
       return;
     }
-    console.log(this.form.value)
+
     this.#authService.authenticate(this.form.value as User);
+  }
+
+  private validateControls(controlName: keyof typeof this.form.controls, humanName: string) {
+    const control = this.form.controls[controlName];
+    control.hasError('email') && this.toastrService.warning(`O campo ${humanName} não é um e-mail válido.`);
+    control.hasError('required') && this.toastrService.warning(`O campo ${humanName} é obrigatório.`)
+
   }
 }

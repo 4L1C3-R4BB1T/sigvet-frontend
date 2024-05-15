@@ -2,7 +2,7 @@
 @use 'primeng/resources/themes/lara-light-blue/theme.css';
 @use 'primeng/resources/primeng.min.css';
 @use 'bootstrap-icons/font/bootstrap-icons.min.css';
-
+@use 'ngx-toastr/toastr.css';
 
 html,
 body {
@@ -17,3 +17,6 @@ body {
 @tailwind base;
 @tailwind utilities;
 @tailwind components;
+
+html, body { height: 100%; }
+body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }

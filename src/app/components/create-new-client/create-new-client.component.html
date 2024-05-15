@@ -1,5 +1,5 @@
 <div id="container" *ngIf="isOpen()" class="absolute left-0 top-0 bg-black bg-opacity-50 w-full h-full p-5 z-20">
-  <form class="max-w-[700px] mx-auto bg-white p-5 py-7 rounded-md shadow-xl animate-slide-in" [formGroup]="form">
+  <form class="max-w-[700px] mx-auto bg-white p-5 py-7 rounded-md shadow-xl animate-slide-in" [formGroup]="form" (ngSubmit)="register()">
     <div class="flex justify-between items-center">
       <h1 class="text-center text-2xl font-medium after:block after:w-10 after:h-0.5 after:bg-black after:bg-opacity-80">Cadastrar-se</h1>
       <span>
@@ -14,30 +14,51 @@
       <span class="flex flex-col gap-1">
         <label for="" class="text-sm">Nome Completo</label>
         <input formControlName="name" type="text" class="border border-black border-opacity-30 rounded-md p-2 text-sm placeholder:text-black placeholder:opacity-75" placeholder="Nome">
+        @if (this.form.controls.name.invalid && this.form.controls.name.dirty) {
+          <span class="text-xs text-red-600">{{ getControlError('name') }}</span>
+        }
       </span>
       <span class="flex flex-col gap-1">
         <label for="" class="text-sm">Usuário</label>
         <input formControlName="username" type="text" class="border border-black border-opacity-30 rounded-md p-2 text-sm placeholder:text-black placeholder:opacity-75" placeholder="Usuário">
+        @if (this.form.controls.username.invalid && this.form.controls.username.dirty) {
+          <span class="text-xs text-red-600">{{ getControlError('username') }}</span>
+        }
       </span>
       <span class="flex flex-col gap-1 col-span-2">
         <label for="" class="text-sm">E-mail</label>
         <input formControlName="email" type="email" class="border border-black border-opacity-30 rounded-md p-2 text-sm placeholder:text-black placeholder:opacity-75" placeholder="Email">
+        @if (this.form.controls.email.invalid && this.form.controls.email.dirty) {
+          <span class="text-xs text-red-600">{{ getControlError('email') }}</span>
+        }
       </span>
       <span class="flex flex-col gap-1">
         <label for="" class="text-sm">Documento</label>
         <input formControlName="document" mask="000.000.000-00" type="text" class="border border-black border-opacity-30 rounded-md p-2 text-sm placeholder:text-black placeholder:opacity-75" placeholder="Documento">
+        @if (this.form.controls.document.invalid && this.form.controls.document.dirty) {
+          <span class="text-xs text-red-600">{{ getControlError('document') }}</span>
+        }
       </span>
       <span class="flex flex-col gap-1">
         <label for="" class="text-sm">Celular</label>
         <input formControlName="phone" mask="(00) 00000-000" type="text" class="border border-black border-opacity-30 rounded-md p-2 text-sm placeholder:text-black placeholder:opacity-75" placeholder="Celular" >
+        @if (this.form.controls.phone.invalid && this.form.controls.phone.dirty) {
+          <span class="text-xs text-red-600">{{ getControlError('phone') }}</span>
+        }
       </span>
       <span class="flex flex-col gap-1">
         <label for="" class="text-sm">Senha</label>
         <input formControlName="password" type="password" class="border border-black border-opacity-30 rounded-md p-2 text-sm placeholder:text-black placeholder:opacity-75" placeholder="Senha" >
+        @if (this.form.controls.password.invalid && this.form.controls.password.dirty) {
+          <span class="text-xs text-red-600">{{ getControlError('password') }}</span>
+        }
       </span>
       <span class="flex flex-col gap-1">
         <label for="" class="text-sm">Senha de Confirmação</label>
         <input formControlName="confirmationPassword" type="password" class=" border border-black border-opacity-30 rounded-md p-2 text-sm placeholder:text-black placeholder:opacity-75" placeholder="Senha">
+        @if (this.form.controls.confirmationPassword.invalid && this.form.controls.confirmationPassword.dirty) {
+          <span class="text-xs text-red-600">{{ getControlError('confirmationPassword') }}</span>
+        }
       </span>
     </div>
     <div *ngIf="!isDetails()" formGroupName="address" class="grid grid-cols-2 gap-4 mt-3 fade-in">
@@ -49,22 +70,37 @@
             <option [ngValue]="city.id">{{  city.name + " - " + city.state.name }}</option>
           }
         </select>
+        @if (this.form.controls.address.controls.cityId.invalid && this.form.controls.address.controls.cityId.dirty) {
+          <span class="text-xs text-red-600">{{ getControlError('address.cityId') }}</span>
+        }
       </span>
       <span class="flex flex-col gap-1">
         <label for="" class="text-sm">Rua</label>
         <input formControlName="street" type="text" class="border border-black border-opacity-30 rounded-md p-2 text-sm placeholder:text-black placeholder:opacity-75" placeholder="Rua" >
+        @if (this.form.controls.address.controls.street.invalid && this.form.controls.address.controls.street.dirty) {
+          <span class="text-xs text-red-600">{{ getControlError('address.street') }}</span>
+        }
       </span>
       <span class="flex flex-col gap-1">
         <label for="" class="text-sm">Bairro</label>
         <input formControlName="neighborhood" type="text" class="border border-black border-opacity-30 rounded-md p-2 text-sm placeholder:text-black placeholder:opacity-75" placeholder="Bairro" >
+        @if (this.form.controls.address.controls.neighborhood.invalid && this.form.controls.address.controls.neighborhood.dirty) {
+          <span class="text-xs text-red-600">{{ getControlError('address.neighborhood') }}</span>
+        }
       </span>
       <span class="flex flex-col gap-1">
         <label for="" class="text-sm">Código Postal</label>
         <input formControlName="zipCode" mask="00000-000" type="text" class="border border-black border-opacity-30 rounded-md p-2 text-sm placeholder:text-black placeholder:opacity-75" placeholder="Código Postal" >
+        @if (this.form.controls.address.controls.zipCode.invalid && this.form.controls.address.controls.zipCode.dirty) {
+          <span class="text-xs text-red-600">{{ getControlError('address.zipCode') }}</span>
+        }
       </span>
       <span class="flex flex-col gap-1">
         <label for="" class="text-sm">Número</label>
         <input formControlName="number" type="text" class="border border-black border-opacity-30 rounded-md p-2 text-sm placeholder:text-black placeholder:opacity-75" placeholder="Número" >
+        @if (this.form.controls.address.controls.number.invalid && this.form.controls.address.controls.number.dirty) {
+          <span class="text-xs text-red-600">{{ getControlError('address.number') }}</span>
+        }
       </span>
     </div>
 

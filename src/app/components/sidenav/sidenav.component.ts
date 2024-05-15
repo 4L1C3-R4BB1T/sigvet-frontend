@@ -1,11 +1,12 @@
 import { NgIf } from '@angular/common';
-import { Component, OnInit, signal } from '@angular/core';
+import { Component, OnInit, inject, signal } from '@angular/core';
 import { RouterLink, RouterLinkActive } from '@angular/router';
 
 import { toSignal } from '@angular/core/rxjs-interop';
 import BaseComponent from '../../base/base-store.component';
 import { MenuMobileComponent } from '../menu-mobile/menu-mobile.component';
 import BaseStoreComponent from '../../base/base-store.component';
+import { AuthService } from '../../services/auth.service';
 
 interface SidenavMenu {
   iconUrl: string;
@@ -24,6 +25,8 @@ interface SidenavMenu {
   styleUrl: './sidenav.component.scss'
 })
 export class SidenavComponent extends BaseStoreComponent implements OnInit {
+
+  #authService = inject(AuthService);
 
   menus: SidenavMenu[] = [
     {
@@ -110,6 +113,10 @@ export class SidenavComponent extends BaseStoreComponent implements OnInit {
       }
       return obj;
     }))
+  }
+
+  public signOut() {
+    this.#authService.signOut();
   }
 
 }
