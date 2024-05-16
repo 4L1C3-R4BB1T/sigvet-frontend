@@ -1,12 +1,12 @@
 import { NgIf } from '@angular/common';
-import { Component, OnInit, inject, signal } from '@angular/core';
+import { Component, inject, signal } from '@angular/core';
 import { RouterLink, RouterLinkActive } from '@angular/router';
 
-import { toSignal } from '@angular/core/rxjs-interop';
-import BaseComponent from '../../base/base-store.component';
-import { MenuMobileComponent } from '../menu-mobile/menu-mobile.component';
+import { MatDialog } from '@angular/material/dialog';
 import BaseStoreComponent from '../../base/base-store.component';
-import { AuthService } from '../../services/auth.service';
+import { DialogExitComponent } from '../../shared/components/dialog/dialog-exit.component';
+import { selectUserPhoto } from '../../store/reducers/user.reducer';
+import { MenuMobileComponent } from '../menu-mobile/menu-mobile.component';
 
 interface SidenavMenu {
   iconUrl: string;
@@ -24,9 +24,9 @@ interface SidenavMenu {
   templateUrl: './sidenav.component.html',
   styleUrl: './sidenav.component.scss'
 })
-export class SidenavComponent extends BaseStoreComponent implements OnInit {
+export class SidenavComponent extends BaseStoreComponent {
 
-  #authService = inject(AuthService);
+  dialog = inject<MatDialog>(MatDialog);
 
   menus: SidenavMenu[] = [
     {
@@ -94,12 +94,15 @@ export class SidenavComponent extends BaseStoreComponent implements OnInit {
 
   isSeeMore = signal(false);
 
-  showMenuSidenav = toSignal(this.store.select(state => state.menuVisibilityReducer.menuSidenav))
+  showMenuSidenav = this.store.selectSignal(state => state.menuVisibilityReducer.menuSidenav);
 
-  public ngOnInit(): void {
+  userPhoto = this.store.selectSignal(selectUserPhoto);
 
+  public openExitDialog() {
+    this.dialog.open(DialogExitComponent, {
+      width: '400px',
+    });
   }
-
   public seeMore() {
     this.isSeeMore.set(!this.isSeeMore());
   }
@@ -113,10 +116,6 @@ export class SidenavComponent extends BaseStoreComponent implements OnInit {
       }
       return obj;
     }))
-  }
-
-  public signOut() {
-    this.#authService.signOut();
   }
 
 }

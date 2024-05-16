@@ -1,12 +1,12 @@
 import { Component, OnInit, inject, signal } from '@angular/core';
 import { RouterOutlet } from '@angular/router';
 
+import BaseStoreComponent from '../../base/base-store.component';
 import { HeaderComponent } from '../../components/header/header.component';
 import { SidenavComponent } from '../../components/sidenav/sidenav.component';
 import { SharedModule } from '../../shared/shared.module';
 import { AuthService } from '../../services/auth.service';
-import BaseStoreComponent from '../../base/base-store.component';
-import { selectUserInfo } from '../../store/reducers/user.reducer';
+import { AccountService } from '../../services/account.service';
 
 @Component({
   selector: 'app-dashboard',
@@ -19,12 +19,12 @@ export class DashboardComponent extends BaseStoreComponent implements OnInit {
 
   isLoading = signal(false);
   #authService = inject(AuthService);
+  #accountService = inject(AccountService);
 
-  public ngOnInit(): void {
+  public async ngOnInit() {
     this.isLoading.set(true);
     setTimeout(() => this.isLoading.set(false), 300);
-    this.#authService.loadingUserInfo();
-    this.store.select(selectUserInfo).subscribe(console.log)
+    await this.#authService.loadingUserInfo(this.#accountService);
   }
 
 }

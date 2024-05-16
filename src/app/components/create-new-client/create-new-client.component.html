@@ -1,66 +1,126 @@
 <div id="container" *ngIf="isOpen()" class="absolute left-0 top-0 bg-black bg-opacity-50 w-full h-full p-5 z-20">
   <form class="max-w-[700px] mx-auto bg-white p-5 py-7 rounded-md shadow-xl animate-slide-in" [formGroup]="form" (ngSubmit)="register()">
     <div class="flex justify-between items-center">
-      <h1 class="text-center text-2xl font-medium after:block after:w-10 after:h-0.5 after:bg-black after:bg-opacity-80">Cadastre-se</h1>
-      <span>
-        <img src="assets/icons/dashboard/close.svg" class="w-6 cursor-pointer" (click)="close()">
-      </span>
+      <h1 class="text-center text-2xl">Cadastre-se</h1>
+      <button mat-icon-button (click)="close()">
+        <img src="assets/icons/dashboard/close.svg" class="w-6 cursor-pointer">
+      </button>
     </div>
-    <ul class="flex gap-3 text-sm mt-5 relative">
-      <li class="cursor-pointer px-2.5 pb-2 block hover:text-blue-600 hover:font-normal transition-all" [class.active]="isDetails()" (click)="isDetails.set(true)">Detalhes</li>
-      <li class="cursor-pointer pb-2 block hover:text-blue-600 hover:font-normal transition-all" [class.active]="!isDetails()" (click)="isDetails.set(false)">Endereço</li>
-    </ul>
-    <div *ngIf="isDetails()" class="grid grid-cols-2 gap-4 mt-5 fade-in">
-      <span class="flex flex-col gap-1">
-        <label for="" class="text-sm">Nome Completo</label>
-        <input formControlName="name" type="text" class="border border-black border-opacity-30 rounded-md p-2 text-sm placeholder:text-black placeholder:opacity-75" placeholder="Nome">
-        @if (this.form.controls.name.invalid && this.form.controls.name.dirty) {
-          <span class="text-xs text-red-600">{{ getControlError('name') }}</span>
-        }
-      </span>
-      <span class="flex flex-col gap-1">
-        <label for="" class="text-sm">Usuário</label>
-        <input formControlName="username" type="text" class="border border-black border-opacity-30 rounded-md p-2 text-sm placeholder:text-black placeholder:opacity-75" placeholder="Usuário">
-        @if (this.form.controls.username.invalid && this.form.controls.username.dirty) {
-          <span class="text-xs text-red-600">{{ getControlError('username') }}</span>
-        }
-      </span>
-      <span class="flex flex-col gap-1 col-span-2">
-        <label for="" class="text-sm">E-mail</label>
-        <input formControlName="email" type="email" class="border border-black border-opacity-30 rounded-md p-2 text-sm placeholder:text-black placeholder:opacity-75" placeholder="Email">
-        @if (this.form.controls.email.invalid && this.form.controls.email.dirty) {
-          <span class="text-xs text-red-600">{{ getControlError('email') }}</span>
-        }
-      </span>
-      <span class="flex flex-col gap-1">
-        <label for="" class="text-sm">Documento</label>
-        <input formControlName="document" mask="000.000.000-00" type="text" class="border border-black border-opacity-30 rounded-md p-2 text-sm placeholder:text-black placeholder:opacity-75" placeholder="Documento">
-        @if (this.form.controls.document.invalid && this.form.controls.document.dirty) {
-          <span class="text-xs text-red-600">{{ getControlError('document') }}</span>
-        }
-      </span>
-      <span class="flex flex-col gap-1">
-        <label for="" class="text-sm">Celular</label>
-        <input formControlName="phone" mask="(00) 00000-0000" type="text" class="border border-black border-opacity-30 rounded-md p-2 text-sm placeholder:text-black placeholder:opacity-75" placeholder="Celular" >
-        @if (this.form.controls.phone.invalid && this.form.controls.phone.dirty) {
-          <span class="text-xs text-red-600">{{ getControlError('phone') }}</span>
-        }
-      </span>
-      <span class="flex flex-col gap-1">
-        <label for="" class="text-sm">Senha</label>
-        <input formControlName="password" type="password" class="border border-black border-opacity-30 rounded-md p-2 text-sm placeholder:text-black placeholder:opacity-75" placeholder="Senha" >
-        @if (this.form.controls.password.invalid && this.form.controls.password.dirty) {
-          <span class="text-xs text-red-600">{{ getControlError('password') }}</span>
-        }
-      </span>
-      <span class="flex flex-col gap-1">
-        <label for="" class="text-sm">Confirmar Senha</label>
-        <input formControlName="confirmationPassword" type="password" class=" border border-black border-opacity-30 rounded-md p-2 text-sm placeholder:text-black placeholder:opacity-75" placeholder="Senha">
-        @if (this.form.controls.confirmationPassword.invalid && this.form.controls.confirmationPassword.dirty) {
-          <span class="text-xs text-red-600">{{ getControlError('confirmationPassword') }}</span>
-        }
-      </span>
-    </div>
+
+    <mat-tab-group [selectedIndex]="selected.value"
+                   (selectedIndexChange)="selected.setValue($event)">
+
+      <mat-tab label="Informações">
+       <div class="mt-5 grid grid-cols-2 gap-3">
+        <mat-form-field class="w-full" appearance="outline">
+          <mat-label>Nome Completo</mat-label>
+          <input type="name" matInput formControlName="name" placeholder="Nome Completo">
+          @if (getControlError('name')) {
+            <mat-error>{{  getControlError('name') }}</mat-error>
+          }
+        </mat-form-field>
+
+        <mat-form-field class="w-full" appearance="outline">
+          <mat-label>Apelido</mat-label>
+          <input type="text" matInput formControlName="username" placeholder="Apelido">
+          @if (getControlError('username')) {
+            <mat-error>{{  getControlError('username') }}</mat-error>
+          }
+        </mat-form-field>
+
+        <mat-form-field class="w-full col-span-2" appearance="outline">
+          <mat-label>E-mail</mat-label>
+          <input type="email" matInput formControlName="email" placeholder="E-mail">
+          @if (getControlError('email')) {
+            <mat-error>{{  getControlError('email') }}</mat-error>
+          }
+        </mat-form-field>
+
+        <mat-form-field class="w-full" appearance="outline">
+          <mat-label>CPF</mat-label>
+          <input type="text" mask="000.000.000-00" matInput formControlName="document" placeholder="CPF">
+          @if (getControlError('document')) {
+            <mat-error>{{  getControlError('document') }}</mat-error>
+          }
+        </mat-form-field>
+
+        <mat-form-field class="w-full" appearance="outline">
+          <mat-label>Celular</mat-label>
+          <input type="text" mask="(00) 00000-0000" matInput formControlName="phone" placeholder="Celular">
+          @if (getControlError('phone')) {
+            <mat-error>{{  getControlError('phone') }}</mat-error>
+          }
+        </mat-form-field>
+
+        <mat-form-field class="w-full" appearance="outline">
+          <mat-label>Senha</mat-label>
+          <input type="password" matInput formControlName="password" placeholder="Senha">
+          @if (getControlError('password')) {
+            <mat-error>{{  getControlError('password') }}</mat-error>
+          }
+        </mat-form-field>
+
+        <mat-form-field class="w-full" appearance="outline">
+          <mat-label>Senha de Confirmação</mat-label>
+          <input type="password" matInput formControlName="confirmationPassword" placeholder="Senha de Confirmação">
+          @if (getControlError('confirmationPassword')) {
+            <mat-error>{{  getControlError('confirmationPassword') }}</mat-error>
+          }
+        </mat-form-field>
+       </div>
+      </mat-tab>
+
+      <mat-tab label="Endereço">
+        <div class="mt-5 grid grid-cols-2 gap-3" formGroupName="address">
+          <mat-form-field appearance="outline" class="w-full col-span-2">
+            <mat-label>Cidades</mat-label>
+            <mat-select formControlName="cityId">
+              @for (city of cities(); track city.id) {
+                <mat-option [value]="city.id">{{  city.name + " - " + city.state.name }}</mat-option>
+              }
+            </mat-select>
+            @if (getControlError('cityId')) {
+              <mat-error>{{  getControlError('cityId') }}</mat-error>
+            }
+          </mat-form-field>
+
+          <mat-form-field class="w-full" appearance="outline">
+            <mat-label>Rua</mat-label>
+            <input type="text" matInput formControlName="street" placeholder="Rua">
+            @if (getControlError('street')) {
+              <mat-error>{{  getControlError('street') }}</mat-error>
+            }
+          </mat-form-field>
+
+          <mat-form-field class="w-full" appearance="outline">
+            <mat-label>Bairro</mat-label>
+            <input type="text" matInput formControlName="neighborhood" placeholder="Bairro">
+            @if (getControlError('neighborhood')) {
+              <mat-error>{{  getControlError('neighborhood') }}</mat-error>
+            }
+          </mat-form-field>
+
+          <mat-form-field class="w-full" appearance="outline">
+            <mat-label>CEP</mat-label>
+            <input type="text" matInput mask="00000-000" formControlName="zipCode" placeholder="CEP">
+            @if (getControlError('zipCode')) {
+              <mat-error>{{  getControlError('zipCode') }}</mat-error>
+            }
+          </mat-form-field>
+
+          <mat-form-field class="w-full" appearance="outline">
+            <mat-label>Número</mat-label>
+            <input type="text" matInput mask="00000-000" formControlName="number" placeholder="Número">
+            @if (getControlError('number')) {
+              <mat-error>{{  getControlError('number') }}</mat-error>
+            }
+          </mat-form-field>
+        </div>
+      </mat-tab>
+
+    </mat-tab-group>
+
+
     <div *ngIf="!isDetails()" formGroupName="address" class="grid grid-cols-2 gap-4 mt-3 fade-in">
       <span class="flex flex-col gap-1 col-span-2">
         <label for="" class="text-sm">Cidade</label>
@@ -104,7 +164,6 @@
       </span>
     </div>
 
-
-    <button class="bg-[#0D356A] w-full font-medium uppercase text-white mt-8 p-2 py-3 rounded-md text-sm hover:opacity-70">Cadastrar</button>
+    <button mat-raised-button color="primary" class="!h-12 w-full mt-4">Cadastrar</button>
   </form>
 </div>

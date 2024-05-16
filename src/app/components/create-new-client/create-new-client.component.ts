@@ -1,7 +1,7 @@
 import { Component, EventEmitter, Input, OnInit, Output, inject, signal } from '@angular/core';
 
 import { NgIf } from '@angular/common';
-import { FormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
+import { FormBuilder, FormControl, ReactiveFormsModule, Validators } from '@angular/forms';
 import { NgxMaskDirective, provideNgxMask } from 'ngx-mask';
 import { lastValueFrom } from 'rxjs';
 import { City } from '../../models/city';
@@ -10,16 +10,23 @@ import { CustomValidators } from '../../validators/custom-validators';
 import BaseFormComponent from '../../base/base-form.component';
 import { AccountService } from '../../services/account.service';
 import { CreateUser } from '../../models/create-user';
+import {MatTabsModule} from '@angular/material/tabs';
+import {MatButtonModule} from '@angular/material/button';
+import {MatInputModule} from '@angular/material/input';
+import {MatFormFieldModule} from '@angular/material/form-field';
+import {MatSelectModule} from '@angular/material/select';
 
 @Component({
   selector: 'app-create-new-client',
   standalone: true,
-  imports: [NgxMaskDirective, NgIf, ReactiveFormsModule],
+  imports: [NgxMaskDirective, NgIf, MatSelectModule, ReactiveFormsModule, MatTabsModule, MatButtonModule, MatFormFieldModule, MatInputModule],
   templateUrl: './create-new-client.component.html',
   styleUrl: './create-new-client.component.scss',
   providers: [provideNgxMask(), CityService],
 })
 export class CreateNewClientComponent extends BaseFormComponent implements OnInit {
+  tabs = ['Pessoais', 'Endereço'];
+  selected = new FormControl(0);
 
   isOpen = signal(false)
   isDetails = signal(true);

@@ -21,7 +21,7 @@ export default class BaseFormComponent {
 
         errors = control?.errors ?? [];
       } else {
-        errors = this.form.get(field)?.errors!;
+        errors = this.form.get(field)?.errors ?? [];
       }
 
       if (Object.hasOwn(errors, 'required')) {

@@ -14,4 +14,5 @@ export class ClientListComponent {
 
   elements = Array.from({ length: 20 });
 
+
 }

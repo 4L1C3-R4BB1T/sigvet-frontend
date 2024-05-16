@@ -29,6 +29,6 @@ export const appConfig: ApplicationConfig = {
       [MENU_VISIBILITY_FEATURE_KEY]: menuVisibilityReducer,
       [USER_FEATURE_KEY]: userReducer,
     }),
-    provideAnimationsAsync(),
+    provideAnimationsAsync(), provideAnimationsAsync(), provideAnimationsAsync(),
   ],
 };

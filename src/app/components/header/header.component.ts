@@ -5,11 +5,14 @@ import { filter, map } from 'rxjs';
 import { MenuMobileComponent } from '../menu-mobile/menu-mobile.component';
 import BaseStoreComponent from '../../base/base-store.component';
 import { ProfileActions } from '../../store/reducers/menu-visibility.reducer';
+import { toSignal } from '@angular/core/rxjs-interop';
+import { selectUserInfo, selectUserPhoto } from '../../store/reducers/user.reducer';
+import { UserRolePipe } from '../../pipes/user-role.pipe';
 
 @Component({
   selector: 'app-header',
   standalone: true,
-  imports: [MenuMobileComponent],
+  imports: [MenuMobileComponent, UserRolePipe],
   templateUrl: './header.component.html',
   styleUrl: './header.component.scss'
 })
@@ -19,6 +22,8 @@ export class HeaderComponent extends BaseStoreComponent implements OnInit {
   #router = inject(Router);
 
   currentTitle = signal('Home');
+  userInfo = this.store.selectSignal(selectUserInfo);
+  userPhoto = this.store.selectSignal(selectUserPhoto);
 
   public ngOnInit() {
     this.#router.events.pipe(

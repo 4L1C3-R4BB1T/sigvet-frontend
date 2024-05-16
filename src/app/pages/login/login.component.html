@@ -4,23 +4,32 @@
       <div class="flex flex-col items-center gap-1">
         <div class="flex items-center mb-1">
           <img src="assets/icons/squirrel.png" class="w-10 mr-3">
-          <h1 class="font-bold text-4xl after:block after:h-[3px] after:bg-[#1C3455] after:w-10 text-[#1C3455]">SIGVet</h1>
+          <h1 class="font-bold text-4xl after:block after:h-[3px] after:bg-[#1C3455] after:w-10 text-blue-950">SIGVet</h1>
         </div>
-        <p class="uppercase  text-xs font-mono opacity-85 text-center text-[#182c3b]">Sistema Integrado de Gestão</p>
+        <p class="uppercase  text-xs font-mono opacity-85 text-center text-blue-950">Sistema Integrado de Gestão</p>
       </div>
       <form class="p-2 px-6" [formGroup]="form" (ngSubmit)="signIn()">
-        <div class="relative bg-white hover:border-black  transition-all flex gap-3 shadow-md  px-3 py-1 rounded-xl outline-none border border-opacity-25 border-black">
-          <img src="assets/icons/mail.svg" class="w-[18px]">
-          <input formControlName="email" type="text" placeholder="Email" class="bg-white focus:placeholder:opacity-0 flex-1 outline-none border-none rounded-xl text-black py-2 placeholder:text-base placeholder:text-black placeholder:opacity-80">
-        </div>
-        <div class="bg-white mt-6 flex gap-3 shadow-md transition-all hover:border-black  px-3 py-1 rounded-xl outline-none border border-opacity-25 border-black">
-          <img src="assets/icons/password-account.svg" class="w-[18px]">
-          <input formControlName="password" type="password" placeholder="Senha" class="bg-white flex-1 focus:placeholder:opacity-0 outline-none border-none rounded-xl text-black py-2  placeholder:text-base placeholder:text-black placeholder:opacity-80">
-        </div>
+
+        <mat-form-field class="w-full" appearance="outline">
+          <mat-label>Email</mat-label>
+          <input type="email" matInput formControlName="email" placeholder="Email">
+          @if (getControlError('email')) {
+            <mat-error>{{  getControlError('email') }}</mat-error>
+          }
+        </mat-form-field>
+
+        <mat-form-field class="w-full mt-3" appearance="outline">
+          <mat-label>Senha</mat-label>
+          <input type="password" matInput formControlName="password" placeholder="Senha">
+          @if (getControlError('password')) {
+            <mat-error>{{  getControlError('password') }}</mat-error>
+          }
+        </mat-form-field>
+
         <div class="flex flex-col">
           <p class="self-end text-sm mt-3 cursor-pointer hover:underline" (click)="openRecoverAccountModal.set(true)">Esqueceu sua senha?</p>
         </div>
-        <button class=" bg-[#0D356A] font-medium text-white w-full mt-6 p-2 sm:p-3 rounded-xl hover:opacity-80 uppercase border hover:border-black hover:border">Entrar</button>
+        <button mat-raised-button color="primary" class="w-full !h-12 mt-3">Entrar</button>
         <span class="text-sm flex gap-2 mt-5 justify-center items-center">
           <p>Não tem uma conta?</p> <strong class="text-[#3d3d3d] hover:underline cursor-pointer font-medium" (click)="openAccountCreationModal.set(true)">Cadastre-se</strong>
         </span>
@@ -30,12 +39,7 @@
 </div>
 
 <div class="absolute top-0 h-full w-full -z-10 flex flex-col">
-  <div class="bg-[#183152fb] flex-1"></div>
-  <div class="bg-[#005792] bg-opacity-20 flex-1 relative">
-    <footer class="absolute bottom-0 left-1/2 -translate-x-1/2 py-5 text-xs text-white text-center bg-[#183152fb]  w-full">
-      <span class="opacity-85">Desenvolvido por: gabriel.livia{{ "@" }}gmail.com</span>
-    </footer>
-  </div>
+  <div class="bg-[#3F51B5] flex-1"></div>
 </div>
 
 @if (openAccountCreationModal()) {

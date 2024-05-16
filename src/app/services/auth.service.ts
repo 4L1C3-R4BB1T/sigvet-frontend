@@ -1,4 +1,4 @@
-import { Injectable, inject } from '@angular/core';
+import { Inject, Injectable, forwardRef, inject } from '@angular/core';
 import { Router } from '@angular/router';
 import { JwtHelperService } from '@auth0/angular-jwt';
 import { Store } from '@ngrx/store';
@@ -8,6 +8,8 @@ import { User } from '../models/user';
 import { AppState } from '../store';
 import { UserActions, UserInfo } from '../store/reducers/user.reducer';
 import { APIResponseError } from '../models/api-response-error';
+import { HttpHeaders } from '@angular/common/http';
+import { AccountService } from './account.service';
 
 const STORAGE_AUTH_KEY = 'sigvet_token';
 
@@ -35,15 +37,19 @@ export class AuthService extends BaseService {
     return JSON.parse(savedToken);
   }
 
-  public async authenticate(user: User) {
+  public async authenticate(user: User, accountService?: AccountService) {
     try {
       const response = (await lastValueFrom(this.http.post(this.getEndpointV1('account/token'), user))) as { result: TokenResponse };
       this.setToken(response.result);
       await this.loadingUserInfo();
       this.toastrService.success('Login efetuado.');
       this.#router.navigateByUrl('/dashboard');
+      accountService?.loadUserPhoto();
     } catch (ex: any) {
-      if (!ex.error) return;
+      if (!ex.error) {
+        this.toastrService.error('Erro interno, tente mais tarde.');
+        return;
+      }
       const error = ex.error as APIResponseError;
       if (error.result instanceof Array) {
         const result = error.result as string[];
@@ -53,7 +59,6 @@ export class AuthService extends BaseService {
       } else if (typeof error.result === 'string') {
         this.toastrService.warning(error.result)
       }
-
     }
   }
 
@@ -62,20 +67,26 @@ export class AuthService extends BaseService {
   }
 
   private async getCurrentUser(id: number) {
-    return ((await lastValueFrom(this.http.get<UserInfo>(this.getEndpointV1(`account/${id}`)))) as any)?.result;
+      return ((await lastValueFrom(this.http.get<UserInfo>(this.getEndpointV1(`account/${id}`)))) as any)?.result;
   }
 
-  public async loadingUserInfo() {
-    if (!this.isAuthenticated) return;
-    const userId = this.extractUserId(this.getToken()!);
-    const userInfo = await this.getCurrentUser(userId!);
-    this.#store.dispatch(UserActions.setUserInfo(userInfo));
+  public async loadingUserInfo(accountService?: AccountService) {
+    try {
+      if (!this.isAuthenticated) return;
+      const userId = this.extractUserId(this.getToken()!);
+      const userInfo = await this.getCurrentUser(userId!);
+      this.#store.dispatch(UserActions.setUserInfo(userInfo));
+      accountService?.loadUserPhoto();
+    } catch (ex: any) {
+      this.setToken(null!);
+      this.#router.navigateByUrl('/login');
+    }
   }
 
   public signOut() {
     this.setToken(null!);
     this.#router.navigateByUrl('/login');
-    this.toastrService.warning('Saiu')
+    this.toastrService.warning('Deslogado')
   }
 
   get isAuthenticated() {

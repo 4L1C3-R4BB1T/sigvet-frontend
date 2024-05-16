@@ -4,30 +4,34 @@ import { CustomValidators } from '../../validators/custom-validators';
 import { NgIf } from '@angular/common';
 import { ToastModule } from 'primeng/toast';
 import { MessageService } from 'primeng/api';
-
+import {MatInputModule} from '@angular/material/input';
+import {MatButtonModule} from '@angular/material/button';
+import BaseFormComponent from '../../base/base-form.component';
+import { NgxMaskDirective, provideNgxMask } from 'ngx-mask';
+import { MatStepperModule } from '@angular/material/stepper';
 
 @Component({
   selector: 'app-recover-client-password',
   standalone: true,
-  imports: [ReactiveFormsModule, NgIf, ToastModule],
+  imports: [MatStepperModule, ReactiveFormsModule, NgIf, ToastModule, MatInputModule, MatButtonModule, NgxMaskDirective, NgIf],
   templateUrl: './recover-client-password.component.html',
   styleUrl: './recover-client-password.component.scss',
-  providers: [MessageService]
+  providers: [MessageService, provideNgxMask()]
 })
-export class RecoverClientPasswordComponent implements OnInit {
+export class RecoverClientPasswordComponent extends BaseFormComponent implements OnInit {
 
   isOpen = signal(false)
   isValidEmail = signal(false);
   isPasswordFilled = signal(false);
 
   #formBuilder = inject(FormBuilder);
-  #messageService = inject(MessageService);
 
   @Output()
   closedEvent = new EventEmitter();
 
-  form = this.#formBuilder.group({
+  protected override form = this.#formBuilder.group({
     email: ['', [Validators.required, Validators.email]],
+    document: ['', [Validators.required]],
     password: ['', [Validators.required]],
     confirmationPassword: ['', [Validators.required]]
   })
@@ -46,7 +50,9 @@ export class RecoverClientPasswordComponent implements OnInit {
 
     this.closedEvent.emit(true);
   }
-  public show() {
-    this.#messageService.add({ severity: 'success', summary: 'Success', detail: 'Message Content' });
+
+  public allFieldsFilled() {
+   return this.form.controls.email.valid && this.form.controls.document.valid && this.form.controls.password.valid && this.form.controls.confirmationPassword.valid;
   }
+
 }

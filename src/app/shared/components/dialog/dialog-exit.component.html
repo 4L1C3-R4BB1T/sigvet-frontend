@@ -1,0 +1,8 @@
+<h2 mat-dialog-title>Alerta</h2>
+<mat-dialog-content>
+  Realmente deseja encerrar a sessão?
+</mat-dialog-content>
+<mat-dialog-actions>
+  <button mat-raised-button mat-dialog-close color="warn" (click)="close(false)"> Cancelar</button>
+  <button mat-raised-button mat-dialog-close color="primary" (click)="close(true)" cdkFocusInitial>Confirmar</button>
+</mat-dialog-actions>
