@@ -1,9 +1,9 @@
+import { NgIf } from '@angular/common';
 import { Component, EventEmitter, Input, OnInit, Output, inject, signal } from '@angular/core';
 import { FormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
-import { CustomValidators } from '../../validators/custom-validators';
-import { NgIf } from '@angular/common';
-import { ToastModule } from 'primeng/toast';
 import { MessageService } from 'primeng/api';
+import { ToastModule } from 'primeng/toast';
+import { CustomValidators } from '../../validators/custom-validators';
 
 
 @Component({

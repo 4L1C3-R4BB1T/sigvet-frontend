@@ -1,10 +1,10 @@
 import { Injectable, inject } from '@angular/core';
+import { lastValueFrom } from 'rxjs';
 import BaseService from '../base/base.service';
-import { CreateUser } from '../models/create-user';
-import { catchError, lastValueFrom, throwError } from 'rxjs';
-import { AuthService } from './auth.service';
-import { User } from '../models/user';
 import { APIResponseError } from '../models/api-response-error';
+import { CreateUser } from '../models/create-user';
+import { User } from '../models/user';
+import { AuthService } from './auth.service';
 
 @Injectable({
   providedIn: 'root'

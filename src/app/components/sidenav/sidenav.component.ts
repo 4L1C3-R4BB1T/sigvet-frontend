@@ -3,10 +3,9 @@ import { Component, OnInit, inject, signal } from '@angular/core';
 import { RouterLink, RouterLinkActive } from '@angular/router';
 
 import { toSignal } from '@angular/core/rxjs-interop';
-import BaseComponent from '../../base/base-store.component';
-import { MenuMobileComponent } from '../menu-mobile/menu-mobile.component';
 import BaseStoreComponent from '../../base/base-store.component';
 import { AuthService } from '../../services/auth.service';
+import { MenuMobileComponent } from '../menu-mobile/menu-mobile.component';
 
 interface SidenavMenu {
   iconUrl: string;
@@ -57,7 +56,7 @@ export class SidenavComponent extends BaseStoreComponent implements OnInit {
     {
       iconUrl: 'assets/icons/sidenav/vaccination.svg',
       label: 'Vacinações',
-      routeLink: '/dashboard/vacinacoes'
+      routeLink: '/dashboard/vacinacoes',
     }
   ];
 
@@ -69,8 +68,8 @@ export class SidenavComponent extends BaseStoreComponent implements OnInit {
     },
     {
       iconUrl: 'assets/icons/sidenav/diagnoses.svg',
+      routeLink: '/dashboard/diagnosticos',
       label: 'Diagnósticos',
-      routeLink: '/dashboard/diagnosticos'
     },
     {
       iconUrl: 'assets/icons/sidenav/reports.svg',

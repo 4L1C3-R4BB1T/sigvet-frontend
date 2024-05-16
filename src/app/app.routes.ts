@@ -1,13 +1,18 @@
 import { Routes } from '@angular/router';
-import { DashboardComponent } from './pages/dashboard/dashboard.component';
-import LoginComponent from './pages/login/login.component';
 import { authGuard } from './guards/auth.guard';
+import { DashboardComponent } from './pages/dashboard/dashboard.component';
+import { LandingPageComponent } from './pages/landing-page/landing-page.component';
+import LoginComponent from './pages/login/login.component';
 
 export const routes: Routes = [
+  // {
+  //   path: '',
+  //   pathMatch: 'full',
+  //   redirectTo: 'login',
+  // },
   {
     path: '',
-    pathMatch: 'full',
-    redirectTo: 'login',
+    component: LandingPageComponent
   },
   {
     path: 'login',
@@ -53,6 +58,11 @@ export const routes: Routes = [
         path: 'vacinas',
         loadComponent: () => import('./pages/vaccines/vaccines.component'),
         title: 'Vacinas',
+      },
+      {
+        path: 'diagnosticos',
+        loadComponent: () => import('./pages/vaccines/vaccines.component'),
+        title: 'Diagnósticos',
       }
     ],
   },

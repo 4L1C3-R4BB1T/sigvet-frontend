@@ -1,7 +1,7 @@
 import { NgModule } from '@angular/core';
+import { MatDialogModule } from '@angular/material/dialog';
 import { ChartModule } from 'primeng/chart';
 import { ProgressSpinnerModule } from 'primeng/progressspinner';
-import { MatDialogModule } from '@angular/material/dialog';
 
 @NgModule({
   declarations: [],

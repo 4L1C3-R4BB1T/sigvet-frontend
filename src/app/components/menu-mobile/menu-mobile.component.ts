@@ -1,7 +1,7 @@
-import { Component, effect, signal } from '@angular/core';
+import { Component } from '@angular/core';
+import { toSignal } from '@angular/core/rxjs-interop';
 import BaseStoreComponent from '../../base/base-store.component';
 import { SidenavActions } from '../../store/reducers/menu-visibility.reducer';
-import { toSignal } from '@angular/core/rxjs-interop';
 
 
 @Component({

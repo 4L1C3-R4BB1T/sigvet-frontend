@@ -3,10 +3,11 @@ import { FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angula
 import { RouterLink, RouterOutlet } from '@angular/router';
 import BaseFormComponent from '../../base/base-form.component';
 import { CreateNewClientComponent } from '../../components/create-new-client/create-new-client.component';
-import { RecoverClientPasswordComponent } from '../../components/recover-client-password/recover-client-password.component';
 import { ProfileComponent } from '../../components/profile/profile.component';
-import { AuthService } from '../../services/auth.service';
+import { RecoverClientPasswordComponent } from '../../components/recover-client-password/recover-client-password.component';
 import { User } from '../../models/user';
+import { AuthService } from '../../services/auth.service';
+
 @Component({
   selector: 'app-account',
   standalone: true,

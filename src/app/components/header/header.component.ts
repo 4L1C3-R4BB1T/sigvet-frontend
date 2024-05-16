@@ -2,9 +2,9 @@ import { Component, inject, OnInit, signal } from '@angular/core';
 import { NavigationEnd, Router } from '@angular/router';
 import { filter, map } from 'rxjs';
 
-import { MenuMobileComponent } from '../menu-mobile/menu-mobile.component';
 import BaseStoreComponent from '../../base/base-store.component';
 import { ProfileActions } from '../../store/reducers/menu-visibility.reducer';
+import { MenuMobileComponent } from '../menu-mobile/menu-mobile.component';
 
 @Component({
   selector: 'app-header',

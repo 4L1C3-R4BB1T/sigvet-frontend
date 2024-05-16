@@ -4,12 +4,12 @@ import { NgIf } from '@angular/common';
 import { FormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
 import { NgxMaskDirective, provideNgxMask } from 'ngx-mask';
 import { lastValueFrom } from 'rxjs';
+import BaseFormComponent from '../../base/base-form.component';
 import { City } from '../../models/city';
+import { CreateUser } from '../../models/create-user';
+import { AccountService } from '../../services/account.service';
 import CityService from '../../services/city.service';
 import { CustomValidators } from '../../validators/custom-validators';
-import BaseFormComponent from '../../base/base-form.component';
-import { AccountService } from '../../services/account.service';
-import { CreateUser } from '../../models/create-user';
 
 @Component({
   selector: 'app-create-new-client',

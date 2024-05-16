@@ -1,11 +1,11 @@
 import { Component, OnInit, inject, signal } from '@angular/core';
 import { RouterOutlet } from '@angular/router';
 
+import BaseStoreComponent from '../../base/base-store.component';
 import { HeaderComponent } from '../../components/header/header.component';
 import { SidenavComponent } from '../../components/sidenav/sidenav.component';
-import { SharedModule } from '../../shared/shared.module';
 import { AuthService } from '../../services/auth.service';
-import BaseStoreComponent from '../../base/base-store.component';
+import { SharedModule } from '../../shared/shared.module';
 import { selectUserInfo } from '../../store/reducers/user.reducer';
 
 @Component({

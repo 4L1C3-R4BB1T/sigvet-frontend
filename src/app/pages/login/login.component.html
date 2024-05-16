@@ -6,7 +6,7 @@
           <img src="assets/icons/squirrel.png" class="w-10 mr-3">
           <h1 class="font-bold text-4xl after:block after:h-[3px] after:bg-[#1C3455] after:w-10 text-[#1C3455]">SIGVet</h1>
         </div>
-        <p class="uppercase  text-xs font-mono opacity-85 text-center text-[#182c3b]">Sistema Integrado de Gestão</p>
+        <p class="uppercase text-xs font-mono opacity-85 text-center text-[#182c3b]">Sistema Integrado de Gestão</p>
       </div>
       <form class="p-2 px-6" [formGroup]="form" (ngSubmit)="signIn()">
         <div class="relative bg-white hover:border-black  transition-all flex gap-3 shadow-md  px-3 py-1 rounded-xl outline-none border border-opacity-25 border-black">
@@ -15,7 +15,7 @@
         </div>
         <div class="bg-white mt-6 flex gap-3 shadow-md transition-all hover:border-black  px-3 py-1 rounded-xl outline-none border border-opacity-25 border-black">
           <img src="assets/icons/password-account.svg" class="w-[18px]">
-          <input formControlName="password" type="password" placeholder="Senha" class="bg-white flex-1 focus:placeholder:opacity-0 outline-none border-none rounded-xl text-black py-2  placeholder:text-base placeholder:text-black placeholder:opacity-80">
+          <input formControlName="password" type="password" placeholder="Senha" class="bg-white flex-1 focus:placeholder:opacity-0 outline-none border-none rounded-xl text-black py-2 placeholder:text-base placeholder:text-black placeholder:opacity-80">
         </div>
         <div class="flex flex-col">
           <p class="self-end text-sm mt-3 cursor-pointer hover:underline" (click)="openRecoverAccountModal.set(true)">Esqueceu sua senha?</p>

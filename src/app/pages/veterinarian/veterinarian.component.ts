@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
-import { VeterinarianTableComponent } from './components/veterinarian-table/veterinarian-table.component';
 import { PaginatorComponent } from '../../components/paginator/paginator.component';
+import { VeterinarianTableComponent } from './components/veterinarian-table/veterinarian-table.component';
 
 @Component({
   selector: 'app-veterinarian',

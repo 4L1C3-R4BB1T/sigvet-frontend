@@ -4,17 +4,16 @@ import { JwtHelperService } from '@auth0/angular-jwt';
 import { Store } from '@ngrx/store';
 import { lastValueFrom } from 'rxjs';
 import BaseService from '../base/base.service';
+import { APIResponseError } from '../models/api-response-error';
 import { User } from '../models/user';
 import { AppState } from '../store';
 import { UserActions, UserInfo } from '../store/reducers/user.reducer';
-import { APIResponseError } from '../models/api-response-error';
 
 const STORAGE_AUTH_KEY = 'sigvet_token';
 
 interface TokenResponse {
   token: string;
 }
-
 
 @Injectable({
   providedIn: 'root'

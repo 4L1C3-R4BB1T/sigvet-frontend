@@ -1,7 +1,7 @@
 import { Component, signal } from '@angular/core';
-import { VaccineTableComponent } from './components/vaccine-table/vaccine-table.component';
-import { PaginatorComponent } from '../../components/paginator/paginator.component';
 import { FilterComponent } from '../../components/filter/filter.component';
+import { PaginatorComponent } from '../../components/paginator/paginator.component';
+import { VaccineTableComponent } from './components/vaccine-table/vaccine-table.component';
 
 @Component({
   selector: 'app-vaccines',
