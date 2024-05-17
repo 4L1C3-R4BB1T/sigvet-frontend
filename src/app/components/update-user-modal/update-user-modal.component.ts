@@ -13,6 +13,7 @@ import { City } from '../../models/city';
 import CityService from '../../services/city.service';
 import { ClientService } from '../../services/client.service';
 import { CreateUser } from '../../models/create-user';
+import { AccountService } from '../../services/account.service';
 
 @Component({
   selector: 'app-update-user-modal',
@@ -30,9 +31,13 @@ export class UpdateUserModalComponent extends BaseFormComponent implements OnIni
   @Output()
   onExit = new EventEmitter();
 
+  previewsPhoto = signal('');
+  savedPhoto = signal(null as File | null);
+
   #formBuilder = inject(FormBuilder);
   #cityService = inject(CityService);
   #clientService = inject(ClientService);
+  #accountService = inject(AccountService);
 
   cities = signal([] as City[]);
 
@@ -67,6 +72,17 @@ export class UpdateUserModalComponent extends BaseFormComponent implements OnIni
     if (this.form.invalid) return;
     await this.#clientService.create(this.form.value as CreateUser);
     this.onExit.emit();
+  }
+
+  async addPhoto(files: FileList | null) {
+    if (!files) return;
+    const file = files.item(0);
+    this.previewsPhoto.set(URL.createObjectURL(file!));
+    if (this.userId) {
+      this.#accountService.addClientPhoto(file!, this.userId);
+      return;
+    }
+    this.savedPhoto.set(file);
   }
 
   async checkIfEdition() {

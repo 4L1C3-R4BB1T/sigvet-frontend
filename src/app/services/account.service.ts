@@ -43,7 +43,7 @@ export class AccountService extends BaseService {
     if (!this.userInfo()) return;
     const formData = new FormData();
     formData.append('photo', file);
-    await lastValueFrom(this.http.put(this.getEndpointV1(`photo/user/${this.userInfo()!.id}`), formData).pipe(catchError(ex => {
+    await lastValueFrom(this.http.put(this.getEndpointV1(`photo/user/${this.userInfo()?.id}`), formData).pipe(catchError(ex => {
       if (ex['error']) {
         const error = ex['error'] as { result: string | string[] };
         if (error.result instanceof Array) {
@@ -58,6 +58,25 @@ export class AccountService extends BaseService {
     })
     ));
     await this.loadUserPhoto();
+  }
+
+  public async addClientPhoto(file: File, userId: number) {
+    const formData = new FormData();
+    formData.append('photo', file);
+    await lastValueFrom(this.http.put(this.getEndpointV1(`photo/user/${userId}`), formData).pipe(catchError(ex => {
+      if (ex['error']) {
+        const error = ex['error'] as { result: string | string[] };
+        if (error.result instanceof Array) {
+          for (const messageError of error.result) {
+            this.toastrService.info(messageError);
+          }
+        } else {
+          this.toastrService.info(error.result);
+        }
+      }
+      return of();
+    })
+    ));
   }
 
   public async loadUserPhoto() {
