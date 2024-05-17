@@ -19,12 +19,11 @@ export class DashboardComponent extends BaseStoreComponent implements OnInit {
 
   isLoading = signal(false);
   #authService = inject(AuthService);
-  #accountService = inject(AccountService);
 
   public async ngOnInit() {
     this.isLoading.set(true);
     setTimeout(() => this.isLoading.set(false), 300);
-    await this.#authService.loadingUserInfo(this.#accountService);
+    await this.#authService.loadingUserInfo();
   }
 
 }

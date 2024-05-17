@@ -1,4 +1,5 @@
 import { createActionGroup, createReducer, emptyProps, on, props } from "@ngrx/store";
+import { AppState } from "..";
 
 
 export const SidenavActions = createActionGroup({
@@ -33,3 +34,5 @@ export default createReducer(
   on(SidenavActions.toggleMenu, state => ({ ...state, menuSidenav: !state.menuSidenav })),
   on(ProfileActions.toggleModal, state => ({ ...state, modalProfile: !state.modalProfile }))
 )
+
+export const selectMenuSidenavValue = (state: AppState) => state.menuVisibilityReducer.menuSidenav;

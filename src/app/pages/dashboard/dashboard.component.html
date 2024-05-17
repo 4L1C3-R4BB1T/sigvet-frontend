@@ -1,7 +1,6 @@
 <app-sidenav>
-  <app-header/>
   @defer(when !isLoading()) {
-    <div class="p-4 max-h-screen overflow-hidden overflow-y-auto">
+    <div>
       <router-outlet/>
     </div>
   } @placeholder {

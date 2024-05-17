@@ -1,15 +1,11 @@
-.triangle {
-  width: 0;
-  height: 0;
-  border: 10px solid transparent;
-  border-top: 10px solid #005792;
-  border-left: 10px solid #005792;
-  background-color: transparent;
-  position: absolute;
-  left: 50%;
-  transform: rotate(225deg) translateY(-50%);
-  top: -8%;
-  background-color: transparent;
-  background-color: #005792;
-  z-index: -99;
+
+::ng-deep {
+  .menu {
+    .mat-mdc-menu-content {
+      background: linear-gradient(to top, #005792, #0D356A);
+      width: 200px;;
+    }
+
+
+  }
 }

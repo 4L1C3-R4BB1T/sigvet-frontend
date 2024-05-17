@@ -1,0 +1,51 @@
+@layer utilities {
+  .bg-base-to-top {
+    background: linear-gradient(to top, #005792, #0D356A);
+  }
+
+  .bg-base-to-bottom {
+    background: linear-gradient(to bottom, #005792, #0D356A);
+  }
+
+  .custom-border {
+    border-color: rgba(13, 53, 106, 0.15);
+    border-width: 2px;
+    border-style: solid;
+  }
+
+
+  .hover-scale:hover {
+    transform: scale(1.03) !important;
+  }
+
+  .active-link {
+    background-color: #0b5c9b53;
+    &::after {
+      background-color: white;
+    }
+  }
+
+  .hover-after-h {
+    position: relative;
+
+    &::after {
+      content: '';
+      display: block;
+      height: 100%;
+      position: absolute;
+      width: 2px;
+      left: 0;
+      top: 0;
+    }
+
+    &:hover {
+      background-color: #0b5c9b53;
+      &::after {
+        background-color: white;
+      }
+
+    }
+
+  }
+
+}

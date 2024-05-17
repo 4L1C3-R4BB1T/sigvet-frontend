@@ -2,23 +2,24 @@ import { Component, inject, OnInit, signal } from '@angular/core';
 import { NavigationEnd, Router } from '@angular/router';
 import { filter, map } from 'rxjs';
 
-import { MenuMobileComponent } from '../menu-mobile/menu-mobile.component';
 import BaseStoreComponent from '../../base/base-store.component';
-import { ProfileActions } from '../../store/reducers/menu-visibility.reducer';
-import { toSignal } from '@angular/core/rxjs-interop';
 import { selectUserInfo, selectUserPhoto } from '../../store/reducers/user.reducer';
 import { UserRolePipe } from '../../pipes/user-role.pipe';
+import { MenuHamburguerComponent } from '../menu-hamburguer/menu-hamburguer.component';
+import {MatMenuModule} from '@angular/material/menu';
+import {MatRippleModule} from '@angular/material/core';
+import { ProfileActions } from '../../store/reducers/menu-visibility.reducer';
 
 @Component({
   selector: 'app-header',
   standalone: true,
-  imports: [MenuMobileComponent, UserRolePipe],
+  imports: [UserRolePipe, MenuHamburguerComponent, MatMenuModule, MatRippleModule],
   templateUrl: './header.component.html',
   styleUrl: './header.component.scss'
 })
 export class HeaderComponent extends BaseStoreComponent implements OnInit {
 
-  openProfile = signal(false);
+  openMenu = signal(false);
   #router = inject(Router);
 
   currentTitle = signal('Home');

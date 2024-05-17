@@ -13,7 +13,7 @@ import { CreateNewClientComponent } from '../../components/create-new-client/cre
 import { RecoverClientPasswordComponent } from '../../components/recover-client-password/recover-client-password.component';
 import { ProfileComponent } from '../../components/profile/profile.component';
 import { AuthService } from '../../services/auth.service';
-import { User } from '../../models/user';
+import { UserLogin } from '../../models/user-login';
 import { AccountService } from '../../services/account.service';
 import { JsonPipe } from '@angular/common';
 @Component({
@@ -35,7 +35,6 @@ import { JsonPipe } from '@angular/common';
 })
 export default class LoginComponent extends BaseFormComponent {
   #authService = inject(AuthService);
-  #accountService = inject(AccountService);
 
   openAccountCreationModal = signal(false);
   openRecoverAccountModal = signal(false);
@@ -50,10 +49,7 @@ export default class LoginComponent extends BaseFormComponent {
       return;
     }
 
-    this.#authService.authenticate(
-      this.form.value as User,
-      this.#accountService
-    );
+    this.#authService.authenticate(this.form.value as UserLogin);
   }
 
 }

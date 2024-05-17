@@ -15,9 +15,7 @@ export class DialogExitComponent implements OnInit {
   subscription: Subscription | null = null;
 
   public ngOnInit(): void {
-    console.log('oii')
       this.#dialogRef.afterClosed().subscribe(b => {
-        console.log('oi')
         if (b) {
           this.#authService.signOut();
         } else {
@@ -25,7 +23,7 @@ export class DialogExitComponent implements OnInit {
         }
       });
   }
-  
+
   public close(b: boolean) {
     this.#dialogRef.close(b);
   }
