@@ -8,7 +8,7 @@
         } @else {
           <img [src]="userPhoto()" class="rounded-full object-cover h-full w-full">
         }
-        <div class="absolute right-0 bottom-0 cursor-pointer">
+        <div class="absolute -right-2 bottom-0 cursor-pointer">
           <button mat-mini-fab color="primary">
             <i class="bi bi-camera-fill text-base"></i>
             <input type="file" class="absolute left-0 top-0 w-full h-full opacity-0 cursor-pointer" #fileInput (click)="addPhoto(fileInput.files)">
