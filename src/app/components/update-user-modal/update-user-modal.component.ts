@@ -70,19 +70,28 @@ export class UpdateUserModalComponent extends BaseFormComponent implements OnIni
   async create() {
     this.checkForm();
     if (this.form.invalid) return;
-    await this.#clientService.create(this.form.value as CreateUser);
+    const result = await this.#clientService.create(this.form.value as CreateUser);
+    if (!result?.id) return;
+    if (this.savedPhoto()) {
+      this.#accountService.addClientPhoto(this.savedPhoto()!, result.id);
+    }
     this.onExit.emit();
+  }
+
+  async update() {
+    this.checkForm();
+    if (this.form.invalid) return;
   }
 
   async addPhoto(files: FileList | null) {
     if (!files) return;
     const file = files.item(0);
     this.previewsPhoto.set(URL.createObjectURL(file!));
+    this.savedPhoto.set(file); // Se for o criar eu vou setar a foto pra adicionar depois de criado
     if (this.userId) {
       this.#accountService.addClientPhoto(file!, this.userId);
       return;
     }
-    this.savedPhoto.set(file);
   }
 
   async checkIfEdition() {

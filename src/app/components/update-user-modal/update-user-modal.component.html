@@ -141,7 +141,11 @@
 
       </div>
       <div class="flex justify-end">
-        <button mat-button>Salvar</button>
+        @if (!userId) {
+          <button mat-button (click)="create()">Salvar</button>
+        } @else {
+          <button mat-button disabled>Opção indisponível</button>
+        }
       </div>
     </aside>
   </form>

@@ -12,6 +12,7 @@ import { FilterComponent } from '../../components/filter/filter.component';
 import { PaginatorComponent } from '../../components/paginator/paginator.component';
 import { ClientListComponent } from './client-list/client-list.component';
 import { UpdateUserModalComponent } from '../../components/update-user-modal/update-user-modal.component';
+import { RouterLink } from '@angular/router';
 
 @Component({
   selector: 'app-clients',
@@ -28,6 +29,7 @@ import { UpdateUserModalComponent } from '../../components/update-user-modal/upd
     MatTooltipModule,
     MatTabsModule,
     UpdateUserModalComponent,
+    RouterLink,
   ],
   templateUrl: './clients.component.html',
   styleUrl: './clients.component.scss',
@@ -42,5 +44,9 @@ export default class ClientsComponent extends BaseStoreComponent {
   reset() {
     this.createClient.set(false);
     this.userId.set(null);
+  }
+
+  reloadPage() {
+    window.location.reload();
   }
 }

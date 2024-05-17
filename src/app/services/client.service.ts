@@ -23,7 +23,8 @@ export class ClientService extends BaseService {
 
   public async create(record: CreateUser) {
     try {
-      await lastValueFrom(this.http.post(this.getEndpointV1('clients'), record));
+      return await lastValueFrom(this.http.post(this.getEndpointV1('clients'), record)
+        .pipe(map((response: any) => response.result as { id: number })));
     } catch (ex: any) {
       if (!ex.error) {
         this.toastrService.error('Erro interno, tente mais tarde.');
@@ -39,5 +40,28 @@ export class ClientService extends BaseService {
         this.toastrService.warning(error.result)
       }
     }
+    return null;
   }
+
+  // public async update(id: number, record: CreateUser) {
+  //   try {
+  //     return await lastValueFrom(this.http.post(this.getEndpointV1('clients'), record)
+  //       .pipe(map((response: any) => response.result as { id: number })));
+  //   } catch (ex: any) {
+  //     if (!ex.error) {
+  //       this.toastrService.error('Erro interno, tente mais tarde.');
+  //       return;
+  //     }
+  //     const error = ex.error as APIResponseError;
+  //     if (error.result instanceof Array) {
+  //       const result = error.result as string[];
+  //       for (const messageError of result) {
+  //         this.toastrService.warning(messageError);
+  //       }
+  //     } else if (typeof error.result === 'string') {
+  //       this.toastrService.warning(error.result)
+  //     }
+  //   }
+  //   return null;
+  // }
 }
