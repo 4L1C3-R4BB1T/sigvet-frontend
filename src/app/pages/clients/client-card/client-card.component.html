@@ -3,16 +3,17 @@
     <mat-card-header>
       <div class="flex justify-between w-full">
         <div class="flex gap-3">
-          <img class="w-20 h-20 rounded-full" src="https://material.angular.io/assets/img/examples/shiba2.jpg">
+          <img class="w-20 h-20 rounded-full" src="assets/images/sem-foto.png">
         <div class="flex flex-col gap-2">
-          <span class="text-base font-semibold">{{ client.name }}</span>
+            <span class="text-base font-semibold">{{ client.name }}</span>
+            <span class="text-sm opacity-60">Castelo, Espírito Santo</span>
           <span class="text-sm">Criado em: 04/05/2022</span>
           <span class="text-sm">Última atualização em: 04/05/2022</span>
         </div>
        </div>
        <div>
         <span>
-          <button mat-mini-fab color="primary" matTooltip="Editar">
+          <button mat-mini-fab color="primary" matTooltip="Editar" (click)="edit()">
             <i class="bi bi-pencil-square"></i>
           </button>
        </span>

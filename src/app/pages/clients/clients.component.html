@@ -23,9 +23,14 @@
 </header>
 
 <div class="mt-1 pb-5">
-  <app-client-list />
+  <app-client-list (onEdit)="userId.set($event)"/>
 </div>
 
 @if (openMoreFilterModal()) {
-<app-filter (onClose)="openMoreFilterModal.set(false)" />
+  <app-filter (onClose)="openMoreFilterModal.set(false)" />
 }
+
+@if (userId()) {
+  <app-update-user-modal [userId]="userId()" returnUrl="/dashboard/clientes"/>
+}
+

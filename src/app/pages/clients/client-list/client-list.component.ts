@@ -1,22 +1,28 @@
 import { AsyncPipe } from '@angular/common';
-import { Component, OnInit, inject, signal } from '@angular/core';
+import { Component, EventEmitter, OnInit, Output, inject, signal } from '@angular/core';
 import BaseStoreComponent from '../../../base/base-store.component';
 import { FadeInDirective } from '../../../directives/fade-in.directive';
 import { ClientCardComponent } from '../client-card/client-card.component';
 import {PageEvent, MatPaginatorModule} from '@angular/material/paginator';
 import { ClientService } from '../../../services/client.service';
 import { User } from '../../../models/user';
+import { UpdateUserModalComponent } from '../../../components/update-user-modal/update-user-modal.component';
 
 @Component({
   selector: 'app-client-list',
   standalone: true,
-  imports: [FadeInDirective, AsyncPipe, ClientCardComponent,  MatPaginatorModule],
+  imports: [FadeInDirective, AsyncPipe, ClientCardComponent,  MatPaginatorModule, UpdateUserModalComponent],
   templateUrl: './client-list.component.html',
   styleUrl: './client-list.component.scss',
 })
 export class ClientListComponent extends BaseStoreComponent  implements OnInit {
 
     #clientService = inject(ClientService);
+
+    @Output()
+    onEdit = new EventEmitter();
+
+    userId = signal<number | null>(null);
 
     data = signal([] as User[]);
 
@@ -54,6 +60,10 @@ export class ClientListComponent extends BaseStoreComponent  implements OnInit {
       if (setPageSizeOptionsInput) {
         this.pageSizeOptions = setPageSizeOptionsInput.split(',').map(str => +str);
       }
+    }
+
+    edit(userId: number) {
+      this.onEdit.emit(userId);
     }
 
 }

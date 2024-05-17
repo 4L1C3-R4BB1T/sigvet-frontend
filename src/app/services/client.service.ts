@@ -13,4 +13,9 @@ export class ClientService extends BaseService {
     return await lastValueFrom(this.http.get(this.getEndpointV1(`clients${this.getFilterParams(filters)}`))
       .pipe(map((response: any) => response.elements as User[])));
   }
+
+  public async findById(id: number) {
+    return await lastValueFrom(this.http.get(this.getEndpointV1(`clients/${id}`))
+    .pipe(map((response: any) => response.result as User)));
+  }
 }
