@@ -12,7 +12,7 @@
           Voltar para a página anterior
         </button>
       </header>
-      <div>
+      <div [formGroup]="form">
         <mat-tab-group>
 
             <mat-tab label="Informações">
@@ -57,21 +57,23 @@
             }
             </mat-form-field>
 
-            <mat-form-field class="w-full" appearance="outline">
-            <mat-label>Senha</mat-label>
-            <input type="password" matInput formControlName="password" placeholder="Senha">
-            @if (getControlError('password')) {
-            <mat-error>{{  getControlError('password') }}</mat-error>
-            }
-            </mat-form-field>
+            @if (userId == null) {
+              <mat-form-field class="w-full" appearance="outline">
+                <mat-label>Senha</mat-label>
+                <input type="password" matInput formControlName="password" placeholder="Senha">
+                @if (getControlError('password')) {
+                <mat-error>{{  getControlError('password') }}</mat-error>
+                }
+              </mat-form-field>
 
-            <mat-form-field class="w-full" appearance="outline">
-            <mat-label>Senha de Confirmação</mat-label>
-            <input type="password" matInput formControlName="confirmationPassword" placeholder="Senha de Confirmação">
-            @if (getControlError('confirmationPassword')) {
-            <mat-error>{{  getControlError('confirmationPassword') }}</mat-error>
+              <mat-form-field class="w-full" appearance="outline">
+                <mat-label>Senha de Confirmação</mat-label>
+                <input type="password" matInput formControlName="confirmationPassword" placeholder="Senha de Confirmação">
+                @if (getControlError('confirmationPassword')) {
+                <mat-error>{{  getControlError('confirmationPassword') }}</mat-error>
+                }
+              </mat-form-field>
             }
-            </mat-form-field>
             </div>
             </mat-tab>
 

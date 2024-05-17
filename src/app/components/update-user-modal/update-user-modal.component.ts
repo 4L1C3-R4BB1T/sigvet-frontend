@@ -1,27 +1,27 @@
-import { Component, DoCheck, Input, OnInit, inject, signal } from '@angular/core';
-import { FormBuilder, Validators } from '@angular/forms';
+import { JsonPipe } from '@angular/common';
+import { ChangeDetectorRef, Component, Input, OnChanges, OnInit, inject, signal } from '@angular/core';
+import { FormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
 import { MatButtonModule } from '@angular/material/button';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { MatSelectModule } from '@angular/material/select';
 import { MatTabsModule } from '@angular/material/tabs';
-import BaseFormComponent from '../../base/base-form.component';
-import { AccountService } from '../../services/account.service';
-import CityService from '../../services/city.service';
-import { City } from '../../models/city';
-import { lastValueFrom } from 'rxjs';
-import { ClientService } from '../../services/client.service';
 import { RouterLink } from '@angular/router';
+import { lastValueFrom } from 'rxjs';
+import BaseFormComponent from '../../base/base-form.component';
+import { City } from '../../models/city';
+import CityService from '../../services/city.service';
+import { ClientService } from '../../services/client.service';
 
 @Component({
   selector: 'app-update-user-modal',
   standalone: true,
-  imports: [MatButtonModule, MatFormFieldModule, MatInputModule, MatTabsModule, MatSelectModule, RouterLink],
+  imports: [MatButtonModule, MatFormFieldModule, ReactiveFormsModule, MatInputModule, MatTabsModule, MatSelectModule, RouterLink, JsonPipe],
   templateUrl: './update-user-modal.component.html',
   styleUrl: './update-user-modal.component.scss',
   providers: [CityService],
 })
-export class UpdateUserModalComponent extends BaseFormComponent implements OnInit, DoCheck {
+export class UpdateUserModalComponent extends BaseFormComponent implements OnInit, OnChanges {
 
   @Input()
   userId: number | null = null;
@@ -29,11 +29,10 @@ export class UpdateUserModalComponent extends BaseFormComponent implements OnIni
   @Input()
   returnUrl: string = '';
 
-  stop = false;
-
   #formBuilder = inject(FormBuilder);
   #cityService = inject(CityService);
   #clientService = inject(ClientService);
+  #cdr = inject(ChangeDetectorRef);
 
   cities = signal([] as City[]);
 
@@ -59,19 +58,18 @@ export class UpdateUserModalComponent extends BaseFormComponent implements OnIni
     this.cities.set(await lastValueFrom(this.#cityService.findAll));
   }
 
-  async ngDoCheck() {
-    if (this.stop) return;
+  async ngOnChanges() {
     await this.checkIfEdition();
-    this.stop = true;
   }
+
   async checkIfEdition() {
     if (!this.userId) return;
+    console.log("OII")
     this.form.removeControl('password' as never);
     this.form.removeControl('confirmationPassword' as never);
     const user = await this.#clientService.findById(this.userId);
-    console.log(user)
     this.form.patchValue(user as any);
     this.form.controls.address.controls.cityId.setValue(user.address?.city.id as any ?? '');
-    this.form.updateValueAndValidity();
+    this.#cdr.detectChanges();
   }
 }
