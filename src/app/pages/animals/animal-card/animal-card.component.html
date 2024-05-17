@@ -1,39 +1,41 @@
-<li class="shadow-xl border-[#0D356A] border-2 border-opacity-15 shadow-slate-300 rounded-md bg-white max-w-[90vw] xl:max-w-[100vw] overflow-hidden overflow-x-auto">
-  <div class="md:min-w-[250px]">
-    <img src="assets/images/periquito.png">
-  </div>
-  <div class="py-5 px-8">
-    <section class="border-b-2 border-black border-opacity-15 pb-3">
-      <span class="text-xl after:mt-1 after:z-10 relative block after:absolute after:top-6 after:block after:w-5 after:h-0.5 after:bg-[#3479BF]">
-        Manga
-      </span>
-      <span class="text-sm opacity-60 mt-5 block">Agapornis</span>
-    </section>
-    <section>
-      <ul class="flex flex-col gap-2 mt-4">
-        <li>
-          <span class="opacity-70 text-sm me-2">Data de Nascimento:</span>
-          <span class="opacity-90 text-sm">15/02/2021</span>
-        </li>
-        <li>
-          <span class="opacity-70 text-sm me-2">Cliente:</span>
-          <span class="opacity-90 text-sm">Livia</span>
-        </li>
-        <li>
-          <span class="opacity-70 text-sm me-2">Email:</span>
-          <span class="opacity-90 text-sm">livia{{"@"}}gmail.com</span>
-        </li>
-        <li>
-          <span class="opacity-70 text-sm me-2">Telefone:</span>
-          <span class="opacity-90 text-sm">(28) 99999-9999</span>
-        </li>
-      </ul>
-      <div class="flex justify-end mt-4">
-        <button class="flex gap-3 items-center bg-gradient-to-b from-[#005792] to-[#0D356A] text-white font-medium text-xs uppercase hover:opacity-70 rounded-md p-1.5 px-4">
-          <i class="bi bi-pencil-square text-base"></i>
-          Editar
-        </button>
+<div class="w-full mat-elevation-z4">
+  <mat-card class="w-full">
+    <mat-card-header>
+      <div class="flex justify-between w-full">
+        <div class="flex gap-3">
+          <img class="w-20 h-20 rounded-full" src="assets/images/periquito.png">
+          <div class="flex flex-col gap-2">
+            <span class="text-base font-semibold">Manga</span>
+            <span class="text-sm opacity-60">Agapornis</span>
+            <span class="text-sm">Criado em: 04/05/2022</span>
+            <span class="text-sm">Última atualização em: 04/05/2022</span>
+          </div>
+        </div>
+        <div>
+          <span>
+            <button mat-mini-fab color="primary" matTooltip="Editar">
+              <i class="bi bi-pencil-square"></i>
+            </button>
+          </span>
+        </div>
       </div>
-    </section>
-  </div>
-</li>
+    </mat-card-header>
+    <mat-card-content>
+      <div class="mt-4 p-2"></div>
+    </mat-card-content>
+    <mat-card-actions>
+      <div class="flex justify-between w-full">
+        <div>
+          <button mat-button color="primary" matTooltip="gabrielcardoso_stelo@hotmail.com">
+            <i class="bi bi-envelope-at-fill"></i>
+            Conversar
+          </button>
+          <button mat-button color="primary" matTooltip="(28) 99950-5410">
+            <i class="bi bi-telephone-forward-fill"></i>
+            Ligar
+          </button>
+        </div>
+      </div>
+    </mat-card-actions>
+  </mat-card>
+</div>
