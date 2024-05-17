@@ -3,9 +3,9 @@
     <mat-card-header>
       <div class="flex justify-between w-full">
         <div class="flex gap-3">
-          <img class="w-20 h-20 rounded-full" src="https://material.angular.io/assets/img/examples/shiba2.jpg" alt="Photo of a Shiba Inu">
+          <img class="w-20 h-20 rounded-full" src="https://material.angular.io/assets/img/examples/shiba2.jpg">
         <div class="flex flex-col gap-2">
-          <span class="text-base font-semibold">Gabriel Cardoso</span>
+          <span class="text-base font-semibold">{{ client.name }}</span>
           <span class="text-sm">Criado em: 04/05/2022</span>
           <span class="text-sm">Última atualização em: 04/05/2022</span>
         </div>
@@ -20,18 +20,16 @@
       </div>
     </mat-card-header>
     <mat-card-content>
-      <div class="mt-4 p-2">
-
-      </div>
+      <div class="mt-4 p-2"></div>
     </mat-card-content>
     <mat-card-actions>
       <div class="flex justify-between w-full">
         <div>
-          <button mat-button color="primary" matTooltip="gabrielcardoso_stelo@hotmail.com">
+          <button mat-button color="primary" matTooltip="{{ client.email }}">
             <i class="bi bi-envelope-at-fill"></i>
             Conversar
           </button>
-          <button mat-button color="primary" matTooltip="(28) 99950-5410">
+          <button mat-button color="primary" matTooltip="{{ client.phone }}">
             <i class="bi bi-telephone-forward-fill"></i>
             Ligar
           </button>

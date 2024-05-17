@@ -1,7 +1,7 @@
 import { Routes } from '@angular/router';
+import { authGuard } from './guards/auth.guard';
 import { DashboardComponent } from './pages/dashboard/dashboard.component';
 import LoginComponent from './pages/login/login.component';
-import { authGuard } from './guards/auth.guard';
 
 export const routes: Routes = [
   {
@@ -23,6 +23,7 @@ export const routes: Routes = [
       {
         path: '',
         loadComponent: () => import('./pages/dashboard/home/home.component'),
+        title: 'Home'
       },
       {
         path: 'clientes',
@@ -35,16 +36,6 @@ export const routes: Routes = [
         title: 'Animais',
       },
       {
-        path: 'consultas',
-        loadComponent: () => import('./pages/consultations/consultations.component'),
-        title: 'Consultas',
-      },
-      {
-        path: 'vacinacoes',
-        loadComponent: () => import('./pages/vaccinations/vaccinations.component'),
-        title: 'Vacinações',
-      },
-      {
         path: 'veterinarios',
         loadComponent: () => import('./pages/veterinarian/veterinarian.component'),
         title: 'Veterinários',
@@ -53,6 +44,21 @@ export const routes: Routes = [
         path: 'vacinas',
         loadComponent: () => import('./pages/vaccines/vaccines.component'),
         title: 'Vacinas',
+      },
+      {
+        path: 'vacinacoes',
+        loadComponent: () => import('./pages/vaccinations/vaccinations.component'),
+        title: 'Vacinações',
+      },
+      {
+        path: 'consultas',
+        loadComponent: () => import('./pages/consultations/consultations.component'),
+        title: 'Consultas',
+      },
+      {
+        path: 'diagnosticos',
+        loadComponent: () => import('./pages/diagnostics/diagnostics.component'),
+        title: 'Diagnósticos',
       }
     ],
   },

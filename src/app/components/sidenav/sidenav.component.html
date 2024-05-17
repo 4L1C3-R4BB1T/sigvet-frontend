@@ -2,7 +2,7 @@
   <mat-drawer mode="side" #drawer [opened]="drawerOpen()" class="bg-base-to-bottom">
     <div class="h-screen p-5 bg-base-to-bottom">
       <div class="block w-[100px] h-[100px] rounded-full bg-white mx-auto">
-        <img [src]="userPhoto()" class="rounded-full object-cover h-full w-full">
+        <img [src]="userPhoto() || 'assets/images/user-photo.png'" class="rounded-full object-cover h-full w-full">
       </div>
       <span class="block opacity-80 text-white mt-5 text-center">{{  userInfo()?.name }}</span>
       <mat-list>

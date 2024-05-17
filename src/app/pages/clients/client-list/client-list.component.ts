@@ -56,7 +56,4 @@ export class ClientListComponent extends BaseStoreComponent  implements OnInit {
       }
     }
 
-
-
-
 }
