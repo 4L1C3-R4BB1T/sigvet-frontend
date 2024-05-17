@@ -1,8 +1,19 @@
 <mat-drawer-container class="h-full">
   <mat-drawer mode="side" #drawer [opened]="drawerOpen()" class="bg-base-to-bottom">
     <div class="h-screen p-5 bg-base-to-bottom">
-      <div class="block w-[100px] h-[100px] rounded-full bg-white mx-auto">
-        <img [src]="userPhoto()" class="rounded-full object-cover h-full w-full">
+      <div class="block w-[100px] h-[100px] rounded-full bg-white mx-auto relative">
+
+        @if(!userPhoto()) {
+          <img src="assets/images/sem-foto.png" class="rounded-full object-cover h-full w-full">
+        } @else {
+          <img [src]="userPhoto()" class="rounded-full object-cover h-full w-full">
+        }
+        <div class="absolute right-0 bottom-0 cursor-pointer">
+          <button mat-mini-fab color="primary">
+            <i class="bi bi-camera-fill text-base"></i>
+            <input type="file" class="absolute left-0 top-0 w-full h-full opacity-0 cursor-pointer" #fileInput (click)="addPhoto(fileInput.files)">
+          </button>
+        </div>
       </div>
       <span class="block opacity-80 text-white mt-5 text-center">{{  userInfo()?.name }}</span>
       <mat-list>
@@ -37,7 +48,7 @@
   </mat-drawer>
   <mat-drawer-content>
     <app-header></app-header>
-    <div class="pt-20 px-5">
+    <div class="pt-20 px-5 pb-5">
       <ng-content></ng-content>
     </div>
   </mat-drawer-content>

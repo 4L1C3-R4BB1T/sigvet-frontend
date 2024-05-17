@@ -65,7 +65,7 @@ export class AccountService extends BaseService {
       const user = await lastValueFrom(this.http.get(this.getEndpointV1(`account/${this.userInfo()?.id}`))
         .pipe(map((response: any) => response.result), tap(console.log)));
       this.store.dispatch(UserActions.setUserInfo(null!));
-      setTimeout(() => this.store.dispatch(UserActions.setUserInfo(user)), 200);
+      setTimeout(() => this.store.dispatch(UserActions.setUserInfo(user)), 100);
   }
 
 

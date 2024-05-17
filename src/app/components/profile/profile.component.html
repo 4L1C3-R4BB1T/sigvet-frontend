@@ -6,18 +6,19 @@
       </button>
     </span>
     <aside>
-      <div class="photo relative w-44 h-32 bg-black bg-opacity-80">
-        <img class="absolute top-0 left-0 w-full h-full object-cover" [src]="photo()" alt>
-        <button class="absolute bottom-0 text-white flex justify-center  hover:opacity-70 w-full text-xs  bg-black bg-opacity-60 p-2">
-          Alterar foto
-          <input (change)="addPhoto(fileInput.files)" #fileInput type="file" class="border-none w-full h-full opacity-0 top-0 absolute cursor-pointer">
-        </button>
-      </div>
+      @if (photoUrl())  {
+        <div class="photo relative w-44 h-44  bg-opacity-80 rounded-full">
+          <img class="absolute top-0 left-0 w-full h-full object-cover rounded-full" [src]="photoUrl()" alt>
+        </div>
+      }
 
     </aside>
     <div class="w-full">
       <header>
-        <h1 class="text-2xl">Gabriel Cardoso Girarde</h1>
+        <div class="flex gap-2">
+          <h1 class="text-2xl">Gabriel Cardoso Girarde</h1>
+          <button mat-button color="primary" class="ms-4">Editar</button>
+        </div>
         <h2 class="text-[#3479BF] font-semibold text-sm">Administrador</h2>
       </header>
 

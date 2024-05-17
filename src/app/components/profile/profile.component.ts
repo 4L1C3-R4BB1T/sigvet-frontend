@@ -1,13 +1,11 @@
-import { Component, inject, signal } from '@angular/core';
+import { Component, signal } from '@angular/core';
+import { MatButtonModule } from '@angular/material/button';
+import { MatDividerModule } from '@angular/material/divider';
+import { MatListModule } from '@angular/material/list';
 import { MatTabsModule } from '@angular/material/tabs';
-import { Store } from '@ngrx/store';
-import { AccountService } from '../../services/account.service';
-import { AppState } from '../../store';
+import BaseStoreComponent from '../../base/base-store.component';
 import { ProfileActions } from '../../store/reducers/menu-visibility.reducer';
 import { selectUserPhoto } from '../../store/reducers/user.reducer';
-import { MatListModule } from '@angular/material/list';
-import { MatDividerModule } from '@angular/material/divider';
-import { MatButtonModule } from '@angular/material/button';
 
 @Component({
   selector: 'app-profile',
@@ -16,22 +14,16 @@ import { MatButtonModule } from '@angular/material/button';
   templateUrl: './profile.component.html',
   styleUrl: './profile.component.scss',
 })
-export class ProfileComponent {
+export class ProfileComponent extends BaseStoreComponent {
   isAbout = signal(true);
-  #store: Store<AppState> = inject(Store);
-  #accountService = inject(AccountService);
-  photo = this.#store.selectSignal(selectUserPhoto);
+  photoUrl = this.store.selectSignal(selectUserPhoto);
 
   public tabChange() {
     this.isAbout.set(!this.isAbout());
   }
 
   public close() {
-    this.#store.dispatch(ProfileActions.toggleModal());
+    this.store.dispatch(ProfileActions.toggleModal());
   }
 
-  public async addPhoto(fileList: FileList | null) {
-    if (!fileList || fileList.length == 0) return;
-    await this.#accountService.addPhoto(fileList.item(0)!);
-  }
 }

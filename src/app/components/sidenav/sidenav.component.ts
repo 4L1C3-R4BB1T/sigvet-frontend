@@ -14,6 +14,8 @@ import {
 } from '../../store/reducers/menu-visibility.reducer';
 import { selectUserInfo, selectUserPhoto } from '../../store/reducers/user.reducer';
 import { HeaderComponent } from '../header/header.component';
+import { MatButtonModule } from '@angular/material/button';
+import { AccountService } from '../../services/account.service';
 
 interface SidenavMenu {
   iconUrl: string;
@@ -37,6 +39,7 @@ interface SidenavMenu {
     MatListModule,
     MatRippleModule,
     MatDividerModule,
+    MatButtonModule
   ],
   templateUrl: './sidenav.component.html',
   styleUrl: './sidenav.component.scss',
@@ -45,7 +48,8 @@ export class SidenavComponent extends BaseStoreComponent implements OnInit {
   dialog = inject<MatDialog>(MatDialog);
   drawerOpen = this.store.selectSignal(selectMenuSidenavValue);
   userInfo = this.store.selectSignal(selectUserInfo);
-
+  #accountService = inject(AccountService);
+  
   menus = signal<SidenavMenu[]>([]);
   showMore = signal(false);
 
@@ -148,14 +152,9 @@ export class SidenavComponent extends BaseStoreComponent implements OnInit {
     this.showMore.set(!this.showMore());
   }
 
-  // public openSubmenus(targetIndex: number | null) {
-  //   this.submenus.update(old => old.map((obj, index) => {
-  //     if (obj.openSubmenu) {
-  //       obj.openSubmenu = false;
-  //     } else {
-  //       obj.openSubmenu = targetIndex == index;
-  //     }
-  //     return obj;
-  //   }))
-  // }
+  public async addPhoto(fileList: FileList | null) {
+    if (!fileList || fileList.length == 0) return;
+    await this.#accountService.addPhoto(fileList.item(0)!);
+  }
+
 }

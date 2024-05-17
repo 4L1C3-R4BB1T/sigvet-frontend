@@ -1,4 +1,4 @@
-<header class="shadow-xl  p-3 justify-between flex bg-base-to-top fixed w-full z-50">
+<header class="shadow-xl  p-3 justify-between flex bg-base-to-top absolute w-full z-50">
   <div class="flex items-center gap-4">
     <app-menu-hamburguer/>
     <h1 class="text-xl  text-white font-medium">{{ currentTitle() }}</h1>
@@ -9,7 +9,11 @@
       <p class="text-xs text-end opacity-80">{{ userInfo()?.roles ?? [] | userRole }}</p>
     </span>
     <div class="w-10 h-10 rounded-full bg-white relative">
-      <img class="h-full w-full rounded-full object-cover" [src]="userPhoto()" >
+      @if (!userPhoto()) {
+        <img src="assets/images/sem-foto.png" class="rounded-full object-cover h-full w-full">
+      } @else {
+        <img class="h-full w-full rounded-full object-cover" [src]="userPhoto()" >
+      }
       <div class="absolute right-0 bottom-0 bg-white rounded-full w-3 h-3 flex items-center justify-center">
         @if(openMenu()) {
           <img src="assets/icons/dashboard/seta-para-baixo.png" class="w-2  transition-all" style="transform: rotate(180deg)">
