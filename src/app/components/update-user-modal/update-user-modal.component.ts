@@ -1,5 +1,5 @@
 import { JsonPipe } from '@angular/common';
-import { ChangeDetectorRef, Component, Input, OnChanges, OnInit, inject, signal } from '@angular/core';
+import { Component, EventEmitter, Input, OnChanges, OnInit, Output, inject, signal } from '@angular/core';
 import { FormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
 import { MatButtonModule } from '@angular/material/button';
 import { MatFormFieldModule } from '@angular/material/form-field';
@@ -12,6 +12,7 @@ import BaseFormComponent from '../../base/base-form.component';
 import { City } from '../../models/city';
 import CityService from '../../services/city.service';
 import { ClientService } from '../../services/client.service';
+import { CreateUser } from '../../models/create-user';
 
 @Component({
   selector: 'app-update-user-modal',
@@ -26,13 +27,12 @@ export class UpdateUserModalComponent extends BaseFormComponent implements OnIni
   @Input()
   userId: number | null = null;
 
-  @Input()
-  returnUrl: string = '';
+  @Output()
+  onExit = new EventEmitter();
 
   #formBuilder = inject(FormBuilder);
   #cityService = inject(CityService);
   #clientService = inject(ClientService);
-  #cdr = inject(ChangeDetectorRef);
 
   cities = signal([] as City[]);
 
@@ -46,11 +46,11 @@ export class UpdateUserModalComponent extends BaseFormComponent implements OnIni
     password: ['', [Validators.required]],
     confirmationPassword: ['', [Validators.required]],
     address: this.#formBuilder.group({
-      street: ['', [Validators.maxLength(100)]],
-      neighborhood: ['', [Validators.maxLength(100)]],
-      zipCode: ['', [Validators.maxLength(100)]],
-      number: ['', [Validators.maxLength(100)]],
-      cityId: [''],
+      street: ['', [Validators.maxLength(100), Validators.required]],
+      neighborhood: ['', [Validators.maxLength(100), Validators.required]],
+      zipCode: ['', [Validators.maxLength(100), Validators.required]],
+      number: ['', [Validators.maxLength(100), Validators.required]],
+      cityId: ['', [Validators.required]],
     }),
   });
 
@@ -62,14 +62,20 @@ export class UpdateUserModalComponent extends BaseFormComponent implements OnIni
     await this.checkIfEdition();
   }
 
+  async create() {
+    this.checkForm();
+    if (this.form.invalid) return;
+    await this.#clientService.create(this.form.value as CreateUser);
+    this.onExit.emit();
+  }
+
   async checkIfEdition() {
     if (!this.userId) return;
-    console.log("OII")
     this.form.removeControl('password' as never);
     this.form.removeControl('confirmationPassword' as never);
     const user = await this.#clientService.findById(this.userId);
     this.form.patchValue(user as any);
     this.form.controls.address.controls.cityId.setValue(user.address?.city.id as any ?? '');
-    this.#cdr.detectChanges();
   }
+
 }

@@ -36,4 +36,11 @@ export default class ClientsComponent extends BaseStoreComponent {
   openMoreFilterModal = signal(false);
 
   userId = signal<number | null>(null);
+
+  createClient = signal(false);
+
+  reset() {
+    this.createClient.set(false);
+    this.userId.set(null);
+  }
 }

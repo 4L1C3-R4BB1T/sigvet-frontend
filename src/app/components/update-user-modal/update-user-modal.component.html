@@ -7,7 +7,7 @@
     </aside>
     <aside class="flex flex-col p-4 flex-1">
       <header class="py-2">
-        <button mat-button class="flex gap-2" [routerLink]="returnUrl">
+        <button mat-button class="flex gap-2" (click)="onExit.emit()">
           <i class="bi bi-arrow-left"></i>
           Voltar para a página anterior
         </button>

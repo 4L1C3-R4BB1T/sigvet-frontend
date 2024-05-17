@@ -15,8 +15,11 @@
     </div>
 
     <div class=" flex items-center mr-2">
-      <button matTooltip="Adicionar" mat-mini-fab color="primary" class="mr-2">
+      <button matTooltip="Adicionar" mat-mini-fab color="primary" class="mr-2" (click)="createClient.set(true)">
         <i class="bi bi-person-fill-add text-2xl"></i>
+      </button>
+      <button matTooltip="Recarregar" mat-mini-fab color="primary" class="mr-2">
+        <i class="bi bi-arrow-clockwise text-2xl"></i>
       </button>
     </div>
   </div>
@@ -30,7 +33,7 @@
   <app-filter (onClose)="openMoreFilterModal.set(false)" />
 }
 
-@if (userId()) {
-  <app-update-user-modal [userId]="userId()" returnUrl="/dashboard/clientes"/>
+@if (userId() || createClient()) {
+  <app-update-user-modal (onExit)="reset()" [userId]="userId()"/>
 }
 
