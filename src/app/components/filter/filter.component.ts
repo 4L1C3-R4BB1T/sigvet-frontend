@@ -3,14 +3,17 @@ import { FormControl, FormGroup, ReactiveFormsModule } from '@angular/forms';
 import { FilterProperty } from './filter.model';
 import { NgIf } from '@angular/common';
 import { MatButtonModule } from '@angular/material/button';
-import { MatSelectModule } from '@angular/material/select';
+import { MatSelectChange, MatSelectModule } from '@angular/material/select';
+import { MatInputModule } from '@angular/material/input';
+import { NgxMaskDirective, provideNgxMask } from 'ngx-mask';
 
 @Component({
   selector: 'app-filter',
   standalone: true,
-  imports: [ReactiveFormsModule, NgIf, MatButtonModule, MatSelectModule],
+  imports: [ReactiveFormsModule, NgxMaskDirective, NgIf, MatButtonModule, MatSelectModule, MatInputModule],
   templateUrl: './filter.component.html',
-  styleUrl: './filter.component.scss'
+  styleUrl: './filter.component.scss',
+  providers: [provideNgxMask()]
 })
 export class FilterComponent implements OnInit {
 
@@ -26,6 +29,7 @@ export class FilterComponent implements OnInit {
     {
       property: 'document',
       propertyNickname: 'Documento',
+      mask: '000.000.000-00',
     }
   ];
 
@@ -41,9 +45,8 @@ export class FilterComponent implements OnInit {
     }
   }
 
-  applyFilter(select: HTMLSelectElement) {
+  applyFilter(select: MatSelectChange) {
     if (!select.value) return;
-    // Passar o objeto
     const field = this.fields.find(field => field.property === select.value)!;
     this.fieldsSelect().push(field);
     this.fieldsCopy.update(oldFields => oldFields.filter(field1 => field1.property !== field.property));

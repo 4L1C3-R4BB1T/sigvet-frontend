@@ -1,49 +1,35 @@
 <div  class="wrapper absolute top-0 left-0 w-full h-full bg-black bg-opacity-50">
   <div class="shadow-lg w-full max-w-[600px] bg-white animate-slide-in mx-auto mt-6">
     <div class="bg-[#244878] text-white flex justify-between items-center p-4">
-      Filtros
-      <span (click)="handleCloseEvent()" class="flex items-center justify-center p-2 rounded-full w-10 h-10 hover:bg-gray-100 transition-all hover:text-black cursor-pointer">
+      <span class="text-lg font-semibold">Filtros</span>
+      <button (click)="handleCloseEvent()" mat-icon-button>
         <i class="bi bi-x-lg"></i>
-      </span>
+      </button>
     </div>
     <section class="p-5">
       <div class="flex gap-4">
         <mat-form-field appearance="outline" class="flex-1">
           <mat-label>Propriedades</mat-label>
-          <mat-select name="Propriedades">
+          <mat-select name="Propriedades" (selectionChange)="applyFilter($event)">
             @for (field of fieldsCopy(); track field) {
-              <mat-option [value]="field.property">{{field.property}}</mat-option>
+              <mat-option [value]="field.property">{{ field.propertyNickname }}</mat-option>
             }
           </mat-select>
         </mat-form-field>
-
-<!--
-        <select #select class="text-sm  shadow-md border outline-none rounded-md border-black border-opacity-15 p-2 py-3 w-full">
-          @if(!fieldsCopy().length) {
-            <option value="" selected disabled>Não há mais propriedades</option>
-          }
-          @for (field of fieldsCopy(); track field) {
-            <option [value]="field.property">{{  field.propertyNickname }}</option>
-          }
-        </select> -->
-        <button  mat-raised-button color="primary" class="!h-full">
-          <div class="flex items-center gap-2">
-            <i class="bi bi-filter"></i>
-            Adicionar
-          </div>
-        </button>
       </div>
-      <span [formGroup]="form" class="mt-5 flex flex-col gap-3">
+      <span [formGroup]="form" class="mt-5 flex flex-col gap-1">
 
         @for (field of fields; track field) {
             @if (fieldsSelect().includes(field)) {
-              <div class="flex gap-5 bg-white items-center">
-                <span class="flex flex-grow border rounded-md shadow-md items-center px-2">
-                  <span class="text-sm">{{ field.propertyNickname }}:</span>
-                  <input formControlName="{{field.property}}" type="text" class="outline-none w-full h-full p-2 py-3 placeholder:text-sm placeholder:font-medium" placeholder="Insirar um valor">
-                </span>
-                <button (click)="removeFilter(field.property)" class="text-xs bg-red-900 bg-opacity-90 hover:opacity-90 flex gap-2 items-center text-white px-2 rounded-full w-10 h-10 justify-center"><i class="bi bi-trash3-fill"></i></button>
-              </div>
+             <div class="flex flex-1 gap-2">
+                <mat-form-field appearance="outline" class="flex-1">
+                  <mat-label>{{ field.propertyNickname }}</mat-label>
+                  <input matInput [mask]="field.mask" [placeholder]="field.propertyNickname" [name]="field.property">
+                </mat-form-field>
+                <button mat-mini-fab color="warn" class="mt-2" (click)="removeFilter(field.property)">
+                  <i class="bi bi-trash3-fill"></i>
+                </button>
+             </div>
           }
         }
 
