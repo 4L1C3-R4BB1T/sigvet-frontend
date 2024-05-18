@@ -2,11 +2,13 @@ import { Component, EventEmitter, Input, OnInit, Output, signal } from '@angular
 import { FormControl, FormGroup, ReactiveFormsModule } from '@angular/forms';
 import { FilterProperty } from './filter.model';
 import { NgIf } from '@angular/common';
+import { MatButtonModule } from '@angular/material/button';
+import { MatSelectModule } from '@angular/material/select';
 
 @Component({
   selector: 'app-filter',
   standalone: true,
-  imports: [ReactiveFormsModule, NgIf],
+  imports: [ReactiveFormsModule, NgIf, MatButtonModule, MatSelectModule],
   templateUrl: './filter.component.html',
   styleUrl: './filter.component.scss'
 })

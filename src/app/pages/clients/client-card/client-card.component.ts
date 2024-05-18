@@ -1,4 +1,5 @@
-import { Component, EventEmitter, Input, Output } from '@angular/core';
+import { DatePipe } from '@angular/common';
+import { Component, EventEmitter, Input, Output, inject, signal } from '@angular/core';
 import { MatButtonModule } from '@angular/material/button';
 import { MatCardModule } from '@angular/material/card';
 import { MatAccordion, MatExpansionModule } from '@angular/material/expansion';
@@ -7,7 +8,8 @@ import { MatInputModule } from '@angular/material/input';
 import { MatTooltipModule } from '@angular/material/tooltip';
 import { MatTreeModule } from '@angular/material/tree';
 import { User } from '../../../models/user';
-import { UpdateUserModalComponent } from '../../../components/update-user-modal/update-user-modal.component';
+import { DialogModule } from 'primeng/dialog';
+import { ClientService } from '../../../services/client.service';
 
 @Component({
   selector: 'app-client-card',
@@ -21,6 +23,8 @@ import { UpdateUserModalComponent } from '../../../components/update-user-modal/
     MatExpansionModule,
     MatInputModule,
     MatFormFieldModule,
+    DatePipe,
+    DialogModule,
   ],
   templateUrl: './client-card.component.html',
   styleUrl: './client-card.component.scss',
@@ -33,7 +37,17 @@ export class ClientCardComponent {
   @Output()
   onEdit = new EventEmitter();
 
+  #clientService = inject(ClientService);
+
+  closeDialog = signal(true);
+
   edit() {
     this.onEdit.emit(this.client.id);
+  }
+
+
+  async remove() {
+    await this.#clientService.deleteById(this.client.id);
+    this.closeDialog.set(true);
   }
 }

@@ -7,6 +7,7 @@ import {PageEvent, MatPaginatorModule} from '@angular/material/paginator';
 import { ClientService } from '../../../services/client.service';
 import { User } from '../../../models/user';
 import { UpdateUserModalComponent } from '../../../components/update-user-modal/update-user-modal.component';
+import { selectUserInfo } from '../../../store/reducers/user.reducer';
 
 @Component({
   selector: 'app-client-list',
@@ -18,6 +19,8 @@ import { UpdateUserModalComponent } from '../../../components/update-user-modal/
 export class ClientListComponent extends BaseStoreComponent  implements OnInit {
 
     #clientService = inject(ClientService);
+
+    userInfo = this.store.selectSignal(selectUserInfo);
 
     @Output()
     onEdit = new EventEmitter();

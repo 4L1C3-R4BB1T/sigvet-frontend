@@ -25,4 +25,6 @@ export interface User {
     }
   },
   roles: string[];
+  createdAt: string;
+  updatedAt: string;
 }

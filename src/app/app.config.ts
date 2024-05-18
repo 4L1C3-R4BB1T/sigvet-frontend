@@ -21,7 +21,9 @@ export const appConfig: ApplicationConfig = {
     provideToastr({
       progressBar: true,
       progressAnimation: 'increasing',
+      newestOnTop: true,
       timeOut: 3000,
+      positionClass: 'custom-toast-position',
     }),
     provideHttpClient(withInterceptors([authInterceptor])),
     importProvidersFrom(JwtModule.forRoot({})),

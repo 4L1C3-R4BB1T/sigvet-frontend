@@ -3,18 +3,27 @@
     <mat-card-header>
       <div class="flex justify-between w-full">
         <div class="flex gap-3">
-          <img class="w-20 h-20 rounded-full" src="assets/images/sem-foto.png">
+          @if (!client.photoUrl) {
+            <img class="w-20 h-20 rounded-full" src="assets/images/sem-foto.png">
+          } @else {
+            <img class="w-20 h-20 rounded-full" [src]="client.photoUrl">
+          }
         <div class="flex flex-col gap-2">
             <span class="text-base font-semibold">{{ client.name }}</span>
-            <span class="text-sm opacity-60">Castelo, Espírito Santo</span>
-          <span class="text-sm">Criado em: 04/05/2022</span>
-          <span class="text-sm">Última atualização em: 04/05/2022</span>
+            @if (client.address) {
+              <span class="text-sm opacity-60">{{ client.address.city.name + ', ' + client.address.city.state.name }}</span>
+            }
+          <span class="text-sm">Criado em: {{ client.createdAt | date: 'dd/MM/YYYY' }}</span>
+          <span class="text-sm">Última atualização em: {{ client.updatedAt | date: 'dd/MM/YYYY' }}</span>
         </div>
        </div>
        <div>
-        <span>
+        <span class="flex gap-2">
           <button mat-mini-fab color="primary" matTooltip="Editar" (click)="edit()">
-            <i class="bi bi-pencil-square"></i>
+            <i class="bi bi-pencil-square text-base"></i>
+          </button>
+          <button mat-mini-fab color="warn" matTooltip="Remover" (click)="closeDialog.set(false)">
+            <i class="bi bi-person-dash-fill text-base"></i>
           </button>
        </span>
        </div>
@@ -39,3 +48,19 @@
     </mat-card-actions>
   </mat-card>
 </div>
+
+
+<p-dialog [showHeader]="false" [modal]="true" #dialog [visible]="!closeDialog()" [style]="{ width: '25rem' }">
+  <div class="p-4">
+    <div class="flex flex-col gap-2">
+      <span class="font-semibold text-lg">Aviso</span>
+      <span class="text-sm">Você tem certeza que desejar esse usuário deletar?</span>
+    </div>
+    <div class="flex justify-end gap-3 mt-5">
+      <button mat-button color="warn" (click)="closeDialog.set(true)">Cancelar</button>
+      <button mat-button color="primary" (click)="remove()">Deletar</button>
+    </div>
+  </div>
+</p-dialog>
+
+

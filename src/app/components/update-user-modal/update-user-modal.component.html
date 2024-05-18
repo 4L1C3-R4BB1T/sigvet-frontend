@@ -14,8 +14,10 @@
           </button>
         </div>
       </div>
-      <span class="opacity-60 text-sm">gabrielcardoso{{"@"}}hotmail.com</span>
-      <span class=text-sm>Castelo, Espírito Santo</span>
+      @if (userId) {
+        <span class="opacity-60 text-sm">gabrielcardoso{{"@"}}hotmail.com</span>
+        <span class=text-sm>Castelo, Espírito Santo</span>
+      }
     </aside>
     <aside class="flex flex-col p-4 flex-1">
       <header class="py-2">
@@ -98,40 +100,40 @@
                 <mat-option [value]="city.id">{{  city.name + " - " + city.state.name }}</mat-option>
               }
             </mat-select>
-            @if (getControlError('cityId')) {
-              <mat-error>{{  getControlError('cityId') }}</mat-error>
+            @if (getControlError('address.cityId')) {
+              <mat-error>{{  getControlError('address.cityId') }}</mat-error>
             }
             </mat-form-field>
 
             <mat-form-field class="w-full" appearance="outline">
             <mat-label>Rua</mat-label>
             <input type="text" matInput formControlName="street" placeholder="Rua">
-            @if (getControlError('street')) {
-              <mat-error>{{  getControlError('street') }}</mat-error>
+            @if (getControlError('address.street')) {
+              <mat-error>{{  getControlError('address.street') }}</mat-error>
             }
             </mat-form-field>
 
             <mat-form-field class="w-full" appearance="outline">
             <mat-label>Bairro</mat-label>
             <input type="text" matInput formControlName="neighborhood" placeholder="Bairro">
-            @if (getControlError('neighborhood')) {
-              <mat-error>{{  getControlError('neighborhood') }}</mat-error>
+            @if (getControlError('address.neighborhood')) {
+              <mat-error>{{  getControlError('address.neighborhood') }}</mat-error>
             }
             </mat-form-field>
 
             <mat-form-field class="w-full" appearance="outline">
             <mat-label>CEP</mat-label>
             <input type="text" matInput mask="00000-000" formControlName="zipCode" placeholder="CEP">
-            @if (getControlError('zipCode')) {
-              <mat-error>{{  getControlError('zipCode') }}</mat-error>
+            @if (getControlError('address.zipCode')) {
+              <mat-error>{{  getControlError('address.zipCode') }}</mat-error>
             }
             </mat-form-field>
 
             <mat-form-field class="w-full" appearance="outline">
             <mat-label>Número</mat-label>
-            <input type="text" matInput mask="00000-000" formControlName="number" placeholder="Número">
-            @if (getControlError('number')) {
-              <mat-error>{{  getControlError('number') }}</mat-error>
+            <input type="text" matInput formControlName="number" placeholder="Número">
+            @if (getControlError('address.number')) {
+              <mat-error>{{  getControlError('address.number') }}</mat-error>
             }
             </mat-form-field>
             </div>
@@ -144,7 +146,7 @@
         @if (!userId) {
           <button type="button" mat-button (click)="create()">Salvar</button>
         } @else {
-          <button mat-button disabled>Opção indisponível</button>
+          <button type="button" mat-button (click)="update()">Atualizar</button>
         }
       </div>
     </aside>

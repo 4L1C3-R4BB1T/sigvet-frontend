@@ -7,8 +7,6 @@ import BaseService from '../base/base.service';
 import { AppState } from '../store';
 import { UserActions } from '../store/reducers/user.reducer';
 import { APIResponseError } from '../models/api-response-error';
-import { HttpHeaders } from '@angular/common/http';
-import { AccountService } from './account.service';
 import { UserLogin } from '../models/user-login';
 import { User } from '../models/user';
 
@@ -46,6 +44,7 @@ export class AuthService extends BaseService {
       this.toastrService.success('Login efetuado.');
       this.#router.navigateByUrl('/dashboard');
     } catch (ex: any) {
+      console.log(ex);
       if (!ex.error) {
         this.toastrService.error('Erro interno, tente mais tarde.');
         return;

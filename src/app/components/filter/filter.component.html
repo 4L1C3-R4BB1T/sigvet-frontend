@@ -8,6 +8,16 @@
     </div>
     <section class="p-5">
       <div class="flex gap-4">
+        <mat-form-field appearance="outline" class="flex-1">
+          <mat-label>Propriedades</mat-label>
+          <mat-select name="Propriedades">
+            @for (field of fieldsCopy(); track field) {
+              <mat-option [value]="field.property">{{field.property}}</mat-option>
+            }
+          </mat-select>
+        </mat-form-field>
+
+<!--
         <select #select class="text-sm  shadow-md border outline-none rounded-md border-black border-opacity-15 p-2 py-3 w-full">
           @if(!fieldsCopy().length) {
             <option value="" selected disabled>Não há mais propriedades</option>
@@ -15,10 +25,12 @@
           @for (field of fieldsCopy(); track field) {
             <option [value]="field.property">{{  field.propertyNickname }}</option>
           }
-        </select>
-        <button (click)="applyFilter(select)"  class="text-xs flex items-center gap-2 bg-[#244878] hover:opacity-90 text-white px-2 rounded-md">
-          <i class="bi bi-filter"></i>
-          Aplicar
+        </select> -->
+        <button  mat-raised-button color="primary" class="!h-full">
+          <div class="flex items-center gap-2">
+            <i class="bi bi-filter"></i>
+            Adicionar
+          </div>
         </button>
       </div>
       <span [formGroup]="form" class="mt-5 flex flex-col gap-3">
@@ -36,9 +48,9 @@
         }
 
       </span>
-      <div class="flex gap-3 text-sm mt-5">
-        <button class="flex-grow p-2  hover:opacity-80 rounded-md border hover:text-red-800 hover:border hover:border-red-800 bg-white shadow-lg" (click)="clearFilter()">Limpar Filtro</button>
-        <button class="flex-grow bg-[#244878] p-2 text-white hover:opacity-80 rounded-md shadow-lg">Filtrar</button>
+      <div class="flex gap-3 text-sm">
+        <button mat-raised-button class="flex-1" (click)="clearFilter()" class="flex-1 !h-12">Limpar Filtro</button>
+        <button mat-raised-button color="primary" class="flex-1 !h-12">Filtrar</button>
       </div>
     </section>
   </div>

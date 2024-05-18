@@ -41,6 +41,7 @@ export default class BaseFormComponent {
     }
 
   public checkForm() {
+    this.form.markAsDirty();
     this.markAllAsDirty(this.form);
   }
 
@@ -53,6 +54,8 @@ export default class BaseFormComponent {
         const control = controls[controlName];
         if (control instanceof FormControl) {
           control.markAsDirty();
+          control.markAsPristine();
+          control.markAsTouched();
         } else if (control instanceof FormGroup) {
           this.markAllAsDirty(control);
         }

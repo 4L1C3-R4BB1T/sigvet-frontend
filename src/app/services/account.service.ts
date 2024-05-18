@@ -8,6 +8,8 @@ import { AppState } from '../store';
 import { UserActions, selectUserInfo } from '../store/reducers/user.reducer';
 import { AuthService } from './auth.service';
 import { UserLogin } from '../models/user-login';
+import { RecoverUser } from '../models/recover-user';
+import { User } from '../models/user';
 
 @Injectable({
   providedIn: 'root'
@@ -17,6 +19,34 @@ export class AccountService extends BaseService {
   private authService = inject(AuthService);
   private store = inject<Store<AppState>>(Store);
   private userInfo = this.store.selectSignal(selectUserInfo);
+
+  public async recover(content: RecoverUser) {
+    try {
+      return await lastValueFrom(this.http.post(this.getEndpointV1('accout/recover'), content)
+        .pipe(map((response: any) => response.result as boolean)));
+    } catch (ex: any) {
+      if (!ex.error) {
+        this.toastrService.error('Erro interno, tente mais tarde.');
+        return;
+      }
+      const error = ex.error as APIResponseError;
+      if (error.result instanceof Array) {
+        const result = error.result as string[];
+        for (const messageError of result) {
+          this.toastrService.warning(messageError);
+        }
+      } else if (typeof error.result === 'string') {
+        this.toastrService.warning(error.result)
+      }
+    }
+    return null;
+  }
+
+  public async findById(id: number) {
+    return await lastValueFrom(this.http.get(this.getEndpointV1(`account/${id}`))
+    .pipe(map((response: any) => response.result as User)));
+  }
+
 
   public async create(record: CreateUser) {
     try {
@@ -60,7 +90,7 @@ export class AccountService extends BaseService {
     await this.loadUserPhoto();
   }
 
-  public async addClientPhoto(file: File, userId: number) {
+  public async addUserPhoto(file: File, userId: number) {
     const formData = new FormData();
     formData.append('photo', file);
     await lastValueFrom(this.http.put(this.getEndpointV1(`photo/user/${userId}`), formData).pipe(catchError(ex => {

@@ -14,14 +14,16 @@ import CityService from '../../services/city.service';
 import { ClientService } from '../../services/client.service';
 import { CreateUser } from '../../models/create-user';
 import { AccountService } from '../../services/account.service';
+import { UpdateUser } from '../../models/update-user';
+import { NgxMaskDirective, provideNgxMask } from 'ngx-mask';
 
 @Component({
   selector: 'app-update-user-modal',
   standalone: true,
-  imports: [MatButtonModule, MatFormFieldModule, ReactiveFormsModule, MatInputModule, MatTabsModule, MatSelectModule, RouterLink, JsonPipe],
+  imports: [NgxMaskDirective, MatButtonModule, MatFormFieldModule, ReactiveFormsModule, MatInputModule, MatTabsModule, MatSelectModule, RouterLink, JsonPipe],
   templateUrl: './update-user-modal.component.html',
   styleUrl: './update-user-modal.component.scss',
-  providers: [CityService],
+  providers: [CityService, provideNgxMask()],
 })
 export class UpdateUserModalComponent extends BaseFormComponent implements OnInit, OnChanges {
 
@@ -41,7 +43,7 @@ export class UpdateUserModalComponent extends BaseFormComponent implements OnIni
 
   cities = signal([] as City[]);
 
-  override form = this.#formBuilder.group({
+  protected override form = this.#formBuilder.group({
     id: [''],
     name: ['', [Validators.maxLength(100), Validators.minLength(3), Validators.required]],
     username: ['', [Validators.maxLength(100), Validators.minLength(3), Validators.required]],
@@ -73,7 +75,7 @@ export class UpdateUserModalComponent extends BaseFormComponent implements OnIni
     const result = await this.#clientService.create(this.form.value as CreateUser);
     if (!result?.id) return;
     if (this.savedPhoto()) {
-      this.#accountService.addClientPhoto(this.savedPhoto()!, result.id);
+      this.#accountService.addUserPhoto(this.savedPhoto()!, result.id);
     }
     this.onExit.emit();
   }
@@ -81,6 +83,10 @@ export class UpdateUserModalComponent extends BaseFormComponent implements OnIni
   async update() {
     this.checkForm();
     if (this.form.invalid) return;
+    const result = await this.#clientService.update(this.userId!, this.form.value as UpdateUser);
+    if (result) {
+      this.onExit.emit();
+    }
   }
 
   async addPhoto(files: FileList | null) {
@@ -89,7 +95,7 @@ export class UpdateUserModalComponent extends BaseFormComponent implements OnIni
     this.previewsPhoto.set(URL.createObjectURL(file!));
     this.savedPhoto.set(file); // Se for o criar eu vou setar a foto pra adicionar depois de criado
     if (this.userId) {
-      this.#accountService.addClientPhoto(file!, this.userId);
+      this.#accountService.addUserPhoto(file!, this.userId);
       return;
     }
   }
@@ -98,7 +104,8 @@ export class UpdateUserModalComponent extends BaseFormComponent implements OnIni
     if (!this.userId) return;
     this.form.removeControl('password' as never);
     this.form.removeControl('confirmationPassword' as never);
-    const user = await this.#clientService.findById(this.userId);
+    const user = await this.#accountService.findById(this.userId);
+    this.previewsPhoto.set(user.photoUrl ?? '');
     this.form.patchValue(user as any);
     this.form.controls.address.controls.cityId.setValue(user.address?.city.id as any ?? '');
   }
