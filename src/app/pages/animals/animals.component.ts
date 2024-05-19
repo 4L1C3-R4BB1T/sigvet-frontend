@@ -1,4 +1,4 @@
-import { Component, signal } from '@angular/core';
+import { AfterViewInit, Component, ViewChild, inject, signal } from '@angular/core';
 
 import { MatAutocompleteModule } from '@angular/material/autocomplete';
 import { MatButtonModule } from '@angular/material/button';
@@ -9,7 +9,7 @@ import { MatTooltipModule } from '@angular/material/tooltip';
 import { PaginatorComponent } from '../../components/paginator/paginator.component';
 import { AnimalListComponent } from './animal-list/animal-list.component';
 import { ViewAnimalInfoComponent } from './view-animal-info/view-animal-info.component';
-import { RouterLink, RouterOutlet } from '@angular/router';
+import { Router, RouterLink, RouterOutlet } from '@angular/router';
 import { FilterComponent } from '../../components/filter/filter.component';
 
 @Component({
@@ -27,14 +27,26 @@ import { FilterComponent } from '../../components/filter/filter.component';
     ViewAnimalInfoComponent,
     RouterOutlet,
     FilterComponent,
-    RouterLink,
   ],
   templateUrl: './animals.component.html',
   styleUrl: './animals.component.scss'
 })
 export default class AnimalsComponent {
+
+  @ViewChild(AnimalListComponent)
+  animalListComponent!: AnimalListComponent;
+
   openMoreFilterModal = signal(false);
 
+  #router = inject(Router);
+
+  create() {
+    if (this.animalListComponent.clientId()) {
+      this.#router.navigateByUrl('/dashboard/animais/novo?clientId='+this.animalListComponent.clientId());
+    } else {
+      this.#router.navigateByUrl('/dashboard/animais/novo');
+    }
+  }
   reload() {
     window.location.reload();
   }

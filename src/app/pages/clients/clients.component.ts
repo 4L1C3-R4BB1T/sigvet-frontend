@@ -1,4 +1,4 @@
-import { Component, ViewChild, signal } from '@angular/core';
+import { AfterViewInit, Component, ViewChild, signal } from '@angular/core';
 
 import { MatAutocompleteModule } from '@angular/material/autocomplete';
 import { MatButtonModule } from '@angular/material/button';

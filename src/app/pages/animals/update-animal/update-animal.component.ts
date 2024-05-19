@@ -51,6 +51,7 @@ export class UpdateAnimalComponent extends BaseFormComponent implements OnInit, 
   #store = inject(Store);
 
   animalId = signal<number | null>(this.#activatedRoute.snapshot.params['id'] ?? null);
+  clientId = signal<number | null>(this.#activatedRoute.snapshot.queryParams['clientId'] ?? null);
 
   clients = signal([] as User[]);
 
@@ -84,7 +85,14 @@ export class UpdateAnimalComponent extends BaseFormComponent implements OnInit, 
       }
       this.#clientService.searchByName(typed).then(result => this.filteredClients.set(result));
     });
-    this.checkIfEdition();
+    await this.checkIfEdition();
+
+    if (this.clientId()) {
+      const client = await this.#clientService.findById(this.clientId()!);
+      this.form.controls.clientId.setValue(''+client.id);
+      this.form.controls.client.controls.name.setValue(client.document + ' - ' + client.name);
+      this.form.updateValueAndValidity();
+    }
 
   }
 

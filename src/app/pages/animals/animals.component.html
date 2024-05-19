@@ -15,7 +15,7 @@
     </div>
 
     <div class="flex items-center mr-2">
-      <button matTooltip="Adicionar" mat-mini-fab color="primary" class="mr-2" routerLink="novo">
+      <button matTooltip="Adicionar" mat-mini-fab color="primary" class="mr-2" (click)="create()">
         <i class="bi bi-plus-circle-fill text-xl"></i>
       </button>
       <button matTooltip="Recarregar" mat-mini-fab color="primary" class="mr-2" (click)="reload()">

@@ -35,7 +35,7 @@ export class ClientListComponent extends BaseStoreComponent  implements OnInit {
     data = signal([] as User[]);
 
     length = 50; // Quantidade de dados trazidos
-    pageSize = 25;
+    pageSize = 5;
     pageIndex = 0;
     pageSizeOptions = [5, 10, 25];
 
@@ -58,7 +58,6 @@ export class ClientListComponent extends BaseStoreComponent  implements OnInit {
 
     async handlePageEvent(e: PageEvent) {
       this.pageEvent = e;
-      // this.length = e.length;
       this.pageSize = e.pageSize;
       this.pageIndex = e.pageIndex;
       await this.reload();
