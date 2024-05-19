@@ -1,4 +1,4 @@
-import { Component, signal } from '@angular/core';
+import { Component, ViewChild, signal } from '@angular/core';
 
 import { MatAutocompleteModule } from '@angular/material/autocomplete';
 import { MatButtonModule } from '@angular/material/button';
@@ -35,6 +35,10 @@ import { RouterLink } from '@angular/router';
   styleUrl: './clients.component.scss',
 })
 export default class ClientsComponent extends BaseStoreComponent {
+
+  @ViewChild(ClientListComponent)
+  clientListComponent!: ClientListComponent;
+
   openMoreFilterModal = signal(false);
 
   userId = signal<number | null>(null);
@@ -48,5 +52,9 @@ export default class ClientsComponent extends BaseStoreComponent {
 
   reloadPage() {
     window.location.reload();
+  }
+
+  generatePDF() {
+    this.clientListComponent?.generatePDF();
   }
 }

@@ -24,6 +24,8 @@
     "@ngrx/store": "^17.1.0",
     "bootstrap-icons": "^1.11.3",
     "chart.js": "^4.4.1",
+    "jspdf": "^2.5.1",
+    "jspdf-autotable": "^3.8.2",
     "ngx-mask": "^17.0.7",
     "ngx-toastr": "^18.0.0",
     "primeng": "^17.15.0",

@@ -8,6 +8,9 @@ import { ClientService } from '../../../services/client.service';
 import { User } from '../../../models/user';
 import { UpdateUserModalComponent } from '../../../components/update-user-modal/update-user-modal.component';
 import { selectUserInfo } from '../../../store/reducers/user.reducer';
+import jsPDF from 'jspdf';
+import autoTable from 'jspdf-autotable';
+import { ToastrService } from 'ngx-toastr';
 
 @Component({
   selector: 'app-client-list',
@@ -19,6 +22,8 @@ import { selectUserInfo } from '../../../store/reducers/user.reducer';
 export class ClientListComponent extends BaseStoreComponent  implements OnInit {
 
     #clientService = inject(ClientService);
+
+    #toastrService = inject(ToastrService);
 
     userInfo = this.store.selectSignal(selectUserInfo);
 
@@ -68,5 +73,40 @@ export class ClientListComponent extends BaseStoreComponent  implements OnInit {
     edit(userId: number) {
       this.onEdit.emit(userId);
     }
+
+
+    generatePDF() {
+      if (!this.data() || !this.data().length) {
+        this.#toastrService.info('Não há dados', 'PDF');
+        return;
+      }
+      const doc = new jsPDF();
+
+      const title = "Ficha de Clientes";
+      const pageWidth = doc.internal.pageSize.getWidth();
+      const textWidth = doc.getTextWidth(title);
+      const textX = (pageWidth - textWidth) / 2; // Calcula a posição central
+
+      doc.setFontSize(18);
+      doc.text(title, textX, 10);
+      const header = [['Id', 'Nome Completo', 'Usuário', 'Email', 'CPF', 'Celular']];
+
+      const  data = this.data().map(client => [
+          client.id,
+          client.name,
+          client.username,
+          client.email,
+          client.document,
+          client.phone,
+      ])
+
+      autoTable(doc, {
+        head: header,
+        body: data,
+      });
+
+      doc.save("client.pdf");
+    }
+
 
 }
