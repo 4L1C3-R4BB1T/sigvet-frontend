@@ -23,8 +23,14 @@
   </mat-paginator>
 </div>
 
-<div class="grid grid-cols-2 gap-4 mt-3">
+<div class="grid grid-cols-2 gap-4 mt-3 relative">
   @for (element of elements(); track element.id) {
     <app-animal-card [animal]="element"/>
+  } @empty {
+    <div class="bg-orange-100 absolute top-0 left-0 w-full p-3 flex gap-4 items-center mb-2" style="border: 1px solid #33333330">
+      <p class="text-sm">
+        Não há nenhum animal cadastrado
+      </p>
+    </div>
   }
 </div>
