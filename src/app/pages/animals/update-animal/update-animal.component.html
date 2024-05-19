@@ -1,18 +1,24 @@
 <div class="bg-black bg-opacity-50 absolute top-0 left-0 w-full h-full flex justify-center items-center">
   <form [formGroup]="form" class="max-w-[1000px] w-full bg-white p-5 mat-elevation-z2 rounded-md flex gap-5 animate-slide-in">
     <div class="flex justify-center ps-3">
-      <div class="w-40 h-40 mt-5 relative mat-elevation-z9 rounded-full flex items-center justify-center">
+      <div class="w-48 h-48 mt-12 relative mat-elevation-z6 rounded-full flex items-center justify-center">
         @if (previewPhotoUrl() || (animal() && animal().photoUrl)) {
           <img class="w-full h-full rounded-full object-cover" src="{{previewPhotoUrl() || animal().photoUrl }}">
+          <div class="absolute right-0 bottom-0">
+            <button mat-mini-fab color="primary">
+              <i class="bi bi-camera-fill text-2xl"></i>
+              <input type="file" class="opacity-0 absolute w-full h-full cursor-pointer top-0 left-0" #inputFile (input)="savePhoto(inputFile.files!)">
+            </button>
+          </div>
         } @else {
-          <i class="bi bi-image text-4xl text-[#242c59]"></i>
+          <div class="absolute top-0 left-0 w-full h-full rounded-full flex items-center justify-center">
+            <button mat-fab color="primary">
+              <i class="bi bi-camera-fill text-2xl"></i>
+              <input type="file" class="opacity-0 absolute w-full h-full cursor-pointer top-0 left-0" #inputFile (input)="savePhoto(inputFile.files!)">
+            </button>
+          </div>
         }
-        <div class="absolute right-0 bottom-0">
-          <button mat-mini-fab color="primary">
-            <i class="bi bi-camera-fill text-2xl"></i>
-            <input type="file" class="opacity-0 absolute w-full h-full cursor-pointer top-0 left-0" #inputFile (input)="savePhoto(inputFile.files!)">
-          </button>
-        </div>
+
       </div>
     </div>
    <div class="flex-1 p-5 flex-col flex">

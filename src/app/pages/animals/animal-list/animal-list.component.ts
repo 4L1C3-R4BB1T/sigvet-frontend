@@ -6,6 +6,8 @@ import { AnimalCardComponent } from '../animal-card/animal-card.component';
 import { AnimalService } from '../../../services/animal.service';
 import { Animal } from '../../../models/animal';
 import { ActivatedRoute } from '@angular/router';
+import { ClientService } from '../../../services/client.service';
+import { User } from '../../../models/user';
 
 @Component({
   selector: 'app-animal-list',
@@ -18,9 +20,12 @@ export class AnimalListComponent {
 
   #animalService = inject(AnimalService);
 
+  #clientService = inject(ClientService);
+
   #activatedRoute = inject(ActivatedRoute);
 
-  clientId = signal(this.#activatedRoute.snapshot.queryParams['clientId']);
+  clientId = signal(this.#activatedRoute.snapshot.queryParams['clientId'] as number);
+  client = signal({} as User);
 
   elements = signal<Animal[]>([]);
 
@@ -38,6 +43,7 @@ export class AnimalListComponent {
 
   async ngOnInit() {
     if (this.clientId()) {
+      this.client.set(await this.#clientService.findById(this.clientId()));
       await this.reload(await this.#animalService.findAllByClientId(this.clientId()));
       return;
     }
