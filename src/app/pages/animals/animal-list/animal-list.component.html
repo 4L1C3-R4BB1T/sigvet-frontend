@@ -1,3 +1,13 @@
+@if(clientId()) {
+  <div class="bg-yellow-100 p-3 flex gap-4 items-center mb-2" style="border: 1px solid #33333330">
+    <span class="bg-white rounded-full w-8 h-8 flex items-center justify-center">
+      <i class="bi bi-info-lg text-xl"></i>
+    </span>
+    <p class="text-sm">
+      Você está atualmente visualizando os animais associados a um cliente específico.
+    </p>
+  </div>
+}
 <div>
     <mat-paginator #paginator
               class="!bg-transparent"
@@ -12,15 +22,6 @@
                 [pageIndex]="pageIndex">
   </mat-paginator>
 </div>
-
-@if (clientId()) {
-  <p-messages severity="info">
-    <ng-template pTemplate>
-        <img src="https://primefaces.org/cdn/primeng/images/primeng.svg" width="32" />
-        <div class="ml-2">Always bet on Prime.</div>
-    </ng-template>
-</p-messages>
-}
 
 <div class="grid grid-cols-2 gap-4 mt-3">
   @for (element of elements(); track element.id) {
