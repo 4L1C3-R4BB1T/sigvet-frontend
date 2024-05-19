@@ -13,6 +13,15 @@
   </mat-paginator>
 </div>
 
+@if (clientId()) {
+  <p-messages severity="info">
+    <ng-template pTemplate>
+        <img src="https://primefaces.org/cdn/primeng/images/primeng.svg" width="32" />
+        <div class="ml-2">Always bet on Prime.</div>
+    </ng-template>
+</p-messages>
+}
+
 <div class="grid grid-cols-2 gap-4 mt-3">
   @for (element of elements(); track element.id) {
     <app-animal-card [animal]="element"/>

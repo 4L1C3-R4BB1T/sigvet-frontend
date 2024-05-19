@@ -6,11 +6,12 @@ import { AnimalCardComponent } from '../animal-card/animal-card.component';
 import { AnimalService } from '../../../services/animal.service';
 import { Animal } from '../../../models/animal';
 import { ActivatedRoute } from '@angular/router';
+import { MessagesModule } from 'primeng/messages';
 
 @Component({
   selector: 'app-animal-list',
   standalone: true,
-  imports: [AnimalCardComponent, FadeInDirective, MatPaginatorModule],
+  imports: [AnimalCardComponent, FadeInDirective, MatPaginatorModule, MessagesModule],
   templateUrl: './animal-list.component.html',
   styleUrl: './animal-list.component.scss'
 })

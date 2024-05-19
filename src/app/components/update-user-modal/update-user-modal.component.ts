@@ -18,6 +18,7 @@ import { UpdateUser } from '../../models/update-user';
 import { NgxMaskDirective, provideNgxMask } from 'ngx-mask';
 import { Store } from '@ngrx/store';
 import { WindowReloadPageAction } from '../../store/reducers/window.reducer';
+import { User } from '../../models/user';
 
 @Component({
   selector: 'app-update-user-modal',
@@ -31,6 +32,7 @@ export class UpdateUserModalComponent extends BaseFormComponent implements OnIni
 
   @Input()
   userId: number | null = null;
+  user = signal({} as User);
 
   @Output()
   onExit = new EventEmitter();
@@ -112,6 +114,7 @@ export class UpdateUserModalComponent extends BaseFormComponent implements OnIni
     this.form.removeControl('password' as never);
     this.form.removeControl('confirmationPassword' as never);
     const user = await this.#accountService.findById(this.userId);
+    this.user.set(user);
     this.previewsPhoto.set(user.photoUrl ?? '');
     this.form.patchValue(user as any);
     this.form.controls.address.controls.cityId.setValue(user.address?.city.id as any ?? '');

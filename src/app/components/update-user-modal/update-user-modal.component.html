@@ -15,8 +15,10 @@
         </div>
       </div>
       @if (userId) {
-        <span class="opacity-60 text-sm">gabrielcardoso{{"@"}}hotmail.com</span>
-        <span class=text-sm>Castelo, Espírito Santo</span>
+        <span class="opacity-90 text-sm font-medium">{{ user().email }}</span>
+        @if (user().address) {
+          <span class="text-xs">{{ user().address?.city?.name }}, {{ user().address?.city?.state?.name }}</span>
+        }
       }
     </aside>
     <aside class="flex flex-col p-4 flex-1">
