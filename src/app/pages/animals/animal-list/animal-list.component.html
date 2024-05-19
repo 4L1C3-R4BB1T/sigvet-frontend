@@ -14,7 +14,7 @@
 </div>
 
 <div class="grid grid-cols-2 gap-4 mt-3">
-  @for (element of elements; track element; let i = $index) {
-    <app-animal-card />
+  @for (element of elements(); track element.id) {
+    <app-animal-card [animal]="element"/>
   }
 </div>

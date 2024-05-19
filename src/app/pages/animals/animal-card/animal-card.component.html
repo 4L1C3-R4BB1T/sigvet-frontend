@@ -1,41 +1,56 @@
-<div class="w-full mat-elevation-z4 rounded-md">
+<div class="w-full mat-elevation-z6 rounded-md">
   <mat-card class="w-full !rounded-md">
-    <mat-card-header>
-      <div class="flex justify-between w-full">
-        <div class="flex gap-3">
-          <img class="w-20 h-20 rounded-full" src="assets/images/periquito.png">
-          <div class="flex flex-col gap-2">
-            <span class="text-base font-semibold">Manga</span>
-            <span class="text-sm opacity-60">Agapornis</span>
-            <span class="text-sm">Criado em: 04/05/2022</span>
-            <span class="text-sm">Última atualização em: 04/05/2022</span>
+    <mat-card-content>
+      <div class="flex">
+        <div class="w-full flex gap-4 items-center">
+          @if (animal.photoUrl) {
+            <img class="w-20 h-20 object-cover object-center rounded-full" src="{{animal.photoUrl}}" alt="">
+          } @else {
+            <div class="w-20 h-20 bg-white flex items-center justify-center gap-1 mat-elevation-z4 rounded-full">
+              <i class="bi bi-images text-3xl"></i>
+            </div>
+          }
+          <div class="flex flex-col gap-1">
+              <span class="font-semibold text-base">{{ animal.name }}</span>
+              <span class="opacity-70 text-sm">{{ animal.breed }}</span>
+              <span class="text-sm">Criado em: {{ animal.createdAt | date: 'dd/MM/YYYY' }}</span>
+              <span class="text-sm">Última atualização em: {{ animal.updatedAt | date: 'dd/MM/YYYY' }}</span>
           </div>
         </div>
-        <div>
-          <span>
-            <button mat-mini-fab color="primary" matTooltip="Editar">
-              <i class="bi bi-pencil-square"></i>
-            </button>
-          </span>
+        <div class="flex gap-2">
+          <button mat-mini-fab color="primary" [routerLink]="['/dashboard', 'animais', 'atualizar', animal.id]">
+            <i class="bi bi-pencil-square text-lg"></i>
+          </button>
+          <button mat-mini-fab color="warn" (click)="closeDialog.set(false)">
+            <i class="bi bi-trash3-fill text-lg"></i>
+          </button>
         </div>
       </div>
-    </mat-card-header>
-    <mat-card-content>
-      <div class="mt-4 p-2"></div>
     </mat-card-content>
     <mat-card-actions>
-      <div class="flex justify-between w-full">
-        <div>
-          <button mat-button color="primary" matTooltip="gabrielcardoso_stelo@hotmail.com">
-            <i class="bi bi-envelope-at-fill"></i>
-            Conversar
-          </button>
-          <button mat-button color="primary" matTooltip="(28) 99950-5410">
-            <i class="bi bi-telephone-forward-fill"></i>
-            Ligar
-          </button>
-        </div>
+      <div class="flex justify-end w-full">
+        <button mat-button color="primary" [routerLink]="['/dashboard', 'animais', 'visualizar', animal.id]">
+         <div class="flex items-center gap-2">
+            <i class="bi bi-eye-fill text-lg"></i>
+            Visualizar
+         </div>
+        </button>
       </div>
     </mat-card-actions>
   </mat-card>
 </div>
+
+
+<p-dialog [showHeader]="false" [modal]="true" #dialog [visible]="!closeDialog()" [style]="{ width: '25rem' }">
+  <div class="p-4">
+    <div class="flex flex-col gap-2">
+      <span class="font-semibold text-lg">Aviso</span>
+      <span class="text-sm">Você tem certeza que desejar esse usuário deletar?</span>
+    </div>
+    <div class="flex justify-end gap-3 mt-5">
+      <button mat-button color="warn" (click)="closeDialog.set(true)">Cancelar</button>
+      <button mat-button color="primary" (click)="remove()">Deletar</button>
+    </div>
+  </div>
+</p-dialog>
+

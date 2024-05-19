@@ -22,8 +22,10 @@ export class AccountService extends BaseService {
 
   public async recover(content: RecoverUser) {
     try {
-      return await lastValueFrom(this.http.post(this.getEndpointV1('accout/recover'), content)
+      const result = await lastValueFrom(this.http.post(this.getEndpointV1('account/recover'), content)
         .pipe(map((response: any) => response.result as boolean)));
+      this.toastrService.success('Senha alterada', 'Conta');
+      return result;
     } catch (ex: any) {
       if (!ex.error) {
         this.toastrService.error('Erro interno, tente mais tarde.');

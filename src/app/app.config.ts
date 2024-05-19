@@ -12,6 +12,7 @@ import { JwtModule } from '@auth0/angular-jwt';
 import { provideToastr } from 'ngx-toastr';
 import { USER_FEATURE_KEY, userReducer } from './store/reducers/user.reducer';
 import { authInterceptor } from './interceptors/auth.interceptor';
+import { provideNativeDateAdapter } from '@angular/material/core';
 
 export const appConfig: ApplicationConfig = {
   providers: [
@@ -31,6 +32,9 @@ export const appConfig: ApplicationConfig = {
       [MENU_VISIBILITY_FEATURE_KEY]: menuVisibilityReducer,
       [USER_FEATURE_KEY]: userReducer,
     }),
-    provideAnimationsAsync(), provideAnimationsAsync(), provideAnimationsAsync(),
+    provideAnimationsAsync(),
+    provideAnimationsAsync(),
+    provideAnimationsAsync(),
+    provideNativeDateAdapter(),
   ],
 };

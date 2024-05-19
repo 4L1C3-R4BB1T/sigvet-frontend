@@ -9,6 +9,8 @@ import {MatButtonModule} from '@angular/material/button';
 import BaseFormComponent from '../../base/base-form.component';
 import { NgxMaskDirective, provideNgxMask } from 'ngx-mask';
 import { MatStepperModule } from '@angular/material/stepper';
+import { AccountService } from '../../services/account.service';
+import { RecoverUser } from '../../models/recover-user';
 
 @Component({
   selector: 'app-recover-client-password',
@@ -23,6 +25,7 @@ export class RecoverClientPasswordComponent extends BaseFormComponent implements
   isOpen = signal(false)
   isValidEmail = signal(false);
   isPasswordFilled = signal(false);
+  #accountService = inject(AccountService);
 
   #formBuilder = inject(FormBuilder);
 
@@ -41,18 +44,26 @@ export class RecoverClientPasswordComponent extends BaseFormComponent implements
     this.isOpen.set(b);
   }
 
-  public ngOnInit(): void {
+  ngOnInit(): void {
     this.form.controls.password.addValidators(CustomValidators.passwordMatch('password', this.form));
   }
 
-  public close() {
+  close() {
     this.isOpen.set(false);
 
     this.closedEvent.emit(true);
   }
 
-  public allFieldsFilled() {
+  allFieldsFilled() {
    return this.form.controls.email.valid && this.form.controls.document.valid && this.form.controls.password.valid && this.form.controls.confirmationPassword.valid;
+  }
+
+  async recover() {
+    this.checkForm();
+    if (!this.form.valid) return;
+    if (await this.#accountService.recover(this.form.value as RecoverUser)) {
+      this.close();
+    }
   }
 
 }

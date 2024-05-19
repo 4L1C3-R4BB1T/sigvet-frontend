@@ -153,7 +153,6 @@ export class SidenavComponent extends BaseStoreComponent implements OnInit {
   }
 
   public async addPhoto(fileList: FileList | null) {
-    console.log(fileList)
     if (!fileList || fileList.length == 0) return;
     await this.#accountService.addPhoto(fileList.item(0)!);
   }

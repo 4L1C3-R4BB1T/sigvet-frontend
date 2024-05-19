@@ -1,0 +1,66 @@
+<div class="bg-black bg-opacity-50 absolute top-0 left-0 w-full h-full flex justify-center items-center">
+  <form [formGroup]="form" class="max-w-[1000px] w-full bg-white p-5 mat-elevation-z2 rounded-md flex gap-5 animate-slide-in">
+    <div class="flex justify-center ps-3">
+      <div class="w-40 h-40 mt-5 relative mat-elevation-z9 rounded-full flex items-center justify-center">
+        <i class="bi bi-image text-4xl text-[#242c59]"></i>
+        <!-- <img class="w-full h-full rounded-full object-cover" src="assets/images/macaco.png" alt=""> -->
+        <div class="absolute right-0 bottom-0">
+          <button mat-mini-fab color="primary">
+            <i class="bi bi-camera-fill text-2xl"></i>
+            <input type="file" class="opacity-0 absolute w-full h-full cursor-pointer top-0 left-0">
+          </button>
+        </div>
+      </div>
+    </div>
+   <div class="flex-1 p-5 flex-col flex">
+    <span class="block">
+      <button mat-button type="button" routerLink="/dashboard/animais">
+        <i class="bi bi-arrow-left"></i> Voltar para a tela de animais
+      </button>
+    </span>
+    <div class="w-full grid gap-2 gap-x-4 mt-4 {{clientId() ? 'grid-cols-1' : 'grid-cols-2' }}">
+      <mat-form-field  appearance="outline">
+        <mat-label>Nome</mat-label>
+        <input type="text" matInput formControlName="name" placeholder="Nome">
+        @if (getControlError('name')) {
+          <mat-error>{{  getControlError('name') }}</mat-error>
+        }
+      </mat-form-field>
+      <mat-form-field  appearance="outline">
+        <mat-label>Raça</mat-label>
+        <input type="text" matInput formControlName="breed" placeholder="Raça">
+        @if (getControlError('breed')) {
+          <mat-error>{{  getControlError('breed') }}</mat-error>
+        }
+      </mat-form-field>
+      <mat-form-field appearance="outline" >
+        <mat-label>Data Nascimento</mat-label>
+        <input matInput [matDatepicker]="picker" formControlName="birthDate" placeholder="Data Nascimento">
+        <mat-datepicker-toggle matIconSuffix [for]="picker"></mat-datepicker-toggle>
+        <mat-datepicker #picker></mat-datepicker>
+      </mat-form-field>
+
+      <mat-form-field appearance="outline" formGroupName="client" *ngIf="!clientId()">
+        <mat-label>Clientes</mat-label>
+        <input type="text"
+               placeholder="Nome"
+               matInput
+               formControlName="name"
+               [matAutocomplete]="auto">
+        <mat-autocomplete autoActiveFirstOption #auto="matAutocomplete" autoSelectActiveOption (optionSelected)="onClientSelect($event)">
+          @for (client of filteredClients(); track client.id) {
+            <mat-option [value]="client.document + ' - ' + client.name">{{ client.document + ' - ' + client.name }}</mat-option>
+          }
+        </mat-autocomplete>
+        @if (getControlError('clientId')) {
+          <mat-error>{{  getControlError('clientId') }}</mat-error>
+        }
+      </mat-form-field>
+
+    </div>
+    <div class="flex-1 justify-end flex">
+      <button mat-button color="primary">Salvar</button>
+    </div>
+   </div>
+  </form>
+</div>

@@ -9,14 +9,17 @@
       <button matTooltip="Limpar" mat-mini-fab color="none" class="h-full ms-2">
         <i class="bi bi-eraser-fill text-xl"></i>
       </button>
-      <button mat-mini-fab matTooltip="Mais Filtros" color="primary" class="ms-2" (click)="openMoreFilterModal.set(true)">
+      <button (click)="openMoreFilterModal.set(true)" mat-mini-fab matTooltip="Mais Filtros" color="primary" class="ms-2" (click)="openMoreFilterModal.set(true)">
         <i class="bi bi-filter text-2xl"></i>
       </button>
     </div>
 
     <div class="flex items-center mr-2">
-      <button matTooltip="Adicionar" mat-mini-fab color="primary" class="mr-2">
-        <i class="bi bi-person-fill-add text-2xl"></i>
+      <button matTooltip="Adicionar" mat-mini-fab color="primary" class="mr-2" routerLink="novo">
+        <i class="bi bi-plus-circle-fill text-xl"></i>
+      </button>
+      <button matTooltip="Recarregar" mat-mini-fab color="primary" class="mr-2">
+        <i class="bi bi-arrow-clockwise text-2xl"></i>
       </button>
     </div>
   </div>
@@ -25,3 +28,10 @@
 <div class="mt-1 pb-5">
   <app-animal-list />
 </div>
+
+@if (openMoreFilterModal()) {
+  <app-filter (onClose)="openMoreFilterModal.set(false)"/>
+}
+
+<router-outlet/>
+

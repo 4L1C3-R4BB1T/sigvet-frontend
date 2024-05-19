@@ -35,7 +35,7 @@ export default class BaseFormComponent {
       } else if (Object.hasOwn(errors, 'email')) {
         return 'O campo não é um e-mail válido';
       } else if (Object.hasOwn(errors, 'passwordMatch')) {
-        return 'A senha de confirmação não bate com a senha';
+        return 'A senha não bate com a senha de confirmação';
       }
       return "";
     }

@@ -8,6 +8,9 @@ import { MatTabsModule } from '@angular/material/tabs';
 import { MatTooltipModule } from '@angular/material/tooltip';
 import { PaginatorComponent } from '../../components/paginator/paginator.component';
 import { AnimalListComponent } from './animal-list/animal-list.component';
+import { ViewAnimalInfoComponent } from './view-animal-info/view-animal-info.component';
+import { RouterLink, RouterOutlet } from '@angular/router';
+import { FilterComponent } from '../../components/filter/filter.component';
 
 @Component({
   selector: 'app-animals',
@@ -21,6 +24,10 @@ import { AnimalListComponent } from './animal-list/animal-list.component';
     MatFormFieldModule,
     MatTooltipModule,
     MatTabsModule,
+    ViewAnimalInfoComponent,
+    RouterOutlet,
+    FilterComponent,
+    RouterLink,
   ],
   templateUrl: './animals.component.html',
   styleUrl: './animals.component.scss'

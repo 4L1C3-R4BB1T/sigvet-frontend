@@ -2,6 +2,8 @@ import { Routes } from '@angular/router';
 import { authGuard } from './guards/auth.guard';
 import { DashboardComponent } from './pages/dashboard/dashboard.component';
 import LoginComponent from './pages/login/login.component';
+import { ViewAnimalInfoComponent } from './pages/animals/view-animal-info/view-animal-info.component';
+import { UpdateAnimalComponent } from './pages/animals/update-animal/update-animal.component';
 
 export const routes: Routes = [
   {
@@ -34,6 +36,20 @@ export const routes: Routes = [
         path: 'animais',
         loadComponent: () => import('./pages/animals/animals.component'),
         title: 'Animais',
+        children: [
+          {
+            path: 'novo',
+            component: UpdateAnimalComponent,
+          },
+          {
+            path: 'atualizar/:id',
+            component: UpdateAnimalComponent,
+          },
+          {
+            path: 'visualizar/:id',
+            component: ViewAnimalInfoComponent,
+          },
+        ]
       },
       {
         path: 'veterinarios',
