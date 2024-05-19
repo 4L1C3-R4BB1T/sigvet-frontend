@@ -2,12 +2,15 @@
   <form [formGroup]="form" class="max-w-[1000px] w-full bg-white p-5 mat-elevation-z2 rounded-md flex gap-5 animate-slide-in">
     <div class="flex justify-center ps-3">
       <div class="w-40 h-40 mt-5 relative mat-elevation-z9 rounded-full flex items-center justify-center">
-        <i class="bi bi-image text-4xl text-[#242c59]"></i>
-        <!-- <img class="w-full h-full rounded-full object-cover" src="assets/images/macaco.png" alt=""> -->
+        @if (previewPhotoUrl() || (animal() && animal().photoUrl)) {
+          <img class="w-full h-full rounded-full object-cover" src="{{previewPhotoUrl() || animal().photoUrl }}">
+        } @else {
+          <i class="bi bi-image text-4xl text-[#242c59]"></i>
+        }
         <div class="absolute right-0 bottom-0">
           <button mat-mini-fab color="primary">
             <i class="bi bi-camera-fill text-2xl"></i>
-            <input type="file" class="opacity-0 absolute w-full h-full cursor-pointer top-0 left-0">
+            <input type="file" class="opacity-0 absolute w-full h-full cursor-pointer top-0 left-0" #inputFile (input)="savePhoto(inputFile.files!)">
           </button>
         </div>
       </div>
@@ -18,7 +21,7 @@
         <i class="bi bi-arrow-left"></i> Voltar para a tela de animais
       </button>
     </span>
-    <div class="w-full grid gap-2 gap-x-4 mt-4 {{clientId() ? 'grid-cols-1' : 'grid-cols-2' }}">
+    <div class="w-full grid grid-cols-2 gap-2 gap-x-4 mt-4">
       <mat-form-field  appearance="outline">
         <mat-label>Nome</mat-label>
         <input type="text" matInput formControlName="name" placeholder="Nome">
@@ -40,7 +43,7 @@
         <mat-datepicker #picker></mat-datepicker>
       </mat-form-field>
 
-      <mat-form-field appearance="outline" formGroupName="client" *ngIf="!clientId()">
+      <mat-form-field appearance="outline" formGroupName="client">
         <mat-label>Clientes</mat-label>
         <input type="text"
                placeholder="Nome"
@@ -59,7 +62,11 @@
 
     </div>
     <div class="flex-1 justify-end flex">
-      <button mat-button color="primary">Salvar</button>
+      @if (!animalId()) {
+        <button type="button" (click)="create()" mat-button color="primary">Salvar</button>
+      } @else {
+        <button type="button" (click)="update()" mat-button color="primary">Atualizar</button>
+      }
     </div>
    </div>
   </form>

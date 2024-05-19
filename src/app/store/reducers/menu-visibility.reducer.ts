@@ -23,7 +23,7 @@ export interface MenuVisibilityState {
 }
 
 const initialState: MenuVisibilityState = {
-  menuSidenav: false,
+  menuSidenav: true,
   modalProfile: false,
 }
 

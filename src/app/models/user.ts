@@ -1,3 +1,5 @@
+import { Animal } from "./animal";
+
 export interface User {
   id: number;
   username: string;
@@ -25,6 +27,7 @@ export interface User {
     }
   },
   roles: string[];
+  animals: Animal[];
   createdAt: string;
   updatedAt: string;
 }

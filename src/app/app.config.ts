@@ -13,6 +13,7 @@ import { provideToastr } from 'ngx-toastr';
 import { USER_FEATURE_KEY, userReducer } from './store/reducers/user.reducer';
 import { authInterceptor } from './interceptors/auth.interceptor';
 import { provideNativeDateAdapter } from '@angular/material/core';
+import { WINDOW_FEATURE_KEY, windowReducer } from './store/reducers/window.reducer';
 
 export const appConfig: ApplicationConfig = {
   providers: [
@@ -31,6 +32,7 @@ export const appConfig: ApplicationConfig = {
     provideStore({
       [MENU_VISIBILITY_FEATURE_KEY]: menuVisibilityReducer,
       [USER_FEATURE_KEY]: userReducer,
+      [WINDOW_FEATURE_KEY]: windowReducer,
     }),
     provideAnimationsAsync(),
     provideAnimationsAsync(),

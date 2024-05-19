@@ -35,6 +35,7 @@ export class ViewAnimalInfoComponent implements OnInit {
       return;
     }
     this.animal.set(result);
+    console.log(result)
   }
 
   exit() {

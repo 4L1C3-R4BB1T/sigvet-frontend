@@ -1,14 +1,29 @@
 import { Injectable } from '@angular/core';
-import BaseService, { FilterParams } from '../base/base.service';
 import { lastValueFrom, map } from 'rxjs';
+import BaseService, { FilterParams } from '../base/base.service';
 import { Animal } from '../models/animal';
 import { UpdateAnimal } from '../models/create-animal';
-import { APIResponseError } from '../models/api-response-error';
 
 @Injectable({
   providedIn: 'root'
 })
 export class AnimalService extends BaseService {
+
+  public async findAllByClientId(id: number) {
+    return await lastValueFrom(this.http.get<Animal[]>(this.getEndpointV1('animals/client/'+id)));
+  }
+
+  public async savePhoto(id: number | string, file: File) {
+    try {
+      const formData = new FormData();
+      formData.append('photo', file);
+      await lastValueFrom(this.http.put(this.getEndpointV1('photo/animal/'+id), formData));
+      return true;
+    } catch (ex: any) {
+      this.handleException(ex);
+      return false;
+    }
+  }
 
   public async findAll(filters?: FilterParams) {
     return await lastValueFrom(this.http.get(this.getEndpointV1(`animals${this.getFilterParams(filters)}`))
@@ -29,20 +44,7 @@ export class AnimalService extends BaseService {
       return await lastValueFrom(this.http.post(this.getEndpointV1('animals'), content)
         .pipe(map((response: any) => response.result as Animal)));
     } catch (ex: any) {
-      console.log(ex)
-      if (!ex.error) {
-        this.toastrService.error('Erro interno, tente mais tarde.');
-        return;
-      }
-      const error = ex.error as APIResponseError;
-      if (error.result instanceof Array) {
-        const result = error.result as string[];
-        for (const messageError of result) {
-          this.toastrService.warning(messageError);
-        }
-      } else if (typeof error.result === 'string') {
-        this.toastrService.warning(error.result)
-      }
+      this.handleException(ex);
     }
     return null;
   }
@@ -53,20 +55,7 @@ export class AnimalService extends BaseService {
      await lastValueFrom(this.http.put(this.getEndpointV1(`animals/${id}`), content));
      return true;
     } catch (ex: any) {
-      console.log(ex)
-      if (!ex.error) {
-        this.toastrService.error('Erro interno, tente mais tarde.');
-        return;
-      }
-      const error = ex.error as APIResponseError;
-      if (error.result instanceof Array) {
-        const result = error.result as string[];
-        for (const messageError of result) {
-          this.toastrService.warning(messageError);
-        }
-      } else if (typeof error.result === 'string') {
-        this.toastrService.warning(error.result)
-      }
+      this.handleException(ex);
     }
     return false;
   }

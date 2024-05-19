@@ -13,14 +13,21 @@
             @if (client.address) {
               <span class="text-sm opacity-60">{{ client.address.city.name + ', ' + client.address.city.state.name }}</span>
             }
-          <span class="text-sm">Criado em: {{ client.createdAt | date: 'dd/MM/YYYY' }}</span>
-          <span class="text-sm">Última atualização em: {{ client.updatedAt | date: 'dd/MM/YYYY' }}</span>
+          <span class="text-sm flex items-center gap-2">Criado em:
+              {{ client.createdAt | date: 'dd/MM/YYYY' }}
+            </span>
+          <span class="text-sm flex items-center gap-2">Última atualização em:
+              {{ client.updatedAt | date: 'dd/MM/YYYY' }}
+           </span>
         </div>
        </div>
        <div>
         <span class="flex gap-2">
           <button mat-mini-fab color="primary" matTooltip="Editar" (click)="edit()">
             <i class="bi bi-pencil-square text-xl"></i>
+          </button>
+          <button mat-mini-fab class="!bg-[#D26437]" matTooltip="Ver Animais" (click)="showAnimals()">
+            <img src="assets/icons/pawprint.png" class="w-5">
           </button>
           <button mat-mini-fab color="warn" matTooltip="Remover" (click)="closeDialog.set(false)">
             <i class="bi bi-person-dash-fill text-xl"></i>

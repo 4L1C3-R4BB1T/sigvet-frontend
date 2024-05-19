@@ -16,6 +16,8 @@ import { CreateUser } from '../../models/create-user';
 import { AccountService } from '../../services/account.service';
 import { UpdateUser } from '../../models/update-user';
 import { NgxMaskDirective, provideNgxMask } from 'ngx-mask';
+import { Store } from '@ngrx/store';
+import { WindowReloadPageAction } from '../../store/reducers/window.reducer';
 
 @Component({
   selector: 'app-update-user-modal',
@@ -40,6 +42,7 @@ export class UpdateUserModalComponent extends BaseFormComponent implements OnIni
   #cityService = inject(CityService);
   #clientService = inject(ClientService);
   #accountService = inject(AccountService);
+  #store = inject(Store);
 
   cities = signal([] as City[]);
 
@@ -77,15 +80,23 @@ export class UpdateUserModalComponent extends BaseFormComponent implements OnIni
     if (this.savedPhoto()) {
       this.#accountService.addUserPhoto(this.savedPhoto()!, result.id);
     }
+    this.toastrService.success('Adicionado', 'Cliente');
     this.onExit.emit();
+    setTimeout(() => this.#store.dispatch(WindowReloadPageAction()), 200);
   }
 
   async update() {
     this.checkForm();
+    if (!this.userId) return;
     if (this.form.invalid) return;
     const result = await this.#clientService.update(this.userId!, this.form.value as UpdateUser);
+    if (this.savedPhoto() && this.previewsPhoto()) {
+      this.#accountService.addUserPhoto(this.savedPhoto()!, this.userId);
+    }
     if (result) {
+      this.toastrService.success('Atualizado', 'Cliente');
       this.onExit.emit();
+      setTimeout(() => this.#store.dispatch(WindowReloadPageAction()), 200);
     }
   }
 
@@ -93,11 +104,7 @@ export class UpdateUserModalComponent extends BaseFormComponent implements OnIni
     if (!files) return;
     const file = files.item(0);
     this.previewsPhoto.set(URL.createObjectURL(file!));
-    this.savedPhoto.set(file); // Se for o criar eu vou setar a foto pra adicionar depois de criado
-    if (this.userId) {
-      this.#accountService.addUserPhoto(file!, this.userId);
-      return;
-    }
+    this.savedPhoto.set(file);
   }
 
   async checkIfEdition() {

@@ -5,6 +5,7 @@ import { FadeInDirective } from '../../../directives/fade-in.directive';
 import { AnimalCardComponent } from '../animal-card/animal-card.component';
 import { AnimalService } from '../../../services/animal.service';
 import { Animal } from '../../../models/animal';
+import { ActivatedRoute } from '@angular/router';
 
 @Component({
   selector: 'app-animal-list',
@@ -17,12 +18,16 @@ export class AnimalListComponent {
 
   #animalService = inject(AnimalService);
 
+  #activatedRoute = inject(ActivatedRoute);
+
+  clientId = signal(this.#activatedRoute.snapshot.queryParams['clientId']);
+
   elements = signal<Animal[]>([]);
 
   length = 50; // Quantidade de dados trazidos
-  pageSize = 5;
+  pageSize = 1000;
   pageIndex = 0;
-  pageSizeOptions = [2, 5, 25];
+  pageSizeOptions = [5, 10, 25];
 
   hidePageSize = false;
   showPageSizeOptions = true;
@@ -32,11 +37,16 @@ export class AnimalListComponent {
   pageEvent!: PageEvent;
 
   async ngOnInit() {
+    if (this.clientId()) {
+      await this.reload(await this.#animalService.findAllByClientId(this.clientId()));
+      return;
+    }
+
     await this.reload();
   }
 
-  async reload() {
-    const elements = await this.#animalService.findAll({ size: this.pageSize, page: this.pageIndex });
+  async reload(data?: Animal[]) {
+    const elements = data ?? await this.#animalService.findAll({ size: this.pageSize, page: this.pageIndex });
     this.length = elements.length;
     this.elements.set(elements);
   }

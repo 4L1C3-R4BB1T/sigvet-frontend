@@ -30,9 +30,9 @@ export class ClientListComponent extends BaseStoreComponent  implements OnInit {
     data = signal([] as User[]);
 
     length = 50; // Quantidade de dados trazidos
-    pageSize = 5;
+    pageSize = 25;
     pageIndex = 0;
-    pageSizeOptions = [2, 5, 25];
+    pageSizeOptions = [5, 10, 25];
 
     hidePageSize = false;
     showPageSizeOptions = true;

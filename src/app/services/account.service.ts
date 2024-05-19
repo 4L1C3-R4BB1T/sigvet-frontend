@@ -27,19 +27,7 @@ export class AccountService extends BaseService {
       this.toastrService.success('Senha alterada', 'Conta');
       return result;
     } catch (ex: any) {
-      if (!ex.error) {
-        this.toastrService.error('Erro interno, tente mais tarde.');
-        return;
-      }
-      const error = ex.error as APIResponseError;
-      if (error.result instanceof Array) {
-        const result = error.result as string[];
-        for (const messageError of result) {
-          this.toastrService.warning(messageError);
-        }
-      } else if (typeof error.result === 'string') {
-        this.toastrService.warning(error.result)
-      }
+      this.handleException(ex);
     }
     return null;
   }
@@ -55,19 +43,7 @@ export class AccountService extends BaseService {
       await lastValueFrom(this.http.post(this.getEndpointV1('account'), record));
       await this.authService.authenticate(record as UserLogin);
     } catch (ex: any) {
-      if (!ex.error) {
-        this.toastrService.error('Erro interno, tente mais tarde.');
-        return;
-      }
-      const error = ex.error as APIResponseError;
-      if (error.result instanceof Array) {
-        const result = error.result as string[];
-        for (const messageError of result) {
-          this.toastrService.warning(messageError);
-        }
-      } else if (typeof error.result === 'string') {
-        this.toastrService.warning(error.result)
-      }
+      this.handleException(ex);
     }
   }
 
@@ -76,16 +52,7 @@ export class AccountService extends BaseService {
     const formData = new FormData();
     formData.append('photo', file);
     await lastValueFrom(this.http.put(this.getEndpointV1(`photo/user/${this.userInfo()?.id}`), formData).pipe(catchError(ex => {
-      if (ex['error']) {
-        const error = ex['error'] as { result: string | string[] };
-        if (error.result instanceof Array) {
-          for (const messageError of error.result) {
-            this.toastrService.info(messageError);
-          }
-        } else {
-          this.toastrService.info(error.result);
-        }
-      }
+      this.handleException(ex);
       return of();
     })
     ));
@@ -96,16 +63,7 @@ export class AccountService extends BaseService {
     const formData = new FormData();
     formData.append('photo', file);
     await lastValueFrom(this.http.put(this.getEndpointV1(`photo/user/${userId}`), formData).pipe(catchError(ex => {
-      if (ex['error']) {
-        const error = ex['error'] as { result: string | string[] };
-        if (error.result instanceof Array) {
-          for (const messageError of error.result) {
-            this.toastrService.info(messageError);
-          }
-        } else {
-          this.toastrService.info(error.result);
-        }
-      }
+      this.handleException(ex);
       return of();
     })
     ));

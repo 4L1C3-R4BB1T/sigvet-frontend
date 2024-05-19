@@ -34,4 +34,8 @@ import { FilterComponent } from '../../components/filter/filter.component';
 })
 export default class AnimalsComponent {
   openMoreFilterModal = signal(false);
+
+  reload() {
+    window.location.reload();
+  }
 }

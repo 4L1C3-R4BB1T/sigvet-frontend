@@ -35,7 +35,12 @@ export class HeaderComponent extends BaseStoreComponent implements OnInit {
         if (url.startsWith('/dashboard')) {
           this.currentTitle.set('Home');
         } else {
-          this.currentTitle.set(`${url[0].toUpperCase()}${url.substring(1)}`.replace(/\d|\//g, ''));
+          let title = url.split('/')[0];
+
+          if (title.includes('?')) {
+            title = title.substring(0, title.indexOf('?'));
+          }
+          this.currentTitle.set(title);
         }
       });
   }

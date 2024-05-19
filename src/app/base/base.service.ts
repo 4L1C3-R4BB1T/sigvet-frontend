@@ -2,6 +2,7 @@ import { inject } from "@angular/core";
 import { environment } from "../../environments/environment";
 import { HttpClient } from "@angular/common/http";
 import { ToastrService } from "ngx-toastr";
+import { APIResponseError } from "../models/api-response-error";
 
 export interface FilterParams {
   equal_filters?: string;
@@ -42,5 +43,22 @@ export default class BaseService {
 
   protected getEndpointV1(prefix: string) {
     return `${environment.apiBaseUrl}/${prefix}`;
+  }
+
+  protected handleException(ex: any) {
+    console.log(ex);
+    if (!ex?.error) {
+      this.toastrService.error('Erro interno, tente mais tarde.');
+      return;
+    }
+    const error = ex.error as APIResponseError;
+    if (error.result instanceof Array) {
+      const result = error.result as string[];
+      for (const messageError of result) {
+        this.toastrService.warning(messageError);
+      }
+    } else if (typeof error.result === 'string') {
+      this.toastrService.warning(error.result)
+    }
   }
 }

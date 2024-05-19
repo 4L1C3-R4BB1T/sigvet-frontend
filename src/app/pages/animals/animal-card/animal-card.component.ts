@@ -12,6 +12,9 @@ import { DatePipe } from '@angular/common';
 import { RouterLink } from '@angular/router';
 import { DialogModule } from 'primeng/dialog';
 import { AnimalService } from '../../../services/animal.service';
+import { ToastrService } from 'ngx-toastr';
+import { Store } from '@ngrx/store';
+import { WindowReloadPageAction } from '../../../store/reducers/window.reducer';
 
 @Component({
   selector: 'app-animal-card',
@@ -34,17 +37,23 @@ import { AnimalService } from '../../../services/animal.service';
   styleUrl: './animal-card.component.scss',
   providers: [],
 })
-export class AnimalCardComponent {
+export class AnimalCardComponent{
 
   @Input({ required: true })
   animal!: Animal;
 
   #animalService = inject(AnimalService);
 
+  #toastrService = inject(ToastrService);
+
+  #store = inject(Store);
+
   closeDialog = signal(true);
 
   async remove() {
     await this.#animalService.deleteById(this.animal.id);
+    this.#toastrService.success('Foi removido', 'Animal');
+    this.#store.dispatch(WindowReloadPageAction());
     this.closeDialog.set(true);
   }
 }
