@@ -12,8 +12,8 @@
           </div>
         } @else {
           <div class="absolute top-0 left-0 w-full h-full rounded-full flex items-center justify-center">
-            <button mat-fab color="primary">
-              <i class="bi bi-camera-fill text-2xl"></i>
+            <button mat-fab color="primary" class="!w-full !h-full">
+              <i class="bi bi-camera-fill text-4xl"></i>
               <input type="file" class="opacity-0 absolute w-full h-full cursor-pointer top-0 left-0" #inputFile (input)="savePhoto(inputFile.files!)">
             </button>
           </div>
