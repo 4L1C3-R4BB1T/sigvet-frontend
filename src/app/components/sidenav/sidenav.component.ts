@@ -3,20 +3,20 @@ import { Component, OnInit, inject, signal } from '@angular/core';
 import { MatSidenavModule } from '@angular/material/sidenav';
 import { RouterLink, RouterLinkActive } from '@angular/router';
 
+import { MatButtonModule } from '@angular/material/button';
 import { MatRippleModule } from '@angular/material/core';
 import { MatDialog } from '@angular/material/dialog';
 import { MatDividerModule } from '@angular/material/divider';
 import { MatListModule } from '@angular/material/list';
+import { MatMenuModule } from '@angular/material/menu';
 import BaseStoreComponent from '../../base/base-store.component';
+import { AccountService } from '../../services/account.service';
 import { DialogExitComponent } from '../../shared/components/dialog/dialog-exit.component';
 import {
   selectMenuSidenavValue
 } from '../../store/reducers/menu-visibility.reducer';
 import { selectUserInfo, selectUserPhoto } from '../../store/reducers/user.reducer';
 import { HeaderComponent } from '../header/header.component';
-import { MatButtonModule } from '@angular/material/button';
-import { AccountService } from '../../services/account.service';
-
 interface SidenavMenu {
   iconUrl: string;
   routeLink: string;
@@ -39,7 +39,8 @@ interface SidenavMenu {
     MatListModule,
     MatRippleModule,
     MatDividerModule,
-    MatButtonModule
+    MatButtonModule,
+    MatMenuModule
   ],
   templateUrl: './sidenav.component.html',
   styleUrl: './sidenav.component.scss',
@@ -157,4 +158,15 @@ export class SidenavComponent extends BaseStoreComponent implements OnInit {
     await this.#accountService.addPhoto(fileList.item(0)!);
   }
 
+  async removePhoto() {
+    if (!this.userInfo()) return;
+    if (await this.#accountService.removePhotoByUserId(this.userInfo()?.id!)) {
+      this.#accountService.toastrService.success('Removido', 'Foto');
+      this.reloadPage();
+    }
+  }
+
+  reloadPage() {
+    window.location.reload();
+  }
 }

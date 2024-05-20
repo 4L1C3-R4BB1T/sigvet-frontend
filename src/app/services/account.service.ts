@@ -20,6 +20,14 @@ export class AccountService extends BaseService {
   private store = inject<Store<AppState>>(Store);
   private userInfo = this.store.selectSignal(selectUserInfo);
 
+  public async removePhotoByUserId(id: number) {
+    try {
+      return await lastValueFrom(this.http.delete(this.getEndpointV1('photo/user/'+id)));
+    } catch(ex: any) {
+      return false;
+    }
+  }
+
   public async recover(content: RecoverUser) {
     try {
       const result = await lastValueFrom(this.http.post(this.getEndpointV1('account/recover'), content)

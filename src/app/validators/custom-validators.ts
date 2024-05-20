@@ -1,4 +1,5 @@
-import { FormGroup, ValidatorFn } from "@angular/forms";
+import { AbstractControl, FormGroup, ValidatorFn } from "@angular/forms";
+import moment from "moment";
 
 export const CustomValidators = {
   passwordMatch: (field: string, form: FormGroup): ValidatorFn => {
@@ -10,6 +11,19 @@ export const CustomValidators = {
       }
       return null;
     };
-  }
+  },
+  presentOrFuture: (control: AbstractControl) => {
+    try {
+      const today = moment(new Date());
+      const targetDate = moment(control.value);
+      if (targetDate.isBefore(today)) {
+        return {
+          presentOrFuture: true,
+        }
+      }
+      return null;
+    } catch (ex: any) {}
+    return null;
+  },
 }
 

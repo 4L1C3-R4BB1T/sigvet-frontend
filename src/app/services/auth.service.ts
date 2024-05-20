@@ -1,14 +1,13 @@
-import { Inject, Injectable, forwardRef, inject } from '@angular/core';
+import { Injectable, inject, signal } from '@angular/core';
 import { Router } from '@angular/router';
 import { JwtHelperService } from '@auth0/angular-jwt';
 import { Store } from '@ngrx/store';
 import { lastValueFrom } from 'rxjs';
 import BaseService from '../base/base.service';
+import { User } from '../models/user';
+import { UserLogin } from '../models/user-login';
 import { AppState } from '../store';
 import { UserActions } from '../store/reducers/user.reducer';
-import { APIResponseError } from '../models/api-response-error';
-import { UserLogin } from '../models/user-login';
-import { User } from '../models/user';
 
 const STORAGE_AUTH_KEY = 'sigvet_token';
 
@@ -25,6 +24,7 @@ export class AuthService extends BaseService {
   #jwtHelperService = inject(JwtHelperService);
   #router = inject(Router);
   #store = inject<Store<AppState>>(Store);
+  userInfo = signal<User | null>(null);
 
   private setToken(token: TokenResponse) {
     localStorage.setItem(STORAGE_AUTH_KEY, JSON.stringify(token));
@@ -42,22 +42,9 @@ export class AuthService extends BaseService {
       this.setToken(response.result);
       await this.loadingUserInfo();
       this.toastrService.success('Login efetuado.');
-      this.#router.navigateByUrl('/dashboard');
+      this.#router.navigateByUrl('/dashboard', { skipLocationChange: true });
     } catch (ex: any) {
-      console.log(ex);
-      if (!ex.error) {
-        this.toastrService.error('Erro interno, tente mais tarde.');
-        return;
-      }
-      const error = ex.error as APIResponseError;
-      if (error.result instanceof Array) {
-        const result = error.result as string[];
-        for (const messageError of result) {
-          this.toastrService.warning(messageError);
-        }
-      } else if (typeof error.result === 'string') {
-        this.toastrService.warning(error.result)
-      }
+      this.handleException(ex);
     }
   }
 
@@ -71,10 +58,9 @@ export class AuthService extends BaseService {
 
   public async loadingUserInfo() {
     try {
-      if (!this.isAuthenticated) return;
       const userId = this.extractUserId(this.getToken()!);
       const userInfo = await this.getCurrentUser(userId!);
-      this.#store.dispatch(UserActions.setUserInfo(userInfo));
+      setTimeout(() => this.#store.dispatch(UserActions.setUserInfo(userInfo)), 200);
     } catch (ex: any) {
       this.setToken(null!);
       this.#router.navigateByUrl('/login');

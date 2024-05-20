@@ -1,5 +1,5 @@
 <div id="container" class="absolute top-0 left-0 w-screen h-screen bg-black bg-opacity-70 flex flex-col items-center p-5">
-  <section class="bg-white w-full max-w-[1000px] flex gap-5 p-6 animate-slide-in shadow-md rounded-sm relative">
+  <section class="bg-white w-full max-w-[1000px] flex gap-5 p-6 animate-slide-in shadow-md rounded-md mat-elevation-z2 relative">
     <span class="absolute top-0 right-0 mt-5 mr-4">
       <button mat-icon-button (click)="close()">
         <img src="assets/icons/dashboard/close.svg" class="w-6 cursor-pointer">
@@ -7,7 +7,7 @@
     </span>
     <aside>
       @if (photoUrl())  {
-        <div class="photo relative w-44 h-44  bg-opacity-80 rounded-full">
+        <div class="photo relative w-52 h-52  bg-opacity-80 rounded-full px-4">
           <img class="absolute top-0 left-0 w-full h-full object-cover rounded-full" [src]="photoUrl()" alt>
         </div>
       }
@@ -16,10 +16,10 @@
     <div class="w-full">
       <header>
         <div class="flex gap-2">
-          <h1 class="text-2xl">Gabriel Cardoso Girarde</h1>
-          <button mat-button color="primary" class="ms-4">Editar</button>
+          <h1 class="text-2xl">{{ userInfo()!.name }}</h1>
+          <button mat-button color="primary" class="ms-4" (click)="onClickEditProfile.emit()">Editar</button>
         </div>
-        <h2 class="text-[#3479BF] font-semibold text-sm">Administrador</h2>
+        <h2 class="text-[#3479BF] font-semibold text-sm">{{ userInfo()!.roles |  userRole }}</h2>
       </header>
 
       <section class="py-5 mt-3">
@@ -29,68 +29,71 @@
               <mat-list-item>
                 <div class="flex justify-between">
                   <span class="font-medium text-base flex-1">Documento</span>
-                  <span class="w-1/3 text-sm text-[#3479BF] font-medium">173.645.097-20</span>
+                  <span class="w-1/3 text-sm text-[#3479BF] font-medium">{{ userInfo()!.document }}</span>
                 </div>
               </mat-list-item>
               <mat-list-item>
                 <div class="flex justify-between">
                   <span class="font-medium text-base flex-1">Nome</span>
-                <span class="w-1/3  text-sm text-[#3479BF] font-medium">Gabriel Cardoso Girarde</span>
+                <span class="w-1/3  text-sm text-[#3479BF] font-medium">{{ userInfo()!.name }}</span>
                 </div>
               </mat-list-item>
               <mat-list-item>
                 <div class="flex justify-between">
                   <span class="font-medium text-base flex-1">E-mail</span>
-                  <span class="w-1/3 text-sm text-[#3479BF] font-medium">gabrielcardosogirarde{{ "@" }}gmail.com</span>
+                  <span class="w-1/3 text-sm text-[#3479BF] font-medium">{{ userInfo()!.email }}</span>
                 </div>
               </mat-list-item>
               <mat-list-item>
                 <div class="flex justify-between">
-                  <span class="font-medium text-base flex-1">Telefone</span>
-                  <span class="w-1/3 text-sm text-[#3479BF] font-medium">(28) 99950-5410</span>
+                  <span class="font-medium text-base flex-1">Celular</span>
+                  <span class="w-1/3 text-sm text-[#3479BF] font-medium">{{ userInfo()!.phone }}</span>
                 </div>
               </mat-list-item>
             </mat-list>
           </mat-tab>
           <mat-tab label="Endereço">
-            <mat-list>
-              <mat-list-item>
-                <div class="flex justify-between">
-                  <span class="font-medium text-base flex-1">Rua</span>
-                  <span class="w-1/3 text-sm text-[#3479BF] font-medium">Rod. Família Requieri</span>
-                </div>
-              </mat-list-item>
-              <mat-list-item>
-                <div class="flex justify-between">
-                  <span class="font-medium text-base flex-1">Bairro</span>
-                <span class="w-1/3  text-sm text-[#3479BF] font-medium">Santo Agostinho</span>
-                </div>
-              </mat-list-item>
-              <mat-list-item>
-                <div class="flex justify-between">
-                  <span class="font-medium text-base flex-1">Número</span>
-                  <span class="w-1/3 text-sm text-[#3479BF] font-medium">95</span>
-                </div>
-              </mat-list-item>
-              <mat-list-item>
-                <div class="flex justify-between">
-                  <span class="font-medium text-base flex-1">Código Postal</span>
-                  <span class="w-1/3 text-sm text-[#3479BF] font-medium">2936000-000</span>
-                </div>
-              </mat-list-item>
-              <mat-list-item>
-                <div class="flex justify-between">
-                  <span class="font-medium text-base flex-1">Cidade</span>
-                  <span class="w-1/3 text-sm text-[#3479BF] font-medium">Castelo</span>
-                </div>
-              </mat-list-item>
-              <mat-list-item>
-                <div class="flex justify-between">
-                  <span class="font-medium text-base flex-1">Estado</span>
-                  <span class="w-1/3 text-sm text-[#3479BF] font-medium">Espírito Santo</span>
-                </div>
-              </mat-list-item>
-            </mat-list>
+            @if(userInfo()?.address) {
+                <mat-list>
+                  <mat-list-item>
+                    <div class="flex justify-between">
+                      <span class="font-medium text-base flex-1">Rua</span>
+                      <span class="w-1/3 text-sm text-[#3479BF] font-medium">{{ userInfo()!.address?.street }}</span>
+                    </div>
+                  </mat-list-item>
+                  <mat-list-item>
+                    <div class="flex justify-between">
+                      <span class="font-medium text-base flex-1">Bairro</span>
+                    <span class="w-1/3  text-sm text-[#3479BF] font-medium">{{ userInfo()!.address?.neighborhood }}</span>
+                    </div>
+                  </mat-list-item>
+                  <mat-list-item>
+                    <div class="flex justify-between">
+                      <span class="font-medium text-base flex-1">Número</span>
+                      <span class="w-1/3 text-sm text-[#3479BF] font-medium">{{ userInfo()!.address?.number }}</span>
+                    </div>
+                  </mat-list-item>
+                  <mat-list-item>
+                    <div class="flex justify-between">
+                      <span class="font-medium text-base flex-1">Código Postal</span>
+                      <span class="w-1/3 text-sm text-[#3479BF] font-medium">{{ userInfo()!.address?.zipCode }}</span>
+                    </div>
+                  </mat-list-item>
+                  <mat-list-item>
+                    <div class="flex justify-between">
+                      <span class="font-medium text-base flex-1">Cidade</span>
+                      <span class="w-1/3 text-sm text-[#3479BF] font-medium">{{ userInfo()!.address?.city?.name }}</span>
+                    </div>
+                  </mat-list-item>
+                  <mat-list-item>
+                    <div class="flex justify-between">
+                      <span class="font-medium text-base flex-1">Estado</span>
+                      <span class="w-1/3 text-sm text-[#3479BF] font-medium">{{ userInfo()!.address?.city?.state?.name }}</span>
+                    </div>
+                  </mat-list-item>
+                </mat-list>
+              }
+
           </mat-tab>
         </mat-tab-group>
       </section>

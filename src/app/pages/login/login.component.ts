@@ -44,12 +44,12 @@ export default class LoginComponent extends BaseFormComponent {
     password: new FormControl('', [Validators.required]),
   });
 
-  public signIn() {
+  async signIn() {
     if (!this.form.valid) {
       return;
     }
 
-    this.#authService.authenticate(this.form.value as UserLogin);
+    await this.#authService.authenticate(this.form.value as UserLogin);
   }
 
 }

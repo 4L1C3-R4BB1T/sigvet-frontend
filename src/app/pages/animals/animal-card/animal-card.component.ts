@@ -1,20 +1,19 @@
+import { DatePipe, JsonPipe } from '@angular/common';
 import { Component, Input, inject, signal } from '@angular/core';
 import { MatButtonModule } from '@angular/material/button';
 import { MatCardModule } from '@angular/material/card';
+import { MatRippleModule } from '@angular/material/core';
 import { MatAccordion, MatExpansionModule } from '@angular/material/expansion';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { MatTooltipModule } from '@angular/material/tooltip';
 import { MatTreeModule } from '@angular/material/tree';
-import { MatRippleModule } from '@angular/material/core';
-import { Animal } from '../../../models/animal';
-import { DatePipe } from '@angular/common';
 import { RouterLink } from '@angular/router';
-import { DialogModule } from 'primeng/dialog';
-import { AnimalService } from '../../../services/animal.service';
 import { ToastrService } from 'ngx-toastr';
-import { Store } from '@ngrx/store';
-import { WindowReloadPageAction } from '../../../store/reducers/window.reducer';
+import { DialogModule } from 'primeng/dialog';
+import { Animal } from '../../../models/animal';
+import { AnimalService } from '../../../services/animal.service';
+import AnimalsComponent from '../animals.component';
 
 @Component({
   selector: 'app-animal-card',
@@ -32,6 +31,7 @@ import { WindowReloadPageAction } from '../../../store/reducers/window.reducer';
     DatePipe,
     RouterLink,
     DialogModule,
+    JsonPipe,
   ],
   templateUrl: './animal-card.component.html',
   styleUrl: './animal-card.component.scss',
@@ -46,14 +46,14 @@ export class AnimalCardComponent{
 
   #toastrService = inject(ToastrService);
 
-  #store = inject(Store);
+  #animalComponent = inject(AnimalsComponent);
 
   closeDialog = signal(true);
 
   async remove() {
     await this.#animalService.deleteById(this.animal.id);
     this.#toastrService.success('Foi removido', 'Animal');
-    this.#store.dispatch(WindowReloadPageAction());
+    this.#animalComponent.reload();
     this.closeDialog.set(true);
   }
 }

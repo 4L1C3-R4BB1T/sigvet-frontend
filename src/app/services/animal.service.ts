@@ -53,6 +53,7 @@ export class AnimalService extends BaseService {
   public async update(id: number, content: UpdateAnimal) {
     try {
      await lastValueFrom(this.http.put(this.getEndpointV1(`animals/${id}`), content));
+     console.log('oii')
      return true;
     } catch (ex: any) {
       this.handleException(ex);

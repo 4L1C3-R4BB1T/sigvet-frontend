@@ -16,7 +16,7 @@ export interface FilterParams {
 export default class BaseService {
 
   protected http = inject(HttpClient);
-  protected toastrService = inject(ToastrService);
+  public toastrService = inject(ToastrService);
 
   protected getFilterParams(filters?: FilterParams): string {
     if (!filters) return '';

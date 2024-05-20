@@ -1,4 +1,4 @@
-import { DatePipe, JsonPipe } from '@angular/common';
+import { DatePipe } from '@angular/common';
 import { Component, EventEmitter, Input, Output, inject, signal } from '@angular/core';
 import { MatButtonModule } from '@angular/material/button';
 import { MatCardModule } from '@angular/material/card';
@@ -7,13 +7,12 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { MatTooltipModule } from '@angular/material/tooltip';
 import { MatTreeModule } from '@angular/material/tree';
-import { Router, RouterLink } from '@angular/router';
-import { Store } from '@ngrx/store';
+import { Router } from '@angular/router';
 import { ToastrService } from 'ngx-toastr';
 import { DialogModule } from 'primeng/dialog';
 import { User } from '../../../models/user';
 import { ClientService } from '../../../services/client.service';
-import { WindowReloadPageAction } from '../../../store/reducers/window.reducer';
+import ClientsComponent from '../clients.component';
 
 @Component({
   selector: 'app-client-card',
@@ -45,9 +44,9 @@ export class ClientCardComponent {
 
   #toastrService = inject(ToastrService);
 
-  #router = inject(Router);
+  #clientComponent = inject(ClientsComponent);
 
-  #store = inject(Store);
+  #router = inject(Router);
 
   closeDialog = signal(true);
 
@@ -58,9 +57,9 @@ export class ClientCardComponent {
   async remove() {
     if (await this.#clientService.deleteById(this.client.id)) {
       this.#toastrService.success('Foi removido', 'Cliente');
-      this.#store.dispatch(WindowReloadPageAction());
+      await this.#clientComponent.reload();
+      this.closeDialog.set(true);
     }
-    this.closeDialog.set(true);
   }
 
   showAnimals() {

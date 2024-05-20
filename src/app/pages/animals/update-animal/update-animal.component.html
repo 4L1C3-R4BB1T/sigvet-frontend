@@ -1,33 +1,38 @@
-<div class="bg-black bg-opacity-50 absolute top-0 left-0 w-full h-full flex justify-center items-center">
-  <form [formGroup]="form" class="max-w-[1000px] w-full bg-white p-5 mat-elevation-z2 rounded-md flex gap-5 animate-slide-in">
-    <div class="flex justify-center ps-3">
-      <div class="w-48 h-48 mt-12 relative mat-elevation-z6 rounded-full flex items-center justify-center">
-        @if (previewPhotoUrl() || (animal() && animal().photoUrl)) {
-          <img class="w-full h-full rounded-full object-cover" src="{{previewPhotoUrl() || animal().photoUrl }}">
-          <div class="absolute right-0 bottom-0">
-            <button mat-mini-fab color="primary">
-              <i class="bi bi-camera-fill text-2xl"></i>
-              <input type="file" class="opacity-0 absolute w-full h-full cursor-pointer top-0 left-0" #inputFile (input)="savePhoto(inputFile.files!)">
-            </button>
-          </div>
-        } @else {
-          <div class="absolute top-0 left-0 w-full h-full rounded-full flex items-center justify-center">
-            <button mat-fab color="primary" class="!w-full !h-full">
-              <i class="bi bi-camera-fill text-5xl"></i>
-              <input type="file" class="opacity-0 absolute w-full h-full cursor-pointer top-0 left-0" #inputFile (input)="savePhoto(inputFile.files!)">
-            </button>
-          </div>
-        }
+<div class="bg-black bg-opacity-50 absolute p-4 top-0 left-0 w-full h-full flex justify-center items-center">
+  <form [formGroup]="form" class="{{ toggleShowUploadPhoto.checked ? 'max-w-[800px]' : 'max-w-[600px]'}} overflow-hidden w-full fade-in bg-white  mat-elevation-z2 rounded-lg flex gap-5 animate-slide-in">
 
+
+    @if (toggleShowUploadPhoto.checked) {
+      <div class="flex justify-center items-center ps-5">
+        <div class="w-36 h-36 relative mat-elevation-z6 rounded-full flex items-center justify-center">
+          @if (previewPhotoUrl() || (animal() && animal().photoUrl)) {
+            <img class="w-full h-full rounded-full object-cover" src="{{previewPhotoUrl() || animal().photoUrl }}">
+            <div class="absolute right-0 bottom-0">
+              <button mat-mini-fab color="primary">
+                <i class="bi bi-camera-fill text-2xl"></i>
+                <input type="file" class="opacity-0 absolute w-full h-full cursor-pointer top-0 left-0" #inputFile (input)="savePhoto(inputFile.files!)">
+              </button>
+            </div>
+          } @else {
+            <div class="absolute top-0 left-0 w-full h-full rounded-full flex items-center justify-center">
+              <button mat-fab color="primary" class="!w-full !h-full">
+                <i class="bi bi-camera-fill text-5xl"></i>
+                <input type="file" class="opacity-0 absolute w-full h-full cursor-pointer top-0 left-0" #inputFile (input)="savePhoto(inputFile.files!)">
+              </button>
+            </div>
+          }
+
+        </div>
       </div>
-    </div>
+    }
+
    <div class="flex-1 p-5 flex-col flex">
     <span class="block">
       <button mat-button type="button" routerLink="/dashboard/animais">
         <i class="bi bi-arrow-left"></i> Voltar para a tela de animais
       </button>
     </span>
-    <div class="w-full grid grid-cols-2 gap-2 gap-x-4 mt-4">
+    <div class="w-full grid  gap-2 gap-x-4 mt-4">
       <mat-form-field  appearance="outline">
         <mat-label>Nome</mat-label>
         <input type="text" matInput formControlName="name" placeholder="Nome">
@@ -35,20 +40,6 @@
           <mat-error>{{  getControlError('name') }}</mat-error>
         }
       </mat-form-field>
-      <mat-form-field  appearance="outline">
-        <mat-label>Raça</mat-label>
-        <input type="text" matInput formControlName="breed" placeholder="Raça">
-        @if (getControlError('breed')) {
-          <mat-error>{{  getControlError('breed') }}</mat-error>
-        }
-      </mat-form-field>
-      <mat-form-field appearance="outline" >
-        <mat-label>Data Nascimento</mat-label>
-        <input matInput [matDatepicker]="picker" formControlName="birthDate" placeholder="Data Nascimento">
-        <mat-datepicker-toggle matIconSuffix [for]="picker"></mat-datepicker-toggle>
-        <mat-datepicker #picker></mat-datepicker>
-      </mat-form-field>
-
       <mat-form-field appearance="outline" formGroupName="client">
         <mat-label>Clientes</mat-label>
         <input type="text"
@@ -65,13 +56,35 @@
           <mat-error>{{  getControlError('clientId') }}</mat-error>
         }
       </mat-form-field>
-
+      <div class="flex gap-4 mt-1">
+        <mat-form-field  appearance="outline" class="flex-1">
+          <mat-label>Raça</mat-label>
+          <input type="text" matInput formControlName="breed" placeholder="Raça">
+          @if (getControlError('breed')) {
+            <mat-error>{{  getControlError('breed') }}</mat-error>
+          }
+        </mat-form-field>
+        <mat-form-field appearance="outline" class="flex-1">
+          <mat-label>Data Nascimento</mat-label>
+          <input matInput [matDatepicker]="picker" formControlName="birthDate" placeholder="Data Nascimento">
+          <mat-datepicker-toggle matIconSuffix [for]="picker"></mat-datepicker-toggle>
+          <mat-datepicker #picker></mat-datepicker>
+          @if (getControlError('birthDate')) {
+            <mat-error>{{  getControlError('birthDate') }}</mat-error>
+          }
+        </mat-form-field>
+      </div>
+      <div>
+        <mat-slide-toggle color="primary" class="mb-3" #toggleShowUploadPhoto>
+          <span>Exibir upload de foto</span>
+        </mat-slide-toggle>
+      </div>
     </div>
-    <div class="flex-1 justify-end flex">
+    <div class="flex-1 justify-end flex mt-3">
       @if (!animalId()) {
-        <button type="button" (click)="create()" mat-button color="primary">Salvar</button>
+        <button type="button" (click)="create()" mat-raised-button color="primary" class="w-full !h-12">Salvar</button>
       } @else {
-        <button type="button" (click)="update()" mat-button color="primary">Atualizar</button>
+        <button type="button" (click)="update()" mat-raised-button color="primary" class="w-full !h-12">Atualizar</button>
       }
     </div>
    </div>

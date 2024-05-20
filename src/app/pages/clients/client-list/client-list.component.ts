@@ -25,6 +25,7 @@ export class ClientListComponent extends BaseStoreComponent  implements OnInit {
 
     #toastrService = inject(ToastrService);
 
+
     userInfo = this.store.selectSignal(selectUserInfo);
 
     @Output()

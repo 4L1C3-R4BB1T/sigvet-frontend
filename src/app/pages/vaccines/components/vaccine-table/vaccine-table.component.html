@@ -1,223 +1,102 @@
-<table class="w-full shadow-lg border border-black border-opacity-20">
-  <thead>
-    <tr class="text-xs  bg-[#0d356ae6] text-white">
-      <th class="py-2">Foto</th>
-      <th>Nome</th>
-      <th>Fabricante</th>
-      <th>Lote</th>
-      <th>Preço</th>
-      <th>Estoque</th>
-      <th>Fabricação</th>
-      <th>Vencimento</th>
-      <th>Status</th>
-      <th>Ações</th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr class="bg-white border-b border-black border-opacity-15">
-      <td class="py-4">
-        <div class="flex justify-center">
-          <img src="assets/images/vacina2.png" class="block w-11 h-11 rounded-full bg-black"/>
+<div class="mat-elevation-z8">
+  <table mat-table [dataSource]="dataSource" matSort>
+    <!-- 'id', 'name', 'manufacturer', 'lot', 'unitPrice', 'stock', 'expirationDate']; -->
+
+    <ng-container matColumnDef="select">
+      <th mat-header-cell *matHeaderCellDef>
+        <mat-checkbox (change)="$event ? toggleAllRows() : null"
+                      [checked]="selection.hasValue() && isAllSelected()"
+                      [indeterminate]="selection.hasValue() && !isAllSelected()" color="primary">
+        </mat-checkbox>
+      </th>
+      <td mat-cell *matCellDef="let row">
+        <mat-checkbox (click)="$event.stopPropagation()"
+                      (change)="$event ? selection.toggle(row) : null"
+                      [checked]="selection.isSelected(row)" color="primary">
+        </mat-checkbox>
+      </td>
+    </ng-container>
+
+
+    <ng-container matColumnDef="id">
+      <th mat-header-cell *matHeaderCellDef mat-sort-header> ID </th>
+      <td mat-cell *matCellDef="let row"> {{row.id}} </td>
+    </ng-container>
+
+
+    <ng-container matColumnDef="name">
+      <th mat-header-cell *matHeaderCellDef mat-sort-header> Nome </th>
+      <td mat-cell *matCellDef="let row"> {{row.name}}</td>
+    </ng-container>
+
+    <ng-container matColumnDef="manufacturer">
+      <th mat-header-cell *matHeaderCellDef mat-sort-header> Fabricante </th>
+      <td mat-cell *matCellDef="let row"> {{row.manufacturer}} </td>
+    </ng-container>
+
+    <ng-container matColumnDef="lot">
+      <th mat-header-cell *matHeaderCellDef mat-sort-header> Lote </th>
+      <td mat-cell *matCellDef="let row"> {{row.lot}} </td>
+    </ng-container>
+
+    <ng-container matColumnDef="unitPrice">
+      <th mat-header-cell *matHeaderCellDef mat-sort-header> Preço Unitário </th>
+      <td mat-cell *matCellDef="let row">
+        <p-tag severity="success">
+          <span class="block px-2">{{ row.unitPrice | currency:'BRL' }}</span>
+        </p-tag>
+    </ng-container>
+
+    <ng-container matColumnDef="stock">
+      <th mat-header-cell *matHeaderCellDef mat-sort-header> Estoque </th>
+      <td mat-cell *matCellDef="let row">
+        <p-tag severity="warning">
+          <span class="block px-2">{{ row.stock }}</span>
+        </p-tag>
+     </td>
+    </ng-container>
+
+    <ng-container matColumnDef="expirationDate">
+      <th mat-header-cell *matHeaderCellDef mat-sort-header> Data de Expiração </th>
+      <td mat-cell *matCellDef="let row">
+        <p-tag severity="secondary">
+          <span class="block px-2">{{row.expirationDate | date: 'dd/MM/YYYY'}}</span>
+        </p-tag>
+      </td>
+    </ng-container>
+
+
+    <ng-container matColumnDef="actions">
+      <th mat-header-cell *matHeaderCellDef mat-sort-header> Ações </th>
+      <td mat-cell *matCellDef="let row">
+        <div>
+          <button
+          pButton
+          pRipple
+          severity="secondary" text rounded [matMenuTriggerFor]="menu">
+          <i class="bi bi-three-dots-vertical"></i>
+        </button>
+        <mat-menu #menu="matMenu">
+          <button mat-menu-item>
+            <span class="text-sm flex items-center gap-2">
+              <i class="bi bi-pencil-square text-black"></i>
+              Editar
+            </span>
+          </button>
+          <button mat-menu-item>
+            <span class="text-sm flex items-center gap-2">
+              <i class="bi bi-eye-fill text-black"></i>
+              Visualizar
+            </span>
+          </button>
+        </mat-menu>
+
         </div>
-      </td>
-      <td class="text-center">
-        <span class="text-sm">COVID-19</span>
-      </td>
-      <td class="text-center">
-        <span class="text-sm">Pfizer</span>
-      </td>
-      <td class="text-center">
-        <span class="text-sm">ABC123</span>
-      </td>
-      <td class="text-center">
-        <span class="text-sm text-green-800">R$ 15.50</span>
-      </td>
-      <td class="text-center">
-        <span class="text-sm">500</span>
-      </td>
-      <td class="text-center">
-        <span class="text-sm text-blue-900">01/03/2024</span>
-      </td>
-      <td class="text-center">
-        <span class="text-sm text-red-900">06/04/2024</span>
-      </td>
-      <td class="text-center">
-        <span class="text-sm font-bold text-red-900">Vencida</span>
-      </td>
-      <td class="text-center">
-        <ul class="flex gap-3 justify-center list-none">
-          <li class="bg-[#1469C0] hover:opacity-80 p-2 shadow-md rounded-full w-9 h-9 cursor-pointer">
-            <i class="bi bi-pencil-square text-base text-white"></i>
-          </li>
-          <li class="bg-[#BA1A1A] hover:opacity-80 shadow-md p-2 rounded-full w-9 h-9 cursor-pointer">
-            <i class="bi bi-trash3-fill text-base text-white"></i>
-          </li>
-        </ul>
-      </td>
-    </tr>
-    <tr class="bg-white border-b border-black border-opacity-15">
-      <td class="py-4">
-        <div class="flex justify-center">
-          <img src="assets/images/vacina2.png" class="block w-11 h-11 rounded-full bg-black"/>
-        </div>
-      </td>
-      <td class="text-center">
-        <span class="text-sm">COVID-19</span>
-      </td>
-      <td class="text-center">
-        <span class="text-sm">Pfizer</span>
-      </td>
-      <td class="text-center">
-        <span class="text-sm">ABC123</span>
-      </td>
-      <td class="text-center">
-        <span class="text-sm text-green-800">R$ 15.50</span>
-      </td>
-      <td class="text-center">
-        <span class="text-sm">500</span>
-      </td>
-      <td class="text-center">
-        <span class="text-sm text-blue-900">06/04/2024</span>
-      </td>
-      <td class="text-center">
-        <span class="text-sm text-red-900">01/01/2025</span>
-      </td>
-      <td class="text-center">
-        <span class="text-sm font-bold text-green-900">Ativo</span>
-      </td>
-      <td class="text-center">
-        <ul class="flex gap-3 justify-center list-none">
-          <li class="bg-[#1469C0] hover:opacity-80 p-2 shadow-md rounded-full w-9 h-9 cursor-pointer">
-            <i class="bi bi-pencil-square text-base text-white"></i>
-          </li>
-          <li class="bg-[#BA1A1A] hover:opacity-80 shadow-md p-2 rounded-full w-9 h-9 cursor-pointer">
-            <i class="bi bi-trash3-fill text-base text-white"></i>
-          </li>
-        </ul>
-      </td>
-    </tr>
-    <tr class="bg-white border-b border-black border-opacity-15">
-      <td class="py-4">
-        <div class="flex justify-center">
-          <img src="assets/images/vacina2.png" class="block w-11 h-11 rounded-full bg-black"/>
-        </div>
-      </td>
-      <td class="text-center">
-        <span class="text-sm">COVID-19</span>
-      </td>
-      <td class="text-center">
-        <span class="text-sm">Pfizer</span>
-      </td>
-      <td class="text-center">
-        <span class="text-sm">ABC123</span>
-      </td>
-      <td class="text-center">
-        <span class="text-sm text-green-800">R$ 15.50</span>
-      </td>
-      <td class="text-center">
-        <span class="text-sm">500</span>
-      </td>
-      <td class="text-center">
-        <span class="text-sm text-blue-900">06/04/2024</span>
-      </td>
-      <td class="text-center">
-        <span class="text-sm text-red-900">01/01/2025</span>
-      </td>
-      <td class="text-center">
-        <span class="text-sm font-bold text-green-900">Ativo</span>
-      </td>
-      <td class="text-center">
-        <ul class="flex gap-3 justify-center list-none">
-          <li class="bg-[#1469C0] hover:opacity-80 p-2 shadow-md rounded-full w-9 h-9 cursor-pointer">
-            <i class="bi bi-pencil-square text-base text-white"></i>
-          </li>
-          <li class="bg-[#BA1A1A] hover:opacity-80 shadow-md p-2 rounded-full w-9 h-9 cursor-pointer">
-            <i class="bi bi-trash3-fill text-base text-white"></i>
-          </li>
-        </ul>
-      </td>
-    </tr>
-    <tr class="bg-white border-b border-black border-opacity-15">
-      <td class="py-4">
-        <div class="flex justify-center">
-          <img src="assets/images/vacina2.png" class="block w-11 h-11 rounded-full bg-black"/>
-        </div>
-      </td>
-      <td class="text-center">
-        <span class="text-sm">COVID-19</span>
-      </td>
-      <td class="text-center">
-        <span class="text-sm">Pfizer</span>
-      </td>
-      <td class="text-center">
-        <span class="text-sm">ABC123</span>
-      </td>
-      <td class="text-center">
-        <span class="text-sm text-green-800">R$ 15.50</span>
-      </td>
-      <td class="text-center">
-        <span class="text-sm">500</span>
-      </td>
-      <td class="text-center">
-        <span class="text-sm text-blue-900">06/04/2024</span>
-      </td>
-      <td class="text-center">
-        <span class="text-sm text-red-900">01/01/2025</span>
-      </td>
-      <td class="text-center">
-        <span class="text-sm font-bold text-green-900">Ativo</span>
-      </td>
-      <td class="text-center">
-        <ul class="flex gap-3 justify-center list-none">
-          <li class="bg-[#1469C0] hover:opacity-80 p-2 shadow-md rounded-full w-9 h-9 cursor-pointer">
-            <i class="bi bi-pencil-square text-base text-white"></i>
-          </li>
-          <li class="bg-[#BA1A1A] hover:opacity-80 shadow-md p-2 rounded-full w-9 h-9 cursor-pointer">
-            <i class="bi bi-trash3-fill text-base text-white"></i>
-          </li>
-        </ul>
-      </td>
-    </tr>
-    <tr class="bg-white border-b border-black border-opacity-15">
-      <td class="py-4">
-        <div class="flex justify-center">
-          <img src="assets/images/vacina2.png" class="block w-11 h-11 rounded-full bg-black"/>
-        </div>
-      </td>
-      <td class="text-center">
-        <span class="text-sm">COVID-19</span>
-      </td>
-      <td class="text-center">
-        <span class="text-sm">Pfizer</span>
-      </td>
-      <td class="text-center">
-        <span class="text-sm">ABC123</span>
-      </td>
-      <td class="text-center">
-        <span class="text-sm text-green-800">R$ 15.50</span>
-      </td>
-      <td class="text-center">
-        <span class="text-sm">500</span>
-      </td>
-      <td class="text-center">
-        <span class="text-sm text-blue-900">06/04/2024</span>
-      </td>
-      <td class="text-center">
-        <span class="text-sm text-red-900">01/01/2025</span>
-      </td>
-      <td class="text-center">
-        <span class="text-sm font-bold text-green-900">Ativo</span>
-      </td>
-      <td class="text-center">
-        <ul class="flex gap-3 justify-center list-none">
-          <li class="bg-[#1469C0] hover:opacity-80 p-2 shadow-md rounded-full w-9 h-9 cursor-pointer">
-            <i class="bi bi-pencil-square text-base text-white"></i>
-          </li>
-          <li class="bg-[#BA1A1A] hover:opacity-80 shadow-md p-2 rounded-full w-9 h-9 cursor-pointer">
-            <i class="bi bi-trash3-fill text-base text-white"></i>
-          </li>
-        </ul>
-      </td>
-    </tr>
-  </tbody>
-</table>
+     </td>
+    </ng-container>
+
+    <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+    <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+  </table>
+
+</div>

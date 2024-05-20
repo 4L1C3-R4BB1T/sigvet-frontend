@@ -7,18 +7,18 @@ import { MatInputModule } from '@angular/material/input';
 import { MatSelectModule } from '@angular/material/select';
 import { MatTabsModule } from '@angular/material/tabs';
 import { RouterLink } from '@angular/router';
+import { Store } from '@ngrx/store';
+import { NgxMaskDirective, provideNgxMask } from 'ngx-mask';
 import { lastValueFrom } from 'rxjs';
 import BaseFormComponent from '../../base/base-form.component';
 import { City } from '../../models/city';
+import { CreateUser } from '../../models/create-user';
+import { UpdateUser } from '../../models/update-user';
+import { User } from '../../models/user';
+import ClientsComponent from '../../pages/clients/clients.component';
+import { AccountService } from '../../services/account.service';
 import CityService from '../../services/city.service';
 import { ClientService } from '../../services/client.service';
-import { CreateUser } from '../../models/create-user';
-import { AccountService } from '../../services/account.service';
-import { UpdateUser } from '../../models/update-user';
-import { NgxMaskDirective, provideNgxMask } from 'ngx-mask';
-import { Store } from '@ngrx/store';
-import { WindowReloadPageAction } from '../../store/reducers/window.reducer';
-import { User } from '../../models/user';
 
 @Component({
   selector: 'app-update-user-modal',
@@ -33,6 +33,8 @@ export class UpdateUserModalComponent extends BaseFormComponent implements OnIni
   @Input()
   userId: number | null = null;
   user = signal({} as User);
+
+  #clientComponent = inject(ClientsComponent);
 
   @Output()
   onExit = new EventEmitter();
@@ -82,9 +84,9 @@ export class UpdateUserModalComponent extends BaseFormComponent implements OnIni
     if (this.savedPhoto()) {
       this.#accountService.addUserPhoto(this.savedPhoto()!, result.id);
     }
-    this.toastrService.success('Adicionado', 'Cliente');
+    this.toastrService.success('Adicionado', 'Usuário');
+    await this.#clientComponent.reload();
     this.onExit.emit();
-    setTimeout(() => this.#store.dispatch(WindowReloadPageAction()), 200);
   }
 
   async update() {
@@ -97,8 +99,8 @@ export class UpdateUserModalComponent extends BaseFormComponent implements OnIni
     }
     if (result) {
       this.toastrService.success('Atualizado', 'Cliente');
+      await this.#clientComponent.reload();
       this.onExit.emit();
-      setTimeout(() => this.#store.dispatch(WindowReloadPageAction()), 200);
     }
   }
 

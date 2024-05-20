@@ -4,6 +4,7 @@ import { DashboardComponent } from './pages/dashboard/dashboard.component';
 import LoginComponent from './pages/login/login.component';
 import { ViewAnimalInfoComponent } from './pages/animals/view-animal-info/view-animal-info.component';
 import { UpdateAnimalComponent } from './pages/animals/update-animal/update-animal.component';
+import { UpdateVaccineComponent } from './pages/vaccines/components/update-vaccine/update-vaccine.component';
 
 export const routes: Routes = [
   {
@@ -35,6 +36,8 @@ export const routes: Routes = [
       {
         path: 'animais',
         loadComponent: () => import('./pages/animals/animals.component'),
+        canActivate: [authGuard],
+        canActivateChild: [authGuard],
         title: 'Animais',
         children: [
           {
@@ -60,6 +63,18 @@ export const routes: Routes = [
         path: 'vacinas',
         loadComponent: () => import('./pages/vaccines/vaccines.component'),
         title: 'Vacinas',
+        canActivate: [authGuard],
+        canActivateChild: [authGuard],
+        children: [
+          {
+            path: 'novo',
+            component: UpdateVaccineComponent,
+          },
+          {
+            path: 'atualizar/:id',
+            component: UpdateVaccineComponent,
+          },
+        ],
       },
       {
         path: 'vacinacoes',

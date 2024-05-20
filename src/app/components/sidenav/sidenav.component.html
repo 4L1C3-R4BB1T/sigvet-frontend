@@ -9,10 +9,27 @@
           <img [src]="userPhoto()" class="rounded-full object-cover h-full w-full">
         }
         <div class="absolute -right-2 bottom-0 cursor-pointer">
-          <button mat-mini-fab color="primary">
-            <i class="bi bi-camera-fill text-base"></i>
-            <input type="file" class="absolute left-0 top-0 w-full h-full opacity-0 cursor-pointer" #photoFileInput (input)="addPhoto(photoFileInput.files)">
+          <button mat-mini-fab color="primary" [matMenuTriggerFor]="menu">
+            <i class="bi bi-three-dots text-lg"></i>
+
           </button>
+          <mat-menu #menu="matMenu" class="menu ms-5 mt-2">
+            <button mat-menu-item>
+              <span class="text-sm flex items-center gap-2 text-white relative">
+                <i class="bi bi-upload text-base"></i>
+                Subir foto
+                <input type="file" class="absolute left-0 top-0 w-full h-full opacity-0 cursor-pointer" #photoFileInput (input)="addPhoto(photoFileInput.files)">
+              </span>
+            </button>
+            @if (userPhoto()) {
+              <button mat-menu-item (click)="removePhoto()">
+                <span class="text-sm flex items-center gap-2 text-white">
+                  <i class="bi bi-x-circle-fill"></i>
+                  Remover foto
+                </span>
+              </button>
+            }
+          </mat-menu>
         </div>
       </div>
       <span class="block opacity-80 text-white mt-5 text-center">{{  userInfo()?.name }}</span>

@@ -1,0 +1,75 @@
+<div class="bg-black p-2 bg-opacity-60 absolute top-0 left-0 w-full h-full flex items-center justify-center">
+  <form [formGroup]="form" class="max-w-[600px] mat-elevation-z2 rounded-md w-full bg-white p-8 animate-slide-in">
+    <!-- name: string
+    manufacturer: string
+    lot: string
+    unitPrice: number
+    stock: number
+    expirationDate: string -->
+   <div>
+    <header class="mb-4">
+      <button mat-button>
+        <span class="flex items-center gap-2">
+          <i class="bi bi-arrow-left"></i>
+          Voltar
+        </span>
+      </button>
+    </header>
+    <div class="grid gap-2">
+      <mat-form-field  appearance="outline" floatLabel="always">
+        <mat-label>Nome</mat-label>
+        <input type="text" matInput placeholder="Nome" formControlName="name">
+        @if (getControlError('name')) {
+          <mat-error>{{  getControlError('name') }}</mat-error>
+        }
+      </mat-form-field>
+      <mat-form-field  appearance="outline" floatLabel="always">
+        <mat-label>Fabricante</mat-label>
+        <input type="text" matInput placeholder="Fabricante" formControlName="manufacturer">
+        @if (getControlError('manufacturer')) {
+          <mat-error>{{  getControlError('manufacturer') }}</mat-error>
+        }
+      </mat-form-field>
+      <div class="flex gap-4 mt-2">
+        <mat-form-field  appearance="outline" class="flex-1" floatLabel="always">
+          <mat-label>Lote</mat-label>
+          <input type="text" matInput placeholder="Lote" formControlName="lot">
+          @if (getControlError('lot')) {
+            <mat-error>{{  getControlError('lot') }}</mat-error>
+          }
+        </mat-form-field>
+        <mat-form-field  appearance="outline" class="flex-1" floatLabel="always">
+          <mat-label>Preço Unitário</mat-label>
+          <input type="number" matInput class="example-right-align text-end" placeholder="0" formControlName="unitPrice">
+          <span matTextPrefix>R$&nbsp;</span>
+          <span matTextSuffix>.00</span>
+          @if (getControlError('unitPrice')) {
+            <mat-error>{{  getControlError('unitPrice') }}</mat-error>
+          }
+        </mat-form-field>
+      </div>
+      <div class="flex gap-4 mt-2">
+        <mat-form-field  appearance="outline" class="flex-1" floatLabel="always">
+          <mat-label>Estoque</mat-label>
+          <input type="number" matInput placeholder="Estoque" formControlName="stock">
+          @if (getControlError('stock')) {
+            <mat-error>{{  getControlError('stock') }}</mat-error>
+          }
+        </mat-form-field>
+        <mat-form-field appearance="outline" class="flex-1" floatLabel="always">
+          <mat-label>Data de Vencimento</mat-label>
+          <input matInput [matDatepicker]="picker" placeholder="dd/MM/YYYY" formControlName="expirationDate">
+          <mat-datepicker-toggle matIconSuffix [for]="picker"></mat-datepicker-toggle>
+          <mat-datepicker #picker></mat-datepicker>
+          @if (getControlError('expirationDate')) {
+            <mat-error>{{  getControlError('expirationDate') }}</mat-error>
+          }
+        </mat-form-field>
+      </div>
+    </div>
+   </div>
+
+    <button mat-raised-button color="primary" class="w-full !h-12 mt-4">Cadastrar</button>
+
+  </form>
+</div>

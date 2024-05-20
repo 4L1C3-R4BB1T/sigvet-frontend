@@ -36,6 +36,11 @@ export default class BaseFormComponent {
         return 'O campo não é um e-mail válido';
       } else if (Object.hasOwn(errors, 'passwordMatch')) {
         return 'A senha não bate com a senha de confirmação';
+      } else if (Object.hasOwn(errors, 'min')) {
+        const min = errors['min'];
+        return `O mínimo é ${min.min}`;
+      } else if (Object.hasOwn(errors, 'presentOrFuture')) {
+        return 'A data deve esta no presente ou futuro';
       }
       return "";
     }

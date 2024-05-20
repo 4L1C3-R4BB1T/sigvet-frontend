@@ -48,6 +48,6 @@ export default class AnimalsComponent {
     }
   }
   reload() {
-    window.location.reload();
+    this.animalListComponent.reload();
   }
 }

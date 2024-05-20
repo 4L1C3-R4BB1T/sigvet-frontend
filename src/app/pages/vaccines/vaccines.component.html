@@ -12,35 +12,44 @@
       <button mat-mini-fab matTooltip="Mais Filtros" color="primary" class="ms-2" (click)="openMoreFilterModal.set(true)">
         <i class="bi bi-filter text-2xl"></i>
       </button>
-    </div>
+      <button mat-mini-fab matTooltip="Excluir Itens" color="warn" class="ms-2" (click)="closeDialog.set(false)">
+        <i class="bi bi-trash2-fill text-2xl"></i>
+      </button>
+  </div>
 
     <div class=" flex items-center mr-2">
-      <button matTooltip="Adicionar" mat-mini-fab color="primary" class="mr-2">
-        <i class="bi bi-person-fill-add text-2xl"></i>
+      <button matTooltip="Adicionar" mat-mini-fab color="primary" class="mr-2" routerLink="/dashboard/vacinas/novo">
+        <i class="bi bi-plus-circle-fill text-xl"></i>
       </button>
     </div>
   </div>
 
   <div class="mt-1">
-    <mat-paginator #paginator
-                  class="demo-paginator"
-                  (page)="handlePageEvent($event)"
-                  [length]="length"
-                  [pageSize]="pageSize"
-                  [disabled]="disabled"
-                  [showFirstLastButtons]="showFirstLastButtons"
-                  [pageSizeOptions]="showPageSizeOptions ? pageSizeOptions : []"
-                  [hidePageSize]="hidePageSize"
-                  showFirstLastButtons
-                  [pageIndex]="pageIndex">
+    <mat-paginator #paginator [pageSizeOptions]="[5, 10, 25, 100]" class="!bg-transparent">
     </mat-paginator>
   </div>
 </header>
 
-<div class="mt-1 pb-5">
-  <app-vaccine-table />
+<div class="mt-2 pb-5">
+  <app-vaccine-table [data]="data()" />
 </div>
 
 @if (openMoreFilterModal()) {
 <app-filter (onClose)="openMoreFilterModal.set(false)" />
 }
+
+
+<p-dialog [showHeader]="false" [modal]="true" #dialog [visible]="!closeDialog()" [style]="{ width: '25rem' }">
+  <div class="p-4">
+    <div class="flex flex-col gap-2">
+      <span class="font-semibold text-lg">Aviso</span>
+      <span class="text-sm">Você tem certeza que desejar deletar?</span>
+    </div>
+    <div class="flex justify-end gap-3 mt-5">
+      <button mat-button color="warn" (click)="closeDialog.set(true)">Cancelar</button>
+      <button mat-button color="primary" (click)="removeAll()">Deletar</button>
+    </div>
+  </div>
+</p-dialog>
+
+<router-outlet></router-outlet>

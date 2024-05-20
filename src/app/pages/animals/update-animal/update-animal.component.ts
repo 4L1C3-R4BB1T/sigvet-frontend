@@ -7,7 +7,9 @@ import { MatDatepickerModule } from '@angular/material/datepicker';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { MatSelectModule } from '@angular/material/select';
+import { MatSlideToggleModule } from '@angular/material/slide-toggle';
 import { ActivatedRoute, Router, RouterLink } from '@angular/router';
+import { Store } from '@ngrx/store';
 import { Subscription } from 'rxjs';
 import BaseFormComponent from '../../../base/base-form.component';
 import { Animal } from '../../../models/animal';
@@ -15,8 +17,7 @@ import { UpdateAnimal } from '../../../models/create-animal';
 import { User } from '../../../models/user';
 import { AnimalService } from '../../../services/animal.service';
 import { ClientService } from '../../../services/client.service';
-import { Store } from '@ngrx/store';
-import { WindowReloadPageAction } from '../../../store/reducers/window.reducer';
+import AnimalsComponent from '../animals.component';
 
 @Component({
   selector: 'app-update-animal',
@@ -31,7 +32,8 @@ import { WindowReloadPageAction } from '../../../store/reducers/window.reducer';
     RouterLink,
     MatAutocompleteModule,
     JsonPipe,
-    NgIf
+    NgIf,
+    MatSlideToggleModule
   ],
   templateUrl: './update-animal.component.html',
   styleUrl: './update-animal.component.scss'
@@ -49,6 +51,8 @@ export class UpdateAnimalComponent extends BaseFormComponent implements OnInit, 
   #router = inject(Router);
 
   #store = inject(Store);
+
+  #animalComponent = inject(AnimalsComponent);
 
   animalId = signal<number | null>(this.#activatedRoute.snapshot.params['id'] ?? null);
   clientId = signal<number | null>(this.#activatedRoute.snapshot.queryParams['clientId'] ?? null);
@@ -70,7 +74,7 @@ export class UpdateAnimalComponent extends BaseFormComponent implements OnInit, 
     breed: ['', Validators.required],
     birthDate: ['', Validators.required],
     client: this.#formBuilder.group({
-      name: ['']
+      name: ['', Validators.required]
     }),
     clientId: ['', Validators.required],
   });
@@ -114,29 +118,30 @@ export class UpdateAnimalComponent extends BaseFormComponent implements OnInit, 
         this.toastrService.info('Não foi possível salvar a foto', 'Animal');
       }
     }
-    this.#router.navigateByUrl('/dashboard/animais');
-    setTimeout(() => this.#store.dispatch(WindowReloadPageAction()), 800);
+   this.#animalComponent.reload();
+   this.#router.navigate(['/dashboard/animais']);
   }
 
   async update() {
     this.checkForm();
     if (!this.animalId()) return;
     if (this.form.invalid) return;
-    await this.#animalService.update(this.animalId()!, this.form.value as UpdateAnimal);
+    if (await this.#animalService.update(this.animalId()!, this.form.value as UpdateAnimal)) {
+      this.toastrService.success('Atualizado', 'Animal');
+    }
     if (this.file() && this.previewPhotoUrl()) {
       const saved = await this.#animalService.savePhoto(this.animalId()!, this.file());
       if (!saved) {
         this.toastrService.info('Não foi possível salvar a foto', 'Animal');
       }
     }
-    this.toastrService.success('Atualizado', 'Animal');
-    this.#router.navigateByUrl('/dashboard/animais');
-    setTimeout(() => this.#store.dispatch(WindowReloadPageAction()), 800);
+
+    await this.#animalComponent.reload();
+    this.#router.navigate(['/dashboard/animais']);
   }
 
   async checkIfEdition() {
     if (!this.animalId()) return;
-    this.form.controls.client.disable();
     const animal = (await this.#animalService.findById(this.animalId()!))!;
     this.animal.set(animal);
     const client = await this.#clientService.findById(animal.client.id);

@@ -50,8 +50,9 @@ export default class ClientsComponent extends BaseStoreComponent {
     this.userId.set(null);
   }
 
-  reloadPage() {
-    window.location.reload();
+  async reload() {
+    await this.clientListComponent.reload();
+    console.log('oii')
   }
 
   generatePDF() {
