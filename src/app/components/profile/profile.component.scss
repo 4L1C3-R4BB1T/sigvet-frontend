@@ -2,3 +2,8 @@
   @apply after:mt-1 after:z-10 after:absolute after:bottom-0 after:block after:w-16  after:h-0.5 after:bg-[#3479BF]
 }
 
+
+
+section, mat-list-item:nth-child(2n+1) {
+  background-color: #eee !important;
+}

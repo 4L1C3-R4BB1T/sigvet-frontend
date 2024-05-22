@@ -3,7 +3,7 @@
   <h1 class="text-2xl font-bold">Dashboard</h1>
 
   <ul class="flex gap-5 flex-wrap">
-    <li class="dashboard-status-item custom-border  p-3 flex gap-3 flex-col bg-white min-h-36 min-w-[250px] rounded-xl shadow-xl cursor-pointer flex-1 hover-scale transition-all">
+    <li class="dashboard-status-item custom-border p-3 flex gap-3 flex-col bg-white mat-elevation-z2 min-h-36 min-w-[250px] rounded-xl shadow-xl cursor-pointer flex-1 hover-scale transition-all">
       <div class="flex justify-between flex-1 flex-wrap">
         <div class="flex flex-col gap-3">
           <h2 class="text-sm opacity-90 ">Total de Clientes</h2>
@@ -14,7 +14,7 @@
         </div>
       </div>
       <div class="flex gap-2 items-center flex-wrap ">
-        @if (calcPercentForClients(); as revenuePercent > 0) {
+        @if (calcPercentForClients() > 0) {
           <img src="assets/icons/elevacao.png" class="w-5">
           <span class="text-green-600 text-xl lg:text-xs">{{ calcPercentForClients() }}%</span>
           <p class="text-xs font-medium opacity-80 hidden lg:block">Ganhos</p>
@@ -41,7 +41,7 @@
         </div>
       </div>
       <div class="flex gap-2 items-center flex-wrap">
-        @if (calcPercentForAnimals(); as revenuePercent > 0) {
+        @if (calcPercentForAnimals() > 0) {
           <img src="assets/icons/elevacao.png" class="w-5">
           <span class="text-green-600 text-xl lg:text-xs">{{ calcPercentForAnimals() }}%</span>
           <p class="text-xs font-medium opacity-80 hidden lg:block">Ganhos</p>
@@ -68,7 +68,7 @@
         </div>
       </div>
       <div class="flex gap-2 items-center flex-wrap">
-        @if (calcPercentForConsults(); as revenuePercent > 0) {
+        @if (calcPercentForConsults() > 0) {
           <img src="assets/icons/elevacao.png" class="w-5">
           <span class="text-green-600 text-xl lg:text-xs">{{ calcPercentForConsults() }}%</span>
           <p class="text-xs font-medium opacity-80 hidden lg:block">Ganhos</p>
@@ -95,7 +95,7 @@
         </div>
       </div>
       <div class="flex gap-2 items-center flex-wrap">
-        @if (calcPercentForRevenue(); as revenuePercent > 0) {
+        @if (calcPercentForRevenue() > 0) {
           <img src="assets/icons/elevacao.png" class="w-5">
           <span class="text-green-600 text-xl lg:text-xs">{{ calcPercentForRevenue() }}%</span>
           <p class="text-xs font-medium opacity-80 hidden lg:block">Ganhos</p>
