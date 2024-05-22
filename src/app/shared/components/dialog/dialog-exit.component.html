@@ -3,6 +3,8 @@
   <span>Realmente deseja encerrar a sessão?</span>
 </mat-dialog-content>
 <mat-dialog-actions>
-  <button mat-button (click)="close(false)"> Cancelar</button>
-  <button mat-raised-button color="primary" (click)="close(true)" cdkFocusInitial>Confirmar</button>
+  <div class="flex justify-end gap-2 w-full">
+    <button mat-raised-button (click)="close(false)" color="warn"> Cancelar</button>
+    <button mat-raised-button color="primary" (click)="close(true)" cdkFocusInitial>Confirmar</button>
+  </div>
 </mat-dialog-actions>

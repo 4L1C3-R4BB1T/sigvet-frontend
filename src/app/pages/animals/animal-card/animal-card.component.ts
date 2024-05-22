@@ -8,7 +8,7 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { MatTooltipModule } from '@angular/material/tooltip';
 import { MatTreeModule } from '@angular/material/tree';
-import { RouterLink } from '@angular/router';
+import { ActivatedRoute, Router, RouterLink } from '@angular/router';
 import { ToastrService } from 'ngx-toastr';
 import { DialogModule } from 'primeng/dialog';
 import { Animal } from '../../../models/animal';
@@ -48,12 +48,34 @@ export class AnimalCardComponent{
 
   #animalComponent = inject(AnimalsComponent);
 
+  #activatedRoute = inject(ActivatedRoute);
+
+  #router = inject(Router);
+
+  clientId = signal<number | null>(this.#activatedRoute.snapshot.queryParams['clientId'] ?? null);
+
   closeDialog = signal(true);
 
   async remove() {
     await this.#animalService.deleteById(this.animal.id);
     this.#toastrService.success('Foi removido', 'Animal');
-    this.#animalComponent.reload();
+
+    if (this.clientId()) {
+      const data = await this.#animalService.findAllByClientId(this.clientId()!);
+      this.#animalComponent.reload(data);
+    } else {
+      this.#animalComponent.reload();
+    }
     this.closeDialog.set(true);
+  }
+
+  update() {
+    if (this.clientId()) {
+      this.#router.navigate(['/dashboard', 'animais', 'atualizar', this.animal.id], { queryParams: {
+        clientId: this.clientId(),
+      }});
+    } else {
+      this.#router.navigate(['/dashboard', 'animais', 'atualizar', this.animal.id]);
+    }
   }
 }

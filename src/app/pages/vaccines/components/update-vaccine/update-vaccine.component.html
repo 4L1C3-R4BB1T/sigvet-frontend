@@ -1,5 +1,5 @@
 <div class="bg-black p-2 bg-opacity-60 absolute top-0 left-0 w-full h-full flex items-center justify-center">
-  <form [formGroup]="form" class="max-w-[600px] mat-elevation-z2 rounded-md w-full bg-white p-8 animate-slide-in">
+  <form [formGroup]="form" (ngSubmit)="save()" class="max-w-[600px] mat-elevation-z2 rounded-md w-full bg-white p-8 animate-slide-in">
     <!-- name: string
     manufacturer: string
     lot: string
@@ -8,7 +8,7 @@
     expirationDate: string -->
    <div>
     <header class="mb-4">
-      <button mat-button>
+      <button mat-button routerLink="/dashboard/vacinas">
         <span class="flex items-center gap-2">
           <i class="bi bi-arrow-left"></i>
           Voltar

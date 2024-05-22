@@ -11,6 +11,7 @@ import { AnimalListComponent } from './animal-list/animal-list.component';
 import { ViewAnimalInfoComponent } from './view-animal-info/view-animal-info.component';
 import { Router, RouterLink, RouterOutlet } from '@angular/router';
 import { FilterComponent } from '../../components/filter/filter.component';
+import { Animal } from '../../models/animal';
 
 @Component({
   selector: 'app-animals',
@@ -47,7 +48,7 @@ export default class AnimalsComponent {
       this.#router.navigateByUrl('/dashboard/animais/novo');
     }
   }
-  reload() {
-    this.animalListComponent.reload();
+  reload(data?: Animal[]) {
+    this.animalListComponent.reload(data);
   }
 }

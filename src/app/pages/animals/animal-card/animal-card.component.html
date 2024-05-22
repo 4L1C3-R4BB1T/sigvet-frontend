@@ -18,7 +18,7 @@
           </div>
         </div>
         <div class="flex gap-2">
-          <button mat-mini-fab color="primary" [routerLink]="['/dashboard', 'animais', 'atualizar', animal.id]">
+          <button mat-mini-fab color="primary" (click)="update()">
             <i class="bi bi-pencil-square text-lg"></i>
           </button>
           <button mat-mini-fab color="warn" (click)="closeDialog.set(false)">

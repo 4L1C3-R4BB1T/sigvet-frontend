@@ -19,6 +19,7 @@ import { TagModule } from 'primeng/tag';
 import { ButtonModule } from 'primeng/button';
 import { MenuItem } from 'primeng/api';
 import { MatMenuModule } from '@angular/material/menu';
+import { RouterLink } from '@angular/router';
 
 @Component({
   selector: 'app-vaccine-table',
@@ -36,6 +37,7 @@ import { MatMenuModule } from '@angular/material/menu';
     MatSortModule,
     MatPaginatorModule,
     MatCheckboxModule,
+    RouterLink,
   ],
   templateUrl: './vaccine-table.component.html',
   styleUrl: './vaccine-table.component.scss',

@@ -40,7 +40,7 @@ export default class BaseFormComponent {
         const min = errors['min'];
         return `O mínimo é ${min.min}`;
       } else if (Object.hasOwn(errors, 'presentOrFuture')) {
-        return 'A data deve esta no presente ou futuro';
+        return 'A data deve estar no futuro';
       }
       return "";
     }

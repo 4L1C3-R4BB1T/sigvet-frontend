@@ -16,7 +16,7 @@ export const CustomValidators = {
     try {
       const today = moment(new Date());
       const targetDate = moment(control.value);
-      if (targetDate.isBefore(today)) {
+      if (targetDate.isSameOrBefore(today)) {
         return {
           presentOrFuture: true,
         }

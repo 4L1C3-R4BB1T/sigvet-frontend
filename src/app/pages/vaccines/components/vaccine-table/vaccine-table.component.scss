@@ -16,6 +16,10 @@
 
   th  .mdc-checkbox__background {
     border: 2px solid white !important;
+  }
+
 }
 
+tr:nth-child(2n+1) {
+  background-color: #eee;
 }

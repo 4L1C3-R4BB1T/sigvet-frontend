@@ -74,7 +74,7 @@ export class EditProfileComponent extends BaseFormComponent implements OnInit {
     this.cities.set(cities);
   }
 
-  async update() {
+  async save() {
     if (!this.userInfo()?.crmv) {
       if (await this.#clientService.update(this.userInfo()?.id!, this.form.value as UpdateUser)) {
         this.toastrService.info('Atualizado', 'Perfil');

@@ -50,8 +50,6 @@ export class UpdateAnimalComponent extends BaseFormComponent implements OnInit, 
 
   #router = inject(Router);
 
-  #store = inject(Store);
-
   #animalComponent = inject(AnimalsComponent);
 
   animalId = signal<number | null>(this.#activatedRoute.snapshot.params['id'] ?? null);
@@ -118,14 +116,29 @@ export class UpdateAnimalComponent extends BaseFormComponent implements OnInit, 
         this.toastrService.info('Não foi possível salvar a foto', 'Animal');
       }
     }
-   this.#animalComponent.reload();
-   this.#router.navigate(['/dashboard/animais']);
+
+    let data: Animal[] = [];
+
+    if (this.clientId()) {
+      data = await this.#animalService.findAllByClientId(this.clientId()!);
+      this.#animalComponent.reload(data);
+      console.log('oii')
+      this.#router.navigate(['/dashboard/animais'], { queryParams: { clientId: this.clientId() }});
+    } else {
+      this.#animalComponent.reload();
+      this.#router.navigate(['/dashboard/animais']);
+    }
   }
 
   async update() {
     this.checkForm();
     if (!this.animalId()) return;
     if (this.form.invalid) return;
+
+    if (this.clientId() && this.form.controls.clientId.value !== this.clientId()) {
+      this.toastrService.info('Não é permitio alterar o cliente', 'Atualização');
+      return;
+    }
     if (await this.#animalService.update(this.animalId()!, this.form.value as UpdateAnimal)) {
       this.toastrService.success('Atualizado', 'Animal');
     }
@@ -136,8 +149,16 @@ export class UpdateAnimalComponent extends BaseFormComponent implements OnInit, 
       }
     }
 
-    await this.#animalComponent.reload();
-    this.#router.navigate(['/dashboard/animais']);
+    let data: Animal[] = [];
+
+    if (this.clientId()) {
+      data = await this.#animalService.findAllByClientId(this.clientId()!);
+      this.#animalComponent.reload(data);
+      this.#router.navigate(['/dashboard/animais'], { queryParams: { clientId: this.clientId() }});
+    } else {
+      this.#animalComponent.reload();
+      this.#router.navigate(['/dashboard/animais']);
+    }
   }
 
   async checkIfEdition() {

@@ -5,6 +5,7 @@ import LoginComponent from './pages/login/login.component';
 import { ViewAnimalInfoComponent } from './pages/animals/view-animal-info/view-animal-info.component';
 import { UpdateAnimalComponent } from './pages/animals/update-animal/update-animal.component';
 import { UpdateVaccineComponent } from './pages/vaccines/components/update-vaccine/update-vaccine.component';
+import { ViewVaccineComponent } from './pages/vaccines/components/view-vaccine/view-vaccine.component';
 
 export const routes: Routes = [
   {
@@ -74,6 +75,10 @@ export const routes: Routes = [
             path: 'atualizar/:id',
             component: UpdateVaccineComponent,
           },
+          {
+            path: 'visualizar/:id',
+            component: ViewVaccineComponent,
+          }
         ],
       },
       {

@@ -6,17 +6,27 @@
     <li class="dashboard-status-item custom-border  p-3 flex gap-3 flex-col bg-white min-h-36 min-w-[250px] rounded-xl shadow-xl cursor-pointer flex-1 hover-scale transition-all">
       <div class="flex justify-between flex-1 flex-wrap">
         <div class="flex flex-col gap-3">
-          <h2 class="text-sm opacity-90 ">Total Clientes</h2>
-          <p class="text-2xl font-bold">40,689</p>
+          <h2 class="text-sm opacity-90 ">Total de Clientes</h2>
+          <p class="text-2xl font-bold">{{ generalMetrics().totalClientsCurrentMonth }}</p>
         </div>
         <div class="bg-blue-100 self-start p-4 rounded-xl ">
           <img src="assets/icons/user.svg" class="min-w-7"/>
         </div>
       </div>
       <div class="flex gap-2 items-center flex-wrap ">
-        <img src="assets/icons/elevacao.png" class="w-5">
-        <span class="text-green-600 text-xl lg:text-xs">10%</span>
-        <p class="text-sm  font-medium opacity-80 hidden lg:block">Ganhos de ontem</p>
+        @if (calcPercentForClients(); as revenuePercent > 0) {
+          <img src="assets/icons/elevacao.png" class="w-5">
+          <span class="text-green-600 text-xl lg:text-xs">{{ calcPercentForClients() }}%</span>
+          <p class="text-xs font-medium opacity-80 hidden lg:block">Ganhos</p>
+        } @else if (calcPercentForClients() < 0) {
+          <img src="assets/icons/elevacao-down.png" class="w-5" style="transform: rotate(180deg)">
+          <span class="text-red-600 text-xl lg:text-xs">{{ calcPercentForClients() }}%</span>
+          <p class="text-xs font-medium opacity-80 hidden lg:block">Perdas</p>
+        } @else {
+          <i class="bi bi-clipboard-data-fill text-[#01548E]"></i>
+          <span class="text-xl lg:text-xs">0%</span>
+          <p class="text-xs font-medium opacity-80 hidden lg:block">Sem ganhos</p>
+        }
       </div>
     </li>
 
@@ -24,16 +34,26 @@
       <div class="flex justify-between flex-1 flex-wrap">
         <div class="flex flex-col gap-3">
           <h2 class="text-sm opacity-90">Total Animais</h2>
-          <p class="text-2xl font-bold">10293</p>
+          <p class="text-2xl font-bold">{{  generalMetrics().totalAnimalsCurrentMonth }}</p>
         </div>
         <div class="bg-orange-100 self-start p-4 rounded-xl ">
           <img src="assets/icons/order.svg" class="min-w-7"/>
         </div>
       </div>
       <div class="flex gap-2 items-center flex-wrap">
-        <img src="assets/icons/elevacao.png" class="w-5">
-        <span class="text-green-600 text-xl lg:text-xs">10%</span>
-        <p class="text-xs md:text-sm  font-medium opacity-80 hidden lg:block">Ganhos da semana</p>
+        @if (calcPercentForAnimals(); as revenuePercent > 0) {
+          <img src="assets/icons/elevacao.png" class="w-5">
+          <span class="text-green-600 text-xl lg:text-xs">{{ calcPercentForAnimals() }}%</span>
+          <p class="text-xs font-medium opacity-80 hidden lg:block">Ganhos</p>
+        } @else if (calcPercentForAnimals() < 0) {
+          <img src="assets/icons/elevacao-down.png" class="w-5" style="transform: rotate(180deg)">
+          <span class="text-red-600 text-xl lg:text-xs">{{ calcPercentForAnimals() }}%</span>
+          <p class="text-xs font-medium opacity-80 hidden lg:block">Perdas</p>
+        } @else {
+          <i class="bi bi-clipboard-data-fill text-[#01548E]"></i>
+          <span class="text-xl lg:text-xs">0%</span>
+          <p class="text-xs font-medium opacity-80 hidden lg:block">Sem ganhos</p>
+        }
       </div>
     </li>
 
@@ -41,33 +61,53 @@
       <div class="flex justify-between flex-1 flex-wrap">
         <div class="flex flex-col gap-3">
           <h2 class="text-sm opacity-90">Total Atendimentos</h2>
-          <p class="text-2xl font-bold">$89,000</p>
+          <p class="text-2xl font-bold">{{ generalMetrics().totalConsultsCurrentMonth }}</p>
         </div>
         <div class="bg-green-100 self-start p-4 rounded-xl ">
           <img src="assets/icons/chart-up.png" class="min-w-7"/>
         </div>
       </div>
       <div class="flex gap-2 items-center flex-wrap">
-        <img src="assets/icons/elevacao-down.png" class="w-5" style="transform: rotate(180deg)">
-        <span class="text-red-600 text-xl lg:text-xs">10%</span>
-        <p class="text-xs md:text-sm  font-medium opacity-80 hidden lg:block">Perdas de ontem</p>
+        @if (calcPercentForConsults(); as revenuePercent > 0) {
+          <img src="assets/icons/elevacao.png" class="w-5">
+          <span class="text-green-600 text-xl lg:text-xs">{{ calcPercentForConsults() }}%</span>
+          <p class="text-xs font-medium opacity-80 hidden lg:block">Ganhos</p>
+        } @else if (calcPercentForConsults() < 0) {
+          <img src="assets/icons/elevacao-down.png" class="w-5" style="transform: rotate(180deg)">
+          <span class="text-red-600 text-xl lg:text-xs">{{ calcPercentForConsults() }}%</span>
+          <p class="text-xs font-medium opacity-80 hidden lg:block">Perdas</p>
+        } @else {
+          <i class="bi bi-clipboard-data-fill text-[#01548E]"></i>
+          <span class="text-xl lg:text-xs">0%</span>
+          <p class="text-xs font-medium opacity-80 hidden lg:block">Sem ganhos</p>
+        }
       </div>
     </li>
 
     <li class="dashboard-status-item p-3 custom-border flex gap-3 flex-col bg-white min-h-36 min-w-[250px] rounded-xl shadow-xl cursor-pointer flex-1 hover-scale transition-all">
       <div class="flex justify-between flex-1 flex-wrap">
         <div class="flex flex-col gap-3">
-          <h2 class="text-sm opacity-90">Total Receita</h2>
-          <p class="text-2xl font-bold">2040</p>
+          <h2 class="text-sm opacity-90">Total de Receita</h2>
+          <p class="text-2xl font-bold ">R$ {{ generalMetrics().totalRevenueCurrentMonth }}</p>
         </div>
         <div class="bg-red-100 self-start p-4 rounded-xl ">
           <img src="assets/icons/pedido-processado.png" class="min-w-7"/>
         </div>
       </div>
       <div class="flex gap-2 items-center flex-wrap">
-        <img src="assets/icons/elevacao-down.png" class="w-5">
-        <span class="text-green-600 text-xl lg:text-xs">10%</span>
-        <p class="text-xs md:text-sm  font-medium opacity-80 hidden lg:block">Ganhos de ontem</p>
+        @if (calcPercentForRevenue(); as revenuePercent > 0) {
+          <img src="assets/icons/elevacao.png" class="w-5">
+          <span class="text-green-600 text-xl lg:text-xs">{{ calcPercentForRevenue() }}%</span>
+          <p class="text-xs font-medium opacity-80 hidden lg:block">Ganhos</p>
+        } @else if (calcPercentForRevenue() < 0) {
+          <img src="assets/icons/elevacao-down.png" class="w-5" style="transform: rotate(180deg)">
+          <span class="text-red-600 text-xl lg:text-xs">{{ calcPercentForRevenue() }}%</span>
+          <p class="text-xs font-medium opacity-80 hidden lg:block">Perdas</p>
+        } @else {
+          <i class="bi bi-clipboard-data-fill text-[#01548E]"></i>
+          <span class="text-xl lg:text-xs">0%</span>
+          <p class="text-xs font-medium opacity-80 hidden lg:block">Sem ganhos</p>
+        }
       </div>
     </li>
 

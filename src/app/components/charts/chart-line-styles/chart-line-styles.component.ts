@@ -1,6 +1,18 @@
-import { Component } from '@angular/core';
+import { Component, inject } from '@angular/core';
 
 import { SharedModule } from '../../../shared/shared.module';
+import { MonthAndCount, ReportService } from '../../../services/report.service';
+
+const getCountPerMonth = (list: MonthAndCount[]) => {
+  const months = ["Janeiro", "Fevereiro", "Março", "Abril", "Maio", "Junho", "Julho", "Agosto", "Setembro", "Outubro", "Novembro", "Dezembro"];
+  const counts = Array.from({ length: 12 }, () => 0);
+
+  for (const { month, count } of list) {
+      counts[month - 1] = count;
+  }
+
+  return counts;
+}
 
 @Component({
   selector: 'app-chart-line-styles',
@@ -15,7 +27,16 @@ export class ChartLineStylesComponent {
 
   options: any;
 
-  ngOnInit() {
+  #reportService = inject(ReportService);
+
+
+  async ngOnInit() {
+    const result = (await this.#reportService.fetchMonthlyAnimalsAndClients())!;
+    const clientsResultMapped = getCountPerMonth(result.clientsResult);
+    const animalsResultMapped = getCountPerMonth(result.animalsResult);
+
+    console.log(animalsResultMapped)
+
     const documentStyle = getComputedStyle(document.documentElement);
     const textColor = documentStyle.getPropertyValue('--text-color');
     const textColorSecondary = documentStyle.getPropertyValue(
@@ -24,19 +45,19 @@ export class ChartLineStylesComponent {
     const surfaceBorder = documentStyle.getPropertyValue('--surface-border');
 
     this.data = {
-      labels: ['January', 'February', 'March', 'April', 'May', 'June', 'July'],
+      labels: ["Janeiro", "Fevereiro", "Março", "Abril", "Maio", "Junho", "Julho", "Agosto", "Setembro", "Outubro", "Novembro", "Dezembro"],
       datasets: [
         {
-          label: 'My First dataset',
+          label: 'Animais criados',
           backgroundColor: documentStyle.getPropertyValue('--blue-900'),
           borderColor: documentStyle.getPropertyValue('--blue-900'),
-          data: [65, 59, 80, 81, 56, 55, 40],
+          data: animalsResultMapped,
         },
         {
-          label: 'My Second dataset',
+          label: 'Clientes criados',
           backgroundColor: documentStyle.getPropertyValue('--blue-400'),
           borderColor: documentStyle.getPropertyValue('--blue-400'),
-          data: [28, 48, 40, 19, 86, 27, 90],
+          data: clientsResultMapped,
         },
       ],
     };

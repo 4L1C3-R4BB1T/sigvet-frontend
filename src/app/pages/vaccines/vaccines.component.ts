@@ -76,7 +76,7 @@ export default class VaccinesComponent extends BaseStoreComponent implements OnI
     this.vaccineTable.selection.selected.forEach(async ({ id }) => await this.#vaccineService.deleteById(id));
 
     length == 1 ? this.#toastrService.success('Removida', 'Vacina') : this.#toastrService.success('Removidas', 'Vacina');
-    await this.reload();
+    setTimeout(() => this.reload(), 200);
   }
 
 
