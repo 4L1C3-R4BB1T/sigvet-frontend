@@ -8,7 +8,7 @@ import { UserRolePipe } from '../../pipes/user-role.pipe';
 import { MenuHamburguerComponent } from '../menu-hamburguer/menu-hamburguer.component';
 import {MatMenuModule} from '@angular/material/menu';
 import {MatRippleModule} from '@angular/material/core';
-import { ProfileActions } from '../../store/reducers/menu-visibility.reducer';
+import { ProfileActions, selectMenuSidenavValue } from '../../store/reducers/menu-visibility.reducer';
 
 @Component({
   selector: 'app-header',
@@ -25,6 +25,7 @@ export class HeaderComponent extends BaseStoreComponent implements OnInit {
   currentTitle = signal('Home');
   userInfo = this.store.selectSignal(selectUserInfo);
   userPhoto = this.store.selectSignal(selectUserPhoto);
+  isOpenMenuSidenav = this.store.selectSignal(selectMenuSidenavValue);
 
   public ngOnInit() {
     this.#router.events.pipe(
