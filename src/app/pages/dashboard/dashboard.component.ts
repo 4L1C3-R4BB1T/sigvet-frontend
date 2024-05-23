@@ -4,9 +4,8 @@ import { RouterOutlet } from '@angular/router';
 import BaseStoreComponent from '../../base/base-store.component';
 import { HeaderComponent } from '../../components/header/header.component';
 import { SidenavComponent } from '../../components/sidenav/sidenav.component';
-import { SharedModule } from '../../shared/shared.module';
 import { AuthService } from '../../services/auth.service';
-import { AccountService } from '../../services/account.service';
+import { SharedModule } from '../../shared/shared.module';
 
 @Component({
   selector: 'app-dashboard',

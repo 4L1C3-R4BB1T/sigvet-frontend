@@ -1,21 +1,20 @@
+import { JsonPipe } from '@angular/common';
 import { Component, inject, signal } from '@angular/core';
-import {MatInputModule} from '@angular/material/input';
-import {MatButtonModule} from '@angular/material/button';
 import {
   FormControl,
   FormGroup,
   ReactiveFormsModule,
   Validators,
 } from '@angular/forms';
+import { MatButtonModule } from '@angular/material/button';
+import { MatInputModule } from '@angular/material/input';
 import { RouterLink, RouterOutlet } from '@angular/router';
 import BaseFormComponent from '../../base/base-form.component';
 import { CreateNewClientComponent } from '../../components/create-new-client/create-new-client.component';
-import { RecoverClientPasswordComponent } from '../../components/recover-client-password/recover-client-password.component';
 import { ProfileComponent } from '../../components/profile/profile.component';
-import { AuthService } from '../../services/auth.service';
+import { RecoverClientPasswordComponent } from '../../components/recover-client-password/recover-client-password.component';
 import { UserLogin } from '../../models/user-login';
-import { AccountService } from '../../services/account.service';
-import { JsonPipe } from '@angular/common';
+import { AuthService } from '../../services/auth.service';
 @Component({
   selector: 'app-account',
   standalone: true,

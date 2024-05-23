@@ -1,8 +1,6 @@
+import { NgIf } from '@angular/common';
 import { Component, EventEmitter, Input, OnInit, Output, inject, signal } from '@angular/core';
 import { FormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
-import { CustomValidators } from '../../validators/custom-validators';
-import { NgIf } from '@angular/common';
-import { ToastModule } from 'primeng/toast';
 import { MessageService } from 'primeng/api';
 import {MatInputModule} from '@angular/material/input';
 import {MatButtonModule} from '@angular/material/button';
@@ -11,11 +9,13 @@ import { NgxMaskDirective, provideNgxMask } from 'ngx-mask';
 import { MatStepperModule } from '@angular/material/stepper';
 import { AccountService } from '../../services/account.service';
 import { RecoverUser } from '../../models/recover-user';
+import { CustomValidators } from '../../validators/custom-validators';
+import { ToastrModule } from 'ngx-toastr';
 
 @Component({
   selector: 'app-recover-client-password',
   standalone: true,
-  imports: [MatStepperModule, ReactiveFormsModule, NgIf, ToastModule, MatInputModule, MatButtonModule, NgxMaskDirective, NgIf],
+  imports: [MatStepperModule, ReactiveFormsModule, NgIf, ToastrModule, MatInputModule, MatButtonModule, NgxMaskDirective, NgIf],
   templateUrl: './recover-client-password.component.html',
   styleUrl: './recover-client-password.component.scss',
   providers: [MessageService, provideNgxMask()]

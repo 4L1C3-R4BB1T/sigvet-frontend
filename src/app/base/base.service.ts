@@ -1,8 +1,8 @@
-import { inject } from "@angular/core";
-import { environment } from "../../environments/environment";
 import { HttpClient } from "@angular/common/http";
+import { inject } from "@angular/core";
 import { ToastrService } from "ngx-toastr";
 import { APIResponseError } from "../models/api-response-error";
+import { environment } from "../../environments/environment";
 
 export interface FilterParams {
   equal_filters?: string;
