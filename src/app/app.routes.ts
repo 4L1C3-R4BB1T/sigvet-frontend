@@ -11,7 +11,11 @@ export const routes: Routes = [
   {
     path: '',
     pathMatch: 'full',
-    redirectTo: 'login',
+    redirectTo: 'welcome',
+  },
+  {
+    path: 'welcome',
+    loadComponent: () => import('./pages/welcome/welcome.component'),
   },
   {
     path: 'login',

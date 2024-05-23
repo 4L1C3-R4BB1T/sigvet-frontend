@@ -32,6 +32,7 @@ export class HeaderComponent extends BaseStoreComponent implements OnInit {
       filter(event => event instanceof NavigationEnd),
       map(event => event as NavigationEnd))
       .subscribe(event => {
+        console.log(event)
         var url = event.urlAfterRedirects.replace('/dashboard/', '');
         if (url.startsWith('/dashboard')) {
           this.currentTitle.set('Home');

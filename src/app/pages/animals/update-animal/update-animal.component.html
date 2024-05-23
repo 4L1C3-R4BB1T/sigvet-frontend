@@ -1,5 +1,5 @@
 <div class="bg-black bg-opacity-50 absolute p-4 top-0 left-0 w-full h-full flex justify-center items-center">
-  <form [formGroup]="form" class="{{ toggleShowUploadPhoto.checked ? 'max-w-[800px]' : 'max-w-[600px]'}} overflow-hidden w-full fade-in bg-white  mat-elevation-z2 rounded-lg flex gap-5 animate-slide-in">
+  <form [formGroup]="form" class="{{ toggleShowUploadPhoto.checked ? 'max-w-[800px]' : 'max-w-[600px]'}} overflow-hidden w-full fade-in bg-white  mat-elevation-z2 rounded-lg flex gap-5 animate-slide-in" style="transition: all 0.15s ease-in-out;">
 
 
     @if (toggleShowUploadPhoto.checked) {
