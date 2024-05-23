@@ -48,14 +48,17 @@ export const routes: Routes = [
           {
             path: 'novo',
             component: UpdateAnimalComponent,
+            title: 'Animais',
           },
           {
             path: 'atualizar/:id',
             component: UpdateAnimalComponent,
+            title: 'Animais',
           },
           {
             path: 'visualizar/:id',
             component: ViewAnimalInfoComponent,
+            title: 'Animais',
           },
         ]
       },

@@ -1,6 +1,5 @@
-import { Component, signal } from '@angular/core';
+import { Component, ViewChild, signal } from '@angular/core';
 import { PaginatorComponent } from '../../components/paginator/paginator.component';
-import { VeterinarianTableComponent } from './components/veterinarian-table/veterinarian-table.component';
 
 import { MatAutocompleteModule } from '@angular/material/autocomplete';
 import { MatButtonModule } from '@angular/material/button';
@@ -9,12 +8,17 @@ import { MatInputModule } from '@angular/material/input';
 import { MatPaginatorModule, PageEvent } from '@angular/material/paginator';
 import { MatTabsModule } from '@angular/material/tabs';
 import { MatTooltipModule } from '@angular/material/tooltip';
+import { VeterinarianListComponent } from './veterinarian-list/veterinarian-list.component';
+import { FilterComponent } from '../../components/filter/filter.component';
+import { UpdateUserModalComponent } from '../../components/update-user-modal/update-user-modal.component';
 
 @Component({
   selector: 'app-veterinarian',
   standalone: true,
   imports: [
-    VeterinarianTableComponent,
+    FilterComponent,
+    UpdateUserModalComponent,
+    VeterinarianListComponent,
     PaginatorComponent,
     MatButtonModule,
     MatInputModule,
@@ -28,42 +32,27 @@ import { MatTooltipModule } from '@angular/material/tooltip';
   styleUrl: './veterinarian.component.scss'
 })
 export default class VeterinarianComponent {
+
+  @ViewChild(VeterinarianListComponent)
+  clientListComponent!: VeterinarianListComponent;
+
   openMoreFilterModal = signal(false);
 
-  length = 50; // Quantidade de dados trazidos
-  pageSize = 5;
-  pageIndex = 0;
-  pageSizeOptions = [2, 5, 25];
+  userId = signal<number | null>(null);
 
-  hidePageSize = false;
-  showPageSizeOptions = true;
-  showFirstLastButtons = true;
-  disabled = false;
+  createVeterinarian = signal(false);
 
-  pageEvent!: PageEvent;
-
-  async ngOnInit() {
-    await this.reload();
+  reset() {
+    this.createVeterinarian.set(false);
+    this.userId.set(null);
   }
 
   async reload() {
-    // const data = await this.#clientService.findAll({ size: this.pageSize, page: this.pageIndex });
-    // this.length = data.length;
-    // this.data.set(data);
+    await this.clientListComponent.reload();
+    console.log('oii')
   }
 
-  async handlePageEvent(e: PageEvent) {
-    this.pageEvent = e;
-    // this.length = e.length;
-    this.pageSize = e.pageSize;
-    this.pageIndex = e.pageIndex;
-    await this.reload();
+  generatePDF() {
+    this.clientListComponent?.generatePDF();
   }
-
-  setPageSizeOptions(setPageSizeOptionsInput: string) {
-    if (setPageSizeOptionsInput) {
-      this.pageSizeOptions = setPageSizeOptionsInput.split(',').map(str => +str);
-    }
-  }
-
 }

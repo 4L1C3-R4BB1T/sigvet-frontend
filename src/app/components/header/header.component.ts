@@ -30,11 +30,8 @@ export class HeaderComponent extends BaseStoreComponent implements OnInit {
   public ngOnInit() {
     this.#router.events.pipe(
       filter(event => event instanceof ActivationStart),
-      map(event => event as ActivationStart)) //ActivationStart
-      .subscribe(event => {
-        this.currentTitle.set(event.snapshot.routeConfig?.title as string);
-        console.log(event.snapshot.routeConfig?.title)
-      });
+      map(event => event as ActivationStart))
+      .subscribe(event => this.currentTitle.set(event.snapshot.routeConfig?.title as string));
   }
 
   showProfileMenu() {

@@ -37,7 +37,7 @@ import { Consult } from '../../models/consult';
   templateUrl: './consults.component.html',
   styleUrl: './consults.component.scss'
 })
-export default class ConsultsComponent extends BaseStoreComponent implements OnInit, AfterViewInit {
+export default class ConsultsComponent extends BaseStoreComponent implements AfterViewInit {
 
 
   @ViewChild(MatPaginator) paginator!: MatPaginator;
@@ -53,17 +53,19 @@ export default class ConsultsComponent extends BaseStoreComponent implements OnI
   openMoreFilterModal = signal(false);
   data = signal([] as Consult[]);
 
-
-  async ngOnInit() {
-    this.data.set(await this.#consultService.findAll());
-  }
-
   ngAfterViewInit() {
     this.consultTable.dataSource.paginator = this.paginator;
+    this.paginator.pageSize = 10;
+    this.paginator.pageSizeOptions = [5, 10, 25];
+    this.paginator.pageIndex = 0;
+    this.reload();
+    this.paginator.page.subscribe(event => this.reload({ size: event.pageSize, page: event.pageIndex }))
   }
 
-  async reload() {
-    this.data.set(await this.#consultService.findAll());
+  async reload(params?:{ size: number; page: number;}) {
+    const pageModel = await this.#consultService.findAll(params)
+    this.paginator.length = pageModel.totalElements;
+    this.data.set(pageModel.elements);
   }
 
   async removeAll() {

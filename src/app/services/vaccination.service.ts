@@ -3,6 +3,7 @@ import BaseService, { FilterParams } from '../base/base.service';
 import { lastValueFrom, map } from 'rxjs';
 import { UpdateVaccination } from '../models/update-vaccination';
 import { Vaccination } from '../models/vaccination';
+import { PageModel } from '../models/page-model';
 
 @Injectable({
   providedIn: 'root'
@@ -10,8 +11,7 @@ import { Vaccination } from '../models/vaccination';
 export class VaccinationService extends BaseService {
 
   public async findAll(filters?: FilterParams) {
-    return await lastValueFrom(this.http.get(this.getEndpointV1(`vaccinations${this.getFilterParams(filters)}`))
-      .pipe(map((response: any) => response.elements as Vaccination[])));
+    return await lastValueFrom(this.http.get<PageModel<Vaccination>>(this.getEndpointV1(`vaccinations${this.getFilterParams(filters)}`)));
   }
 
   public async findById(id: number) {

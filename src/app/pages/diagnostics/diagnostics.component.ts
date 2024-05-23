@@ -37,7 +37,7 @@ import { Diagnostic } from '../../models/diagnostic';
   templateUrl: './diagnostics.component.html',
   styleUrl: './diagnostics.component.scss'
 })
-export default class DiagnosticsComponent extends BaseStoreComponent implements OnInit, AfterViewInit {
+export default class DiagnosticsComponent extends BaseStoreComponent implements AfterViewInit {
 
 
   @ViewChild(MatPaginator) paginator!: MatPaginator;
@@ -54,16 +54,19 @@ export default class DiagnosticsComponent extends BaseStoreComponent implements 
   data = signal([] as Diagnostic[]);
 
 
-  async ngOnInit() {
-    this.data.set(await this.#diagnosticService.findAll());
-  }
-
   ngAfterViewInit() {
     this.diagnosticTable.dataSource.paginator = this.paginator;
+    this.paginator.pageSize = 10;
+    this.paginator.pageSizeOptions = [5, 10, 25];
+    this.paginator.pageIndex = 0;
+    this.reload();
+    this.paginator.page.subscribe(event => this.reload({ size: event.pageSize, page: event.pageIndex }))
   }
 
-  async reload() {
-    this.data.set(await this.#diagnosticService.findAll());
+  async reload(params?:{ size: number; page: number;}) {
+    const pageModel = await this.#diagnosticService.findAll(params)
+    this.paginator.length = pageModel.totalElements;
+    this.data.set(pageModel.elements);
   }
 
   async removeAll() {

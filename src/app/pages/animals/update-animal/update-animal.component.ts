@@ -90,6 +90,7 @@ export class UpdateAnimalComponent extends BaseFormComponent implements OnInit, 
     await this.checkIfEdition();
 
     if (this.clientId()) {
+      this.form.controls.client.controls.name.disable();
       const client = await this.#clientService.findById(this.clientId()!);
       this.form.controls.clientId.setValue(''+client.id);
       this.form.controls.client.controls.name.setValue(client.document + ' - ' + client.name);

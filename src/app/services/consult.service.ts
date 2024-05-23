@@ -3,6 +3,7 @@ import { lastValueFrom, map } from 'rxjs';
 import BaseService, { FilterParams } from '../base/base.service';
 import { Consult } from '../models/consult';
 import { UpdateConsult } from '../models/update-consult';
+import { PageModel } from '../models/page-model';
 
 @Injectable({
   providedIn: 'root'
@@ -10,8 +11,7 @@ import { UpdateConsult } from '../models/update-consult';
 export class ConsultService extends BaseService {
 
   public async findAll(filters?: FilterParams) {
-    return await lastValueFrom(this.http.get(this.getEndpointV1(`consults${this.getFilterParams(filters)}`))
-      .pipe(map((response: any) => response.elements as Consult[])));
+    return await lastValueFrom(this.http.get<PageModel<Consult>>(this.getEndpointV1(`consults${this.getFilterParams(filters)}`)));
   }
 
   public async findById(id: number) {

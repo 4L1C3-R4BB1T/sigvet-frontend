@@ -55,15 +55,22 @@ export default class VaccinesComponent extends BaseStoreComponent implements OnI
 
 
   async ngOnInit() {
-    this.data.set(await this.#vaccineService.findAll());
+    // this.data.set(await this.#vaccineService.findAll());
   }
 
   ngAfterViewInit() {
     this.vaccineTable.dataSource.paginator = this.paginator;
+    this.paginator.pageSize = 10;
+    this.paginator.pageSizeOptions = [5, 10, 25];
+    this.paginator.pageIndex = 0;
+    this.reload();
+    this.paginator.page.subscribe(event => this.reload({ size: event.pageSize, page: event.pageIndex }))
   }
 
-  async reload() {
-    this.data.set(await this.#vaccineService.findAll());
+  async reload(params?:{ size: number; page: number;}) {
+    const pageModel = await this.#vaccineService.findAll(params)
+    this.paginator.length = pageModel.totalElements;
+    this.data.set(pageModel.elements);
   }
 
   async removeAll() {

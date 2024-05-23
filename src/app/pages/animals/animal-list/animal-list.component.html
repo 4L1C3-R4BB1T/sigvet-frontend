@@ -23,7 +23,7 @@
   </mat-paginator>
 </div>
 
-<div class="grid grid-cols-2 gap-4 p-3 mt-3 relative max-h-[65vh] overflow-hidden overflow-y-auto h-screen">
+<div class="grid grid-cols-2 gap-4 px-2 py-3 pb-5 mt-3 relative max-h-[65vh] overflow-hidden overflow-y-auto h-screen">
   @for (element of elements(); track element.id) {
     <app-animal-card [animal]="element"/>
   } @empty {
