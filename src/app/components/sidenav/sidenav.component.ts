@@ -45,80 +45,49 @@ interface SidenavMenu {
   templateUrl: './sidenav.component.html',
   styleUrl: './sidenav.component.scss',
 })
-export class SidenavComponent extends BaseStoreComponent implements OnInit {
+export class SidenavComponent extends BaseStoreComponent {
   dialog = inject<MatDialog>(MatDialog);
   drawerOpen = this.store.selectSignal(selectMenuSidenavValue);
   userInfo = this.store.selectSignal(selectUserInfo);
   #accountService = inject(AccountService);
 
-  menus = signal<SidenavMenu[]>([]);
-  showMore = signal(false);
+  menus = signal<SidenavMenu[]>(
+    [
+      {
+        iconUrl: 'assets/icons/sidenav/home.svg',
+        routeLink: '/dashboard',
+        label: 'Home',
+      },
+      {
+        iconUrl: 'assets/icons/sidenav/client.svg',
+        routeLink: '/dashboard/clientes',
+        label: 'Clientes',
+      },
+      {
+        iconUrl: 'assets/icons/sidenav/animal.svg',
+        routeLink: '/dashboard/animais',
+        label: 'Animais',
+      },
+      {
+        iconUrl: 'assets/icons/sidenav/veterinary.svg',
+        routeLink: '/dashboard/veterinarios',
+        label: 'Veterinários',
+      },
+      {
+        iconUrl: 'assets/icons/sidenav/vaccine.svg',
+        routeLink: '/dashboard/vacinas',
+        label: 'Vacinas',
+      },
+      {
+        iconUrl: 'assets/icons/sidenav/vaccination.svg',
+        label: 'Vacinações',
+        routeLink: '/dashboard/vacinacoes',
+      },
+    ]
+  );
+  toggleShowMore = signal(false);
 
-  menusPartial: SidenavMenu[] = [
-    {
-      iconUrl: 'assets/icons/sidenav/home.svg',
-      routeLink: '/dashboard',
-      label: 'Home',
-    },
-    {
-      iconUrl: 'assets/icons/sidenav/client.svg',
-      routeLink: '/dashboard/clientes',
-      label: 'Clientes',
-    },
-    {
-      iconUrl: 'assets/icons/sidenav/animal.svg',
-      routeLink: '/dashboard/animais',
-      label: 'Animais',
-    },
-    {
-      iconUrl: 'assets/icons/sidenav/veterinary.svg',
-      routeLink: '/dashboard/veterinarios',
-      label: 'Veterinários',
-    },
-    {
-      iconUrl: 'assets/icons/sidenav/vaccine.svg',
-      routeLink: '/dashboard/vacinas',
-      label: 'Vacinas',
-    },
-    {
-      iconUrl: 'assets/icons/sidenav/vaccination.svg',
-      label: 'Vacinações',
-      routeLink: '/dashboard/vacinacoes',
-    },
-  ];
-
-
-  menusCompleto: SidenavMenu[] = [
-    {
-      iconUrl: 'assets/icons/sidenav/home.svg',
-      routeLink: '/dashboard',
-      label: 'Home',
-    },
-    {
-      iconUrl: 'assets/icons/sidenav/client.svg',
-      routeLink: '/dashboard/clientes',
-      label: 'Clientes',
-    },
-    {
-      iconUrl: 'assets/icons/sidenav/animal.svg',
-      routeLink: '/dashboard/animais',
-      label: 'Animais',
-    },
-    {
-      iconUrl: 'assets/icons/sidenav/veterinary.svg',
-      routeLink: '/dashboard/veterinarios',
-      label: 'Veterinários',
-    },
-    {
-      iconUrl: 'assets/icons/sidenav/vaccine.svg',
-      routeLink: '/dashboard/vacinas',
-      label: 'Vacinas',
-    },
-    {
-      iconUrl: 'assets/icons/sidenav/vaccination.svg',
-      label: 'Vacinações',
-      routeLink: '/dashboard/vacinacoes',
-    },
+  otherMenus = signal<SidenavMenu[]>([
     {
       iconUrl: 'assets/icons/sidenav/consult.svg',
       routeLink: '/dashboard/consultas',
@@ -128,29 +97,17 @@ export class SidenavComponent extends BaseStoreComponent implements OnInit {
       iconUrl: 'assets/icons/sidenav/diagnoses.svg',
       label: 'Diagnóstico',
       routeLink: '/dashboard/diagnosticos'
-    },
-  ];
-
-
-  isSeeMore = signal(false);
+    }
+  ]);
 
   showMenuSidenav = this.store.selectSignal(selectMenuSidenavValue);
 
   userPhoto = this.store.selectSignal(selectUserPhoto);
 
-
-  public ngOnInit() {
-    this.menus.set(this.menusPartial);
-  }
-
   public openExitDialog() {
     this.dialog.open(DialogExitComponent, {
       width: '400px',
     });
-  }
-  public seeMoreMenu() {
-    this.menus.update(() => !this.showMore() ? this.menusCompleto : this.menusPartial );
-    this.showMore.set(!this.showMore());
   }
 
   public async addPhoto(fileList: FileList | null) {

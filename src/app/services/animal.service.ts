@@ -3,6 +3,7 @@ import { lastValueFrom, map } from 'rxjs';
 import BaseService, { FilterParams } from '../base/base.service';
 import { Animal } from '../models/animal';
 import { UpdateAnimal } from '../models/create-animal';
+import { PageModel } from '../models/page-model';
 
 @Injectable({
   providedIn: 'root'
@@ -26,8 +27,7 @@ export class AnimalService extends BaseService {
   }
 
   public async findAll(filters?: FilterParams) {
-    return await lastValueFrom(this.http.get(this.getEndpointV1(`animals${this.getFilterParams(filters)}`))
-      .pipe(map((response: any) => response.elements as Animal[])));
+    return await lastValueFrom(this.http.get<PageModel<Animal>>(this.getEndpointV1(`animals${this.getFilterParams(filters)}`)));
   }
 
   public async findById(id: number) {

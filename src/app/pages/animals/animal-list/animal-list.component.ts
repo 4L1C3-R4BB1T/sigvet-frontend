@@ -30,8 +30,8 @@ export class AnimalListComponent {
   elements = signal<Animal[]>([]);
 
   length = 50; // Quantidade de dados trazidos
-  pageSize = 1000;
-  pageIndex = 2;
+  pageSize = 6;
+  pageIndex = 0;
   pageSizeOptions = [5, 10, 25];
 
   hidePageSize = false;
@@ -52,16 +52,20 @@ export class AnimalListComponent {
   }
 
   async reload(data?: Animal[]) {
-    const elements = data ?? await this.#animalService.findAll({ size: this.pageSize, page: this.pageIndex });
-    this.length = elements.length;
-    this.elements.set(elements);
+    if (data) {
+      this.length = data.length;
+      this.elements.set(data);
+      return;
+    }
+    const pageModel = await this.#animalService.findAll({ size: this.pageSize, page: this.pageIndex });
+    this.length = pageModel.totalElements;
+    this.elements.set(pageModel.elements);
   }
 
   async handlePageEvent(e: PageEvent) {
     this.pageEvent = e;
     this.pageSize = e.pageSize;
     this.pageIndex = e.pageIndex;
-    console.log(e)
     await this.reload();
   }
 

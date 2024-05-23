@@ -51,12 +51,24 @@
 
       <div class="h-[0.07rem] w-full mt-3 bg-white bg-opacity-70"></div>
 
-      <div matRipple class="cursor-pointer py-2 px-2 hover:opacity-50 mt-3 flex justify-between items-center" (click)="seeMoreMenu()">
-        <span class="text-sm ps-1 text-white">{{ !showMore() ? "Mais opções" : "Mostrar menos"}}</span>
+      <div [matMenuTriggerFor]="menuShowMore" matRipple class="cursor-pointer py-2 px-2 hover:opacity-50 mt-3 flex justify-between items-center">
+        <span class="text-sm ps-1 text-white">Mais opções</span>
         <span class="absolute right-0 block me-3">
           <i class="bi bi-caret-right-fill text-white text-sm"></i>
         </span>
       </div>
+
+      <mat-menu #menuShowMore class="menu  relative left-20">
+        @for (menu of otherMenus(); track menu) {
+          <button mat-menu-item>
+            <div routerLink="{{menu.routeLink}}" routerLinkActive [routerLinkActiveOptions]="{ exact: true }" matRipple  class="cursor-pointer py-3 px-2 flex w-full font-light text-white text-sm gap-5 items-center border border-white">
+              <img src="{{menu.iconUrl}}" class="w-5 ms-2">
+              {{ menu.label }}
+            </div>
+          </button>
+        }
+
+      </mat-menu>
 
       <mat-list>
           <mat-list-item class="!p-0 mt-2" (click)="openExitDialog()">

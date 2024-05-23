@@ -26,15 +26,19 @@ export default class BaseService {
       concat += `size=${filters.size}`;
     }
     if (filters.page) {
+      concat += filters.size ? '&' : '';
       concat += `page=${filters.page}`;
     }
     if (filters.sort) {
+      concat += filters.page || filters.size ? '&' : '';
       concat += `sort=${filters.sort}`;
     }
     if (filters.in_filters) {
+      concat += filters.page || filters.size || filters.sort ? '&' : '';
       concat += `in_filters=${filters.in_filters}`;
     }
     if (filters.equal_filters) {
+      concat += filters.page || filters.size || filters.sort || filters.equal_filters ? '&' : '';
       concat += `equal_filters=${filters.equal_filters}`;
     }
 

@@ -1,6 +1,6 @@
 import { Component, inject, OnInit, signal } from '@angular/core';
-import { NavigationEnd, Router } from '@angular/router';
-import { filter, map } from 'rxjs';
+import { ActivationStart, NavigationEnd, Router } from '@angular/router';
+import { filter, map, tap } from 'rxjs';
 
 import BaseStoreComponent from '../../base/base-store.component';
 import { selectUserInfo, selectUserPhoto } from '../../store/reducers/user.reducer';
@@ -29,21 +29,11 @@ export class HeaderComponent extends BaseStoreComponent implements OnInit {
 
   public ngOnInit() {
     this.#router.events.pipe(
-      filter(event => event instanceof NavigationEnd),
-      map(event => event as NavigationEnd))
+      filter(event => event instanceof ActivationStart),
+      map(event => event as ActivationStart)) //ActivationStart
       .subscribe(event => {
-        console.log(event)
-        var url = event.urlAfterRedirects.replace('/dashboard/', '');
-        if (url.startsWith('/dashboard')) {
-          this.currentTitle.set('Home');
-        } else {
-          let title = url.split('/')[0];
-
-          if (title.includes('?')) {
-            title = title.substring(0, title.indexOf('?'));
-          }
-          this.currentTitle.set(title);
-        }
+        this.currentTitle.set(event.snapshot.routeConfig?.title as string);
+        console.log(event.snapshot.routeConfig?.title)
       });
   }
 
