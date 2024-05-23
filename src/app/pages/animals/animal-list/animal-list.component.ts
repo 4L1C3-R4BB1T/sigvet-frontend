@@ -31,7 +31,7 @@ export class AnimalListComponent {
 
   length = 50; // Quantidade de dados trazidos
   pageSize = 1000;
-  pageIndex = 0;
+  pageIndex = 2;
   pageSizeOptions = [5, 10, 25];
 
   hidePageSize = false;
@@ -59,9 +59,9 @@ export class AnimalListComponent {
 
   async handlePageEvent(e: PageEvent) {
     this.pageEvent = e;
-    // this.length = e.length;
     this.pageSize = e.pageSize;
     this.pageIndex = e.pageIndex;
+    console.log(e)
     await this.reload();
   }
 
