@@ -11,6 +11,7 @@ import { MatTooltipModule } from '@angular/material/tooltip';
 import { VeterinarianListComponent } from './veterinarian-list/veterinarian-list.component';
 import { FilterComponent } from '../../components/filter/filter.component';
 import { UpdateUserModalComponent } from '../../components/update-user-modal/update-user-modal.component';
+import { RouterLink, RouterOutlet } from '@angular/router';
 
 @Component({
   selector: 'app-veterinarian',
@@ -26,7 +27,9 @@ import { UpdateUserModalComponent } from '../../components/update-user-modal/upd
     MatFormFieldModule,
     MatTooltipModule,
     MatTabsModule,
-    MatPaginatorModule
+    MatPaginatorModule,
+    RouterLink,
+    RouterOutlet,
   ],
   templateUrl: './veterinarian.component.html',
   styleUrl: './veterinarian.component.scss'
@@ -34,7 +37,7 @@ import { UpdateUserModalComponent } from '../../components/update-user-modal/upd
 export default class VeterinarianComponent {
 
   @ViewChild(VeterinarianListComponent)
-  clientListComponent!: VeterinarianListComponent;
+  veterinarianListComponent!: VeterinarianListComponent;
 
   openMoreFilterModal = signal(false);
 
@@ -48,11 +51,11 @@ export default class VeterinarianComponent {
   }
 
   async reload() {
-    await this.clientListComponent.reload();
+    await this.veterinarianListComponent.reload();
     console.log('oii')
   }
 
   generatePDF() {
-    this.clientListComponent?.generatePDF();
+    this.veterinarianListComponent?.generatePDF();
   }
 }

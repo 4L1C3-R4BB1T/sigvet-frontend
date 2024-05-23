@@ -15,7 +15,7 @@
     </div>
 
     <div class=" flex items-center mr-2">
-      <button matTooltip="Adicionar" mat-mini-fab color="primary" class="mr-2" (click)="createVeterinarian.set(true)">
+      <button matTooltip="Adicionar" mat-mini-fab color="primary" class="mr-2" (click)="createVeterinarian.set(true)" routerLink="/dashboard/veterinarios/novo">
         <i class="bi bi-person-fill-add text-2xl"></i>
       </button>
       <button matTooltip="Gerar PDF" mat-mini-fab color="primary" class="mr-2 !bg-[#E62C31]" (click)="generatePDF()">
@@ -26,14 +26,11 @@
 </header>
 
 <div class="mt-1 pb-5">
-  <app-veterinarian-list (onEdit)="userId.set($event)"/>
+  <app-veterinarian-list/>
 </div>
 
 @if (openMoreFilterModal()) {
   <app-filter (onClose)="openMoreFilterModal.set(false)" />
 }
 
-@if (userId() || createVeterinarian()) {
-  <app-update-user-modal (onExit)="reset()" [userId]="userId()"/>
-}
-
+<router-outlet></router-outlet>

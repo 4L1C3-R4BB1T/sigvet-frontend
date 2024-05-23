@@ -6,6 +6,8 @@ import { ViewAnimalInfoComponent } from './pages/animals/view-animal-info/view-a
 import { UpdateAnimalComponent } from './pages/animals/update-animal/update-animal.component';
 import { UpdateVaccineComponent } from './pages/vaccines/components/update-vaccine/update-vaccine.component';
 import { ViewVaccineComponent } from './pages/vaccines/components/view-vaccine/view-vaccine.component';
+import { UpdateUserModalComponent } from './components/update-user-modal/update-user-modal.component';
+import { UpdateVeterinarianComponent } from './pages/veterinarian/update-veterinarian/update-veterinarian.component';
 
 export const routes: Routes = [
   {
@@ -66,6 +68,13 @@ export const routes: Routes = [
         path: 'veterinarios',
         loadComponent: () => import('./pages/veterinarian/veterinarian.component'),
         title: 'Veterinários',
+        children: [
+          {
+            path: 'novo',
+            component: UpdateVeterinarianComponent,
+            title: 'Veterinários',
+          }
+        ]
       },
       {
         path: 'vacinas',
