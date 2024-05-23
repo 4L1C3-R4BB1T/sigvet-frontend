@@ -1,3 +1,55 @@
-<div class="w-full h-screen flex justify-center items-center text-2xl flex-col gap-3">
-  <img src="assets/images/pata.png" class="object-contain loading">
+<header>
+  <div class="flex justify-between mt-3 flex-wrap gap-2">
+    <div class="flex gap-2 max-w-[500px] items-center w-full">
+      <mat-form-field appearance="outline" class="flex-1 relative top-2.5">
+        <mat-label>Pesquisar</mat-label>
+        <input type="text" placeholder="Pesquisar" aria-label="Pesquisar" matInput>
+      </mat-form-field>
+
+      <button matTooltip="Limpar" mat-mini-fab color="none" class="h-full ms-2">
+        <i class="bi bi-eraser-fill text-xl"></i>
+      </button>
+      <button mat-mini-fab matTooltip="Mais Filtros" color="primary" class="ms-2" (click)="openMoreFilterModal.set(true)">
+        <i class="bi bi-filter text-2xl"></i>
+      </button>
+      <button mat-mini-fab matTooltip="Excluir Itens" color="warn" class="ms-2" (click)="closeDialog.set(false)">
+        <i class="bi bi-trash2-fill text-2xl"></i>
+      </button>
+  </div>
+
+    <div class=" flex items-center mr-2">
+      <button matTooltip="Adicionar" mat-mini-fab color="primary" class="mr-2" routerLink="/dashboard/vacinacoes/novo">
+        <i class="bi bi-plus-circle-fill text-xl"></i>
+      </button>
+    </div>
+  </div>
+
+  <div class="mt-1">
+    <mat-paginator #paginator [pageSizeOptions]="[5, 10, 25, 100]" class="!bg-transparent">
+    </mat-paginator>
+  </div>
+</header>
+
+<div class="mt-3 pb-5 p-2 max-h-[65vh] overflow-hidden overflow-y-auto">
+  <app-diagnostics-table [data]="data()" />
 </div>
+
+@if (openMoreFilterModal()) {
+<app-filter (onClose)="openMoreFilterModal.set(false)" />
+}
+
+
+<p-dialog [showHeader]="false" [modal]="true" #dialog [visible]="!closeDialog()" [style]="{ width: '25rem' }">
+  <div class="p-4">
+    <div class="flex flex-col gap-2">
+      <span class="font-semibold text-lg">Aviso</span>
+      <span class="text-sm">Você tem certeza que desejar deletar?</span>
+    </div>
+    <div class="flex justify-end gap-3 mt-5">
+      <button mat-button color="warn" (click)="closeDialog.set(true)">Cancelar</button>
+      <button mat-button color="primary" (click)="removeAll()">Deletar</button>
+    </div>
+  </div>
+</p-dialog>
+
+<router-outlet></router-outlet>

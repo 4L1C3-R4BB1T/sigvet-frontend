@@ -1,15 +1,34 @@
-import { Component } from '@angular/core';
+import { Component, OnInit, inject, signal } from '@angular/core';
 import { MatButtonModule } from '@angular/material/button';
 import {MatTabsModule} from '@angular/material/tabs';
-import { RouterLink } from '@angular/router';
+import { ActivatedRoute, RouterLink } from '@angular/router';
+import { VaccineService } from '../../../../services/vaccine.service';
+import { AsyncPipe, DatePipe } from '@angular/common';
+import { Vaccine } from '../../../../models/vaccine';
+import moment from 'moment';
 
 @Component({
   selector: 'app-view-vaccine',
   standalone: true,
-  imports: [MatTabsModule, MatButtonModule, RouterLink],
+  imports: [MatTabsModule, MatButtonModule, RouterLink, AsyncPipe, DatePipe],
   templateUrl: './view-vaccine.component.html',
   styleUrl: './view-vaccine.component.scss'
 })
-export class ViewVaccineComponent {
+export class ViewVaccineComponent implements OnInit {
+
+  vaccineService = inject(VaccineService);
+  vaccineId = signal(inject(ActivatedRoute).snapshot.params['id']);
+  vaccine = signal({} as Vaccine);
+  totalCountOfUses = signal(0);
+
+  async ngOnInit() {
+    const vaccine = await this.vaccineService.findById(this.vaccineId());
+    this.vaccine.set(vaccine!);
+    this.totalCountOfUses.set((await this.vaccineService.getTotalOfUses(vaccine!.id))?.count ?? 0);
+  }
+
+  isExpirationDate() {
+    return moment(this.vaccine().expirationDate).isBefore(moment(new Date()));
+  }
 
 }

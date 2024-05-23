@@ -1,5 +1,6 @@
-export interface Vaccine {
-  id: number
+import { BaseModel } from "./base-model"
+
+export interface Vaccine extends BaseModel {
   createdAt: string
   updatedAt: string
   name: string

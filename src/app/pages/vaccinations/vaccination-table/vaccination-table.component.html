@@ -18,44 +18,51 @@
     </ng-container>
 
 
-    <ng-container matColumnDef="id">
-      <th mat-header-cell *matHeaderCellDef mat-sort-header> ID </th>
-      <td mat-cell *matCellDef="let row"> {{row.id}} </td>
+    <ng-container matColumnDef="dateTime">
+      <th mat-header-cell *matHeaderCellDef mat-sort-header> Data </th>
+      <td mat-cell *matCellDef="let row"> {{ row.dateTime | date: 'dd/MM/YYYY'}} </td>
     </ng-container>
 
 
-    <ng-container matColumnDef="name">
-      <th mat-header-cell *matHeaderCellDef mat-sort-header> Nome </th>
-      <td mat-cell *matCellDef="let row"> {{row.name}}</td>
+    <ng-container matColumnDef="veterinaryName">
+      <th mat-header-cell *matHeaderCellDef mat-sort-header> Veterinário </th>
+      <td mat-cell *matCellDef="let row"> {{row.veterinarian.name}}</td>
+    </ng-container>
+
+    <ng-container matColumnDef="vaccineName">
+      <th mat-header-cell *matHeaderCellDef mat-sort-header> Vacina </th>
+      <td mat-cell *matCellDef="let row"> {{row.vaccine.name}} </td>
     </ng-container>
 
     <ng-container matColumnDef="manufacturer">
       <th mat-header-cell *matHeaderCellDef mat-sort-header> Fabricante </th>
-      <td mat-cell *matCellDef="let row"> {{row.manufacturer}} </td>
+      <td mat-cell *matCellDef="let row"> {{row.vaccine.manufacturer}} </td>
     </ng-container>
 
     <ng-container matColumnDef="lot">
       <th mat-header-cell *matHeaderCellDef mat-sort-header> Lote </th>
-      <td mat-cell *matCellDef="let row"> {{row.lot}} </td>
-    </ng-container>
-
-    <ng-container matColumnDef="unitPrice">
-      <th mat-header-cell *matHeaderCellDef mat-sort-header> Preço Unitário </th>
       <td mat-cell *matCellDef="let row">
-          <span class="block px-2">{{ row.unitPrice.toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' }) }}</span>
+          <span class="block px-2">{{ row.vaccine.lot }}</span>
     </ng-container>
 
-    <ng-container matColumnDef="stock">
+    <ng-container matColumnDef="animalName">
       <th mat-header-cell *matHeaderCellDef mat-sort-header> Estoque </th>
       <td mat-cell *matCellDef="let row">
-        <span class="block px-2">{{ row.stock }}</span>
+        <span class="block px-2">{{ row.vaccine.stock }}</span>
      </td>
     </ng-container>
 
-    <ng-container matColumnDef="expirationDate">
-      <th mat-header-cell *matHeaderCellDef mat-sort-header> Data de Expiração </th>
+    <ng-container matColumnDef="breed">
+      <th mat-header-cell *matHeaderCellDef mat-sort-header> Raça do Animal</th>
       <td mat-cell *matCellDef="let row">
-          <span class="block px-2">{{row.expirationDate | date: 'dd/MM/YYYY'}}</span>
+          <span class="block px-2">{{ row.animal?.breed ?? 'Não definida' }}</span>
+      </td>
+    </ng-container>
+
+    <ng-container matColumnDef="clientName">
+      <th mat-header-cell *matHeaderCellDef mat-sort-header> Cliente </th>
+      <td mat-cell *matCellDef="let row">
+          <span class="block px-2">{{ row.animal.client.name }}</span>
       </td>
     </ng-container>
 

@@ -1,7 +1,7 @@
 import { Animal } from "./animal";
+import { BaseModel } from "./base-model";
 
-export interface User {
-  id: number;
+export interface User extends BaseModel {
   username: string;
   email: string;
   name: string;

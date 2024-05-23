@@ -16,10 +16,11 @@ import { MatTableDataSource, MatTableModule } from '@angular/material/table';
 import { RouterLink } from '@angular/router';
 import { ButtonModule } from 'primeng/button';
 import { TagModule } from 'primeng/tag';
-import { Vaccine } from '../../../../models/vaccine';
+import { Diagnostic } from '../../../models/diagnostic';
+import { ConsultStatusPipe } from '../../../pipes/consult-status.pipe';
 
 @Component({
-  selector: 'app-vaccine-table',
+  selector: 'app-diagnostics-table',
   standalone: true,
   imports: [
     MatMenuModule,
@@ -35,28 +36,30 @@ import { Vaccine } from '../../../../models/vaccine';
     MatPaginatorModule,
     MatCheckboxModule,
     RouterLink,
+    ConsultStatusPipe
   ],
-  templateUrl: './vaccine-table.component.html',
-  styleUrl: './vaccine-table.component.scss',
+  templateUrl: './diagnostics-table.component.html',
+  styleUrl: './diagnostics-table.component.scss',
+
+
 })
-export class VaccineTableComponent implements OnChanges {
+export class DiagnosticsTableComponent implements OnChanges {
   displayedColumns: string[] = [
     'select',
     'id',
-    'name',
-    'manufacturer',
-    'lot',
-    'unitPrice',
-    'stock',
-    'expirationDate',
+    'createdAt',
+    'diagnosis',
+    'comments',
+    'dateTime',
+    'status',
     'actions',
   ];
 
   @Input()
-  data: Vaccine[] = [];
+  data: Diagnostic[] = [];
 
-  dataSource!: MatTableDataSource<Vaccine>;
-  selection = new SelectionModel<Vaccine>(true, []);
+  dataSource!: MatTableDataSource<Diagnostic>;
+  selection = new SelectionModel<Diagnostic>(true, []);
 
   @ViewChild(MatSort) sort!: MatSort;
 

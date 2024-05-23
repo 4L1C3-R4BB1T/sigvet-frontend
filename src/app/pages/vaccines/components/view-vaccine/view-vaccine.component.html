@@ -12,33 +12,49 @@
       <ul class="flex flex-col gap-4 ps-4">
         <li class="flex gap-2">
           <span class="font-medium">ID:</span>
-          <span class="text-sm">1</span>
+          <span class="text-sm">{{ vaccine().id }}</span>
         </li>
         <li class="flex gap-2">
           <span class="font-medium">Fabricante:</span>
-          <span class="text-sm">LTA Company</span>
+          <span class="text-sm">{{ vaccine().manufacturer }}</span>
         </li>
         <li class="flex gap-2">
           <span class="font-medium">Lote:</span>
-          <span class="text-sm">ABBC212</span>
+          <span class="text-sm">{{ vaccine().lot }}</span>
         </li>
         <li class="flex gap-2">
           <span class="font-medium">Preço Unitário:</span>
-          <span class="text-sm">R$ 500,00</span>
+          <span class="text-sm">{{ vaccine().unitPrice.toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' }) }}</span>
         </li>
         <li class="flex gap-2">
           <span class="font-medium">Estoque:</span>
-          <span class="text-sm">500 Unidades</span>
+          <span class="text-sm">{{ vaccine().stock }} Unidades</span>
         </li>
         <li class="flex gap-2">
           <span class="font-medium">Data de Vencimento:</span>
-          <span class="text-sm">05/04/2013 - <span class="text-red-600">Já venceu</span></span>
+          <span class="text-sm">
+            {{ vaccine().expirationDate | date: 'dd/MM/YYYY'}}
+            @if (isExpirationDate()) {
+              - <span class="text-red-600">Já venceu</span>
+            } @else {
+              - <span class="text-green-600">Não vencida</span>
+            }
+
+          </span>
         </li>
         <li class="flex gap-2">
           <span class="font-medium">Usada:</span>
-          <span class="text-sm">Em 35 vacinações</span>
+          @if (totalCountOfUses() > 1) {
+            <span class="text-sm">Em {{ totalCountOfUses() }} vacinações</span>
+          } @else if (totalCountOfUses() === 1) {
+            <span class="text-sm">Em 1 vacinação</span>
+          } @else {
+            <span class="text-sm">Em nenhuma vacinação</span>
+          }
         </li>
       </ul>
     </aside>
   </section>
 </div>
+
+

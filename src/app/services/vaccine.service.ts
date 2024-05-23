@@ -9,6 +9,15 @@ import { UpdateVaccine } from '../models/update-vaccine';
 })
 export class VaccineService extends BaseService {
 
+  public async getTotalOfUses(id: number) {
+    try {
+      return await lastValueFrom(this.http.get<{ count: number }>(this.getEndpointV1('reports/vaccine-uses/'+id+'/total-count')));
+    } catch(ex: any) {
+      this.handleException(ex);
+      return null;
+    }
+  }
+
   public async findAll(filters?: FilterParams) {
     return await lastValueFrom(this.http.get(this.getEndpointV1(`vaccines${this.getFilterParams(filters)}`))
       .pipe(map((response: any) => response.elements as Vaccine[])));

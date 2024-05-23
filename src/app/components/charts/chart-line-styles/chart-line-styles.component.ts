@@ -35,7 +35,6 @@ export class ChartLineStylesComponent {
     const clientsResultMapped = getCountPerMonth(result.clientsResult);
     const animalsResultMapped = getCountPerMonth(result.animalsResult);
 
-    console.log(animalsResultMapped)
 
     const documentStyle = getComputedStyle(document.documentElement);
     const textColor = documentStyle.getPropertyValue('--text-color');
@@ -48,13 +47,13 @@ export class ChartLineStylesComponent {
       labels: ["Janeiro", "Fevereiro", "Março", "Abril", "Maio", "Junho", "Julho", "Agosto", "Setembro", "Outubro", "Novembro", "Dezembro"],
       datasets: [
         {
-          label: 'Animais criados',
+          label: 'Animais Registrados',
           backgroundColor: documentStyle.getPropertyValue('--blue-900'),
           borderColor: documentStyle.getPropertyValue('--blue-900'),
           data: animalsResultMapped,
         },
         {
-          label: 'Clientes criados',
+          label: 'Clientes Registrados',
           backgroundColor: documentStyle.getPropertyValue('--blue-400'),
           borderColor: documentStyle.getPropertyValue('--blue-400'),
           data: clientsResultMapped,
@@ -69,6 +68,9 @@ export class ChartLineStylesComponent {
         legend: {
           labels: {
             color: textColor,
+            font: {
+              size: 14
+          }
           },
         },
       },

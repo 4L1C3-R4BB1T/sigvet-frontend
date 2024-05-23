@@ -9,18 +9,18 @@ import { MatTooltipModule } from '@angular/material/tooltip';
 import { DialogModule } from 'primeng/dialog';
 import { FilterComponent } from '../../components/filter/filter.component';
 import { PaginatorComponent } from '../../components/paginator/paginator.component';
-import { VaccinationService } from '../../services/vaccination.service';
+import { ConsultService } from '../../services/consult.service';
 import { ToastrService } from 'ngx-toastr';
 import BaseStoreComponent from '../../base/base-store.component';
 import { RouterLink, RouterOutlet } from '@angular/router';
-import { VaccinationTableComponent } from './vaccination-table/vaccination-table.component';
-import { Vaccination } from '../../models/vaccination';
+import { ConsultTableComponent } from './consult-table/consult-table.component';
+import { Consult } from '../../models/consult';
 
 @Component({
-  selector: 'app-vaccinations',
+  selector: 'app-consults',
   standalone: true,
   imports: [
-    VaccinationTableComponent,
+    ConsultTableComponent,
     PaginatorComponent,
     FilterComponent,
     MatButtonModule,
@@ -34,48 +34,48 @@ import { Vaccination } from '../../models/vaccination';
     RouterOutlet,
     RouterLink,
   ],
-  templateUrl: './vaccinations.component.html',
-  styleUrl: './vaccinations.component.scss'
+  templateUrl: './consults.component.html',
+  styleUrl: './consults.component.scss'
 })
-export default class VaccinationsComponent extends BaseStoreComponent implements OnInit, AfterViewInit {
+export default class ConsultsComponent extends BaseStoreComponent implements OnInit, AfterViewInit {
 
 
   @ViewChild(MatPaginator) paginator!: MatPaginator;
 
-  @ViewChild(VaccinationTableComponent)
-  vaccinationTable!: VaccinationTableComponent;
+  @ViewChild(ConsultTableComponent)
+  consultTable!: ConsultTableComponent;
 
   #toastrService = inject(ToastrService);
 
   closeDialog = signal(true);
 
-  #vaccinationService = inject(VaccinationService);
+  #consultService = inject(ConsultService);
   openMoreFilterModal = signal(false);
-  data = signal([] as Vaccination[]);
+  data = signal([] as Consult[]);
 
 
   async ngOnInit() {
-    this.data.set(await this.#vaccinationService.findAll());
+    this.data.set(await this.#consultService.findAll());
   }
 
   ngAfterViewInit() {
-    this.vaccinationTable.dataSource.paginator = this.paginator;
+    this.consultTable.dataSource.paginator = this.paginator;
   }
 
   async reload() {
-    this.data.set(await this.#vaccinationService.findAll());
+    this.data.set(await this.#consultService.findAll());
   }
 
   async removeAll() {
-    if (!this.vaccinationTable.selection.hasValue()) {
-      this.#toastrService.info('Selecione uma ou mais vacinações', 'Deletar');
+    if (!this.consultTable.selection.hasValue()) {
+      this.#toastrService.info('Selecione uma ou mais consultas', 'Deletar');
       this.closeDialog.set(true);
       return;
     }
-    const length = this.vaccinationTable.selection.selected.length;
-    this.vaccinationTable.selection.selected.forEach(async ({ id }) => await this.#vaccinationService.deleteById(id));
+    const length = this.consultTable.selection.selected.length;
+    this.consultTable.selection.selected.forEach(async ({ id }) => await this.#consultService.deleteById(id));
 
-    length == 1 ? this.#toastrService.success('Removida', 'Vacinação') : this.#toastrService.success('Removidas', 'Vacinação');
+    length == 1 ? this.#toastrService.success('Removida', 'Consulta') : this.#toastrService.success('Removidas', 'Consulta');
     setTimeout(() => this.reload(), 200);
   }
 

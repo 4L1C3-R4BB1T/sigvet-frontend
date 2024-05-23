@@ -88,7 +88,7 @@ export const routes: Routes = [
       },
       {
         path: 'consultas',
-        loadComponent: () => import('./pages/consultations/consultations.component'),
+        loadComponent: () => import('./pages/consults/consults.component'),
         title: 'Consultas',
       },
       {
