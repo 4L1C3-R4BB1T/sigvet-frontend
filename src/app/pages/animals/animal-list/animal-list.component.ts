@@ -8,6 +8,9 @@ import { Animal } from '../../../models/animal';
 import { ActivatedRoute } from '@angular/router';
 import { ClientService } from '../../../services/client.service';
 import { User } from '../../../models/user';
+import autoTable from 'jspdf-autotable';
+import jsPDF from 'jspdf';
+import { ToastrService } from 'ngx-toastr';
 
 @Component({
   selector: 'app-animal-list',
@@ -26,6 +29,7 @@ export class AnimalListComponent {
 
   clientId = signal(this.#activatedRoute.snapshot.queryParams['clientId'] as number);
   client = signal({} as User);
+  #toastrService = inject(ToastrService);
 
   elements = signal<Animal[]>([]);
 
@@ -73,6 +77,45 @@ export class AnimalListComponent {
     if (setPageSizeOptionsInput) {
       this.pageSizeOptions = setPageSizeOptionsInput.split(',').map(str => +str);
     }
+  }
+
+  async generatePDF() {
+    let elements = (await this.#animalService.findAll()).elements;
+
+    if (this.clientId()) {
+      elements = this.elements();
+    }
+
+    if (!elements || !elements.length) {
+      this.#toastrService.info('Não há dados', 'PDF');
+      return;
+    }
+    const doc = new jsPDF();
+
+    const title = "Ficha de Animais";
+    const pageWidth = doc.internal.pageSize.getWidth();
+    const textWidth = doc.getTextWidth(title);
+    const textX = (pageWidth - textWidth) / 2; // Calcula a posição central
+
+    doc.setFontSize(18);
+    doc.text(title, textX, 10);
+    const header = [['Id', 'Nome', 'Raça', 'Data Nascimento', 'Dono']];
+
+
+    const  data = elements.map(animal => [
+        animal.id,
+        animal.name,
+        animal.breed,
+        animal.birthDate,
+        animal.client.name
+    ]);
+
+    autoTable(doc, {
+      head: header,
+      body: data as any,
+    });
+
+    doc.save(`animais${this.clientId() ? '-' + this.client().name : ''}.pdf`);
   }
 
 }

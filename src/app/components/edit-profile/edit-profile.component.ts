@@ -97,7 +97,7 @@ export class EditProfileComponent extends BaseFormComponent implements OnInit {
   }
 
   public reloadPage() {
-    window.location.reload();
+    setTimeout(() => window.location.reload(), 1000);
   }
 
   checkFormAddressControls() {
