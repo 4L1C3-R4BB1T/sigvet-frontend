@@ -10,16 +10,16 @@
           <p class="text-2xl font-bold">{{ generalMetrics().totalClientsCurrentMonth }}</p>
         </div>
         <div class="bg-blue-100 self-start p-4 rounded-xl ">
-          <img src="assets/icons/user.svg" class="min-w-7"/>
+          <img src="assets/icons/dashboard/user.svg" class="min-w-7"/>
         </div>
       </div>
       <div class="flex gap-2 items-center flex-wrap ">
         @if (calcPercentForClients() > 0) {
-          <img src="assets/icons/elevacao.png" class="w-5">
+          <img src="assets/icons/dashboard/elevacao.png" class="w-5">
           <span class="text-green-600 text-base">{{ calcPercentForClients() }}%</span>
           <p class="font-medium opacity-80 text-sm">Ganhos</p>
         } @else if (calcPercentForClients() < 0) {
-          <img src="assets/icons/elevacao-down.png" class="w-5" style="transform: rotate(180deg)">
+          <img src="assets/icons/dashboard/elevacao-down.png" class="w-5" style="transform: rotate(180deg)">
           <span class="text-red-600 text-base">{{ calcPercentForClients() }}%</span>
           <p class="font-medium opacity-80 text-sm">Perdas</p>
         } @else {
@@ -37,16 +37,16 @@
           <p class="text-2xl font-bold">{{  generalMetrics().totalAnimalsCurrentMonth }}</p>
         </div>
         <div class="bg-orange-100 self-start p-4 rounded-xl ">
-          <img src="assets/icons/order.svg" class="min-w-7"/>
+          <img src="assets/icons/dashboard/order.svg" class="min-w-7"/>
         </div>
       </div>
       <div class="flex gap-2 items-center flex-wrap">
         @if (calcPercentForAnimals() > 0) {
-          <img src="assets/icons/elevacao.png" class="w-5">
+          <img src="assets/icons/dashboard/elevacao.png" class="w-5">
           <span class="text-green-600 text-base">{{ calcPercentForAnimals() }}%</span>
           <p class="font-medium opacity-80 text-sm">Ganhos</p>
         } @else if (calcPercentForAnimals() < 0) {
-          <img src="assets/icons/elevacao-down.png" class="w-5" style="transform: rotate(180deg)">
+          <img src="assets/icons/dashboard/elevacao-down.png" class="w-5" style="transform: rotate(180deg)">
           <span class="text-red-600 text-base">{{ calcPercentForAnimals() }}%</span>
           <p class="font-medium opacity-80 text-sm">Perdas</p>
         } @else {
@@ -64,16 +64,16 @@
           <p class="text-2xl font-bold">{{ generalMetrics().totalConsultsCurrentMonth }}</p>
         </div>
         <div class="bg-green-100 self-start p-4 rounded-xl ">
-          <img src="assets/icons/chart-up.png" class="min-w-7"/>
+          <img src="assets/icons/dashboard/chart-up.png" class="min-w-7"/>
         </div>
       </div>
       <div class="flex gap-2 items-center flex-wrap">
         @if (calcPercentForConsults() > 0) {
-          <img src="assets/icons/elevacao.png" class="w-5">
+          <img src="assets/icons/dashboard/elevacao.png" class="w-5">
           <span class="text-green-600 text-base">{{ calcPercentForConsults() }}%</span>
           <p class="font-medium opacity-80 text-sm">Ganhos</p>
         } @else if (calcPercentForConsults() < 0) {
-          <img src="assets/icons/elevacao-down.png" class="w-5" style="transform: rotate(180deg)">
+          <img src="assets/icons/dashboard/elevacao-down.png" class="w-5" style="transform: rotate(180deg)">
           <span class="text-red-600 text-base">{{ calcPercentForConsults() }}%</span>
           <p class="font-medium opacity-80 text-sm">Perdas</p>
         } @else {
@@ -91,16 +91,16 @@
           <p class="text-2xl font-bold ">{{ generalMetrics().totalRevenueCurrentMonth.toLocaleString('pt-BR', { style: 'currency', currency: 'BRL'}) }}</p>
         </div>
         <div class="bg-red-100 self-start p-4 rounded-xl ">
-          <img src="assets/icons/pedido-processado.png" class="min-w-7"/>
+          <img src="assets/icons/dashboard/pedido-processado.png" class="min-w-7"/>
         </div>
       </div>
       <div class="flex gap-2 items-center flex-wrap">
         @if (calcPercentForRevenue() > 0) {
-          <img src="assets/icons/elevacao.png" class="w-5">
+          <img src="assets/icons/dashboard/elevacao.png" class="w-5">
           <span class="text-green-600 text-base">{{ calcPercentForRevenue() }}%</span>
           <p class="font-medium opacity-80 text-sm">Ganhos</p>
         } @else if (calcPercentForRevenue() < 0) {
-          <img src="assets/icons/elevacao-down.png" class="w-5" style="transform: rotate(180deg)">
+          <img src="assets/icons/dashboard/elevacao-down.png" class="w-5" style="transform: rotate(180deg)">
           <span class="text-red-600 text-base">{{ calcPercentForRevenue() }}%</span>
           <p class="font-medium opacity-80 text-sm">Perdas</p>
         } @else {
