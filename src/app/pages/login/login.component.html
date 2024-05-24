@@ -43,9 +43,9 @@
 </div>
 
 @if (openAccountCreationModal()) {
-  <app-create-new-client [opened]="openAccountCreationModal()" (closedEvent)="openAccountCreationModal.set(false)"/>
+  <app-create-new-user [opened]="openAccountCreationModal()" (closedEvent)="openAccountCreationModal.set(false)"/>
 }
 
 @if (openRecoverAccountModal()) {
-  <app-recover-client-password [opened]="openRecoverAccountModal()" (closedEvent)="openRecoverAccountModal.set(false)"/>
+  <app-recover-user-password [opened]="openRecoverAccountModal()" (closedEvent)="openRecoverAccountModal.set(false)"/>
 }

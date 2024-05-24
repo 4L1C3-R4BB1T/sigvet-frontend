@@ -1,4 +1,4 @@
-import { AfterViewInit, Component, ViewChild, signal } from '@angular/core';
+import { Component, ViewChild, signal } from '@angular/core';
 
 import { MatAutocompleteModule } from '@angular/material/autocomplete';
 import { MatButtonModule } from '@angular/material/button';
@@ -6,12 +6,11 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { MatTabsModule } from '@angular/material/tabs';
 import { MatTooltipModule } from '@angular/material/tooltip';
+import { RouterLink, RouterOutlet } from '@angular/router';
 import BaseStoreComponent from '../../base/base-store.component';
-import { CreateNewClientComponent } from '../../components/create-new-client/create-new-client.component';
 import { FilterComponent } from '../../components/filter/filter.component';
 import { PaginatorComponent } from '../../components/paginator/paginator.component';
 import { ClientListComponent } from './client-list/client-list.component';
-import { RouterLink, RouterOutlet } from '@angular/router';
 
 @Component({
   selector: 'app-clients',
@@ -19,7 +18,6 @@ import { RouterLink, RouterOutlet } from '@angular/router';
   imports: [
     ClientListComponent,
     PaginatorComponent,
-    CreateNewClientComponent,
     FilterComponent,
     MatButtonModule,
     MatInputModule,

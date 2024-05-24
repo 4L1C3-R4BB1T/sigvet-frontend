@@ -13,14 +13,14 @@ import { CustomValidators } from '../../validators/custom-validators';
 import { ToastrModule } from 'ngx-toastr';
 
 @Component({
-  selector: 'app-recover-client-password',
+  selector: 'app-recover-user-password',
   standalone: true,
   imports: [MatStepperModule, ReactiveFormsModule, NgIf, ToastrModule, MatInputModule, MatButtonModule, NgxMaskDirective, NgIf],
-  templateUrl: './recover-client-password.component.html',
-  styleUrl: './recover-client-password.component.scss',
+  templateUrl: './recover-user-password.component.html',
+  styleUrl: './recover-user-password.component.scss',
   providers: [MessageService, provideNgxMask()]
 })
-export class RecoverClientPasswordComponent extends BaseFormComponent implements OnInit {
+export class RecoverUserPasswordComponent extends BaseFormComponent implements OnInit {
 
   isOpen = signal(false)
   isValidEmail = signal(false);

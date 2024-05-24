@@ -17,14 +17,14 @@ import {MatFormFieldModule} from '@angular/material/form-field';
 import {MatSelectModule} from '@angular/material/select';
 
 @Component({
-  selector: 'app-create-new-client',
+  selector: 'app-create-new-user',
   standalone: true,
   imports: [NgxMaskDirective, NgIf, MatSelectModule, ReactiveFormsModule, MatTabsModule, MatButtonModule, MatFormFieldModule, MatInputModule],
-  templateUrl: './create-new-client.component.html',
-  styleUrl: './create-new-client.component.scss',
+  templateUrl: './create-new-user.component.html',
+  styleUrl: './create-new-user.component.scss',
   providers: [provideNgxMask(), CityService],
 })
-export class CreateNewClientComponent extends BaseFormComponent implements OnInit {
+export class CreateNewUserComponent extends BaseFormComponent implements OnInit {
   tabs = ['Pessoais', 'Endereço'];
   selected = new FormControl(0);
 

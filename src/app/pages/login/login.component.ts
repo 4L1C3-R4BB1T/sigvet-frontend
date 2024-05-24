@@ -10,11 +10,11 @@ import { MatButtonModule } from '@angular/material/button';
 import { MatInputModule } from '@angular/material/input';
 import { RouterLink, RouterOutlet } from '@angular/router';
 import BaseFormComponent from '../../base/base-form.component';
-import { CreateNewClientComponent } from '../../components/create-new-client/create-new-client.component';
+import { CreateNewUserComponent } from '../../components/create-new-user/create-new-user.component';
 import { ProfileComponent } from '../../components/profile/profile.component';
-import { RecoverClientPasswordComponent } from '../../components/recover-client-password/recover-client-password.component';
 import { UserLogin } from '../../models/user-login';
 import { AuthService } from '../../services/auth.service';
+import { RecoverUserPasswordComponent } from '../../components/recover-user-password/recover-user-password.component';
 @Component({
   selector: 'app-account',
   standalone: true,
@@ -22,8 +22,8 @@ import { AuthService } from '../../services/auth.service';
     ProfileComponent,
     RouterLink,
     RouterOutlet,
-    CreateNewClientComponent,
-    RecoverClientPasswordComponent,
+    CreateNewUserComponent,
+    RecoverUserPasswordComponent,
     ReactiveFormsModule,
     MatInputModule,
     MatButtonModule,
