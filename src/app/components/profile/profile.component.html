@@ -2,12 +2,12 @@
   <section class="bg-white w-full max-w-[1000px] flex gap-5 p-6 animate-slide-in shadow-md rounded-md mat-elevation-z2 relative">
     <span class="absolute top-0 right-0 mt-5 mr-4">
       <button mat-icon-button (click)="close()">
-        <img src="assets/icons/dashboard/close.svg" class="w-6 cursor-pointer">
+        <img src="assets/icons/close.svg" class="w-6 cursor-pointer">
       </button>
     </span>
     <aside>
       @if (photoUrl())  {
-        <div class="photo relative w-52 h-52  bg-opacity-80 rounded-full px-4">
+        <div class="photo relative w-52 h-52 bg-opacity-80 rounded-full px-4">
           <img class="absolute top-0 left-0 w-full h-full object-cover rounded-full" [src]="photoUrl()" alt>
         </div>
       }
