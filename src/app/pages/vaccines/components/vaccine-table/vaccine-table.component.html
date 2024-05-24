@@ -1,4 +1,4 @@
-<div class="mat-elevation-z8">
+<div class="mat-elevation-z8 h-[60vh] overflow-auto" tabindex="0">
   <table mat-table [dataSource]="dataSource" matSort>
     <!-- 'id', 'name', 'manufacturer', 'lot', 'unitPrice', 'stock', 'expirationDate']; -->
 
@@ -89,7 +89,7 @@
      </td>
     </ng-container>
 
-    <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+    <tr mat-header-row *matHeaderRowDef="displayedColumns; sticky: true"></tr>
     <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
   </table>
   @if (!data.length) {

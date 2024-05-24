@@ -8,6 +8,7 @@ import { UpdateVaccineComponent } from './pages/vaccines/components/update-vacci
 import { ViewVaccineComponent } from './pages/vaccines/components/view-vaccine/view-vaccine.component';
 import { UpdateVeterinarianComponent } from './pages/veterinarian/update-veterinarian/update-veterinarian.component';
 import { UpdateClientComponent } from './pages/clients/update-client/update-client.component';
+import { UpdateVaccinationComponent } from './pages/vaccinations/update-vaccination/update-vaccination.component';
 
 export const routes: Routes = [
   {
@@ -118,6 +119,18 @@ export const routes: Routes = [
         path: 'vacinacoes',
         loadComponent: () => import('./pages/vaccinations/vaccinations.component'),
         title: 'Vacinações',
+        children: [
+          {
+            path: 'novo',
+            component: UpdateVaccinationComponent,
+            title: 'Vacinações - Novo'
+          },
+          {
+            path: 'atualizar/:id',
+            component: UpdateVaccinationComponent,
+            title: 'Vacinações - Atualizar'
+          }
+        ]
       },
       {
         path: 'consultas',
