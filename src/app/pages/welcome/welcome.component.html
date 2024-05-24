@@ -1,5 +1,5 @@
 <div class="h-full overflow-auto flex flex-col">
-  <header class="h-[100px] fixed top-0 left-0 w-full">
+  <header class="h-[100px] fixed top-0 left-0 w-full z-50">
     <nav class="flex justify-between bg-[#3F51B5] text-white px-12 py-5">
       <div class="flex items-center gap-4">
         <img src="assets/icons/squirrel-white.png" class="w-10 mr-3 ">
@@ -12,14 +12,91 @@
         <li class="bg-[#CCDDE9] px-5 py-2 rounded-md text-black hover:bg-[#014674] hover:text-white cursor-pointer">
           Experimente Grátis</li>
         <li routerLink="/login"
-          class="bg-[#CCDDE9] px-5 py-2 rounded-md text-black hover:bg-[#014674] hover:text-white cursor-pointer" routerLink="/login">Entrar
+          class="bg-[#CCDDE9] px-5 py-2 rounded-md text-black hover:bg-[#014674] hover:text-white cursor-pointer"
+          routerLink="/login">Entrar
         </li>
       </ul>
     </nav>
   </header>
 
-  <div class="flex-1 min-h-[700px]">
-    asdgajhsgdjagsdhj
+  <div class="flex-1">
+    <section class="md:h-[100vh] flex justify-center items-center flex-col gap-20 py-10">
+      <p class="text-[60px] text-center font-bold text-[#1d2556] mt-20">
+        LOREM IPSUM DOLOR SIT AMET<br>QUAERAT REM OFFICIIS
+      </p>
+      <p class="w-[70%] text-center text-lg text-[#1d2556] ">
+        Lorem ipsum dolor, sit amet consectetur adipisicing elit. Facilis deleniti velit cupiditate! Autem dolorum hic
+        quaerat rem officiis, vitae fugit rerum nisi facere. Distinctio, illo animi expedita quasi nulla molestiae
+        perferendis quia, voluptate, suscipit incidunt dolores repudiandae tempore aliquid sint. Commodi deserunt natus
+        quaerat similique corporis excepturi culpa sint consequatur. Commodi deserunt natus
+        quaerat similique corporis excepturi culpa sint consequatur.
+      </p>
+      <div class="flex gap-5">
+        <button class="text-lg border-[#3F51B5] text-[#3F51B5] rounded-3xl px-8 py-2 bg-transparent cursor-pointer hover:opacity-60">Lorem Ipsum</button>
+        <button class="text-lg border-[#3F51B5] text-white] rounded-3xl px-8 py-2 bg-[#3F51B5] text-white cursor-pointer hover:opacity-60">Lorem Ipsum</button>
+      </div>
+    </section>
+
+    <section class="md:h-[100vh] bg-[#CCDDE9]">
+      <div class="md:h-[50%] bg-[#e9f4fc] flex justify-center items-center flex-col gap-10 py-5">
+        <p class="text-[40px] font-bold text-[#1d2556]">Features</p>
+        <p class="w-[70%] text-center text-lg text-[#1d2556] ">
+          Lorem ipsum dolor, sit amet consectetur adipisicing elit. Facilis deleniti velit cupiditate! Autem dolorum hic
+          quaerat rem officiis, vitae fugit rerum nisi facere. Lorem ipsum dolor, sit amet consectetur adipisicing elit. Facilis deleniti velit cupiditate!
+        </p>
+      </div>
+      <div class="md:h-[50%] flex justify-center items-center gap-5 flex-col md:flex-row py-5">
+        <div class="w-[250px] flex justify-center items-center flex-col gap-4">
+          <div class="w-[150px] h-[150px] mt-3 rounded-full bg-white">
+            <img src="assets/images/sem-foto.png" class="rounded-full object-cover h-full w-full">
+          </div>
+          <span>LOREM IPSUM</span>
+          <span class="text-center text-sm text-gray-700 italic">Lorem ipsum, dolor sit amet consectetur adipisicing elit.</span>
+        </div>
+        <div class="w-[250px] flex justify-center items-center flex-col gap-4">
+          <div class="w-[150px] h-[150px] mt-3 rounded-full bg-white">
+            <img src="assets/images/sem-foto.png" class="rounded-full object-cover h-full w-full">
+          </div>
+          <span>LOREM IPSUM</span>
+          <span class="text-center text-sm text-gray-700 italic">Lorem ipsum, dolor sit amet consectetur adipisicing
+            elit.</span>
+        </div>
+        <div class="w-[250px] flex justify-center items-center flex-col gap-4">
+          <div class="w-[150px] h-[150px] mt-3 rounded-full bg-white">
+            <img src="assets/images/sem-foto.png" class="rounded-full object-cover h-full w-full">
+          </div>
+          <span>LOREM IPSUM</span>
+          <span class="text-center text-sm text-gray-700 italic">Lorem ipsum, dolor sit amet consectetur adipisicing
+            elit.</span>
+        </div>
+        <div class="w-[250px] flex justify-center items-center flex-col gap-4">
+          <div class="w-[150px] h-[150px] mt-3 rounded-full bg-white">
+            <img src="assets/images/sem-foto.png" class="rounded-full object-cover h-full w-full">
+          </div>
+          <span>LOREM IPSUM</span>
+          <span class="text-center text-sm text-gray-700 italic">Lorem ipsum, dolor sit amet consectetur adipisicing
+            elit.</span>
+        </div>
+      </div>
+    </section>
+
+    <section class="relative md:h-[100vh] flex justify-center items-center flex-col half-bg py-5">
+      <p class="text-[45px] font-bold text-[#1d2556]">
+        LOREM IPSUM DOLOR<br>SIT AMER SED DIAM
+      </p>
+      <p class="w-[40%] text-center text-lg text-[#1d2556] mt-5">
+        Lorem ipsum dolor, sit amet consectetur adipisicing elit. Facilis deleniti velit cupiditate! Autem dolorum hic
+        quaerat rem officiis, vitae fugit rerum nisi facere.
+      </p>
+      <div class="w-[60%] bg-[#CCDDE9] flex flex-col justify-center items-center gap-8 p-16 shadow-xl rounded-md mt-[4rem]">
+        <span class="text-center text-2xl font-bold text-[#1d2556]">LOREM IPSUM DOLOR SIT AMET?</span>
+        <div class="flex gap-5 flex-col lg:flex-row">
+          <input type="text" placeholder="Lorem ipsum dolor sit" class="px-5 py-3 rounded-md border-none w-[250px] text-[15px]">
+          <input type="text" placeholder="Lorem ipsum dolor sit" class="px-5 py-3 rounded-md border-none w-[250px] text-[15px]">
+        </div>
+        <button class="text-lg border-none text-white] rounded-3xl px-8 py-2 bg-red-800 text-white cursor-pointer hover:opacity-60">Get started</button>
+      </div>
+    </section>
   </div>
 
   <footer class="bg-[#3F51B5] text-white py-5">
