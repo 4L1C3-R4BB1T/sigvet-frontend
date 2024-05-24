@@ -61,6 +61,10 @@ export class AuthService extends BaseService {
     return this.getRoles().includes(role);
   }
 
+  public hasSingleRole(role: string) {
+    return this.getRoles().length === 1 && this.getRoles().includes(role);
+  }
+
   private async getCurrentUser(id: number) {
       return ((await lastValueFrom(this.http.get<User>(this.getEndpointV1(`account/${id}`)))) as any)?.result;
   }

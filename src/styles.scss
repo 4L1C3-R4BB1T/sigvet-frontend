@@ -11,10 +11,14 @@ html {
 body {
   margin: 0;
   font-family: Roboto, "Helvetica Neue", sans-serif;
-  position: relative;
   height: 100%;
-  overflow: hidden;
 }
 
 
 @tailwind utilities;
+
+
+.mat-drawer-inner-container {
+  width: 100%;
+  overflow: hidden !important;
+}

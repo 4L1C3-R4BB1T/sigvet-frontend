@@ -3,6 +3,7 @@
   padding: 0;
   box-sizing: border-box;
   font-family: 'Roboto', sans-serif;
+  scroll-behavior: smooth;
 
   ::-webkit-scrollbar {
     width: 0.6rem;
@@ -21,5 +22,5 @@
 
 .mat-drawer-content {
   position: static !important;
-  z-index: 99 !important;
+  z-index: 10 !important;
 }

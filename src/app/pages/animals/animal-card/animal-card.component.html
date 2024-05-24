@@ -18,16 +18,12 @@
           </div>
         </div>
         <div class="flex gap-2">
-          <button mat-mini-fab color="primary" (click)="update()">
-            <i class="bi bi-pencil-square text-lg"></i>
-          </button>
-
-          @if (authService.hasRole('ADMIN')) {
+            <button mat-mini-fab color="primary" (click)="update()">
+              <i class="bi bi-pencil-square text-lg"></i>
+            </button>
             <button mat-mini-fab color="warn" (click)="closeDialog.set(false)">
               <i class="bi bi-trash3-fill text-lg"></i>
             </button>
-          }
-
         </div>
       </div>
     </mat-card-content>
