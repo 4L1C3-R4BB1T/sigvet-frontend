@@ -11,8 +11,7 @@ import { CreateNewClientComponent } from '../../components/create-new-client/cre
 import { FilterComponent } from '../../components/filter/filter.component';
 import { PaginatorComponent } from '../../components/paginator/paginator.component';
 import { ClientListComponent } from './client-list/client-list.component';
-import { UpdateUserModalComponent } from '../../components/update-user-modal/update-user-modal.component';
-import { RouterLink } from '@angular/router';
+import { RouterLink, RouterOutlet } from '@angular/router';
 
 @Component({
   selector: 'app-clients',
@@ -28,8 +27,8 @@ import { RouterLink } from '@angular/router';
     MatFormFieldModule,
     MatTooltipModule,
     MatTabsModule,
-    UpdateUserModalComponent,
     RouterLink,
+    RouterOutlet,
   ],
   templateUrl: './clients.component.html',
   styleUrl: './clients.component.scss',
@@ -45,14 +44,8 @@ export default class ClientsComponent extends BaseStoreComponent {
 
   createClient = signal(false);
 
-  reset() {
-    this.createClient.set(false);
-    this.userId.set(null);
-  }
-
   async reload() {
     await this.clientListComponent.reload();
-    console.log('oii')
   }
 
   generatePDF() {

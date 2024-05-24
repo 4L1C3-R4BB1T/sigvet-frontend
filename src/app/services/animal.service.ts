@@ -14,6 +14,10 @@ export class AnimalService extends BaseService {
     return await lastValueFrom(this.http.get<Animal[]>(this.getEndpointV1('animals/client/'+id)));
   }
 
+  public async removePhoto(id: number) {
+    return await lastValueFrom(this.http.delete<boolean>(this.getEndpointV1('photo/animal/'+id)));
+  }
+
   public async savePhoto(id: number | string, file: File) {
     try {
       const formData = new FormData();

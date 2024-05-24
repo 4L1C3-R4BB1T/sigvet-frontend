@@ -10,7 +10,6 @@ import { MatTabsModule } from '@angular/material/tabs';
 import { MatTooltipModule } from '@angular/material/tooltip';
 import { VeterinarianListComponent } from './veterinarian-list/veterinarian-list.component';
 import { FilterComponent } from '../../components/filter/filter.component';
-import { UpdateUserModalComponent } from '../../components/update-user-modal/update-user-modal.component';
 import { RouterLink, RouterOutlet } from '@angular/router';
 
 @Component({
@@ -18,7 +17,6 @@ import { RouterLink, RouterOutlet } from '@angular/router';
   standalone: true,
   imports: [
     FilterComponent,
-    UpdateUserModalComponent,
     VeterinarianListComponent,
     PaginatorComponent,
     MatButtonModule,

@@ -6,8 +6,8 @@ import { ViewAnimalInfoComponent } from './pages/animals/view-animal-info/view-a
 import { UpdateAnimalComponent } from './pages/animals/update-animal/update-animal.component';
 import { UpdateVaccineComponent } from './pages/vaccines/components/update-vaccine/update-vaccine.component';
 import { ViewVaccineComponent } from './pages/vaccines/components/view-vaccine/view-vaccine.component';
-import { UpdateUserModalComponent } from './components/update-user-modal/update-user-modal.component';
 import { UpdateVeterinarianComponent } from './pages/veterinarian/update-veterinarian/update-veterinarian.component';
+import { UpdateClientComponent } from './pages/clients/update-client/update-client.component';
 
 export const routes: Routes = [
   {
@@ -39,6 +39,18 @@ export const routes: Routes = [
         path: 'clientes',
         loadComponent: () => import('./pages/clients/clients.component'),
         title: 'Clientes',
+        children: [
+          {
+            path: 'novo',
+            component: UpdateClientComponent,
+            title: 'Veterinários',
+          },
+          {
+            path: 'atualizar/:id',
+            component: UpdateClientComponent,
+            title: 'Veterinários',
+          }
+        ]
       },
       {
         path: 'animais',
@@ -71,6 +83,11 @@ export const routes: Routes = [
         children: [
           {
             path: 'novo',
+            component: UpdateVeterinarianComponent,
+            title: 'Veterinários',
+          },
+          {
+            path: 'atualizar/:id',
             component: UpdateVeterinarianComponent,
             title: 'Veterinários',
           }

@@ -6,7 +6,6 @@ import { ClientCardComponent } from '../client-card/client-card.component';
 import {PageEvent, MatPaginatorModule} from '@angular/material/paginator';
 import { ClientService } from '../../../services/client.service';
 import { User } from '../../../models/user';
-import { UpdateUserModalComponent } from '../../../components/update-user-modal/update-user-modal.component';
 import { selectUserInfo } from '../../../store/reducers/user.reducer';
 import jsPDF from 'jspdf';
 import autoTable from 'jspdf-autotable';
@@ -15,7 +14,7 @@ import { ToastrService } from 'ngx-toastr';
 @Component({
   selector: 'app-client-list',
   standalone: true,
-  imports: [FadeInDirective, AsyncPipe, ClientCardComponent,  MatPaginatorModule, UpdateUserModalComponent],
+  imports: [FadeInDirective, AsyncPipe, ClientCardComponent,  MatPaginatorModule],
   templateUrl: './client-list.component.html',
   styleUrl: './client-list.component.scss',
 })

@@ -23,7 +23,7 @@
        </div>
        <div>
         <span class="flex gap-2">
-          <button mat-mini-fab color="primary" matTooltip="Editar" (click)="edit()">
+          <button mat-mini-fab color="primary" matTooltip="Editar" [routerLink]="['/dashboard', 'clientes', 'atualizar', client.id]">
             <i class="bi bi-pencil-square text-xl"></i>
           </button>
           <button mat-mini-fab class="!bg-[#D26437]" matTooltip="Ver Animais" (click)="showAnimals()">

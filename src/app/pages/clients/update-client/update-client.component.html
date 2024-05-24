@@ -1,29 +1,34 @@
 <div class="container px-4 bg-black bg-opacity-60 w-full h-full flex items-center justify-center">
-  <form class="max-w-[900px] w-full bg-white flex gap-2 rounded-md shadow-lg animate-slide-in">
-    <aside class="flex flex-col gap-2 items-center justify-center p-5 px-10">
-      <div class="w-36 h-36 rounded-full relative">
+  <form class="{{ showUploadPhoto.checked ? 'max-w-[900px]' : 'max-w-[700px]' }} w-full p-5 bg-white flex gap-2 rounded-md shadow-lg animate-slide-in" style="transition: all 0.2s ease;">
+    <aside class="flex flex-col gap-2 items-center justify-center p-5 px-10" *ngIf="showUploadPhoto.checked">
+      <div class="w-40 h-40 rounded-full relative">
         @if (previewsPhoto()) {
-          <img class="w-36 h-36 rounded-full" src="{{previewsPhoto()}}">
+          <img class="w-40 h-40 rounded-full" src="{{previewsPhoto()}}">
         } @else {
-          <img class="w-36 h-36 rounded-full" src="assets/images/sem-foto.png">
+          <img class="w-40 h-40 rounded-full" src="assets/images/sem-foto.png">
         }
-        <div class="absolute -right-2 bottom-0 cursor-pointer">
-          <button mat-mini-fab color="primary">
-            <i class="bi bi-camera-fill text-base"></i>
+        <div class="absolute -right-2 bottom-0 cursor-pointer flex items-center">
+          @if (previewsPhoto()) {
+            <button type="button" mat-mini-fab color="warn" class="mr-2" (click)="removeFile()">
+              <i class="bi bi-trash3-fill text-base"></i>
+            </button>
+          }
+          <button type="button" mat-mini-fab color="primary">
+            <i class="bi bi-camera-fill text-lg"></i>
             <input type="file" class="absolute left-0 top-0 w-full h-full opacity-0 cursor-pointer" #photoFileInput (input)="addPhoto(photoFileInput.files)">
           </button>
         </div>
       </div>
-      @if (userId) {
-        <span class="opacity-90 text-sm font-medium">{{ user().email }}</span>
-        @if (user().address) {
-          <span class="text-xs">{{ user().address?.city?.name }}, {{ user().address?.city?.state?.name }}</span>
+      @if (clientId()) {
+        <span class="opacity-90 text-sm font-medium">{{ client().email }}</span>
+        @if (client().address) {
+          <span class="text-xs">{{ client().address?.city?.name }}, {{ client().address?.city?.state?.name }}</span>
         }
       }
     </aside>
     <aside class="flex flex-col p-4 flex-1">
       <header class="py-2">
-        <button mat-button class="flex gap-2" (click)="onExit.emit()">
+        <button mat-button class="flex gap-2" routerLink="/dashboard/clientes">
           <i class="bi bi-arrow-left"></i>
           Voltar para a página anterior
         </button>
@@ -31,7 +36,7 @@
       <div [formGroup]="form">
         <mat-tab-group>
 
-            <mat-tab label="Informações">
+            <mat-tab label="Informações 1">
             <div class="mt-5 grid grid-cols-2 gap-3">
             <mat-form-field class="w-full" appearance="outline">
             <mat-label>Nome Completo</mat-label>
@@ -73,7 +78,7 @@
             }
             </mat-form-field>
 
-            @if (userId == null) {
+            @if (!clientId()) {
               <mat-form-field class="w-full" appearance="outline">
                 <mat-label>Senha</mat-label>
                 <input type="password" matInput formControlName="password" placeholder="Senha">
@@ -91,9 +96,12 @@
               </mat-form-field>
             }
             </div>
+            <mat-slide-toggle color="primary" class="mb-3 mt-3" #showUploadPhoto>
+              <span>Exibir upload de foto</span>
+            </mat-slide-toggle>
             </mat-tab>
 
-            <mat-tab label="Endereço">
+            <mat-tab label="Informações 2">
             <div class="mt-5 grid grid-cols-2 gap-3" formGroupName="address">
             <mat-form-field appearance="outline" class="w-full col-span-2">
             <mat-label>Cidades</mat-label>
@@ -144,11 +152,11 @@
             </mat-tab-group>
 
       </div>
-      <div class="flex justify-end">
-        @if (!userId) {
-          <button type="button" mat-button (click)="create()">Salvar</button>
+      <div class="mt-3">
+        @if (!clientId) {
+          <button type="button" mat-raised-button color="primary" (click)="create()" class="w-full !h-12">Salvar</button>
         } @else {
-          <button type="button" mat-button (click)="update()">Atualizar</button>
+          <button type="button" mat-raised-button color="primary" (click)="update()" class="w-full !h-12">Atualizar</button>
         }
       </div>
     </aside>

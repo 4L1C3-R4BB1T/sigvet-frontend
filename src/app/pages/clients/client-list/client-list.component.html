@@ -16,7 +16,7 @@
 <div class="grid grid-cols-2 gap-4 p-3 mt-3 max-h-[65vh] overflow-hidden overflow-y-auto">
   @for (client of data(); track client.id) {
     @if (userInfo()?.id !== client.id) {
-      <app-client-card [client]="client" (onEdit)="edit($event)"/>
+      <app-client-card [client]="client"/>
     }
   }
 </div>

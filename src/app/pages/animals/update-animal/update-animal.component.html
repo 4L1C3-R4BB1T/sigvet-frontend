@@ -5,12 +5,15 @@
     @if (toggleShowUploadPhoto.checked) {
       <div class="flex justify-center items-center ps-5">
         <div class="w-36 h-36 relative mat-elevation-z6 rounded-full flex items-center justify-center">
-          @if (previewPhotoUrl() || (animal() && animal().photoUrl)) {
+          @if (previewPhotoUrl()) {
             <img class="w-full h-full rounded-full object-cover" src="{{previewPhotoUrl() || animal().photoUrl }}">
-            <div class="absolute right-0 bottom-0">
-              <button mat-mini-fab color="primary">
-                <i class="bi bi-camera-fill text-2xl"></i>
-                <input type="file" class="opacity-0 absolute w-full h-full cursor-pointer top-0 left-0" #inputFile (input)="savePhoto(inputFile.files!)">
+            <div class="absolute -right-2 bottom-0 cursor-pointer flex items-center">
+              <button type="button" mat-mini-fab color="warn" class="mr-2" (click)="removeFile()">
+                <i class="bi bi-trash3-fill text-base"></i>
+              </button>
+              <button type="button" mat-mini-fab color="primary">
+                <i class="bi bi-camera-fill text-lg"></i>
+                <input type="file" class="absolute left-0 top-0 w-full h-full opacity-0 cursor-pointer" #photoFileInput (input)="savePhoto(photoFileInput.files!)">
               </button>
             </div>
           } @else {
@@ -40,7 +43,7 @@
           <mat-error>{{  getControlError('name') }}</mat-error>
         }
       </mat-form-field>
-      <mat-form-field appearance="outline" formGroupName="client">
+      <mat-form-field appearance="outline" formGroupName="client" class="mt-1">
         <mat-label>Clientes</mat-label>
         <input type="text"
                placeholder="Nome"

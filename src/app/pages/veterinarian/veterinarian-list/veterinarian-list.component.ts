@@ -6,7 +6,6 @@ import { VeterinarianCardComponent } from '../veterinarian-card/veterinarian-car
 import {PageEvent, MatPaginatorModule} from '@angular/material/paginator';
 import { VeterinarianService } from '../../../services/veterinarian.service';
 import { User } from '../../../models/user';
-import { UpdateUserModalComponent } from '../../../components/update-user-modal/update-user-modal.component';
 import { selectUserInfo } from '../../../store/reducers/user.reducer';
 import jsPDF from 'jspdf';
 import autoTable from 'jspdf-autotable';
@@ -15,7 +14,7 @@ import { ToastrService } from 'ngx-toastr';
 @Component({
   selector: 'app-veterinarian-list',
   standalone: true,
-  imports: [FadeInDirective, AsyncPipe, VeterinarianCardComponent,  MatPaginatorModule, UpdateUserModalComponent],
+  imports: [FadeInDirective, AsyncPipe, VeterinarianCardComponent,  MatPaginatorModule],
   templateUrl: './veterinarian-list.component.html',
   styleUrl: './veterinarian-list.component.scss',
 })

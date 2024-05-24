@@ -1,15 +1,20 @@
-<div class="container px-4 bg-black bg-opacity-60 w-full h-full flex items-center justify-center">
-  <form class="max-w-[900px] w-full bg-white flex gap-2 rounded-md shadow-lg animate-slide-in">
-    <aside class="flex flex-col gap-2 items-center justify-center p-5 px-10">
-      <div class="w-36 h-36 rounded-full relative">
+<div class="container p-5 bg-black bg-opacity-60 w-full h-full flex items-center justify-center">
+  <form class="{{ showUploadPhoto.checked ? 'max-w-[900px]' : 'max-w-[750px]'}} w-full bg-white flex gap-2 rounded-md shadow-lg animate-slide-in" style="transition: all 0.2s ease">
+    <aside class="flex flex-col gap-2 items-center justify-center p-5 px-10" *ngIf="showUploadPhoto.checked">
+      <div class="w-40 h-40 rounded-full relative">
         @if (previewsPhoto()) {
-          <img class="w-36 h-36 rounded-full" src="{{previewsPhoto()}}">
+          <img class="w-40 h-40 rounded-full" src="{{previewsPhoto()}}">
         } @else {
-          <img class="w-36 h-36 rounded-full" src="assets/images/sem-foto.png">
+          <img class="w-40 h-40 rounded-full" src="assets/images/sem-foto.png">
         }
-        <div class="absolute -right-2 bottom-0 cursor-pointer">
-          <button mat-mini-fab color="primary">
-            <i class="bi bi-camera-fill text-base"></i>
+        <div class="absolute -right-2 bottom-0 cursor-pointer flex items-center">
+          @if (previewsPhoto()) {
+            <button type="button" mat-mini-fab color="warn" class="mr-2" (click)="removeFile()">
+              <i class="bi bi-trash3-fill text-base"></i>
+            </button>
+          }
+          <button type="button" mat-mini-fab color="primary">
+            <i class="bi bi-camera-fill text-lg"></i>
             <input type="file" class="absolute left-0 top-0 w-full h-full opacity-0 cursor-pointer" #photoFileInput (input)="addPhoto(photoFileInput.files)">
           </button>
         </div>
@@ -21,9 +26,9 @@
         }
       }
     </aside>
-    <aside class="flex flex-col p-4 flex-1">
+    <aside class="flex flex-col p-8 flex-1">
       <header class="py-2">
-        <button mat-button class="flex gap-2">
+        <button mat-button class="flex gap-2" routerLink="/dashboard/veterinarios">
           <i class="bi bi-arrow-left"></i>
           Voltar para a página anterior
         </button>
@@ -31,7 +36,7 @@
       <div [formGroup]="form">
         <mat-tab-group>
 
-            <mat-tab label="Informações">
+            <mat-tab label="Informações 1">
             <div class="mt-5 grid grid-cols-2 gap-3">
               <mat-form-field class="w-full" appearance="outline">
                 <mat-label>Nome Completo</mat-label>
@@ -42,50 +47,38 @@
               </mat-form-field>
 
             <mat-form-field class="w-full" appearance="outline">
-            <mat-label>Apelido</mat-label>
-            <input type="text" matInput formControlName="username" placeholder="Apelido">
-            @if (getControlError('username')) {
-            <mat-error>{{  getControlError('username') }}</mat-error>
-            }
+              <mat-label>Apelido</mat-label>
+              <input type="text" matInput formControlName="username" placeholder="Apelido">
+              @if (getControlError('username')) {
+              <mat-error>{{  getControlError('username') }}</mat-error>
+              }
             </mat-form-field>
 
-            <mat-form-field class="w-full col-span-2" appearance="outline">
-            <mat-label>E-mail</mat-label>
-            <input type="email" matInput formControlName="email" placeholder="E-mail">
-            @if (getControlError('email')) {
-            <mat-error>{{  getControlError('email') }}</mat-error>
-            }
-            </mat-form-field>
-
-            <mat-form-field appearance="outline" class="w-full col-span-2">
-              <mat-label>Especialidade</mat-label>
-              <mat-select formControlName="specialty">
-                @for (specialty of specialties; track specialty) {
-                  <mat-option [value]="specialty">{{  specialty }}</mat-option>
-                }
-            </mat-select>
-            @if (getControlError('address.cityId')) {
-              <mat-error>{{  getControlError('address.cityId') }}</mat-error>
-            }
+            <mat-form-field  appearance="outline" class="col-span-2">
+              <mat-label>E-mail</mat-label>
+              <input type="email" matInput formControlName="email" placeholder="E-mail">
+              @if (getControlError('email')) {
+              <mat-error>{{  getControlError('email') }}</mat-error>
+              }
             </mat-form-field>
 
             <mat-form-field class="w-full" appearance="outline">
-            <mat-label>CPF</mat-label>
-            <input type="text" mask="000.000.000-00" matInput formControlName="document" placeholder="CPF">
-            @if (getControlError('document')) {
-            <mat-error>{{  getControlError('document') }}</mat-error>
-            }
+              <mat-label>CPF</mat-label>
+              <input type="text" mask="000.000.000-00" matInput formControlName="document" placeholder="CPF">
+              @if (getControlError('document')) {
+              <mat-error>{{  getControlError('document') }}</mat-error>
+              }
             </mat-form-field>
 
             <mat-form-field class="w-full" appearance="outline">
-            <mat-label>Celular</mat-label>
-            <input type="text" mask="(00) 00000-0000" matInput formControlName="phone" placeholder="Celular">
-            @if (getControlError('phone')) {
-            <mat-error>{{  getControlError('phone') }}</mat-error>
-            }
+              <mat-label>Celular</mat-label>
+              <input type="text" mask="(00) 00000-0000" matInput formControlName="phone" placeholder="Celular">
+              @if (getControlError('phone')) {
+              <mat-error>{{  getControlError('phone') }}</mat-error>
+              }
             </mat-form-field>
 
-            @if (veterinarian == null) {
+            @if (!veterinarianId()) {
               <mat-form-field class="w-full" appearance="outline">
                 <mat-label>Senha</mat-label>
                 <input type="password" matInput formControlName="password" placeholder="Senha">
@@ -103,64 +96,102 @@
               </mat-form-field>
             }
             </div>
+            <mat-slide-toggle color="primary" class="mb-3 mt-3" #showUploadPhoto>
+              <span>Exibir upload de foto</span>
+            </mat-slide-toggle>
             </mat-tab>
 
-            <mat-tab label="Endereço">
-            <div class="mt-5 grid grid-cols-2 gap-3" formGroupName="address">
-            <mat-form-field appearance="outline" class="w-full col-span-2">
-              <mat-label>Cidades</mat-label>
-              <mat-select formControlName="cityId">
-                @for (city of cities(); track city.id) {
-                  <mat-option [value]="city.id">{{  city.name + " - " + city.state.name }}</mat-option>
-                }
-            </mat-select>
-            @if (getControlError('address.cityId')) {
-              <mat-error>{{  getControlError('address.cityId') }}</mat-error>
-            }
-            </mat-form-field>
+            <mat-tab label="Informações 2">
+                <div class="mt-5 grid grid-cols-2 gap-3">
+                  <mat-form-field appearance="outline" class="col-span-2">
+                    <mat-label>Especialidade</mat-label>
+                    <mat-select formControlName="specialty">
+                      @for (specialty of specialties; track specialty) {
+                        <mat-option [value]="specialty">{{  specialty }}</mat-option>
+                      }
+                  </mat-select>
+                  @if (getControlError('address.cityId')) {
+                    <mat-error>{{  getControlError('specialty') }}</mat-error>
+                  }
+                  </mat-form-field>
 
-            <mat-form-field class="w-full" appearance="outline">
-            <mat-label>Rua</mat-label>
-            <input type="text" matInput formControlName="street" placeholder="Rua">
-            @if (getControlError('address.street')) {
-              <mat-error>{{  getControlError('address.street') }}</mat-error>
-            }
-            </mat-form-field>
+                    <mat-form-field  appearance="outline">
+                      <mat-label>CRMV</mat-label>
+                      <input type="text" matInput formControlName="crmv" placeholder="Crmv">
+                      @if (getControlError('crmv')) {
+                      <mat-error>{{  getControlError('crmv') }}</mat-error>
+                      }
+                    </mat-form-field>
+                    <mat-form-field  appearance="outline">
+                      <mat-label>UF</mat-label>
+                      <mat-select formControlName="crmvUf">
+                        @for (state of states(); track state) {
+                          <mat-option [value]="state.shortname">{{  state.name }}</mat-option>
+                        }
+                      </mat-select>
+                      @if (getControlError('crmvUf')) {
+                        <mat-error>{{  getControlError('crmvUf') }}</mat-error>
+                      }
+                    </mat-form-field>
+                </div>
+            </mat-tab>
 
-            <mat-form-field class="w-full" appearance="outline">
-            <mat-label>Bairro</mat-label>
-            <input type="text" matInput formControlName="neighborhood" placeholder="Bairro">
-            @if (getControlError('address.neighborhood')) {
-              <mat-error>{{  getControlError('address.neighborhood') }}</mat-error>
-            }
-            </mat-form-field>
+            <mat-tab label="Informações 3">
+              <div class="mt-5 grid grid-cols-2 gap-3" formGroupName="address">
+              <mat-form-field appearance="outline" class="w-full col-span-2">
+                <mat-label>Cidades</mat-label>
+                <mat-select formControlName="cityId">
+                  @for (city of cities(); track city.id) {
+                    <mat-option [value]="city.id">{{  city.name + " - " + city.state.name }}</mat-option>
+                  }
+              </mat-select>
+              @if (getControlError('address.cityId')) {
+                <mat-error>{{  getControlError('address.cityId') }}</mat-error>
+              }
+              </mat-form-field>
 
-            <mat-form-field class="w-full" appearance="outline">
-            <mat-label>CEP</mat-label>
-            <input type="text" matInput mask="00000-000" formControlName="zipCode" placeholder="CEP">
-            @if (getControlError('address.zipCode')) {
-              <mat-error>{{  getControlError('address.zipCode') }}</mat-error>
-            }
-            </mat-form-field>
+              <mat-form-field class="w-full" appearance="outline">
+              <mat-label>Rua</mat-label>
+              <input type="text" matInput formControlName="street" placeholder="Rua">
+              @if (getControlError('address.street')) {
+                <mat-error>{{  getControlError('address.street') }}</mat-error>
+              }
+              </mat-form-field>
 
-            <mat-form-field class="w-full" appearance="outline">
-            <mat-label>Número</mat-label>
-            <input type="text" matInput formControlName="number" placeholder="Número">
-            @if (getControlError('address.number')) {
-              <mat-error>{{  getControlError('address.number') }}</mat-error>
-            }
-            </mat-form-field>
-            </div>
+              <mat-form-field class="w-full" appearance="outline">
+              <mat-label>Bairro</mat-label>
+              <input type="text" matInput formControlName="neighborhood" placeholder="Bairro">
+              @if (getControlError('address.neighborhood')) {
+                <mat-error>{{  getControlError('address.neighborhood') }}</mat-error>
+              }
+              </mat-form-field>
+
+              <mat-form-field class="w-full" appearance="outline">
+              <mat-label>CEP</mat-label>
+              <input type="text" matInput mask="00000-000" formControlName="zipCode" placeholder="CEP">
+              @if (getControlError('address.zipCode')) {
+                <mat-error>{{  getControlError('address.zipCode') }}</mat-error>
+              }
+              </mat-form-field>
+
+              <mat-form-field class="w-full" appearance="outline">
+              <mat-label>Número</mat-label>
+              <input type="text" matInput formControlName="number" placeholder="Número">
+              @if (getControlError('address.number')) {
+                <mat-error>{{  getControlError('address.number') }}</mat-error>
+              }
+              </mat-form-field>
+              </div>
             </mat-tab>
 
             </mat-tab-group>
 
       </div>
-      <div class="flex justify-end">
+      <div class="mt-4">
         @if (!veterinarianId()) {
-          <button type="button" mat-button (click)="create()">Salvar</button>
+          <button type="button" mat-raised-button color="primary" class="w-full !h-12" (click)="create()">Salvar</button>
         } @else {
-          <button type="button" mat-button (click)="update()">Atualizar</button>
+          <button type="button"mat-raised-button color="primary" class="w-full !h-12" (click)="update()">Atualizar</button>
         }
       </div>
     </aside>

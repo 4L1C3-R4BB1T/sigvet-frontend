@@ -3,7 +3,9 @@ import { Observable } from "rxjs";
 import BaseService from "../base/base.service";
 import { City } from "../models/city";
 
-@Injectable()
+@Injectable({
+  providedIn: 'root',
+})
 export default class CityService extends BaseService {
 
   get findAll(): Observable<City[]> {

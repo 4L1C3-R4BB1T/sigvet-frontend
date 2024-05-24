@@ -1,43 +1,41 @@
-import { JsonPipe } from '@angular/common';
-import { Component, EventEmitter, Input, OnChanges, OnInit, Output, inject, signal } from '@angular/core';
+import { JsonPipe, NgIf } from '@angular/common';
+import { Component, OnChanges, OnInit, ViewChild, inject, signal } from '@angular/core';
 import { FormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
 import { MatButtonModule } from '@angular/material/button';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { MatSelectModule } from '@angular/material/select';
 import { MatTabsModule } from '@angular/material/tabs';
-import { RouterLink } from '@angular/router';
-import { Store } from '@ngrx/store';
+import { ActivatedRoute, Router, RouterLink } from '@angular/router';
 import { NgxMaskDirective, provideNgxMask } from 'ngx-mask';
 import { lastValueFrom } from 'rxjs';
-import BaseFormComponent from '../../base/base-form.component';
-import { City } from '../../models/city';
-import { CreateUser } from '../../models/create-user';
-import { UpdateUser } from '../../models/update-user';
-import { User } from '../../models/user';
-import ClientsComponent from '../../pages/clients/clients.component';
-import { AccountService } from '../../services/account.service';
-import CityService from '../../services/city.service';
-import { ClientService } from '../../services/client.service';
+import BaseFormComponent from '../../../base/base-form.component';
+import { City } from '../../../models/city';
+import { CreateUser } from '../../../models/create-user';
+import { UpdateUser } from '../../../models/update-user';
+import { User } from '../../../models/user';
+import { AccountService } from '../../../services/account.service';
+import CityService from '../../../services/city.service';
+import { ClientService } from '../../../services/client.service';
+import ClientsComponent from '../clients.component';
+import { MatSlideToggle, MatSlideToggleModule } from '@angular/material/slide-toggle';
+import { CustomValidators } from '../../../validators/custom-validators';
+
 
 @Component({
-  selector: 'app-update-user-modal',
+  selector: 'app-update-client',
   standalone: true,
-  imports: [NgxMaskDirective, MatButtonModule, MatFormFieldModule, ReactiveFormsModule, MatInputModule, MatTabsModule, MatSelectModule, RouterLink, JsonPipe],
-  templateUrl: './update-user-modal.component.html',
-  styleUrl: './update-user-modal.component.scss',
-  providers: [CityService, provideNgxMask()],
+  imports: [NgxMaskDirective, MatSlideToggleModule, NgIf, MatButtonModule, MatFormFieldModule, ReactiveFormsModule, MatInputModule, MatTabsModule, MatSelectModule, RouterLink, JsonPipe],
+  templateUrl: './update-client.component.html',
+  styleUrl: './update-client.component.scss',
+  providers: [provideNgxMask()],
 })
-export class UpdateUserModalComponent extends BaseFormComponent implements OnInit, OnChanges {
+export class UpdateClientComponent extends BaseFormComponent implements OnInit {
 
-  @Input()
-  userId: number | null = null;
-  user = signal({} as User);
+  clientId = signal(inject(ActivatedRoute).snapshot.params['id']);
+  client = signal({} as User);
 
   #clientComponent = inject(ClientsComponent);
-
-  @Output()
-  onExit = new EventEmitter();
 
   previewsPhoto = signal('');
   savedPhoto = signal(null as File | null);
@@ -46,9 +44,14 @@ export class UpdateUserModalComponent extends BaseFormComponent implements OnIni
   #cityService = inject(CityService);
   #clientService = inject(ClientService);
   #accountService = inject(AccountService);
-  #store = inject(Store);
+
+
+  @ViewChild(MatSlideToggle, { static: true })
+  matSlideToggle!: MatSlideToggle;
 
   cities = signal([] as City[]);
+
+  #router = inject(Router);
 
   protected override form = this.#formBuilder.group({
     id: [''],
@@ -69,10 +72,8 @@ export class UpdateUserModalComponent extends BaseFormComponent implements OnIni
   });
 
   async ngOnInit() {
+    this.form.controls.confirmationPassword.addValidators(CustomValidators.passwordMatch('password', this.form));
     this.cities.set(await lastValueFrom(this.#cityService.findAll));
-  }
-
-  async ngOnChanges() {
     await this.checkIfEdition();
   }
 
@@ -86,21 +87,21 @@ export class UpdateUserModalComponent extends BaseFormComponent implements OnIni
     }
     this.toastrService.success('Adicionado', 'Usuário');
     await this.#clientComponent.reload();
-    this.onExit.emit();
+    this.#router.navigate(['/dashboard', 'clientes']);
   }
 
   async update() {
     this.checkForm();
-    if (!this.userId) return;
+    if (!this.clientId()) return;
     if (this.form.invalid) return;
-    const result = await this.#clientService.update(this.userId!, this.form.value as UpdateUser);
+    const result = await this.#clientService.update(this.clientId(), this.form.value as UpdateUser);
     if (this.savedPhoto() && this.previewsPhoto()) {
-      this.#accountService.addUserPhoto(this.savedPhoto()!, this.userId);
+      await this.#accountService.addUserPhoto(this.savedPhoto()!, this.clientId());
     }
     if (result) {
       this.toastrService.success('Atualizado', 'Cliente');
       await this.#clientComponent.reload();
-      this.onExit.emit();
+      this.#router.navigate(['/dashboard', 'clientes']);
     }
   }
 
@@ -112,14 +113,23 @@ export class UpdateUserModalComponent extends BaseFormComponent implements OnIni
   }
 
   async checkIfEdition() {
-    if (!this.userId) return;
+    if (!this.clientId()) return;
     this.form.removeControl('password' as never);
     this.form.removeControl('confirmationPassword' as never);
-    const user = await this.#accountService.findById(this.userId);
-    this.user.set(user);
-    this.previewsPhoto.set(user.photoUrl ?? '');
-    this.form.patchValue(user as any);
-    this.form.controls.address.controls.cityId.setValue(user.address?.city.id as any ?? '');
+    const client = await this.#accountService.findById(this.clientId());
+    this.client.set(client);
+    this.previewsPhoto.set(client.photoUrl ?? '');
+    this.matSlideToggle.checked = !!client.photoUrl;
+    this.form.patchValue(client as any);
+    this.form.controls.address.controls.cityId.setValue(client.address?.city.id as any ?? '');
+  }
+
+  removeFile() {
+    if (this.clientId() && this.client().photoUrl) {
+      this.#accountService.removePhotoByUserId(this.clientId());
+    }
+    this.savedPhoto.set(null);
+    this.previewsPhoto.set('');
   }
 
 }

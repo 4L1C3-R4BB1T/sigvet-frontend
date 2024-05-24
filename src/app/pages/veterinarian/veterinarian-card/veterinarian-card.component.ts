@@ -7,7 +7,7 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { MatTooltipModule } from '@angular/material/tooltip';
 import { MatTreeModule } from '@angular/material/tree';
-import { Router } from '@angular/router';
+import { Router, RouterLink } from '@angular/router';
 import { ToastrService } from 'ngx-toastr';
 import { DialogModule } from 'primeng/dialog';
 import { User } from '../../../models/user';
@@ -28,6 +28,7 @@ import VeterinarianComponent from '../veterinarian.component';
     MatFormFieldModule,
     DatePipe,
     DialogModule,
+    RouterLink
   ],
   templateUrl: './veterinarian-card.component.html',
   styleUrl: './veterinarian-card.component.scss',

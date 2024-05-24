@@ -1,10 +1,11 @@
 import { Component, OnInit, inject, signal } from '@angular/core';
 import { GeneralMetrics, ReportService } from '../../../../services/report.service';
+import { NgIf } from '@angular/common';
 
 @Component({
   selector: 'app-dashboard-status',
   standalone: true,
-  imports: [],
+  imports: [NgIf],
   templateUrl: './dashboard-status.component.html',
   styleUrl: './dashboard-status.component.scss'
 })
@@ -12,11 +13,10 @@ export class DashboardStatusComponent implements OnInit {
 
   #reportService = inject(ReportService);
 
-  generalMetrics = signal({} as GeneralMetrics);
+  generalMetrics = signal({} as GeneralMetrics | null);
 
   async ngOnInit() {
     this.generalMetrics.set((await this.#reportService.fetchGeneralMetrics())!);
-    console.log(this.generalMetrics())
   }
 
   calcPercent(current: number, previous: number): number {
@@ -27,22 +27,26 @@ export class DashboardStatusComponent implements OnInit {
   }
 
   calcPercentForClients() {
-    const { totalClientsCurrentMonth, totalClientsPreviousMonth } = this.generalMetrics();
+    if (!this.generalMetrics()) return null;
+    const { totalClientsCurrentMonth, totalClientsPreviousMonth } = this.generalMetrics()!;
     return this.calcPercent(totalClientsCurrentMonth, totalClientsPreviousMonth);
   }
 
   calcPercentForAnimals() {
-    const { totalAnimalsCurrentMonth, totalAnimalsPreviousMonth } = this.generalMetrics();
+    if (!this.generalMetrics()) return null;
+    const { totalAnimalsCurrentMonth, totalAnimalsPreviousMonth } = this.generalMetrics()!;
     return this.calcPercent(totalAnimalsCurrentMonth, totalAnimalsPreviousMonth);
   }
 
   calcPercentForConsults() {
-    const { totalConsultsCurrentMonth, totalConsultsPreviousMonth } = this.generalMetrics();
+    if (!this.generalMetrics()) return null;
+    const { totalConsultsCurrentMonth, totalConsultsPreviousMonth } = this.generalMetrics()!;
     return this.calcPercent(totalConsultsCurrentMonth, totalConsultsPreviousMonth);
   }
 
   calcPercentForRevenue() {
-    const { totalRevenueCurrentMonth, totalRevenuePreviousMonth } = this.generalMetrics();
+    if (!this.generalMetrics()) return null;
+    const { totalRevenueCurrentMonth, totalRevenuePreviousMonth } = this.generalMetrics()!;
     return this.calcPercent(totalRevenueCurrentMonth, totalRevenuePreviousMonth);
   }
 

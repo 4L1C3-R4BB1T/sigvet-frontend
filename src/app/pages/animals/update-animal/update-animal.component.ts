@@ -1,5 +1,5 @@
 import { JsonPipe, NgIf } from '@angular/common';
-import { Component, OnDestroy, OnInit, inject, signal } from '@angular/core';
+import { Component, OnDestroy, OnInit, ViewChild, inject, signal } from '@angular/core';
 import { FormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
 import { MatAutocompleteModule, MatAutocompleteSelectedEvent } from '@angular/material/autocomplete';
 import { MatButtonModule } from '@angular/material/button';
@@ -7,7 +7,7 @@ import { MatDatepickerModule } from '@angular/material/datepicker';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { MatSelectModule } from '@angular/material/select';
-import { MatSlideToggleModule } from '@angular/material/slide-toggle';
+import { MatSlideToggle, MatSlideToggleModule } from '@angular/material/slide-toggle';
 import { ActivatedRoute, Router, RouterLink } from '@angular/router';
 import { Store } from '@ngrx/store';
 import { Subscription } from 'rxjs';
@@ -60,9 +60,13 @@ export class UpdateAnimalComponent extends BaseFormComponent implements OnInit, 
   animal = signal({} as Animal);
 
   previewPhotoUrl = signal('');
-  file = signal({} as File);
+  file = signal({} as File | null);
 
   filteredClients = signal([] as User[]);
+
+
+  @ViewChild(MatSlideToggle, { static: true })
+  matSlideToggle!: MatSlideToggle;
 
 
   subscription!: Subscription;
@@ -112,7 +116,7 @@ export class UpdateAnimalComponent extends BaseFormComponent implements OnInit, 
     if (!animal) return;
     this.toastrService.success('Foi criado', 'Animal');
     if (this.file() && this.previewPhotoUrl()) {
-      const saved = await this.#animalService.savePhoto(animal.id, this.file());
+      const saved = await this.#animalService.savePhoto(animal.id, this.file()!);
       if (!saved) {
         this.toastrService.info('Não foi possível salvar a foto', 'Animal');
       }
@@ -144,7 +148,7 @@ export class UpdateAnimalComponent extends BaseFormComponent implements OnInit, 
       this.toastrService.success('Atualizado', 'Animal');
     }
     if (this.file() && this.previewPhotoUrl()) {
-      const saved = await this.#animalService.savePhoto(this.animalId()!, this.file());
+      const saved = await this.#animalService.savePhoto(this.animalId()!, this.file()!);
       if (!saved) {
         this.toastrService.info('Não foi possível salvar a foto', 'Animal');
       }
@@ -166,10 +170,12 @@ export class UpdateAnimalComponent extends BaseFormComponent implements OnInit, 
     if (!this.animalId()) return;
     const animal = (await this.#animalService.findById(this.animalId()!))!;
     this.animal.set(animal);
+    this.previewPhotoUrl.set(animal.photoUrl ?? '');
     const client = await this.#clientService.findById(animal.client.id);
     this.form.controls.clientId.setValue(''+client.id);
     this.form.controls.client.controls.name.setValue(client.document + ' - ' + client.name);
     this.form.patchValue(animal);
+    this.matSlideToggle.checked = !!animal.photoUrl;
     this.form.updateValueAndValidity();
   }
 
@@ -181,5 +187,14 @@ export class UpdateAnimalComponent extends BaseFormComponent implements OnInit, 
 
   ngOnDestroy(): void {
     this.subscription?.unsubscribe();
+  }
+
+
+  removeFile() {
+    if (this.animalId() && this.animal().photoUrl) {
+      this.#animalService.removePhoto(this.animalId()!);
+    }
+    this.previewPhotoUrl.set('');
+    this.file.set(null);
   }
 }
