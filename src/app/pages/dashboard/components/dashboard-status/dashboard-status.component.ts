@@ -2,11 +2,12 @@ import { NgIf } from '@angular/common';
 import { Component, OnInit, inject, signal } from '@angular/core';
 import { MatButtonModule } from '@angular/material/button';
 import { GeneralMetrics, ReportService } from '../../../../services/report.service';
+import { MatTooltipModule } from '@angular/material/tooltip';
 
 @Component({
   selector: 'app-dashboard-status',
   standalone: true,
-  imports: [NgIf, MatButtonModule],
+  imports: [NgIf, MatButtonModule, MatTooltipModule],
   templateUrl: './dashboard-status.component.html',
   styleUrl: './dashboard-status.component.scss'
 })
