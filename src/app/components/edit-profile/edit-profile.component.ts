@@ -15,6 +15,8 @@ import { UpdateUser } from '../../models/update-user';
 import CityService from '../../services/city.service';
 import { ClientService } from '../../services/client.service';
 import { selectUserInfo } from '../../store/reducers/user.reducer';
+import { AccountService } from '../../services/account.service';
+import { Router } from '@angular/router';
 @Component({
   selector: 'app-edit-profile',
   standalone: true,
@@ -34,11 +36,12 @@ import { selectUserInfo } from '../../store/reducers/user.reducer';
 export class EditProfileComponent extends BaseFormComponent implements OnInit {
 
   #cityService = inject(CityService);
-  #clientService = inject(ClientService);
   #toastrService = inject(ToastrService);
+  #accountService = inject(AccountService);
   #store = inject(Store);
   userInfo = this.#store.selectSignal(selectUserInfo);
   cities = signal([] as City[]);
+  #router = inject(Router);
 
 
   @Output()
@@ -54,11 +57,11 @@ export class EditProfileComponent extends BaseFormComponent implements OnInit {
     crmv: [''],
     crmvUf: [''],
     address: this.#formBuilder.group({
-      street: ['', [Validators.maxLength(100), Validators.required]],
-      neighborhood: ['', [Validators.maxLength(100), Validators.required]],
-      zipCode: ['', [Validators.maxLength(100), Validators.required]],
-      number: ['', [Validators.maxLength(100), Validators.required]],
-      cityId: ['', Validators.required],
+      street: ['', [Validators.maxLength(100)]],
+      neighborhood: ['', [Validators.maxLength(100)]],
+      zipCode: ['', [Validators.maxLength(100)]],
+      number: ['', [Validators.maxLength(100)]],
+      cityId: [''],
     }),
   });
 
@@ -75,8 +78,15 @@ export class EditProfileComponent extends BaseFormComponent implements OnInit {
   }
 
   async save() {
+    this.checkFormAddressControls();
+    if (this.form.invalid) return;
+    let payload = { ...this.form.value };
+    if (!this.form.controls.address.controls.cityId.value) {
+      delete payload['address'];
+    }
     if (!this.userInfo()?.crmv) {
-      if (await this.#clientService.update(this.userInfo()?.id!, this.form.value as UpdateUser)) {
+      // O padrão vai ser userService porque cliente é um user
+      if (await this.#accountService.update(this.userInfo()?.id!, payload as UpdateUser)) {
         this.toastrService.info('Atualizado', 'Perfil');
         this.reloadPage();
       }
@@ -88,5 +98,35 @@ export class EditProfileComponent extends BaseFormComponent implements OnInit {
 
   public reloadPage() {
     window.location.reload();
+  }
+
+  checkFormAddressControls() {
+    const address = this.form.controls.address;
+    let hasAnyFieldWithValue = false;
+
+    for (const controlName in address.controls) {
+      const control = address.get(controlName)!;
+      if (control.value !== '' && !!control.value) {
+        console.log(control.value)
+        hasAnyFieldWithValue = true;
+        break;
+      }
+    }
+
+    if (hasAnyFieldWithValue) {
+      for (const controlName in address.controls) {
+        const control = address.get(controlName)!;
+        control.addValidators(Validators.required);
+        control.updateValueAndValidity();
+      }
+    } else {
+      for (const controlName in address.controls) {
+        const control = address.get(controlName)!;
+        control.removeValidators(Validators.required);
+        control.updateValueAndValidity();
+      }
+    }
+
+    this.checkForm();
   }
 }

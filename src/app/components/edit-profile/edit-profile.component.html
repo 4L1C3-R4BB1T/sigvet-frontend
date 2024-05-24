@@ -39,14 +39,14 @@
           <div class="flex gap-4 mt-3">
             <mat-form-field  appearance="outline" floatLabel="always" class="flex-1">
               <mat-label>CPF</mat-label>
-              <input type="text" matInput placeholder="CPF" formControlName="document">
+              <input mask="000.000.000-00" type="text" matInput placeholder="CPF" formControlName="document">
               @if (getControlError('document')) {
                 <mat-error>{{  getControlError('document') }}</mat-error>
               }
             </mat-form-field>
             <mat-form-field  appearance="outline" floatLabel="always" class="flex-1">
               <mat-label>Celular</mat-label>
-              <input type="text" matInput placeholder="Celular" formControlName="phone">
+              <input mask="(00) 00000-0000" type="text" matInput placeholder="Celular" formControlName="phone">
               @if (getControlError('phone')) {
                 <mat-error>{{  getControlError('phone') }}</mat-error>
               }
@@ -84,12 +84,13 @@
           <mat-form-field appearance="outline">
             <mat-label>Cidades</mat-label>
             <mat-select formControlName="cityId" placeholder="Cidade/Estado">
+              <mat-option [value]="''">Nenhuma</mat-option>
               @for (city of cities(); track city.id) {
                 <mat-option [value]="city.id">{{  city.name + " - " + city.state.name }}</mat-option>
               }
             </mat-select>
-            @if (getControlError('cityId')) {
-              <mat-error>{{  getControlError('cityId') }}</mat-error>
+            @if (getControlError('address.cityId')) {
+              <mat-error>{{  getControlError('address.cityId') }}</mat-error>
             }
           </mat-form-field>
           <div class="flex gap-4 mt-3">
@@ -111,7 +112,7 @@
           <div class="flex gap-4 mt-3">
             <mat-form-field  appearance="outline" floatLabel="always" class="flex-1">
               <mat-label>CEP</mat-label>
-              <input type="text" matInput placeholder="CEP" formControlName="zipCode" >
+              <input mask="00000-000" type="text" matInput placeholder="CEP" formControlName="zipCode" >
               @if (getControlError('address.zipCode')) {
                 <mat-error>{{  getControlError('address.zipCode') }}</mat-error>
               }

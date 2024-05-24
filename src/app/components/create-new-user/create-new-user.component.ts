@@ -106,7 +106,7 @@ export class CreateNewUserComponent extends BaseFormComponent implements OnInit 
     this.closedEvent.emit(true);
   }
 
-  public register() {
+  public async register() {
     this.checkFormAddressControls();
     if (this.form.invalid) return;
     const address = this.form.controls.address;
@@ -114,8 +114,9 @@ export class CreateNewUserComponent extends BaseFormComponent implements OnInit 
     if (address.controls.cityId.value === '') {
       delete payload.address;
     }
-    this.#accountService.create(payload as CreateUser);
-    this.close();
+    if (await this.#accountService.create(payload as CreateUser)) {
+      this.close();
+    }
   }
 
 }

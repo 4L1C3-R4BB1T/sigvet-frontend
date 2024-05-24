@@ -75,6 +75,7 @@
           <mat-form-field appearance="outline" class="w-full col-span-2">
             <mat-label>Cidades</mat-label>
             <mat-select formControlName="cityId">
+              <mat-option [value]="''">Nenhuma</mat-option>
               @for (city of cities(); track city.id) {
                 <mat-option [value]="city.id">{{  city.name + " - " + city.state.name }}</mat-option>
               }
@@ -110,7 +111,7 @@
 
           <mat-form-field class="w-full" appearance="outline">
             <mat-label>Número</mat-label>
-            <input type="text" matInput mask="00000-000" formControlName="number" placeholder="Número">
+            <input type="number" matInput formControlName="number" placeholder="Número">
             @if (getControlError('number')) {
               <mat-error>{{  getControlError('number') }}</mat-error>
             }

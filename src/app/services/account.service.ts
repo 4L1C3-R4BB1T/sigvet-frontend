@@ -10,6 +10,7 @@ import { AuthService } from './auth.service';
 import { UserLogin } from '../models/user-login';
 import { RecoverUser } from '../models/recover-user';
 import { User } from '../models/user';
+import { UpdateUser } from '../models/update-user';
 
 @Injectable({
   providedIn: 'root'
@@ -19,6 +20,16 @@ export class AccountService extends BaseService {
   private authService = inject(AuthService);
   private store = inject<Store<AppState>>(Store);
   private userInfo = this.store.selectSignal(selectUserInfo);
+
+  public async update(id: number, record: UpdateUser) {
+    return await lastValueFrom(this.http.put(this.getEndpointV1('account/profile/'+ id +'/update'), record)
+    .pipe(
+      map((project: any) => project.result as boolean),
+      catchError(error => {
+      this.handleException(error);
+      return of(false);
+    })));
+  }
 
   public async removePhotoByUserId(id: number) {
     try {
@@ -49,9 +60,12 @@ export class AccountService extends BaseService {
   public async create(record: CreateUser) {
     try {
       await lastValueFrom(this.http.post(this.getEndpointV1('account'), record));
-      await this.authService.authenticate(record as UserLogin);
+      this.toastrService.success('Conta criada', 'Conta');
+      this.router.navigate(['/login']);
+      return true;
     } catch (ex: any) {
       this.handleException(ex);
+      return false;
     }
   }
 

@@ -21,7 +21,6 @@ export const appConfig: ApplicationConfig = {
     provideAnimationsAsync(),
     provideToastr({
       progressBar: true,
-      progressAnimation: 'increasing',
       newestOnTop: true,
       timeOut: 3000,
       positionClass: 'custom-toast-position',

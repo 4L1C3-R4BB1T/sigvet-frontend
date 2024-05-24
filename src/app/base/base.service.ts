@@ -3,6 +3,7 @@ import { inject } from "@angular/core";
 import { ToastrService } from "ngx-toastr";
 import { APIResponseError } from "../models/api-response-error";
 import { environment } from "../../environments/environment";
+import { Router } from "@angular/router";
 
 export interface FilterParams {
   equal_filters?: string;
@@ -17,6 +18,7 @@ export default class BaseService {
 
   protected http = inject(HttpClient);
   public toastrService = inject(ToastrService);
+  protected router = inject(Router);
 
   protected getFilterParams(filters?: FilterParams): string {
     if (!filters) return '';

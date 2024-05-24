@@ -11,10 +11,10 @@
       <form class="p-2 px-6" [formGroup]="form" (ngSubmit)="signIn()">
 
         <mat-form-field class="w-full" appearance="outline">
-          <mat-label>Email</mat-label>
-          <input type="email" matInput formControlName="email" placeholder="Email">
-          @if (getControlError('email')) {
-            <mat-error>{{  getControlError('email') }}</mat-error>
+          <mat-label>Email ou Apelido</mat-label>
+          <input type="text" matInput formControlName="emailOrUsername" placeholder="Email ou Apelido">
+          @if (getControlError('emailOrUsername')) {
+            <mat-error>{{  getControlError('emailOrUsername') }}</mat-error>
           }
         </mat-form-field>
 

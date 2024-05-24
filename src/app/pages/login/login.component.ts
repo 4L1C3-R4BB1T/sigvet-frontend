@@ -39,13 +39,13 @@ export default class LoginComponent extends BaseFormComponent {
   openRecoverAccountModal = signal(false);
 
   override form = new FormGroup({
-    email: new FormControl('', [Validators.required, Validators.email]),
+    emailOrUsername: new FormControl('', [Validators.required]),
     password: new FormControl('', [Validators.required]),
   });
 
   async signIn() {
     if (!this.form.valid) {
-      return;
+      return; 
     }
 
     await this.#authService.authenticate(this.form.value as UserLogin);
