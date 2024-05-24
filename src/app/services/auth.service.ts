@@ -51,6 +51,16 @@ export class AuthService extends BaseService {
     return this.#jwtHelperService.decodeToken(obj.token)?.user_id ?? null;
   }
 
+  public getRoles() {
+    if (!this.getToken()) return [];
+    const { token } = this.getToken()!;
+    return (this.#jwtHelperService.decodeToken(token)?.scope as string)?.split(' ') ?? [];
+  }
+
+  public hasRole(role: string) {
+    return this.getRoles().includes(role);
+  }
+
   private async getCurrentUser(id: number) {
       return ((await lastValueFrom(this.http.get<User>(this.getEndpointV1(`account/${id}`)))) as any)?.result;
   }

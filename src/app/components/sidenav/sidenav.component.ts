@@ -1,4 +1,4 @@
-import { NgIf } from '@angular/common';
+import { JsonPipe, NgIf } from '@angular/common';
 import { Component, OnInit, inject, signal } from '@angular/core';
 import { MatSidenavModule } from '@angular/material/sidenav';
 import { RouterLink, RouterLinkActive } from '@angular/router';
@@ -17,6 +17,7 @@ import {
 } from '../../store/reducers/menu-visibility.reducer';
 import { selectUserInfo, selectUserPhoto } from '../../store/reducers/user.reducer';
 import { HeaderComponent } from '../header/header.component';
+import { AuthService } from '../../services/auth.service';
 interface SidenavMenu {
   iconUrl: string;
   routeLink: string;
@@ -40,7 +41,7 @@ interface SidenavMenu {
     MatRippleModule,
     MatDividerModule,
     MatButtonModule,
-    MatMenuModule
+    MatMenuModule,
   ],
   templateUrl: './sidenav.component.html',
   styleUrl: './sidenav.component.scss',

@@ -14,6 +14,7 @@ import { DialogModule } from 'primeng/dialog';
 import { Animal } from '../../../models/animal';
 import { AnimalService } from '../../../services/animal.service';
 import AnimalsComponent from '../animals.component';
+import { AuthService } from '../../../services/auth.service';
 
 @Component({
   selector: 'app-animal-card',
@@ -49,6 +50,8 @@ export class AnimalCardComponent{
   #animalComponent = inject(AnimalsComponent);
 
   #activatedRoute = inject(ActivatedRoute);
+
+  authService = inject(AuthService);
 
   #router = inject(Router);
 
