@@ -1,6 +1,13 @@
 <div class="dashboard-status flex flex-col gap-5">
 
-  <h1 class="text-3xl font-bold mt-2">Dashboard</h1>
+  <div class="flex justify-between items-center">
+    <h1 class="text-3xl font-bold mt-2">Dashboard</h1>
+    <span>
+      <button mat-mini-fab color="primary" (click)="downloadReports()">
+        <i class="bi bi-file-earmark-bar-graph-fill text-xl"></i>
+      </button>
+    </span>
+  </div>
 
   <ul class="flex gap-5 flex-wrap">
     <li *ngIf="generalMetrics()" class="dashboard-status-item custom-border p-3 flex gap-3 flex-col bg-white mat-elevation-z2 min-h-36 min-w-[250px] rounded-xl shadow-xl cursor-pointer flex-1 hover-scale transition-all">
@@ -19,7 +26,7 @@
           <span class="text-green-600 text-base">{{ calcPercentForClients() }}%</span>
           <p class="font-medium opacity-80 text-sm">Ganhos</p>
         } @else if (calcPercentForClients()! < 0) {
-          <img src="assets/icons/dashboard/elevacao-down.png" class="w-5" style="transform: rotate(180deg)">
+          <img src="assets/icons/elevacao-down.png" class="w-5" style="transform: rotate(180deg)">
           <span class="text-red-600 text-base">{{ calcPercentForClients() }}%</span>
           <p class="font-medium opacity-80 text-sm">Perdas</p>
         } @else {

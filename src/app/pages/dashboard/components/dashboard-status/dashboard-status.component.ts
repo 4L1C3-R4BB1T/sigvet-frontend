@@ -1,11 +1,12 @@
-import { Component, OnInit, inject, signal } from '@angular/core';
-import { GeneralMetrics, ReportService } from '../../../../services/report.service';
 import { NgIf } from '@angular/common';
+import { Component, OnInit, inject, signal } from '@angular/core';
+import { MatButtonModule } from '@angular/material/button';
+import { GeneralMetrics, ReportService } from '../../../../services/report.service';
 
 @Component({
   selector: 'app-dashboard-status',
   standalone: true,
-  imports: [NgIf],
+  imports: [NgIf, MatButtonModule],
   templateUrl: './dashboard-status.component.html',
   styleUrl: './dashboard-status.component.scss'
 })
@@ -48,6 +49,10 @@ export class DashboardStatusComponent implements OnInit {
     if (!this.generalMetrics()) return null;
     const { totalRevenueCurrentMonth, totalRevenuePreviousMonth } = this.generalMetrics()!;
     return this.calcPercent(totalRevenueCurrentMonth, totalRevenuePreviousMonth);
+  }
+
+  downloadReports() {
+    this.#reportService.downloadReports();
   }
 
 }
