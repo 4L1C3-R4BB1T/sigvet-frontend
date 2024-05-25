@@ -84,8 +84,9 @@ export default class VaccinesComponent extends BaseStoreComponent implements OnI
 
     length == 1 ? this.#toastrService.success('Removida', 'Vacina') : this.#toastrService.success('Removidas', 'Vacina');
     setTimeout(() => this.reload(), 200);
-  }
 
+    this.closeDialog.set(true);
+  }
 
 }
 
