@@ -13,7 +13,7 @@
   </mat-paginator>
 </div>
 
-<div class="grid grid-cols-2 gap-4 p-3 mt-3 max-h-[65vh] overflow-hidden overflow-y-auto">
+<div class="grid grid-cols-2 gap-4 p-3 mt-3 max-h-[60vh] overflow-hidden overflow-y-auto">
   @for (user of data(); track user.id) {
     @if (userInfo()?.id !== user.id) {
       <app-veterinarian-card [veterinarian]="user" (onEdit)="edit($event)"/>

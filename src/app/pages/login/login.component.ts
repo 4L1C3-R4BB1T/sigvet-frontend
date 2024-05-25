@@ -11,7 +11,6 @@ import { MatInputModule } from '@angular/material/input';
 import { RouterLink, RouterOutlet } from '@angular/router';
 import BaseFormComponent from '../../base/base-form.component';
 import { CreateNewUserComponent } from '../../components/create-new-user/create-new-user.component';
-import { ProfileComponent } from '../../components/profile/profile.component';
 import { UserLogin } from '../../models/user-login';
 import { AuthService } from '../../services/auth.service';
 import { RecoverUserPasswordComponent } from '../../components/recover-user-password/recover-user-password.component';
@@ -19,7 +18,6 @@ import { RecoverUserPasswordComponent } from '../../components/recover-user-pass
   selector: 'app-account',
   standalone: true,
   imports: [
-    ProfileComponent,
     RouterLink,
     RouterOutlet,
     CreateNewUserComponent,
@@ -45,7 +43,7 @@ export default class LoginComponent extends BaseFormComponent {
 
   async signIn() {
     if (!this.form.valid) {
-      return; 
+      return;
     }
 
     await this.#authService.authenticate(this.form.value as UserLogin);
