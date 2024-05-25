@@ -1,9 +1,11 @@
 
 ::ng-deep {
   .menu {
+    background: #3F51B5 !important;
     .mat-mdc-menu-content {
       background: #3F51B5;
-      width: 200px;;
+      width: 10rem;
+      @apply rounded-md;
     }
   }
 }

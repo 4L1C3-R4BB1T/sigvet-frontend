@@ -1,7 +1,7 @@
 <div class="dashboard-status flex flex-col gap-5">
 
   <div class="flex justify-between items-center pt-3">
-    <h1 class="text-3xl font-bold mt-2 text-[#151a32db]">Dashboard</h1>
+    <h1 class="text-3xl font-bold mt-2 text-[#1f2543db]">Dashboard</h1>
     <span>
       <button mat-mini-fab color="primary" (click)="downloadReports()" matTooltip="Baixar Relatórios">
         <i class="bi bi-file-earmark-bar-graph-fill text-xl"></i>
@@ -95,7 +95,7 @@
       <div class="flex justify-between flex-1 flex-wrap">
         <div class="flex flex-col gap-3">
           <h2 class="text-base opacity-90">Total de Receita</h2>
-          <p class="text-2xl font-bold ">{{ generalMetrics()?.totalRevenueCurrentMonth?.toLocaleString('pt-BR', { style: 'currency', currency: 'BRL'}) }}</p>
+          <p class="text-2xl font-bold text-green-800 ">{{ generalMetrics()?.totalRevenueCurrentMonth?.toLocaleString('pt-BR', { style: 'currency', currency: 'BRL'}) }}</p>
         </div>
         <div class="bg-red-100 self-start p-4 rounded-xl ">
           <img src="assets/icons/dashboard/pedido-processado.png" class="min-w-7"/>
