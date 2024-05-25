@@ -189,7 +189,6 @@ export class UpdateAnimalComponent extends BaseFormComponent implements OnInit, 
     this.subscription?.unsubscribe();
   }
 
-
   removeFile() {
     if (this.animalId() && this.animal().photoUrl) {
       this.#animalService.removePhoto(this.animalId()!);
@@ -197,4 +196,5 @@ export class UpdateAnimalComponent extends BaseFormComponent implements OnInit, 
     this.previewPhotoUrl.set('');
     this.file.set(null);
   }
+  
 }

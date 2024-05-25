@@ -77,7 +77,7 @@ export class VaccinationTableComponent implements OnChanges {
       this.selection.clear();
       return;
     }
-
     this.selection.select(...this.dataSource.data);
   }
+
 }

@@ -44,8 +44,8 @@ export class VaccinationService extends BaseService {
     return false;
   }
 
-
   public async deleteById(id: number) {
     await lastValueFrom(this.http.delete(this.getEndpointV1(`vaccinations/${id}`)));
   }
+
 }

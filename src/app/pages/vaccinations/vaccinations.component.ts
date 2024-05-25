@@ -79,8 +79,9 @@ export default class VaccinationsComponent extends BaseStoreComponent implements
 
     length == 1 ? this.#toastrService.success('Removida', 'Vacinação') : this.#toastrService.success('Removidas', 'Vacinação');
     setTimeout(() => this.reload(), 200);
-  }
 
+    this.closeDialog.set(true);
+  }
 
 }
 

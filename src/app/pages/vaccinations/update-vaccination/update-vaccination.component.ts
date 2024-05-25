@@ -8,6 +8,7 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { ActivatedRoute, RouterLink } from '@angular/router';
 import { NgxMaskDirective, provideNgxMask } from 'ngx-mask';
+import { first } from 'rxjs';
 import BaseFormComponent from '../../../base/base-form.component';
 import { Animal } from '../../../models/animal';
 import { User } from '../../../models/user';
@@ -15,8 +16,6 @@ import { Vaccine } from '../../../models/vaccine';
 import { SearchService } from '../../../services/search.service';
 import { VaccinationService } from '../../../services/vaccination.service';
 import { CustomValidators } from '../../../validators/custom-validators';
-import moment from 'moment';
-import { first, interval, take, tap } from 'rxjs';
 
 @Component({
   selector: 'app-update-vaccination',
@@ -107,14 +106,14 @@ export class UpdateVaccinationComponent
       this.isEdition() &&
       (await this.#vaccinationService.update(this.id(), <any>this.form.value))
     ) {
-      this.toastrService.success('Atualização', 'Vacinação');
+      this.toastrService.success('Atualizada', 'Vacinação');
     }
 
     if (
       !this.isEdition() &&
       (await this.#vaccinationService.create(<any>this.form.value))
     ) {
-      this.toastrService.success('Criação', 'Vacinação');
+      this.toastrService.success('Criada', 'Vacinação');
     }
 
     this.router.navigate(['/dashboard', 'vacinacoes']);
@@ -192,4 +191,5 @@ export class UpdateVaccinationComponent
       this.form.controls.animalId.setValue(object.id as string);
     }
   }
+  
 }
