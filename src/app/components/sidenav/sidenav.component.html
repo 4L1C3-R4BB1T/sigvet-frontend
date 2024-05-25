@@ -3,27 +3,19 @@
     <div class="h-screen p-5  bg-base-to-bottom">
       <div class="block w-[100px] h-[100px] mt-3 rounded-full bg-white mx-auto relative">
 
-        @if(!userPhoto()) {
-          <img src="assets/images/sem-foto.png" class="rounded-full object-cover h-full w-full">
-        } @else {
-          <img [src]="userPhoto()" class="rounded-full object-cover h-full w-full">
-        }
+        <img src="{{ !userPhoto() ? 'assets/images/sem-foto.png' : userPhoto() }}" class="rounded-full object-cover h-full w-full">
+
         <div class="absolute -right-2 bottom-0 cursor-pointer">
           <button mat-mini-fab color="primary" [matMenuTriggerFor]="menu">
-            @if (!userPhoto()) {
-              <i class="bi bi-three-dots text-lg"></i>
-            }
-            @else {
-              <i class="bi bi-three-dots-vertical text-lg"></i>
-            }
-
+            <i class="bi bi-three-dots text-lg"
+              [class]="{'bi-three-dots': !userPhoto(), 'bi-three-dots-vertical': userPhoto()}"></i>
           </button>
           <mat-menu #menu="matMenu" class="menu ms-5 mt-2">
             <button mat-menu-item>
               <span class="text-sm flex items-center gap-2 text-white relative">
                 <i class="bi bi-upload text-base"></i>
                 Subir foto
-                <input type="file" class="absolute left-0 top-0 w-full h-full opacity-0 cursor-pointer" #photoFileInput (input)="addPhoto(photoFileInput.files)">
+                <input type="file" class="absolute left-0 top-0 z-[999] w-full h-full opacity-0 cursor-pointer" #photoFileInput (input)="addPhoto(photoFileInput.files)">
               </span>
             </button>
             @if (userPhoto()) {

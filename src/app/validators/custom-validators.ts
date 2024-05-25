@@ -14,9 +14,9 @@ export const CustomValidators = {
   },
   presentOrFuture: (control: AbstractControl) => {
     try {
-      const today = moment(new Date());
+      const today = moment(new Date()).startOf('day');
       const targetDate = moment(control.value);
-      if (today.isAfter(targetDate)) {
+      if (targetDate.isBefore(today)) {
         return {
           presentOrFuture: true,
         }

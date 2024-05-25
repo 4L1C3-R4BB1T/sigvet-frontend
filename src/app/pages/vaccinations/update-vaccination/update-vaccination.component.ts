@@ -16,7 +16,7 @@ import { SearchService } from '../../../services/search.service';
 import { VaccinationService } from '../../../services/vaccination.service';
 import { CustomValidators } from '../../../validators/custom-validators';
 import moment from 'moment';
-import { first } from 'rxjs';
+import { first, interval, take, tap } from 'rxjs';
 
 @Component({
   selector: 'app-update-vaccination',
@@ -68,18 +68,37 @@ export class UpdateVaccinationComponent
 
   vaccines = signal([] as Vaccine[]);
 
-  lastDateTime = signal<Date | null>(null);
-
-  ngOnInit() {
-    this.checkIfEdition();
+  async ngOnInit() {
+    await this.checkIfEdition();
     if (!this.isEdition()) {
       this.form.controls.dateTime.addValidators(CustomValidators.presentOrFuture);
     }
 
   }
 
+  private isEmpty(value: string | null) {
+    return value === '' || !value;
+  }
+
+  private checkIfRequiredFieldsIsValid() {
+    if (this.isEmpty(this.form.controls.vaccineId.value)) {
+      this.toastrService.warning('Vacina é obrigatório');
+    }
+
+    if (this.isEmpty(this.form.controls.animalId.value)) {
+      this.toastrService.warning('Animal é obrigatório');
+    }
+
+    if (this.isEmpty(this.form.controls.veterinarianId.value)) {
+      this.toastrService.warning('Veterinário é obrigatório')
+    }
+  }
+
   async save() {
     if (this.form.invalid) {
+      if (this.form.controls.veterinarian.valid || this.form.controls.vaccine.valid || this.form.controls.animal.valid) {
+        this.checkIfRequiredFieldsIsValid();
+      }
       this.checkForm();
       return;
     }
@@ -105,7 +124,6 @@ export class UpdateVaccinationComponent
     if (!this.id()) return false;
     const data = (await this.#vaccinationService.findById(this.id()))!;
 
-    this.lastDateTime.set(data.dateTime)
     this.form.patchValue(<any>data);
 
     this.form.controls.veterinarianId.setValue(<any>data?.veterinarian.id);
@@ -130,9 +148,15 @@ export class UpdateVaccinationComponent
     this.form.controls.animalId.setValue(<any>data?.animal.id);
     this.form.controls.vaccineId.setValue(<any>data?.vaccine.id);
 
-    this.form.controls.dateTime.valueChanges.pipe(first()).subscribe(() => {
+    this.form.controls.dateTime.valueChanges.pipe(first()).subscribe(value => {
       this.form.controls.dateTime.addValidators(CustomValidators.presentOrFuture);
+      this.form.controls.dateTime.setValue('');
+      setTimeout(() => {
+        this.form.controls.dateTime.setValue(value);
+      }, 100);
+      this.form.updateValueAndValidity();
     });
+
     return true;
   }
 
@@ -160,7 +184,6 @@ export class UpdateVaccinationComponent
   }
 
   onSelectionChange(object: { id: number | string }, index: 0 | 1 | 2 = 2) {
-    console.log(object);
     if (index === 0) {
       this.form.controls.veterinarianId.setValue(object.id as string);
     } else if (index === 1) {
