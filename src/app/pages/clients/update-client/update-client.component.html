@@ -153,7 +153,7 @@
 
       </div>
       <div class="mt-3">
-        @if (!clientId) {
+        @if (!clientId()) {
           <button type="button" mat-raised-button color="primary" (click)="create()" class="w-full !h-12">Salvar</button>
         } @else {
           <button type="button" mat-raised-button color="primary" (click)="update()" class="w-full !h-12">Atualizar</button>
