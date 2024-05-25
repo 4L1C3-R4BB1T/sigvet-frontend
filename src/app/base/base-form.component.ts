@@ -1,5 +1,6 @@
 import { inject } from "@angular/core";
 import { AbstractControl, FormControl, FormGroup, ValidationErrors } from "@angular/forms";
+import { Router } from "@angular/router";
 import { ToastrService } from "ngx-toastr";
 
 
@@ -8,6 +9,8 @@ export default class BaseFormComponent {
   protected form!: FormGroup;
 
   protected toastrService = inject(ToastrService);
+
+  protected router = inject(Router);
 
   protected getControlError(field: string) {
       let errors: ValidationErrors  = [];

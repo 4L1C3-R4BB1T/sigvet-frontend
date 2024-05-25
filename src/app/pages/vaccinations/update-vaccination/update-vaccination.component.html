@@ -1,1 +1,80 @@
-<p>update-vaccination works!</p>
+<section class="absolute top-0 left-0 bg-black bg-opacity-50 w-screen h-screen z-[999] flex items-center justify-center">
+  <form (ngSubmit)="save()" [formGroup]="form" class="bg-white p-8 min-w-[40vw] max-w-[40vw] w-full mat-elevation-z4 rounded-md animate-slide-in">
+    <div class="mb-5">
+      <button mat-flat-button routerLink="/dashboard/vacinacoes">
+        <span class="flex items-center gap-2">
+          <i class="bi bi-arrow-left"></i>
+          Voltar para a página anterior
+        </span>
+      </button>
+    </div>
+    <span class="grid grid-cols-2 gap-x-4 gap-y-2">
+
+      <mat-form-field appearance="outline" class="col-span-2" formGroupName="veterinarian">
+        <mat-label>Veterinário</mat-label>
+        <input type="text"
+                placeholder="Nome"
+                #inputVeterinarian
+                formControlName="name"
+                matInput
+                [matAutocomplete]="autoVeterinario" (input)="searchByName(inputVeterinarian.value, 0)">
+        <mat-autocomplete #autoVeterinario="matAutocomplete" autoActiveFirstOption>
+          @for (veterinarian of veterinarians(); track veterinarian.id) {
+            <mat-option [value]="toPrettyString(veterinarian.document, veterinarian.name)" (onSelectionChange)="onSelectionChange(veterinarian, 0)">{{ toPrettyString(veterinarian.document, veterinarian.name) }}</mat-option>
+          }
+        </mat-autocomplete>
+        @if (getControlError('veterinarianId')) {
+          <mat-error>{{ getControlError('veterinarianId') }}</mat-error>
+        }
+      </mat-form-field>
+
+
+      <mat-form-field appearance="outline">
+        <mat-label>Data</mat-label>
+        <input formControlName="dateTime" #dateTime matInput [matDatepicker]="picker">
+        <mat-datepicker-toggle matIconSuffix [for]="picker"></mat-datepicker-toggle>
+        <mat-datepicker #picker></mat-datepicker>
+        @if (getControlError('dateTime')) {
+          <mat-error>{{ getControlError('dateTime') }}</mat-error>
+        }
+      </mat-form-field>
+
+      <mat-form-field appearance="outline" formGroupName="vaccine">
+        <mat-label>Vacina</mat-label>
+        <input type="text"
+                placeholder="Nome"
+                #inputVaccine
+                formControlName="name"
+                matInput
+                [matAutocomplete]="autoVaccine" (input)="searchByName(inputVaccine.value, 2)">
+        <mat-autocomplete #autoVaccine="matAutocomplete" autoActiveFirstOption>
+          @for (vaccine of vaccines(); track vaccine.id) {
+            <mat-option [value]="toPrettyString(vaccine.lot, vaccine.name)" (onSelectionChange)="onSelectionChange(vaccine, 1)">{{ toPrettyString(vaccine.lot, vaccine.name)}}</mat-option>
+          }
+        </mat-autocomplete>
+        @if (getControlError('vaccineId')) {
+          <mat-error>{{ getControlError('vaccineId') }}</mat-error>
+        }
+      </mat-form-field>
+
+      <mat-form-field appearance="outline" class="col-span-2" formGroupName="animal">
+        <mat-label>Animal</mat-label>
+        <input type="text"
+                placeholder="Nome"
+                formControlName="name"
+                #inputAnimal
+                matInput
+                [matAutocomplete]="autoAnimal" (input)="searchByName(inputAnimal.value, 1)">
+        <mat-autocomplete #autoAnimal="matAutocomplete" autoActiveFirstOption>
+          @for (animal of animals(); track animal) {
+            <mat-option [value]="toPrettyString(animal.name, animal.client.document, animal.client.name)" (onSelectionChange)="onSelectionChange(animal)">{{ toPrettyString(animal.name, animal.client.document, animal.client.name) }}</mat-option>
+          }
+        </mat-autocomplete>
+        @if (getControlError('animalId')) {
+          <mat-error>{{ getControlError('animalId') }}</mat-error>
+        }
+      </mat-form-field>
+    </span>
+    <button type="submit" mat-raised-button color="primary" class="w-full !h-12 mt-3 !uppercase">Salvar</button>
+  </form>
+</section>

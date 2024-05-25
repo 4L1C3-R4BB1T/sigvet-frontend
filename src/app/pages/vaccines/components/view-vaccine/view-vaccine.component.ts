@@ -6,11 +6,12 @@ import { VaccineService } from '../../../../services/vaccine.service';
 import { AsyncPipe, DatePipe } from '@angular/common';
 import { Vaccine } from '../../../../models/vaccine';
 import moment from 'moment';
+import { MatDividerModule } from '@angular/material/divider';
 
 @Component({
   selector: 'app-view-vaccine',
   standalone: true,
-  imports: [MatTabsModule, MatButtonModule, RouterLink, AsyncPipe, DatePipe],
+  imports: [MatTabsModule, MatButtonModule, RouterLink, AsyncPipe, DatePipe, MatDividerModule],
   templateUrl: './view-vaccine.component.html',
   styleUrl: './view-vaccine.component.scss'
 })

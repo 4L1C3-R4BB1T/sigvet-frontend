@@ -1,4 +1,4 @@
-<div class="mat-elevation-z8 h-[60vh] overflow-auto" tabindex="0">
+<div class="mat-elevation-z8 max-h-[60vh] overflow-auto" tabindex="0">
   <table mat-table [dataSource]="dataSource" matSort>
     <!-- 'id', 'name', 'manufacturer', 'lot', 'unitPrice', 'stock', 'expirationDate']; -->
 
@@ -78,13 +78,13 @@
           <i class="bi bi-three-dots-vertical"></i>
         </button>
         <mat-menu #menu="matMenu">
-          <button mat-menu-item [routerLink]="['/dashboard', 'vacinas', 'atualizar', row.id]">
+          <button mat-menu-item [routerLink]="['/dashboard', 'vacinacoes', 'atualizar', row.id]">
             <span class="text-sm flex items-center gap-2">
               <i class="bi bi-pencil-square text-black"></i>
               Editar
             </span>
           </button>
-          <button mat-menu-item [routerLink]="['/dashboard', 'vacinas', 'visualizar', row.id]">
+          <button mat-menu-item [routerLink]="['/dashboard', 'vacinacoes', 'visualizar', row.id]">
             <span class="text-sm flex items-center gap-2">
               <i class="bi bi-eye-fill text-black"></i>
               Visualizar
