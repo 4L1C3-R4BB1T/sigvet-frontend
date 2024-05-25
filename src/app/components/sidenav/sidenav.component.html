@@ -6,23 +6,22 @@
         <img src="{{ !userPhoto() ? 'assets/images/sem-foto.png' : userPhoto() }}" class="rounded-full object-cover h-full w-full">
 
         <div class="absolute -right-2 bottom-0 cursor-pointer">
-          <button mat-mini-fab color="primary" [matMenuTriggerFor]="menu">
-            <i class="bi bi-three-dots text-lg"
-              [class]="{'bi-three-dots': !userPhoto(), 'bi-three-dots-vertical': userPhoto()}"></i>
+          <button mat-mini-fab color="primary" [matMenuTriggerFor]="menu" (click)="toggleMenu.set(true)" style="transition: all 0.2s ease;">
+            <i class="bi bi-three-dots text-lg" [class]="{'bi-three-dots': !toggleMenu(), 'bi-three-dots-vertical': toggleMenu()}"></i>
           </button>
           <mat-menu #menu="matMenu" class="menu ms-5 mt-2">
-            <button mat-menu-item>
-              <span class="text-sm flex items-center gap-2 text-white relative">
-                <i class="bi bi-upload text-base"></i>
-                Subir foto
-                <input type="file" class="absolute left-0 top-0 z-[999] w-full h-full opacity-0 cursor-pointer" #photoFileInput (input)="addPhoto(photoFileInput.files)">
+            <button mat-menu-item class="!p-0 relative">
+              <span class="text-sm flex items-center px-4 gap-5 text-white absolute top-0 left-0 w-full cursor-pointer h-full">
+                <i class="bi bi-cloud-upload-fill text-lg text-white relative top-0.5"></i>
+                <span class="font-medium">Subir foto</span>
+                <input type="file" class="absolute block left-0 opacity-0 top-0 z-[999] w-full h-full cursor-pointer" #photoFileInput (input)="addPhoto(photoFileInput.files)">
               </span>
             </button>
             @if (userPhoto()) {
-              <button mat-menu-item (click)="removePhoto()">
-                <span class="text-sm flex items-center gap-2 text-white">
-                  <i class="bi bi-x-circle-fill"></i>
-                  Remover foto
+              <button mat-menu-item (click)="removePhoto()" class="!p-0 relative">
+                <span class="text-sm flex items-center px-4 gap-5 absolute top-0 left-0 text-white h-full w-full">
+                  <i class="bi bi-x-circle-fill text-lg relative top-0.5"></i>
+                  <span class="font-medium">Remover</span>
                 </span>
               </button>
             }
@@ -43,19 +42,18 @@
 
       <div class="h-[0.07rem] w-full mt-3 bg-white bg-opacity-70"></div>
 
-      <div [matMenuTriggerFor]="menuShowMore" matRipple class="cursor-pointer py-2 px-2 hover:opacity-50 mt-3 flex justify-between items-center">
+      <div (click)="toggleMenuShowMore.set(true)" [matMenuTriggerFor]="menuShowMore" matRipple class="cursor-pointer py-2 px-2 hover:opacity-50 mt-3 flex justify-between items-center">
         <span class="text-sm ps-1 text-white">Mais opções</span>
         <span class="absolute right-0 block me-3">
-          <i class="bi bi-caret-right-fill text-white text-sm"></i>
+          <i class="bi {{ !toggleMenuShowMore() ? 'bi-caret-right-fill' : 'bi-caret-down-fill'}} text-white text-sm"></i>
         </span>
       </div>
-
-      <mat-menu #menuShowMore class="menu  relative left-20">
+      <mat-menu #menuShowMore="matMenu" class="menu  relative left-20">
         @for (menu of otherMenus(); track menu) {
-          <button mat-menu-item>
+          <button mat-menu-item class="!p-0 relative">
             <div routerLink="{{menu.routeLink}}" routerLinkActive [routerLinkActiveOptions]="{ exact: true }" matRipple  class="cursor-pointer py-3 px-2 flex w-full font-light text-white text-sm gap-5 items-center border border-white">
               <img src="{{menu.iconUrl}}" class="w-5 ms-2">
-              {{ menu.label }}
+              <span class="font-medium">{{ menu.label }}</span>
             </div>
           </button>
         }

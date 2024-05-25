@@ -1,5 +1,5 @@
 import { JsonPipe, NgIf } from '@angular/common';
-import { Component, OnInit, inject, signal } from '@angular/core';
+import { Component, OnDestroy, OnInit, ViewChild, inject, signal } from '@angular/core';
 import { MatSidenavModule } from '@angular/material/sidenav';
 import { RouterLink, RouterLinkActive } from '@angular/router';
 
@@ -8,7 +8,7 @@ import { MatRippleModule } from '@angular/material/core';
 import { MatDialog } from '@angular/material/dialog';
 import { MatDividerModule } from '@angular/material/divider';
 import { MatListModule } from '@angular/material/list';
-import { MatMenuModule } from '@angular/material/menu';
+import { MatMenu, MatMenuModule } from '@angular/material/menu';
 import BaseStoreComponent from '../../base/base-store.component';
 import { AccountService } from '../../services/account.service';
 import { DialogExitComponent } from '../../shared/components/dialog/dialog-exit.component';
@@ -18,6 +18,7 @@ import {
 import { selectUserInfo, selectUserPhoto } from '../../store/reducers/user.reducer';
 import { HeaderComponent } from '../header/header.component';
 import { AuthService } from '../../services/auth.service';
+import { Subscription } from 'rxjs';
 interface SidenavMenu {
   iconUrl: string;
   routeLink: string;
@@ -46,11 +47,21 @@ interface SidenavMenu {
   templateUrl: './sidenav.component.html',
   styleUrl: './sidenav.component.scss',
 })
-export class SidenavComponent extends BaseStoreComponent {
+export class SidenavComponent extends BaseStoreComponent implements OnInit, OnDestroy {
   dialog = inject<MatDialog>(MatDialog);
   drawerOpen = this.store.selectSignal(selectMenuSidenavValue);
   userInfo = this.store.selectSignal(selectUserInfo);
   #accountService = inject(AccountService);
+
+  @ViewChild('menu', { static: true })
+  menu!: MatMenu;
+
+  @ViewChild('menuShowMore', { static: true })
+  menuShowMore!: MatMenu;
+
+  toggleMenu = signal(false);
+  
+  toggleMenuShowMore = signal(false);
 
   menus = signal<SidenavMenu[]>(
     [
@@ -105,6 +116,14 @@ export class SidenavComponent extends BaseStoreComponent {
 
   userPhoto = this.store.selectSignal(selectUserPhoto);
 
+
+  subscriptions: Subscription[] = [];
+
+  ngOnInit() {
+    this.subscriptions.push(this.menu.closed.subscribe(() => this.toggleMenu.set(false)));
+    this.subscriptions.push(this.menuShowMore.closed.subscribe(() => this.toggleMenuShowMore.set(false)));
+  }
+
   public openExitDialog() {
     this.dialog.open(DialogExitComponent, {
       width: '400px',
@@ -126,5 +145,9 @@ export class SidenavComponent extends BaseStoreComponent {
 
   reloadPage() {
     window.location.reload();
+  }
+
+  ngOnDestroy() {
+    this.subscriptions.forEach(subscription => subscription.unsubscribe());
   }
 }
