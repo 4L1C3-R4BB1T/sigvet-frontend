@@ -43,10 +43,7 @@
     </aside>
     <aside class="p-3 flex flex-col items-center">
       @if (!animal()?.photoUrl) {
-        <div class="p-5 flex items-center justify-center flex-col gap-1 mt-8">
-          <i class="bi bi-image text-7xl"></i>
-          <span class="text-sm opacity-90">Sem foto</span>
-        </div>
+        <img class="w-52 h-52 mt-16 object-cover rounded-full" src="assets/images/sem-foto.png">
       } @else {
         <img class="w-52 h-52 mt-16 object-cover rounded-full" src="{{animal()?.photoUrl}}">
       }
@@ -66,7 +63,7 @@
         </span>
       </div>
     </aside>
-    <span class="absolute right-0 top-0 m-2" (click)="exit()">
+    <span class="absolute right-0 top-0 m-2 p-2" (click)="exit()">
       <button mat-button color="primary">
         Fechar
       </button>

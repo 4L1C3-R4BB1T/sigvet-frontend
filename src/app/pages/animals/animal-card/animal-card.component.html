@@ -6,9 +6,7 @@
           @if (animal.photoUrl) {
             <img class="w-20 h-20 object-cover object-center rounded-full" src="{{animal.photoUrl}}" alt="">
           } @else {
-            <div class="w-20 h-20 bg-white flex items-center justify-center gap-1 mat-elevation-z4 rounded-full">
-              <i class="bi bi-images text-3xl"></i>
-            </div>
+            <img class="w-20 h-20 object-cover object-center rounded-full" src="assets/images/sem-foto.png" alt="">
           }
           <div class="flex flex-col gap-1">
               <span class="font-semibold text-base">{{ animal.name }}</span>
