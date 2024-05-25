@@ -157,7 +157,7 @@ export class UpdateVeterinarianComponent
       );
     }
     if (result) {
-      this.toastrService.success('Atualizado', 'Cliente');
+      this.toastrService.success('Atualizado', 'Veterinário');
       await this.#veterinarianComponent.reload();
       this.#router.navigate(['/dashboard', 'veterinarios']);
     }

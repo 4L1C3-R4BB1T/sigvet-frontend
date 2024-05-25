@@ -57,7 +57,7 @@ export class VeterinarianCardComponent {
 
   async remove() {
     if (await this.#veterinarianService.deleteById(this.veterinarian.id)) {
-      this.#toastrService.success('Foi removido', 'Cliente');
+      this.#toastrService.success('Foi removido', 'Veterinário');
       await this.#veterinarianComponent.reload();
       this.closeDialog.set(true);
     }

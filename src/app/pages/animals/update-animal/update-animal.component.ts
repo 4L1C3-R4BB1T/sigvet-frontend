@@ -141,7 +141,7 @@ export class UpdateAnimalComponent extends BaseFormComponent implements OnInit, 
     if (this.form.invalid) return;
 
     if (this.clientId() && this.form.controls.clientId.value !== this.clientId()) {
-      this.toastrService.info('Não é permitio alterar o cliente', 'Atualização');
+      this.toastrService.info('Não é permitido alterar o cliente', 'Atualização');
       return;
     }
     if (await this.#animalService.update(this.animalId()!, this.form.value as UpdateAnimal)) {
