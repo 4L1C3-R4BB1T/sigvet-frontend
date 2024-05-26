@@ -10,52 +10,52 @@
         <button mat-button color="primary" routerLink="/dashboard/vacinas">Fechar</button>
       </div>
       <ul class="flex flex-col gap-4 ps-4">
-        <li class="flex gap-2">
-          <span class="font-medium">ID:</span>
-          <span class="text-sm">{{ vaccine().id }}</span>
+        <li class="flex items-center gap-2">
+          <span class="font-medium text-lg">ID:</span>
+          <span class="text-lg">{{ vaccine().id }}</span>
         </li>
         <mat-divider></mat-divider>
         <li class="flex gap-2">
-          <span class="font-medium">Fabricante:</span>
-          <span class="text-sm">{{ vaccine().manufacturer }}</span>
+          <span class="font-medium text-lg">Fabricante:</span>
+          <span class="text-lg">{{ vaccine().manufacturer }}</span>
         </li>
         <mat-divider></mat-divider>
         <li class="flex gap-2">
-          <span class="font-medium">Lote:</span>
-          <span class="text-sm">{{ vaccine().lot }}</span>
+          <span class="font-medium text-lg">Lote:</span>
+          <span class="text-lg">{{ vaccine().lot }}</span>
         </li>
         <mat-divider></mat-divider>
         <li class="flex gap-2">
-          <span class="font-medium">Preço Unitário:</span>
-          <span class="text-sm">{{ vaccine().unitPrice.toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' }) }}</span>
+          <span class="font-medium text-lg">Preço Unitário:</span>
+          <span class="text-lg">{{ vaccine().unitPrice.toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' }) }}</span>
         </li>
         <mat-divider></mat-divider>
         <li class="flex gap-2">
-          <span class="font-medium">Estoque:</span>
-          <span class="text-sm">{{ vaccine().stock }} Unidades</span>
+          <span class="font-medium text-lg">Estoque:</span>
+          <span class="text-lg">{{ vaccine().stock }} Unidades</span>
         </li>
         <mat-divider></mat-divider>
         <li class="flex gap-2">
-          <span class="font-medium">Data de Vencimento:</span>
-          <span class="text-sm">
+          <span class="font-medium text-lg">Data de Vencimento:</span>
+          <span class="text-lg">
             {{ vaccine().expirationDate | date: 'dd/MM/YYYY'}}
             @if (isExpirationDate()) {
               - <span class="text-red-600">Já venceu</span>
             } @else {
-              - <span class="text-green-600">Não vencida</span>
+              - <span class="text-green-600">Disponível</span>
             }
 
           </span>
         </li>
         <mat-divider></mat-divider>
         <li class="flex gap-2">
-          <span class="font-medium">Usada:</span>
+          <span class="font-medium text-lg">Usada:</span>
           @if (totalCountOfUses() > 1) {
-            <span class="text-sm">Em {{ totalCountOfUses() }} vacinações</span>
+            <span class="text-lg">Em {{ totalCountOfUses() }} vacinações</span>
           } @else if (totalCountOfUses() === 1) {
-            <span class="text-sm">Em 1 vacinação</span>
+            <span class="text-lg">Em 1 vacinação</span>
           } @else {
-            <span class="text-sm">Em nenhuma vacinação</span>
+            <span class="text-lg">Em nenhuma vacinação</span>
           }
         </li>
       </ul>
