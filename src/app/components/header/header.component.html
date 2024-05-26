@@ -1,13 +1,7 @@
 <header class="shadow-xl   p-3 justify-between sticky top-0 left-0 flex  z-20 bg-base-to-top w-full">
   <div class="flex items-center gap-4">
     <app-menu-hamburguer/>
-    <span class="flex items-center gap-2 text-white">
-      <h1 class="text-lg  text-white font-medium capitalize">{{ currentTitle() }}</h1>
-      @if (subTitle()) {
-        - <span class="font-medium text-bold text-white">{{ subTitle() }}</span>
-      }
-    </span>
-
+    <h1 class="text-xl  text-white font-medium capitalize">{{ currentTitle() }}</h1>
   </div>
   <div class="flex gap-3 px-2 text-white cursor-pointer" matRipple [matMenuTriggerFor]="menu" (click)="openMenu.set(!openMenu())">
     <span>

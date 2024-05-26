@@ -9,6 +9,7 @@ import { ViewVaccineComponent } from './pages/vaccines/components/view-vaccine/v
 import { UpdateVeterinarianComponent } from './pages/veterinarian/update-veterinarian/update-veterinarian.component';
 import { UpdateClientComponent } from './pages/clients/update-client/update-client.component';
 import { UpdateVaccinationComponent } from './pages/vaccinations/update-vaccination/update-vaccination.component';
+import { ViewVaccinationComponent } from './pages/vaccinations/view-vaccination/view-vaccination.component';
 
 export const routes: Routes = [
   {
@@ -85,12 +86,12 @@ export const routes: Routes = [
           {
             path: 'novo',
             component: UpdateVeterinarianComponent,
-            title: 'Veterinários',
+            title: 'Veterinários/Novo',
           },
           {
             path: 'atualizar/:id',
             component: UpdateVeterinarianComponent,
-            title: 'Veterinários',
+            title: 'Veterinários/Atualizar',
           }
         ]
       },
@@ -104,14 +105,17 @@ export const routes: Routes = [
           {
             path: 'novo',
             component: UpdateVaccineComponent,
+            title: 'Vacinas/Novo',
           },
           {
             path: 'atualizar/:id',
             component: UpdateVaccineComponent,
+            title: 'Vacinas/Atualizar',
           },
           {
             path: 'visualizar/:id',
             component: ViewVaccineComponent,
+            title: 'Vacinas/Visualizar',
           }
         ],
       },
@@ -123,12 +127,17 @@ export const routes: Routes = [
           {
             path: 'novo',
             component: UpdateVaccinationComponent,
-            title: 'Vacinações - Novo'
+            title: 'Vacinações/Novo'
           },
           {
             path: 'atualizar/:id',
             component: UpdateVaccinationComponent,
-            title: 'Vacinações - Atualizar'
+            title: 'Vacinações/Atualizar'
+          },
+          {
+            path: 'visualizar/:id',
+            component: ViewVaccinationComponent,
+            title: 'Vacinações/Visualizar'
           }
         ]
       },

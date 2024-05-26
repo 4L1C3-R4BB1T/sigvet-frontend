@@ -23,7 +23,6 @@ export class HeaderComponent extends BaseStoreComponent implements OnInit {
   #router = inject(Router);
 
   currentTitle = signal('Home');
-  subTitle = signal('');
   userInfo = this.store.selectSignal(selectUserInfo);
   userPhoto = this.store.selectSignal(selectUserPhoto);
   isOpenMenuSidenav = this.store.selectSignal(selectMenuSidenavValue);
@@ -32,18 +31,7 @@ export class HeaderComponent extends BaseStoreComponent implements OnInit {
     this.#router.events.pipe(
       filter(event => event instanceof ActivationStart),
       map(event => event as ActivationStart))
-      .subscribe(event => {
-        const fullTitle = event.snapshot.routeConfig?.title as string;
-        let title = fullTitle;
-        let subTitle = '';
-        if (fullTitle.includes('-')) {
-         const slices = fullTitle.split('-');
-         title = slices[0].trim();
-         subTitle = slices[1].trim();
-        }
-        this.currentTitle.set(title);
-        this.subTitle.set(subTitle);
-      });
+      .subscribe(event => this.currentTitle.set(event.snapshot.routeConfig?.title as string));
   }
 
   showProfileMenu() {
