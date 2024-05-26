@@ -16,6 +16,7 @@ import { Vaccine } from '../../../models/vaccine';
 import { SearchService } from '../../../services/search.service';
 import { VaccinationService } from '../../../services/vaccination.service';
 import { CustomValidators } from '../../../validators/custom-validators';
+import VaccinationsComponent from '../vaccinations.component';
 
 @Component({
   selector: 'app-update-vaccination',
@@ -43,6 +44,8 @@ export class UpdateVaccinationComponent
   #searchService = inject(SearchService);
   #vaccinationService = inject(VaccinationService);
 
+  #table = inject(VaccinationsComponent);
+
   id = signal(inject(ActivatedRoute).snapshot.params['id']);
 
   protected override form = this.#formBuilder.group({
@@ -50,6 +53,7 @@ export class UpdateVaccinationComponent
     veterinarian: this.#formBuilder.group({
       name: ['', Validators.required],
     }),
+    hour: ['', [Validators.pattern(/^(?:[01]\d|2[0-3])[0-5]\d$/)]],
     vaccine: this.#formBuilder.group({
       name: ['', Validators.required],
     }),
@@ -80,16 +84,19 @@ export class UpdateVaccinationComponent
   }
 
   private checkIfRequiredFieldsIsValid() {
-    if (this.isEmpty(this.form.controls.vaccineId.value)) {
-      this.toastrService.warning('Vacina é obrigatório');
+    if (this.isEmpty(this.form.controls.veterinarianId.value)) {
+      this.toastrService.warning('Veterinário é obrigatório')
+      return;
     }
 
     if (this.isEmpty(this.form.controls.animalId.value)) {
       this.toastrService.warning('Animal é obrigatório');
+      return;
     }
 
-    if (this.isEmpty(this.form.controls.veterinarianId.value)) {
-      this.toastrService.warning('Veterinário é obrigatório')
+    if (this.isEmpty(this.form.controls.vaccineId.value)) {
+      this.toastrService.warning('Vacina é obrigatório');
+      return;
     }
   }
 
@@ -102,21 +109,19 @@ export class UpdateVaccinationComponent
       return;
     }
 
-    if (
-      this.isEdition() &&
-      (await this.#vaccinationService.update(this.id(), <any>this.form.value))
-    ) {
+    this.form.controls.hour.setValue(this.formatStringToUTCHour(this.form.controls.hour.value!));
+
+    if (this.isEdition() && (await this.#vaccinationService.update(this.id(), <any>this.form.value))) {
       this.toastrService.success('Atualizada', 'Vacinação');
+      await this.#table.reload();
+      this.router.navigate(['/dashboard', 'vacinacoes']);
     }
 
-    if (
-      !this.isEdition() &&
-      (await this.#vaccinationService.create(<any>this.form.value))
-    ) {
+    if (!this.isEdition() && (await this.#vaccinationService.create(<any>this.form.value))) {
       this.toastrService.success('Criada', 'Vacinação');
+      await this.#table.reload();
+      this.router.navigate(['/dashboard', 'vacinacoes']);
     }
-
-    this.router.navigate(['/dashboard', 'vacinacoes']);
   }
 
   async checkIfEdition() {
@@ -131,8 +136,6 @@ export class UpdateVaccinationComponent
       name: this.toPrettyString(data.veterinarian.document, data.veterinarian.name),
     });
 
-    this.form.controls.veterinarian.disable();
-
     this.form.controls.animal.patchValue({
       name: this.toPrettyString(data.animal.name, data.animal.client.document, data.animal.client.name),
     });
@@ -142,7 +145,6 @@ export class UpdateVaccinationComponent
     this.form.controls.vaccine.patchValue({
       name: this.toPrettyString(data.vaccine.lot, data.vaccine.name),
     })
-    this.form.controls.vaccine.disable();
 
     this.form.controls.animalId.setValue(<any>data?.animal.id);
     this.form.controls.vaccineId.setValue(<any>data?.vaccine.id);
@@ -165,6 +167,11 @@ export class UpdateVaccinationComponent
 
   toPrettyString(...args: string[]) {
     return args.join(' - ');
+  }
+
+  formatStringToUTCHour(value: string) {
+    if (value === '') return value;
+    return value.slice(0, 2) + ':' + value.slice(2);
   }
 
   async searchByName(name: string, option: 0 | 1 | 2) {
@@ -191,5 +198,5 @@ export class UpdateVaccinationComponent
       this.form.controls.animalId.setValue(object.id as string);
     }
   }
-  
+
 }

@@ -28,34 +28,6 @@
         }
       </mat-form-field>
 
-      <mat-form-field appearance="outline">
-        <mat-label>Data</mat-label>
-        <input formControlName="dateTime" #dateTime matInput [matDatepicker]="picker">
-        <mat-datepicker-toggle matIconSuffix [for]="picker"></mat-datepicker-toggle>
-        <mat-datepicker #picker></mat-datepicker>
-        @if (getControlError('dateTime')) {
-          <mat-error>{{ getControlError('dateTime') }}</mat-error>
-        }
-      </mat-form-field>
-
-      <mat-form-field appearance="outline" formGroupName="vaccine">
-        <mat-label>Vacina</mat-label>
-        <input type="text"
-                placeholder="Nome"
-                #inputVaccine
-                formControlName="name"
-                matInput
-                [matAutocomplete]="autoVaccine" (input)="searchByName(inputVaccine.value, 2)">
-        <mat-autocomplete #autoVaccine="matAutocomplete" autoActiveFirstOption>
-          @for (vaccine of vaccines(); track vaccine.id) {
-            <mat-option [value]="toPrettyString(vaccine.lot, vaccine.name)" (onSelectionChange)="onSelectionChange(vaccine, 1)">{{ toPrettyString(vaccine.lot, vaccine.name)}}</mat-option>
-          }
-        </mat-autocomplete>
-        @if (getControlError('vaccineId')) {
-          <mat-error>{{ getControlError('vaccineId') }}</mat-error>
-        }
-      </mat-form-field>
-
       <mat-form-field appearance="outline" class="col-span-2" formGroupName="animal">
         <mat-label>Animal</mat-label>
         <input type="text"
@@ -71,6 +43,42 @@
         </mat-autocomplete>
         @if (getControlError('animalId')) {
           <mat-error>{{ getControlError('animalId') }}</mat-error>
+        }
+      </mat-form-field>
+
+      <mat-form-field appearance="outline">
+        <mat-label>Data</mat-label>
+        <input formControlName="dateTime" #dateTime matInput [matDatepicker]="picker">
+        <mat-datepicker-toggle matIconSuffix [for]="picker"></mat-datepicker-toggle>
+        <mat-datepicker #picker></mat-datepicker>
+        @if (getControlError('dateTime')) {
+          <mat-error>{{ getControlError('dateTime') }}</mat-error>
+        }
+      </mat-form-field>
+
+      <mat-form-field appearance="fill" appearance="outline">
+        <mat-label>Hora</mat-label>
+        <input formControlName="hour" [specialCharacters]="[':']" matInput placeholder="HH:mm" mask="00:00">
+        @if (getControlError('hour')) {
+          <mat-error>{{  getControlError('hour') }}</mat-error>
+        }
+      </mat-form-field>
+
+      <mat-form-field appearance="outline" class="col-span-2" formGroupName="vaccine">
+        <mat-label>Vacina</mat-label>
+        <input type="text"
+                placeholder="Nome"
+                #inputVaccine
+                formControlName="name"
+                matInput
+                [matAutocomplete]="autoVaccine" (input)="searchByName(inputVaccine.value, 2)">
+        <mat-autocomplete #autoVaccine="matAutocomplete" autoActiveFirstOption>
+          @for (vaccine of vaccines(); track vaccine.id) {
+            <mat-option [value]="toPrettyString(vaccine.lot, vaccine.name)" (onSelectionChange)="onSelectionChange(vaccine, 1)">{{ toPrettyString(vaccine.lot, vaccine.name)}}</mat-option>
+          }
+        </mat-autocomplete>
+        @if (getControlError('vaccineId')) {
+          <mat-error>{{ getControlError('vaccineId') }}</mat-error>
         }
       </mat-form-field>
     </span>

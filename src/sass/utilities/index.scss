@@ -54,4 +54,13 @@
 
   }
 
+  .after_add_line {
+    position: absolute;
+    bottom: 0;
+    &::after {
+      content: '';
+      display: block;
+      @apply h-0.5 w-20 bg-[#3F51B5];
+    }
+  }
 }

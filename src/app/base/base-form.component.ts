@@ -44,8 +44,11 @@ export default class BaseFormComponent {
         return `O mínimo é ${min.min}`;
       } else if (Object.hasOwn(errors, 'presentOrFuture')) {
         return 'A data deve estar no presente ou futuro';
+      } else if (Object.hasOwn(errors, 'pattern')) {
+        return 'O campo não possui um formato válido';
+      } else {
+        return "";
       }
-      return "";
     }
 
   public checkForm() {

@@ -23,6 +23,10 @@
       <td mat-cell *matCellDef="let row"> {{ row.dateTime | date: 'dd/MM/YYYY'}} </td>
     </ng-container>
 
+    <ng-container matColumnDef="hour">
+      <th mat-header-cell *matHeaderCellDef mat-sort-header> Horário </th>
+      <td mat-cell *matCellDef="let row"> {{ row.hour }} </td>
+    </ng-container>
 
     <ng-container matColumnDef="veterinaryName">
       <th mat-header-cell *matHeaderCellDef mat-sort-header> Veterinário </th>

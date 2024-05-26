@@ -43,6 +43,7 @@ export class VaccinationTableComponent implements OnChanges {
   displayedColumns: string[] = [
     'select',
     'dateTime',
+    'hour',
     'veterinaryName',
     'vaccineName',
     'manufacturer',
