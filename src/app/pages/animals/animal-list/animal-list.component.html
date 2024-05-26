@@ -1,5 +1,5 @@
 @if(clientId()) {
-  <div class="bg-yellow-100 p-3 flex gap-4 items-center mb-2" style="border: 1px solid #33333330">
+  <div class="bg-yellow-100 p-3 mt-3 flex gap-4 items-center mb-2 custom-border">
     <span class="bg-white rounded-full w-8 h-8 flex items-center justify-center">
       <i class="bi bi-info-lg text-xl"></i>
     </span>
@@ -23,7 +23,7 @@
   </mat-paginator>
 </div>
 
-<div class="grid grid-cols-2 gap-4 px-2 py-3 pb-5 mt-3 relative max-h-[60vh] overflow-hidden overflow-y-auto h-screen">
+<div class="grid grid-cols-2 gap-4 px-2 py-3 pb-5 mt-3 relative max-h-[50vh] overflow-hidden overflow-y-auto h-screen">
   @for (element of elements(); track element.id) {
     <app-animal-card [animal]="element"/>
   } @empty {
