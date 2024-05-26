@@ -10,6 +10,7 @@ import { UpdateVeterinarianComponent } from './pages/veterinarian/update-veterin
 import { UpdateClientComponent } from './pages/clients/update-client/update-client.component';
 import { UpdateVaccinationComponent } from './pages/vaccinations/update-vaccination/update-vaccination.component';
 import { ViewVaccinationComponent } from './pages/vaccinations/view-vaccination/view-vaccination.component';
+import { ViewVeterinarianComponent } from './pages/veterinarian/view-veterinarian/view-veterinarian.component';
 
 export const routes: Routes = [
   {
@@ -92,7 +93,12 @@ export const routes: Routes = [
             path: 'atualizar/:id',
             component: UpdateVeterinarianComponent,
             title: 'Veterinários/Atualizar',
-          }
+          },
+          {
+            path: 'visualizar/:id',
+            component: ViewVeterinarianComponent,
+            title: 'Veterinários/Visualizar',
+          },
         ]
       },
       {
