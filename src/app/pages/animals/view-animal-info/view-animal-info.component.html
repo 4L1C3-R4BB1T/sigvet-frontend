@@ -1,37 +1,37 @@
-<div class="fixed  p-4 flex items-center justify-center top-0 left-0 bg-black bg-opacity-60 w-full h-full">
+<div *ngIf="animal" class="fixed  p-4 flex items-center justify-center top-0 left-0 bg-black bg-opacity-60 w-full h-full">
   <section class="bg-white relative flex gap-2 max-w-[50rem] w-full mat-elevation-z9 rounded-md p-4 animate-slide-in">
     <aside class="flex-1 p-4">
       <mat-tab-group>
         <mat-tab label="Informações">
           <div class="flex flex-col gap-5 mt-5 py-2">
-            <span class="flex gap-2 items-center">
+            <span class="flex gap-2 items-center ps-2">
               <span class="font-semibold flex-1">Nome: </span>
-              <span class="w-[20rem] text-sm">{{ animal()?.name }}</span>
+              <span class="w-[20rem] text-sm">{{ animal.name }}</span>
             </span>
-            <span class="flex gap-2 items-center">
+            <span class="flex gap-2 items-center ps-2">
               <span class="font-semibold flex-1">Raça: </span>
-              <span class="w-[20rem] text-sm">{{ animal()?.breed }}</span>
+              <span class="w-[20rem] text-sm">{{ animal.breed }}</span>
             </span>
-            @if (animal()?.birthDate) {
-              <span class="flex gap-2 items-center">
+            @if (animal.birthDate) {
+              <span class="flex gap-2 items-center ps-2">
                 <span class="font-semibold flex-1">Data Nascimento: </span>
-                <span class="w-[20rem] text-sm">{{ animal()?.birthDate | date: 'dd/MM/YYYY'}}</span>
+                <span class="w-[20rem] text-sm">{{ animal.birthDate | date: 'dd/MM/YYYY'}}</span>
               </span>
             }
-            <span class="flex gap-2 items-center">
+            <span [routerLink]="['/dashboard', 'clientes', 'visualizar', animal.client.id]" class="flex gap-2 items-center ps-2 bg-blue-50 hover:bg-blue-100 cursor-pointer py-2">
               <span class="font-semibold flex-1">Nome do Dono: </span>
-              <span class="w-[20rem] text-sm">{{ animal()?.client?.name }}</span>
+              <span class="w-[20rem] text-sm">{{ animal.client.name }}</span>
             </span>
-            @if (animal()?.client?.address; as address) {
-              <span class="flex gap-2 items-center">
+            @if (animal.client?.address; as address) {
+              <span class="flex gap-2 items-center ps-2">
                 <span class="font-semibold flex-1">Munícipio/Estado: </span>
                 <span class="w-[20rem] text-sm">{{ address.city.name + ', ' + address.city.state.name }}</span>
               </span>
-              <span class="flex gap-2 items-center">
+              <span class="flex gap-2 items-center ps-2">
                 <span class="font-semibold flex-1">Rua/Número: </span>
                 <span class="w-[20rem] text-sm">{{ address.street + ', ' + address.number }}</span>
               </span>
-              <span class="flex gap-2 items-center">
+              <span class="flex gap-2 items-center ps-2">
                 <span class="font-semibold flex-1">Bairro: </span>
                 <span class="w-[20rem] text-sm">{{ address.neighborhood }}</span>
               </span>
@@ -42,29 +42,29 @@
      </mat-tab-group>
     </aside>
     <aside class="p-3 flex flex-col items-center">
-      @if (!animal()?.photoUrl) {
+      @if (!animal.photoUrl) {
         <img class="w-52 h-52 mt-16 object-cover rounded-full" src="assets/images/sem-foto.png">
       } @else {
-        <img class="w-52 h-52 mt-16 object-cover rounded-full" src="{{animal()?.photoUrl}}">
+        <img class="w-52 h-52 mt-16 object-cover rounded-full" src="{{animal.photoUrl}}">
       }
 
       <div class="flex flex-col gap-2 mt-4">
         <span class="flex  justify-between items-center">
           <span class="font-semibold text-sm">Registrado em:</span>
           <p-tag severity="info">
-            <span class="text-xs block px-1">{{ animal()?.createdAt | date: 'dd/MM/YYYY'}}</span>
+            <span class="text-xs block px-1">{{ animal.createdAt | date: 'dd/MM/YYYY'}}</span>
           </p-tag>
         </span>
         <span class="flex justify-between items-center gap-2">
           <span class="font-semibold text-sm">Última modificação: </span>
           <p-tag severity="primary">
-            <span class="text-xs block px-1">{{ animal()?.updatedAt | date: 'dd/MM/YYYY'}}</span>
+            <span class="text-xs block px-1">{{ animal.updatedAt | date: 'dd/MM/YYYY'}}</span>
           </p-tag>
         </span>
       </div>
     </aside>
     <span class="absolute right-0 top-0 m-2 p-2" (click)="exit()">
-      <button mat-button color="primary">
+      <button mat-raised-button color="primary">
         Fechar
       </button>
     </span>
