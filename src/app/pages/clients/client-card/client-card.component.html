@@ -23,6 +23,9 @@
        </div>
        <div>
         <span class="flex gap-2">
+          <button mat-mini-fab color="primary" class="!bg-[#326690]" matTooltip="Visualizar" [routerLink]="['/dashboard', 'clientes', 'visualizar', client.id]">
+            <i class="bi bi-eye-fill text-xl "></i>
+          </button>
           <button mat-mini-fab color="primary" matTooltip="Editar" [routerLink]="['/dashboard', 'clientes', 'atualizar', client.id]">
             <i class="bi bi-pencil-square text-xl"></i>
           </button>

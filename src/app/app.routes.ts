@@ -11,6 +11,7 @@ import { UpdateClientComponent } from './pages/clients/update-client/update-clie
 import { UpdateVaccinationComponent } from './pages/vaccinations/update-vaccination/update-vaccination.component';
 import { ViewVaccinationComponent } from './pages/vaccinations/view-vaccination/view-vaccination.component';
 import { ViewVeterinarianComponent } from './pages/veterinarian/view-veterinarian/view-veterinarian.component';
+import { ViewClientComponent } from './pages/clients/view-client/view-client.component';
 
 export const routes: Routes = [
   {
@@ -46,12 +47,17 @@ export const routes: Routes = [
           {
             path: 'novo',
             component: UpdateClientComponent,
-            title: 'Veterinários',
+            title: 'Clientes/Novo',
           },
           {
             path: 'atualizar/:id',
             component: UpdateClientComponent,
-            title: 'Veterinários',
+            title: 'Clientes/Atualizar',
+          },
+          {
+            path: 'visualizar/:id',
+            component: ViewClientComponent,
+            title: 'Clientes/Visualizar',
           }
         ]
       },
