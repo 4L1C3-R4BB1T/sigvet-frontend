@@ -54,13 +54,14 @@
 
   }
 
-  .after_add_line {
-    position: absolute;
-    bottom: 0;
+  .after_append_bottom_line {
+    position: relative;
+    @apply pb-1;
     &::after {
+      position: absolute;
       content: '';
       display: block;
-      @apply h-0.5 w-20 bg-[#3F51B5];
+      @apply bottom-0 left-0 h-1 w-20  bg-[#3F51B5];
     }
   }
 }
