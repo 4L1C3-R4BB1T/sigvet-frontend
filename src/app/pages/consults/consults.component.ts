@@ -1,4 +1,4 @@
-import { AfterViewInit, Component, OnInit, ViewChild, inject, signal } from '@angular/core';
+import { AfterViewInit, Component, ViewChild, inject, signal } from '@angular/core';
 import { MatAutocompleteModule } from '@angular/material/autocomplete';
 import { MatButtonModule } from '@angular/material/button';
 import { MatFormFieldModule } from '@angular/material/form-field';
@@ -6,15 +6,15 @@ import { MatInputModule } from '@angular/material/input';
 import { MatPaginator, MatPaginatorModule } from '@angular/material/paginator';
 import { MatTabsModule } from '@angular/material/tabs';
 import { MatTooltipModule } from '@angular/material/tooltip';
+import { RouterLink, RouterOutlet } from '@angular/router';
+import { ToastrService } from 'ngx-toastr';
 import { DialogModule } from 'primeng/dialog';
+import BaseStoreComponent from '../../base/base-store.component';
 import { FilterComponent } from '../../components/filter/filter.component';
 import { PaginatorComponent } from '../../components/paginator/paginator.component';
-import { ConsultService } from '../../services/consult.service';
-import { ToastrService } from 'ngx-toastr';
-import BaseStoreComponent from '../../base/base-store.component';
-import { RouterLink, RouterOutlet } from '@angular/router';
-import { ConsultTableComponent } from './consult-table/consult-table.component';
 import { Consult } from '../../models/consult';
+import { ConsultService } from '../../services/consult.service';
+import { ConsultTableComponent } from './consult-table/consult-table.component';
 
 @Component({
   selector: 'app-consults',
@@ -38,7 +38,6 @@ import { Consult } from '../../models/consult';
   styleUrl: './consults.component.scss'
 })
 export default class ConsultsComponent extends BaseStoreComponent implements AfterViewInit {
-
 
   @ViewChild(MatPaginator) paginator!: MatPaginator;
 

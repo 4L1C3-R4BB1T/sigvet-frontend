@@ -77,7 +77,7 @@
               Editar
             </span>
           </button>
-          <button mat-menu-item [routerLink]="['/dashboard', 'vacinas', 'visualizar', row.id]">
+          <button mat-menu-item [routerLink]="['/dashboard', 'consultas', 'visualizar', row.id]">
             <span class="text-sm flex items-center gap-2">
               <i class="bi bi-eye-fill text-black"></i>
               Visualizar
@@ -95,7 +95,7 @@
   @if (!data.length) {
     <p class="text-sm justify-center py-5 font-light flex items-center gap-2">
       <i class="bi bi-database-fill-x text-lg text-[#005691]"></i>
-      Não há nenhuma vacina cadastrada
+      Não há nenhuma consulta cadastrada
     </p>
   }
 </div>

@@ -1,0 +1,79 @@
+<div class="bg-black bg-opacity-60 pt-5 absolute top-0 left-0 w-full h-full z-[999] flex items-center justify-center">
+  <section *ngIf="consult"
+    class="p-5 overflow-auto max-h-[90vh] bg-white mat-elevation-z4 rounded-md animate-slide-in flex gap-2 max-w-[700px] w-full">
+    <!-- 'id', 'name', 'manufacturer', 'lot', 'unitPrice', 'stock', 'expirationDate']; -->
+    <aside class="flex-1 pb-4">
+      <div class="flex justify-between mb-6 gap-2">
+        <span class="text-2xl font-semibold flex items-center gap-2">
+          <i class="bi bi-info-square-fill text-[#4758B8]"></i>
+          Detalhes da Consulta
+        </span>
+        <button mat-raised-button color="primary" routerLink="/dashboard/consultas">Fechar</button>
+      </div>
+      <ul class="flex flex-col gap-4 ps-4">
+        <li class="flex items-center gap-2">
+          <span class="font-medium text-lg">ID:</span>
+          <span class="text-lg">{{ consult.id }}</span>
+        </li>
+        <mat-divider></mat-divider>
+        <li class="flex gap-2">
+          <span class="font-medium text-lg">Data e Hora:</span>
+          <span class="text-lg">{{ dateFormatted }}</span>
+        </li>
+        <mat-divider></mat-divider>
+        <li class="flex flex-col gap-2">
+          <div class="flex items-center gap-2  cursor-pointer bg-blue-50 hover:bg-blue-100 px-2"
+            [routerLink]="['/dashboard', 'veterinarios', 'visualizar', consult.veterinarian.id]">
+            <span class="text-lg font-medium">Veterinário Responsável:</span>
+            <span class="text-lg">{{ consult.veterinarian.name }}</span>
+          </div>
+          <div class="ms-4">
+            <ul class="list-outside flex flex-col gap-2">
+              <li class="flex gap-2 items-center">
+                <span class="text-sm font-medium">CRMV:</span>
+                <span class="text-sm">{{ consult.veterinarian.crmv }}</span>
+              </li>
+              <mat-divider></mat-divider>
+              <li class="flex gap-2 items-center">
+                <span class="text-sm font-medium">Especialidade:</span>
+                <span class="text-sm">{{ consult.veterinarian.specialty }}</span>
+              </li>
+              <mat-divider></mat-divider>
+              <li class="flex gap-2 items-center">
+                <span class="text-sm font-medium">Contato:</span>
+                <span class="text-sm">{{ consult.veterinarian.email + ', ' + consult.veterinarian.phone
+                  }}</span>
+              </li>
+            </ul>
+          </div>
+        </li>
+        <mat-divider></mat-divider>
+        <li class="flex flex-col gap-2">
+          <div class="flex items-center gap-2  cursor-pointer bg-blue-50 hover:bg-blue-100 px-2"
+            [routerLink]="['/dashboard', 'animais', 'visualizar', consult.animal.id]">
+            <span class="text-lg font-medium">Animal:</span>
+            <span class="text-lg">{{ consult.animal.name }}</span>
+          </div>
+          <div class="ms-4">
+            <ul class="list-outside flex flex-col gap-2">
+              <li class="flex gap-2 items-center">
+                <span class="text-sm font-medium">Raça:</span>
+                <span class="text-sm">{{ consult.animal.breed }}</span>
+              </li>
+              <mat-divider></mat-divider>
+              <li class="flex gap-2 items-center">
+                <span class="text-sm font-medium">Data de Nascimento:</span>
+                <span class="text-sm">{{ consult.animal.birthDate | date: 'dd/MM/YYYY' }}</span>
+              </li>
+            </ul>
+          </div>
+        </li>
+        <mat-divider></mat-divider>
+        <li class="flex gap-2">
+          <span class="font-medium text-lg">Status:</span>
+          <span class="text-lg">{{ consult.status | consultStatus }}</span>
+        </li>
+      </ul>
+    </aside>
+  </section>
+</div>

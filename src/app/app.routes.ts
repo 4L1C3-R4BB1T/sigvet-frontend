@@ -1,17 +1,18 @@
 import { Routes } from '@angular/router';
 import { authGuard } from './guards/auth.guard';
+import { UpdateAnimalComponent } from './pages/animals/update-animal/update-animal.component';
+import { ViewAnimalInfoComponent } from './pages/animals/view-animal-info/view-animal-info.component';
+import { UpdateClientComponent } from './pages/clients/update-client/update-client.component';
+import { ViewClientComponent } from './pages/clients/view-client/view-client.component';
+import { ViewConsultComponent } from './pages/consults/view-consult/view-consult.component';
 import { DashboardComponent } from './pages/dashboard/dashboard.component';
 import LoginComponent from './pages/login/login.component';
-import { ViewAnimalInfoComponent } from './pages/animals/view-animal-info/view-animal-info.component';
-import { UpdateAnimalComponent } from './pages/animals/update-animal/update-animal.component';
+import { UpdateVaccinationComponent } from './pages/vaccinations/update-vaccination/update-vaccination.component';
+import { ViewVaccinationComponent } from './pages/vaccinations/view-vaccination/view-vaccination.component';
 import { UpdateVaccineComponent } from './pages/vaccines/components/update-vaccine/update-vaccine.component';
 import { ViewVaccineComponent } from './pages/vaccines/components/view-vaccine/view-vaccine.component';
 import { UpdateVeterinarianComponent } from './pages/veterinarian/update-veterinarian/update-veterinarian.component';
-import { UpdateClientComponent } from './pages/clients/update-client/update-client.component';
-import { UpdateVaccinationComponent } from './pages/vaccinations/update-vaccination/update-vaccination.component';
-import { ViewVaccinationComponent } from './pages/vaccinations/view-vaccination/view-vaccination.component';
 import { ViewVeterinarianComponent } from './pages/veterinarian/view-veterinarian/view-veterinarian.component';
-import { ViewClientComponent } from './pages/clients/view-client/view-client.component';
 
 export const routes: Routes = [
   {
@@ -157,6 +158,13 @@ export const routes: Routes = [
         path: 'consultas',
         loadComponent: () => import('./pages/consults/consults.component'),
         title: 'Consultas',
+        children: [
+          {
+            path: 'visualizar/:id',
+            component: ViewConsultComponent,
+            title: 'Consultas/Visualizar'
+          }
+        ]
       },
       {
         path: 'diagnosticos',

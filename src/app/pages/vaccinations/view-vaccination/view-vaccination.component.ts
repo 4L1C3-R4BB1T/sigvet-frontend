@@ -4,9 +4,8 @@ import { MatButtonModule } from '@angular/material/button';
 import { MatDividerModule } from '@angular/material/divider';
 import { MatTabsModule } from '@angular/material/tabs';
 import { ActivatedRoute, RouterLink } from '@angular/router';
-import { VaccinationService } from '../../../services/vaccination.service';
 import { Vaccination } from '../../../models/vaccination';
-import moment from 'moment';
+import { VaccinationService } from '../../../services/vaccination.service';
 
 @Component({
   selector: 'app-view-vaccination',
