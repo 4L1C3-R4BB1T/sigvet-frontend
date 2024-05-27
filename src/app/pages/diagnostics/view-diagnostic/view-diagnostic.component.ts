@@ -24,7 +24,6 @@ export class ViewDiagnosticComponent implements OnInit {
   id = signal(inject(ActivatedRoute).snapshot.params['id']);
 
   diagnostic!: Diagnostic;
-
   consult!: Consult;
 
   dateFormatted = '';

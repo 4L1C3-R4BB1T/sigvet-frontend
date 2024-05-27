@@ -73,6 +73,9 @@ export class UpdateDiagnosticComponent
   }
 
   async save() {
+    const consultId = this.form.controls.consults.get('name')?.value ?? '';
+    this.form.controls.consultId.setValue(consultId);
+
     if (this.form.invalid) {
       if (this.form.controls.diagnosis.valid || this.form.controls.comments.valid) {
         this.checkIfRequiredFieldsIsValid();
@@ -81,13 +84,13 @@ export class UpdateDiagnosticComponent
       return;
     }
 
-    if (this.isEdition() && (await this.#consultService.update(this.id(), <any>this.form.value))) {
+    if (this.isEdition() && (await this.#diagnosticService.update(this.id(), <any>this.form.value))) {
       this.toastrService.success('Atualizado', 'Diagnóstico');
       await this.#table.reload();
       this.router.navigate(['/dashboard', 'diagnosticos']);
     }
 
-    if (!this.isEdition() && (await this.#consultService.create(<any>this.form.value))) {
+    if (!this.isEdition() && (await this.#diagnosticService.create(<any>this.form.value))) {
       this.toastrService.success('Criado', 'Diagnóstico');
       await this.#table.reload();
       this.router.navigate(['/dashboard', 'diagnosticos']);
