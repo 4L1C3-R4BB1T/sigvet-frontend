@@ -1,5 +1,6 @@
 export interface UpdateConsult {
-  dateTime: Date;
+  date: Date;
+  hour: string;
   veterinarianId: number;
   animalId: number;
   status: 'SCHEDULED' | 'COMPLETED' | 'CANCELED';

@@ -1,5 +1,6 @@
 export interface UpdateVaccination {
-  dateTime: Date;
+  date: Date;
+  hour: string;
   veterinarianId: number;
   vaccineId: number;
   animalId: number;

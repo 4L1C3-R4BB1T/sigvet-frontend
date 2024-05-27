@@ -13,6 +13,7 @@ import { UpdateVaccineComponent } from './pages/vaccines/components/update-vacci
 import { ViewVaccineComponent } from './pages/vaccines/components/view-vaccine/view-vaccine.component';
 import { UpdateVeterinarianComponent } from './pages/veterinarian/update-veterinarian/update-veterinarian.component';
 import { ViewVeterinarianComponent } from './pages/veterinarian/view-veterinarian/view-veterinarian.component';
+import { UpdateConsultComponent } from './pages/consults/update-consult/update-consult.component';
 
 export const routes: Routes = [
   {
@@ -159,6 +160,16 @@ export const routes: Routes = [
         loadComponent: () => import('./pages/consults/consults.component'),
         title: 'Consultas',
         children: [
+          {
+            path: 'novo',
+            component: UpdateConsultComponent,
+            title: 'Consultas/Novo'
+          },
+          {
+            path: 'atualizar/:id',
+            component: UpdateConsultComponent,
+            title: 'Consultas/Atualizar'
+          },
           {
             path: 'visualizar/:id',
             component: ViewConsultComponent,

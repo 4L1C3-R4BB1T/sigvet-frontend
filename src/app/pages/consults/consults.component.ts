@@ -78,8 +78,8 @@ export default class ConsultsComponent extends BaseStoreComponent implements Aft
 
     length == 1 ? this.#toastrService.success('Removida', 'Consulta') : this.#toastrService.success('Removidas', 'Consulta');
     setTimeout(() => this.reload(), 200);
+
+    this.closeDialog.set(true);
   }
 
-
 }
-

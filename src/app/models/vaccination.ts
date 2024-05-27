@@ -5,8 +5,8 @@ import { Vaccine } from "./vaccine";
 
 export interface Vaccination extends BaseModel {
   date: Date;
-  veterinarian: User;
   hour: string;
+  veterinarian: User;
   vaccine: Vaccine;
   animal: Animal;
 }
