@@ -42,7 +42,7 @@ import { Vaccination } from '../../../models/vaccination';
 export class VaccinationTableComponent implements OnChanges {
   displayedColumns: string[] = [
     'select',
-    'dateTime',
+    'date',
     'hour',
     'veterinaryName',
     'vaccineName',

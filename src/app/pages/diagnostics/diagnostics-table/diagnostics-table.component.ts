@@ -50,7 +50,8 @@ export class DiagnosticsTableComponent implements OnChanges {
     'createdAt',
     'diagnosis',
     'comments',
-    'dateTime',
+    'date',
+    'hour',
     'status',
     'actions',
   ];

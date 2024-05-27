@@ -4,7 +4,7 @@ import { User } from "./user";
 import { Vaccine } from "./vaccine";
 
 export interface Vaccination extends BaseModel {
-  dateTime: Date;
+  date: Date;
   veterinarian: User;
   hour: string;
   vaccine: Vaccine;

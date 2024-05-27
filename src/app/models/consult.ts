@@ -3,7 +3,8 @@ import { BaseModel } from "./base-model";
 import { User } from "./user";
 
 export interface Consult extends BaseModel {
-  dateTime: Date;
+  date: Date;
+  hour: string;
   animal: Animal;
   veterinarian: User;
   status: 'SCHEDULED' | 'COMPLETED' | 'CANCELED';

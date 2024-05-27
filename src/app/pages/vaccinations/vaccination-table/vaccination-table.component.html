@@ -17,10 +17,9 @@
       </td>
     </ng-container>
 
-
-    <ng-container matColumnDef="dateTime">
+    <ng-container matColumnDef="date">
       <th mat-header-cell *matHeaderCellDef mat-sort-header> Data </th>
-      <td mat-cell *matCellDef="let row"> {{ row.dateTime | date: 'dd/MM/YYYY'}} </td>
+      <td mat-cell *matCellDef="let row"> {{ row.date | date: 'dd/MM/YYYY'}} </td>
     </ng-container>
 
     <ng-container matColumnDef="hour">

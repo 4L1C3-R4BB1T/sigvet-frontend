@@ -49,11 +49,11 @@ export class UpdateVaccinationComponent
   id = signal(inject(ActivatedRoute).snapshot.params['id']);
 
   protected override form = this.#formBuilder.group({
-    dateTime: ['', [Validators.required]],
+    date: ['', [Validators.required]],
     veterinarian: this.#formBuilder.group({
       name: ['', Validators.required],
     }),
-    hour: ['', [Validators.pattern(/^(?:[01]\d|2[0-3])[0-5]\d$/)]],
+    hour: ['', [Validators.pattern(/^(?:[01]\d|2[0-3])[0-5]\d$/), Validators.required]],
     vaccine: this.#formBuilder.group({
       name: ['', Validators.required],
     }),
@@ -74,7 +74,7 @@ export class UpdateVaccinationComponent
   async ngOnInit() {
     await this.checkIfEdition();
     if (!this.isEdition()) {
-      this.form.controls.dateTime.addValidators(CustomValidators.presentOrFuture);
+      this.form.controls.date.addValidators(CustomValidators.presentOrFuture);
     }
 
   }
@@ -149,11 +149,11 @@ export class UpdateVaccinationComponent
     this.form.controls.animalId.setValue(<any>data?.animal.id);
     this.form.controls.vaccineId.setValue(<any>data?.vaccine.id);
 
-    this.form.controls.dateTime.valueChanges.pipe(first()).subscribe(value => {
-      this.form.controls.dateTime.addValidators(CustomValidators.presentOrFuture);
-      this.form.controls.dateTime.setValue('');
+    this.form.controls.date.valueChanges.pipe(first()).subscribe(value => {
+      this.form.controls.date.addValidators(CustomValidators.presentOrFuture);
+      this.form.controls.date.setValue('');
       setTimeout(() => {
-        this.form.controls.dateTime.setValue(value);
+        this.form.controls.date.setValue(value);
       }, 100);
       this.form.updateValueAndValidity();
     });

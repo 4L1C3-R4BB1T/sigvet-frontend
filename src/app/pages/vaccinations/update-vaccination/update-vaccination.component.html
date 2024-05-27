@@ -48,11 +48,11 @@
 
       <mat-form-field appearance="outline">
         <mat-label>Data</mat-label>
-        <input formControlName="dateTime" #dateTime matInput [matDatepicker]="picker">
+        <input formControlName="date" #dateTime matInput [matDatepicker]="picker">
         <mat-datepicker-toggle matIconSuffix [for]="picker"></mat-datepicker-toggle>
         <mat-datepicker #picker></mat-datepicker>
-        @if (getControlError('dateTime')) {
-          <mat-error>{{ getControlError('dateTime') }}</mat-error>
+        @if (getControlError('date')) {
+          <mat-error>{{ getControlError('date') }}</mat-error>
         }
       </mat-form-field>
 

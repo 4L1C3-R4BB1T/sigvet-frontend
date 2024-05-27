@@ -46,7 +46,8 @@ import { ConsultStatusPipe } from '../../../pipes/consult-status.pipe';
 export class ConsultTableComponent implements OnChanges {
   displayedColumns: string[] = [
     'select',
-    'dateTime',
+    'date',
+    'hour',
     'veterinarianName',
     'specialty',
     'animalName',
