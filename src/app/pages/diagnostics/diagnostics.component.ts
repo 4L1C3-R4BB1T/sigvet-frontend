@@ -78,10 +78,11 @@ export default class DiagnosticsComponent extends BaseStoreComponent implements 
     const length = this.diagnosticTable.selection.selected.length;
     this.diagnosticTable.selection.selected.forEach(async ({ id }) => await this.#diagnosticService.deleteById(id));
 
-    length == 1 ? this.#toastrService.success('Removida', 'Diagnósticos') : this.#toastrService.success('Removidas', 'Diagnósticos');
+    length == 1 ? this.#toastrService.success('Removido', 'Diagnósticos') : this.#toastrService.success('Removidos', 'Diagnósticos');
     setTimeout(() => this.reload(), 200);
-  }
 
+    this.closeDialog.set(true);
+  }
 
 }
 
