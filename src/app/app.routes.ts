@@ -4,8 +4,10 @@ import { UpdateAnimalComponent } from './pages/animals/update-animal/update-anim
 import { ViewAnimalInfoComponent } from './pages/animals/view-animal-info/view-animal-info.component';
 import { UpdateClientComponent } from './pages/clients/update-client/update-client.component';
 import { ViewClientComponent } from './pages/clients/view-client/view-client.component';
+import { UpdateConsultComponent } from './pages/consults/update-consult/update-consult.component';
 import { ViewConsultComponent } from './pages/consults/view-consult/view-consult.component';
 import { DashboardComponent } from './pages/dashboard/dashboard.component';
+import { ViewDiagnosticComponent } from './pages/diagnostics/view-diagnostic/view-diagnostic.component';
 import LoginComponent from './pages/login/login.component';
 import { UpdateVaccinationComponent } from './pages/vaccinations/update-vaccination/update-vaccination.component';
 import { ViewVaccinationComponent } from './pages/vaccinations/view-vaccination/view-vaccination.component';
@@ -13,7 +15,6 @@ import { UpdateVaccineComponent } from './pages/vaccines/components/update-vacci
 import { ViewVaccineComponent } from './pages/vaccines/components/view-vaccine/view-vaccine.component';
 import { UpdateVeterinarianComponent } from './pages/veterinarian/update-veterinarian/update-veterinarian.component';
 import { ViewVeterinarianComponent } from './pages/veterinarian/view-veterinarian/view-veterinarian.component';
-import { UpdateConsultComponent } from './pages/consults/update-consult/update-consult.component';
 
 export const routes: Routes = [
   {
@@ -181,6 +182,13 @@ export const routes: Routes = [
         path: 'diagnosticos',
         loadComponent: () => import('./pages/diagnostics/diagnostics.component'),
         title: 'Diagnósticos',
+        children: [
+          {
+            path: 'visualizar/:id',
+            component: ViewDiagnosticComponent,
+            title: 'Diagnósticos/Visualizar'
+          }
+        ]
       }
     ],
   },
