@@ -33,49 +33,9 @@
         <mat-divider></mat-divider>
         <li class="flex flex-col gap-2">
           <div class="flex items-center gap-2  cursor-pointer bg-blue-50 hover:bg-blue-100 px-2"
-            [routerLink]="['/dashboard', 'veterinarios', 'visualizar', diagnostic.consult.veterinarian.id]">
-            <span class="text-lg font-medium">Veterinário Responsável:</span>
-            <span class="text-lg">{{ diagnostic.consult.veterinarian.name }}</span>
-          </div>
-          <div class="ms-4">
-            <ul class="list-outside flex flex-col gap-2">
-              <li class="flex gap-2 items-center">
-                <span class="text-sm font-medium">CRMV:</span>
-                <span class="text-sm">{{ diagnostic.consult.veterinarian.crmv }}</span>
-              </li>
-              <mat-divider></mat-divider>
-              <li class="flex gap-2 items-center">
-                <span class="text-sm font-medium">Especialidade:</span>
-                <span class="text-sm">{{ diagnostic.consult.veterinarian.specialty }}</span>
-              </li>
-              <mat-divider></mat-divider>
-              <li class="flex gap-2 items-center">
-                <span class="text-sm font-medium">Contato:</span>
-                <span class="text-sm">{{ diagnostic.consult.veterinarian.email + ', ' + diagnostic.consult.veterinarian.phone
-                  }}</span>
-              </li>
-            </ul>
-          </div>
-        </li>
-        <mat-divider></mat-divider>
-        <li class="flex flex-col gap-2">
-          <div class="flex items-center gap-2  cursor-pointer bg-blue-50 hover:bg-blue-100 px-2"
-            [routerLink]="['/dashboard', 'animais', 'visualizar', diagnostic.consult.animal.id]">
-            <span class="text-lg font-medium">Animal:</span>
-            <span class="text-lg">{{ diagnostic.consult.animal.name }}</span>
-          </div>
-          <div class="ms-4">
-            <ul class="list-outside flex flex-col gap-2">
-              <li class="flex gap-2 items-center">
-                <span class="text-sm font-medium">Raça:</span>
-                <span class="text-sm">{{ diagnostic.consult.animal.breed }}</span>
-              </li>
-              <mat-divider></mat-divider>
-              <li class="flex gap-2 items-center">
-                <span class="text-sm font-medium">Data de Nascimento:</span>
-                <span class="text-sm">{{ diagnostic.consult.animal.birthDate | date: 'dd/MM/YYYY' }}</span>
-              </li>
-            </ul>
+            [routerLink]="['/dashboard', 'consultas', 'visualizar', diagnostic.consult.id]">
+            <span class="text-lg font-medium">ID Consulta:</span>
+            <span class="text-lg">{{ diagnostic.consult.id }}</span>
           </div>
         </li>
       </ul>
