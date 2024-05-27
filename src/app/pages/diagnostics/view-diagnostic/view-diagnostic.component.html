@@ -26,16 +26,29 @@
           <span class="text-lg">{{ diagnostic.comments }}</span>
         </li>
         <mat-divider></mat-divider>
-        <li class="flex gap-2">
-          <span class="font-medium text-lg">Data e Hora da Consulta:</span>
-          <span class="text-lg">{{ dateFormatted }}</span>
-        </li>
-        <mat-divider></mat-divider>
         <li class="flex flex-col gap-2">
           <div class="flex items-center gap-2  cursor-pointer bg-blue-50 hover:bg-blue-100 px-2"
             [routerLink]="['/dashboard', 'consultas', 'visualizar', diagnostic.consult.id]">
             <span class="text-lg font-medium">ID Consulta:</span>
             <span class="text-lg">{{ diagnostic.consult.id }}</span>
+          </div>
+          <div class="ms-4">
+            <ul class="list-outside flex flex-col gap-2">
+              <li class="flex gap-2 items-center">
+                <span class="text-sm font-medium">Veterinário Resposável:</span>
+                <span class="text-sm">{{ consult.veterinarian.name }}</span>
+              </li>
+              <mat-divider></mat-divider>
+              <li class="flex gap-2 items-center">
+                <span class="text-sm font-medium">Animal:</span>
+                <span class="text-sm">{{ consult.animal.name }}</span>
+              </li>
+              <mat-divider></mat-divider>
+              <li class="flex gap-2 items-center">
+                <span class="text-sm font-medium">Data e Hora da Consulta:</span>
+                <span class="text-sm">{{ dateFormatted }}</span>
+              </li>
+            </ul>
           </div>
         </li>
       </ul>

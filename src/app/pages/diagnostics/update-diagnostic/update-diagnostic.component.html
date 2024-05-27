@@ -1,0 +1,52 @@
+<section
+  class="absolute top-0 left-0 bg-black bg-opacity-50 w-screen h-screen z-[999] flex items-center justify-center">
+  <form (ngSubmit)="save()" [formGroup]="form"
+    class="bg-white p-8 min-w-[40vw] max-w-[40vw] w-full mat-elevation-z4 rounded-md animate-slide-in">
+    <div class="mb-5">
+      <button mat-flat-button routerLink="/dashboard/diagnosticos">
+        <span class="flex items-center gap-2">
+          <i class="bi bi-arrow-left"></i>
+          Voltar para a página anterior
+        </span>
+      </button>
+    </div>
+    <span class="grid grid-cols-2 gap-x-4 gap-y-2">
+      <mat-form-field appearance="outline" class="col-span-2" formGroupName="consults">
+        <mat-label>Consulta</mat-label>
+        <mat-select formControlName="name">
+          @for (consult of consults(); track consult.id) {
+            @if (consult.status === 'SCHEDULED') {
+              <mat-option [value]="consult.id">
+                {{
+                  toPrettyString(consult.id.toString(), consult.date.toString(), consult.hour, consult.veterinarian.name,
+                    consult.veterinarian.crmv, consult.animal.name, consult.animal.breed)
+                }}
+              </mat-option>
+            }
+          }
+        </mat-select>
+        @if (getControlError('consultId')) {
+        <mat-error>{{ getControlError('consultId') }}</mat-error>
+        }
+      </mat-form-field>
+
+      <mat-form-field appearance="outline" class="col-span-2">
+        <mat-label>Diagnóstico</mat-label>
+        <input type="text" placeholder="Diagnóstico" formControlName="diagnosis" matInput>
+        @if (getControlError('diagnosis')) {
+        <mat-error>{{ getControlError('diagnosis') }}</mat-error>
+        }
+      </mat-form-field>
+
+      <mat-form-field appearance="outline" class="col-span-2">
+        <mat-label>Comentários</mat-label>
+        <input type="text" placeholder="Comentários" formControlName="comments" matInput>
+        @if (getControlError('comments')) {
+        <mat-error>{{ getControlError('comments') }}</mat-error>
+        }
+      </mat-form-field>
+
+    </span>
+    <button type="submit" mat-raised-button color="primary" class="w-full !h-12 mt-3 !uppercase">Salvar</button>
+  </form>
+</section>

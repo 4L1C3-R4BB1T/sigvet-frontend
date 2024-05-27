@@ -15,6 +15,7 @@ import { UpdateVaccineComponent } from './pages/vaccines/components/update-vacci
 import { ViewVaccineComponent } from './pages/vaccines/components/view-vaccine/view-vaccine.component';
 import { UpdateVeterinarianComponent } from './pages/veterinarian/update-veterinarian/update-veterinarian.component';
 import { ViewVeterinarianComponent } from './pages/veterinarian/view-veterinarian/view-veterinarian.component';
+import { UpdateDiagnosticComponent } from './pages/diagnostics/update-diagnostic/update-diagnostic.component';
 
 export const routes: Routes = [
   {
@@ -183,6 +184,16 @@ export const routes: Routes = [
         loadComponent: () => import('./pages/diagnostics/diagnostics.component'),
         title: 'Diagnósticos',
         children: [
+          {
+            path: 'novo',
+            component: UpdateDiagnosticComponent,
+            title: 'Diagnósticos/Novo'
+          },
+          {
+            path: 'atualizar/:id',
+            component: UpdateDiagnosticComponent,
+            title: 'Diagnósticos/Atualizar'
+          },
           {
             path: 'visualizar/:id',
             component: ViewDiagnosticComponent,

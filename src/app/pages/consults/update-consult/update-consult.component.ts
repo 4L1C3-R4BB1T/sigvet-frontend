@@ -117,11 +117,13 @@ export class UpdateConsultComponent
 
     this.form.patchValue(<any>data);
 
-    this.form.controls.veterinarianId.setValue(<any>data?.veterinarian.id);
-
     this.form.controls.veterinarian.patchValue({
       name: this.toPrettyString(data.veterinarian.document, data.veterinarian.name),
     });
+
+    this.form.controls.veterinarian.disable();
+
+    this.form.controls.veterinarianId.setValue(<any>data?.veterinarian.id);
 
     this.form.controls.animal.patchValue({
       name: this.toPrettyString(data.animal.name, data.animal.client.document, data.animal.client.name),
