@@ -73,8 +73,10 @@ export class UpdateDiagnosticComponent
   }
 
   async save() {
-    const consultId = this.form.controls.consults.get('name')?.value ?? '';
-    this.form.controls.consultId.setValue(consultId);
+    if (!this.form.controls.consultId.value) {
+      const consultId = this.form.controls.consults.get('name')?.value ?? '';
+      this.form.controls.consultId.setValue(consultId);
+    }
 
     if (this.form.invalid) {
       if (this.form.controls.diagnosis.valid || this.form.controls.comments.valid) {
@@ -106,9 +108,11 @@ export class UpdateDiagnosticComponent
     const consult = (await this.#consultService.findById(data.consult.id))!;
 
     this.form.controls.consults.patchValue({
-      name: this.toPrettyString(consult.id.toString(), consult.veterinarian.name,
-        consult.veterinarian.crmv, consult.animal.name, consult.animal.breed),
+      name: this.toPrettyString(consult.id.toString(), consult.date.toString(), consult.hour,
+        consult.veterinarian.name, consult.veterinarian.crmv, consult.animal.name, consult.animal.breed)
     });
+
+    console.log(this.form.controls.consults.get('name')?.value)
 
     this.form.controls.consults.disable();
 

@@ -18,8 +18,8 @@
             @if (consult.status === 'SCHEDULED') {
               <mat-option [value]="consult.id">
                 {{
-                  toPrettyString(consult.id.toString(), consult.date.toString(), consult.hour, consult.veterinarian.name,
-                    consult.veterinarian.crmv, consult.animal.name, consult.animal.breed)
+                  toPrettyString(consult.id.toString(), consult.date.toString(), consult.hour,
+                    consult.veterinarian.name, consult.veterinarian.crmv, consult.animal.name, consult.animal.breed)
                 }}
               </mat-option>
             }
