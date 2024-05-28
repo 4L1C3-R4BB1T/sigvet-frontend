@@ -6,34 +6,34 @@
           <div class="flex flex-col gap-5 mt-5 py-2">
             <span class="flex gap-2 items-center ps-2">
               <span class="font-semibold flex-1">Nome: </span>
-              <span class="w-[20rem] text-sm">{{ animal.name }}</span>
+              <span class="w-[20rem] base">{{ animal.name }}</span>
             </span>
             <span class="flex gap-2 items-center ps-2">
               <span class="font-semibold flex-1">Raça: </span>
-              <span class="w-[20rem] text-sm">{{ animal.breed }}</span>
+              <span class="w-[20rem] base">{{ animal.breed }}</span>
             </span>
             @if (animal.birthDate) {
               <span class="flex gap-2 items-center ps-2">
                 <span class="font-semibold flex-1">Data Nascimento: </span>
-                <span class="w-[20rem] text-sm">{{ animal.birthDate | date: 'dd/MM/YYYY'}}</span>
+                <span class="w-[20rem] base">{{ animal.birthDate | date: 'dd/MM/YYYY'}}</span>
               </span>
             }
-            <span [routerLink]="['/dashboard', 'clientes', 'visualizar', animal.client.id]" class="flex gap-2 items-center ps-2 bg-blue-50 hover:bg-blue-100 cursor-pointer py-2">
+            <span [routerLink]="['/dashboard', 'clientes', 'visualizar', animal.client.id]" class="flex gap-2 items-center ps-2 bg-gray-100 cursor-pointer py-2">
               <span class="font-semibold flex-1">Nome do Dono: </span>
-              <span class="w-[20rem] text-sm">{{ animal.client.name }}</span>
+              <span class="w-[20rem] base">{{ animal.client.name }}</span>
             </span>
-            @if (animal.client?.address; as address) {
+            @if (animal.client.address; as address) {
               <span class="flex gap-2 items-center ps-2">
                 <span class="font-semibold flex-1">Munícipio/Estado: </span>
-                <span class="w-[20rem] text-sm">{{ address.city.name + ', ' + address.city.state.name }}</span>
+                <span class="w-[20rem] base">{{ address.city.name + ', ' + address.city.state.name }}</span>
               </span>
               <span class="flex gap-2 items-center ps-2">
                 <span class="font-semibold flex-1">Rua/Número: </span>
-                <span class="w-[20rem] text-sm">{{ address.street + ', ' + address.number }}</span>
+                <span class="w-[20rem] base">{{ address.street + ', ' + address.number }}</span>
               </span>
               <span class="flex gap-2 items-center ps-2">
                 <span class="font-semibold flex-1">Bairro: </span>
-                <span class="w-[20rem] text-sm">{{ address.neighborhood }}</span>
+                <span class="w-[20rem] base">{{ address.neighborhood }}</span>
               </span>
             }
           </div>
@@ -50,13 +50,13 @@
 
       <div class="flex flex-col gap-2 mt-4">
         <span class="flex  justify-between items-center">
-          <span class="font-semibold text-sm">Registrado em:</span>
+          <span class="font-semibold base">Registrado em:</span>
           <p-tag severity="info">
             <span class="text-xs block px-1">{{ animal.createdAt | date: 'dd/MM/YYYY'}}</span>
           </p-tag>
         </span>
         <span class="flex justify-between items-center gap-2">
-          <span class="font-semibold text-sm">Última modificação: </span>
+          <span class="font-semibold base">Última modificação: </span>
           <p-tag severity="primary">
             <span class="text-xs block px-1">{{ animal.updatedAt | date: 'dd/MM/YYYY'}}</span>
           </p-tag>
