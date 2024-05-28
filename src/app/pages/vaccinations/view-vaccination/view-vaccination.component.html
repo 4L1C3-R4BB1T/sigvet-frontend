@@ -3,8 +3,8 @@
     <!-- 'id', 'name', 'manufacturer', 'lot', 'unitPrice', 'stock', 'expirationDate']; -->
     <aside class="flex-1 pb-4">
       <div class="flex justify-between mb-6 gap-2">
-        <span class="text-2xl font-semibold flex items-center gap-2">
-          <i class="bi bi-info-square-fill text-[#4758B8]"></i>
+        <span class="text-2xl font-semibold flex items-center gap-2 text-gray-600">
+          <i class="bi bi-info-square-fill"></i>
           Detalhes da Vacinação
         </span>
         <button mat-raised-button color="primary" routerLink="/dashboard/vacinacoes">Fechar</button>
@@ -16,14 +16,14 @@
         </li>
         <mat-divider></mat-divider>
         <li class="flex gap-2">
-          <span class="font-medium text-lg">Data e Hora:</span>
-          <span class="text-lg">{{ dateFormatted }}</span>
+          <span class="font-medium text-base">Data e Hora:</span>
+          <span class="text-base">{{ dateFormatted }}</span>
         </li>
         <mat-divider></mat-divider>
         <li class="flex flex-col gap-2">
-          <div class="flex items-center gap-2  cursor-pointer bg-blue-50 hover:bg-blue-100 px-2" [routerLink]="['/dashboard', 'veterinarios', 'visualizar', vaccination.veterinarian.id]">
-            <span class="text-lg font-medium">Veterinário Responsável:</span>
-            <span class="text-lg" >{{ vaccination.veterinarian.name }}</span>
+          <div class="flex items-center gap-2  cursor-pointer bg-gray-100 px-2" [routerLink]="['/dashboard', 'veterinarios', 'visualizar', vaccination.veterinarian.id]">
+            <span class="text-base font-medium">Veterinário Responsável:</span>
+            <span class="text-base" >{{ vaccination.veterinarian.name }}</span>
           </div>
           <div class="ms-4">
             <ul class="list-outside flex flex-col gap-2">
@@ -46,9 +46,9 @@
         </li>
         <mat-divider></mat-divider>
         <li class="flex flex-col gap-2">
-          <div class="flex items-center gap-2  cursor-pointer bg-blue-50 hover:bg-blue-100 px-2" [routerLink]="['/dashboard', 'animais', 'visualizar', vaccination.animal.id]">
-            <span class="text-lg font-medium">Animal:</span>
-            <span class="text-lg">{{ vaccination.animal.name }}</span>
+          <div class="flex items-center gap-2  cursor-pointer bg-gray-100 px-2" [routerLink]="['/dashboard', 'animais', 'visualizar', vaccination.animal.id]">
+            <span class="text-base font-medium">Animal:</span>
+            <span class="text-base">{{ vaccination.animal.name }}</span>
           </div>
           <div class="ms-4">
             <ul class="list-outside flex flex-col gap-2">
@@ -66,9 +66,9 @@
         </li>
         <mat-divider></mat-divider>
         <li class="flex flex-col gap-2">
-          <div class="flex items-center gap-2  cursor-pointer bg-blue-50 hover:bg-blue-100 px-2" [routerLink]="['/dashboard', 'vacinas', 'visualizar', vaccination.vaccine.id]">
-            <span class="text-lg font-medium">Vacina Administrada:</span>
-            <span class="text-lg">{{ vaccination.vaccine.name }}</span>
+          <div class="flex items-center gap-2  cursor-pointer bg-gray-100 px-2" [routerLink]="['/dashboard', 'vacinas', 'visualizar', vaccination.vaccine.id]">
+            <span class="text-base font-medium">Vacina Administrada:</span>
+            <span class="text-base">{{ vaccination.vaccine.name }}</span>
           </div>
           <div class="ms-4">
             <ul class="list-outside flex flex-col gap-2">
