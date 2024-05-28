@@ -4,70 +4,70 @@
     <aside class="flex-1 pb-4">
       <div class="flex justify-between mb-6 gap-2">
         <span class="text-2xl font-semibold flex items-center gap-2">
-          <i class="bi bi-person-fill text-[#4758B8]"></i>
-        <span class="after_append_bottom_line">Detalhes do Cliente</span>
+          <i class="bi bi-person-fill text-gray-600"></i>
+        <span class="text-gray-600">Cliente</span>
         </span>
         <button mat-raised-button color="primary" routerLink="/dashboard/clientes">Fechar</button>
       </div>
       <mat-tab-group>
-        <mat-tab label="Profissional">
+        <mat-tab label="Profissional" >
           <ul class="flex flex-col gap-4 ps-4 pb-3 mt-5">
             <li class="flex items-center gap-2 ps-2">
-              <span class="font-medium text-lg">ID:</span>
-              <span class="text-lg">{{ client.id }}</span>
+              <span class="font-medium text-base">ID:</span>
+              <span class="text-base">{{ client.id }}</span>
             </li>
             <mat-divider></mat-divider>
             <li class="flex gap-2 ps-2">
-              <span class="font-medium text-lg">Nome:</span>
-              <span class="text-lg">{{ client.name }}</span>
+              <span class="font-medium text-base">Nome:</span>
+              <span class="text-base">{{ client.name }}</span>
             </li>
             <mat-divider></mat-divider>
             <li class="flex gap-2 ps-2">
-              <span class="font-medium text-lg">Nome de Usuário:</span>
-              <span class="text-lg">{{ client.username }}</span>
+              <span class="font-medium text-base">Nome de Usuário:</span>
+              <span class="text-base">{{ client.username }}</span>
             </li>
             <mat-divider></mat-divider>
             <li class="flex gap-2 ps-2">
-              <span class="font-medium text-lg">E-mail:</span>
-              <span class="text-lg">{{ client.email }}</span>
+              <span class="font-medium text-base">E-mail:</span>
+              <span class="text-base">{{ client.email }}</span>
             </li>
             <mat-divider></mat-divider>
             <li class="flex gap-2 ps-2">
-              <span class="font-medium text-lg">Documento:</span>
-              <span class="text-lg">{{ client.document }}</span>
+              <span class="font-medium text-base">Documento:</span>
+              <span class="text-base">{{ client.document }}</span>
             </li>
             <mat-divider></mat-divider>
             <li class="flex gap-2 ps-2">
-              <span class="font-medium text-lg">Telefone:</span>
-              <span class="text-lg">{{ client.phone }}</span>
+              <span class="font-medium text-base">Telefone:</span>
+              <span class="text-base">{{ client.phone }}</span>
             </li>
             <mat-divider></mat-divider>
-            <li class="flex gap-2 bg-blue-50 hover:bg-blue-100 cursor-pointer py-2 ps-2" [routerLink]="['/dashboard', 'animais']" [queryParams]="{ clientId: client.id }">
-              <span class="font-medium text-lg">Quantidade de Animais:</span>
-              <span class="text-lg">{{ client.animals.length }}</span>
+            <li class="flex gap-2 bg-gray-100 cursor-pointer py-2 ps-2" [routerLink]="['/dashboard', 'animais']" [queryParams]="{ clientId: client.id }">
+              <span class="font-medium text-base">Quantidade de Animais:</span>
+              <span class="text-base">{{ client.animals.length }}</span>
             </li>
           </ul>
         </mat-tab>
         <mat-tab label="Endereço">
           <ul *ngIf="client.address as address" class="flex flex-col gap-4 ps-4 pb-3 mt-5">
             <li class="flex items-center gap-2 ps-2">
-              <span class="font-medium text-lg">Rua:</span>
-              <span class="text-lg">{{ address.street }}</span>
+              <span class="font-medium text-base">Rua:</span>
+              <span class="text-base">{{ address.street }}</span>
             </li>
             <mat-divider></mat-divider>
             <li class="flex gap-2 ps-2">
-              <span class="font-medium text-lg">Bairro:</span>
-              <span class="text-lg">{{ address.neighborhood }}</span>
+              <span class="font-medium text-base">Bairro:</span>
+              <span class="text-base">{{ address.neighborhood }}</span>
             </li>
             <mat-divider></mat-divider>
             <li class="flex gap-2 ps-2">
-              <span class="font-medium text-lg">Cidade:</span>
-              <span class="text-lg">{{ address.city.name }}, {{ address.city.state.name }}</span>
+              <span class="font-medium text-base">Cidade:</span>
+              <span class="text-base">{{ address.city.name }}, {{ address.city.state.name }}</span>
             </li>
             <mat-divider></mat-divider>
             <li class="flex gap-2 ps-2">
-              <span class="font-medium text-lg">CEP:</span>
-              <span class="text-lg capitalize">{{ address.zipCode }}</span>
+              <span class="font-medium text-base">CEP:</span>
+              <span class="text-base capitalize">{{ address.zipCode }}</span>
             </li>
           </ul>
         </mat-tab>
