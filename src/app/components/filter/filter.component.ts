@@ -1,7 +1,7 @@
-import { Component, EventEmitter, Input, OnInit, Output, signal } from '@angular/core';
+import { Component, EventEmitter, Input, OnChanges, OnInit, Output, SimpleChanges, signal } from '@angular/core';
 import { FormControl, FormGroup, ReactiveFormsModule } from '@angular/forms';
-import { FilterProperty } from './filter.model';
-import { NgIf } from '@angular/common';
+import { FilterPropertyModel } from './filter.model';
+import { JsonPipe, NgIf } from '@angular/common';
 import { MatButtonModule } from '@angular/material/button';
 import { MatSelectChange, MatSelectModule } from '@angular/material/select';
 import { MatInputModule } from '@angular/material/input';
@@ -15,34 +15,29 @@ import { NgxMaskDirective, provideNgxMask } from 'ngx-mask';
   styleUrl: './filter.component.scss',
   providers: [provideNgxMask()]
 })
-export class FilterComponent implements OnInit {
+export class FilterComponent implements OnChanges {
 
   @Output()
   onClose = new EventEmitter();
 
   @Input()
-  fields: FilterProperty[] = [
-    {
-      property: 'name',
-      propertyNickname: 'Nome',
-    },
-    {
-      property: 'document',
-      propertyNickname: 'Documento',
-      mask: '000.000.000-00',
-    }
-  ];
+  fields: FilterPropertyModel[] = [];
 
-  fieldsCopy = signal(this.fields);
+  @Output()
+  onFilter = new EventEmitter();
 
-  fieldsSelect = signal([] as FilterProperty[]);
+  fieldsCopy = signal([] as FilterPropertyModel[]);
+
+  fieldsSelect = signal([] as FilterPropertyModel[]);
 
   form = new FormGroup({});
 
-  ngOnInit(): void {
+
+  ngOnChanges(): void {
     for (const { property } of this.fields) {
       this.form.addControl(property, new FormControl());
     }
+    this.fieldsCopy.set(this.fields);
   }
 
   applyFilter(select: MatSelectChange) {
@@ -64,6 +59,21 @@ export class FilterComponent implements OnInit {
   }
 
   handleCloseEvent() {
+    this.onClose.emit();
+  }
+
+  handleFilter() {
+    const propertiesSelected = this.fieldsSelect().map(propertyFilter => {
+      const value = this.form.get(propertyFilter.property)?.value ?? '';
+      propertyFilter.outputValue = value;
+      return propertyFilter;
+    })
+    .filter(({ outputValue }) => outputValue!.trim() !== '');
+    this.onFilter.emit(propertiesSelected);
+    this.close();
+  }
+
+  close() {
     this.onClose.emit();
   }
 }

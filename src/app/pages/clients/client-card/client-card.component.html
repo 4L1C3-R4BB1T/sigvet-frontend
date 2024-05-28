@@ -1,7 +1,7 @@
 <div class="w-full mat-elevation-z4 rounded-md custom-border">
   <mat-card class="!rounded-md">
     <mat-card-header>
-      <div class="flex justify-between w-full">
+      <div class="flex justify-between w-full relative">
         <div class="flex gap-3">
           @if (!client.photoUrl) {
             <img class="w-20 h-20 rounded-full" src="assets/images/sem-foto.png">
@@ -9,7 +9,12 @@
             <img class="w-20 h-20 rounded-full" [src]="client.photoUrl">
           }
         <div class="flex flex-col gap-2">
-            <span class="text-base font-semibold">{{ client.name }}</span>
+            <span class="text-base font-semibold">
+              {{ client.name }}
+              @if (userId() === client.id) {
+                (You)
+              }
+            </span>
             @if (client.address) {
               <span class="text-sm opacity-60">{{ client.address.city.name + ', ' + client.address.city.state.name }}</span>
             }
@@ -26,13 +31,13 @@
           <button mat-mini-fab color="primary" class="!bg-[#326690]" matTooltip="Visualizar" [routerLink]="['/dashboard', 'clientes', 'visualizar', client.id]">
             <i class="bi bi-eye-fill text-xl "></i>
           </button>
-          <button mat-mini-fab color="primary" matTooltip="Editar" [routerLink]="['/dashboard', 'clientes', 'atualizar', client.id]">
+          <button *ngIf="userId() !== client.id" mat-mini-fab color="primary" matTooltip="Editar" [routerLink]="['/dashboard', 'clientes', 'atualizar', client.id]">
             <i class="bi bi-pencil-square text-xl"></i>
           </button>
-          <button mat-mini-fab class="!bg-[#D26437]" matTooltip="Ver Animais" (click)="showAnimals()">
+          <button  mat-mini-fab class="!bg-[#D26437]" matTooltip="Ver Animais" (click)="showAnimals()">
             <img src="assets/icons/pawprint.png" class="w-5">
           </button>
-          <button mat-mini-fab color="warn" matTooltip="Remover" (click)="closeDialog.set(false)">
+          <button *ngIf="userId() !== client.id" mat-mini-fab color="warn" matTooltip="Remover" (click)="closeDialog.set(false)">
             <i class="bi bi-person-dash-fill text-xl"></i>
           </button>
        </span>

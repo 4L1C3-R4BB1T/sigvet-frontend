@@ -24,7 +24,7 @@
              <div class="flex flex-1 gap-2">
                 <mat-form-field appearance="outline" class="flex-1">
                   <mat-label>{{ field.propertyNickname }}</mat-label>
-                  <input matInput [mask]="field.mask" [placeholder]="field.propertyNickname" [name]="field.property">
+                  <input [formControlName]="field.property" matInput [mask]="field.mask" [placeholder]="field.propertyNickname" [name]="field.property">
                 </mat-form-field>
                 <button mat-mini-fab color="warn" class="mt-2" (click)="removeFilter(field.property)">
                   <i class="bi bi-trash3-fill"></i>
@@ -36,7 +36,7 @@
       </span>
       <div class="flex gap-3 text-sm">
         <button mat-raised-button class="flex-1" (click)="clearFilter()" class="flex-1 !h-12">Limpar Filtro</button>
-        <button mat-raised-button color="primary" class="flex-1 !h-12">Filtrar</button>
+        <button mat-raised-button color="primary" class="flex-1 !h-12" (click)="handleFilter()">Filtrar</button>
       </div>
     </section>
   </div>

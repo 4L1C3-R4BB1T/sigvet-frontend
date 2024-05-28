@@ -22,4 +22,8 @@ export class SearchService extends BaseService {
     return await lastValueFrom(this.http.get<Animal[]>(this.getEndpointV1('animals/search?name='+name)));
   }
 
+  async searchClientsByName(name: string) {
+    return await lastValueFrom(this.http.get<User[]>(this.getEndpointV1('clients/search?name='+name)));
+  }
+
 }

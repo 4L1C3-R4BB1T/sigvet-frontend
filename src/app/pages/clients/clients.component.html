@@ -1,12 +1,12 @@
-<header>
+<header class="relative">
   <div class="flex justify-between mt-3 flex-wrap gap-2 ps-2">
     <div class="flex gap-2 max-w-[500px] items-center w-full">
       <mat-form-field appearance="outline" class="flex-1 relative top-2.5">
         <mat-label>Pesquisar</mat-label>
-        <input type="text" placeholder="Pesquisar" aria-label="Pesquisar" matInput>
+        <input type="text" #searchInput placeholder="Pesquisar" aria-label="Pesquisar" matInput (input)="searchByName(searchInput.value)">
       </mat-form-field>
 
-      <button matTooltip="Limpar" mat-mini-fab color="none" class="h-full ms-2">
+      <button matTooltip="Limpar" mat-mini-fab color="none" class="h-full ms-2" (click)="clearFilters()">
         <i class="bi bi-eraser-fill text-xl"></i>
       </button>
       <button mat-mini-fab matTooltip="Mais Filtros" color="primary" class="ms-2" (click)="openMoreFilterModal.set(true)">
@@ -23,6 +23,24 @@
       </button>
     </div>
   </div>
+    <span class="block ps-2">
+      @if (appliedFilters().length) {
+        <span class="flex items-center gap-1">
+          <span class="text-sm font-medium ">Filtro aplicado para:</span>
+          <ul class="list-none flex items-center font-light">
+            @for (propertyFilter of appliedFilters(); let first = $first; let last = $last; track propertyFilter) {
+              @if (first) {
+                <li class="text-sm">{{ propertyFilter.propertyNickname + ' igual à ' + propertyFilter.outputValue }}</li>
+              } @else if (last) {
+                <li class="text-sm">, {{ propertyFilter.propertyNickname + ' igual à ' + propertyFilter.outputValue }}</li>
+              } @else {
+                <li class="text-sm">{{ propertyFilter.propertyNickname + ' igual à ' + propertyFilter.outputValue }}</li>
+              }
+            }
+          </ul>
+        </span>
+      }
+    </span>
 </header>
 
 <div class="mt-1 pb-5">
@@ -30,7 +48,7 @@
 </div>
 
 @if (openMoreFilterModal()) {
-  <app-filter (onClose)="openMoreFilterModal.set(false)" />
+  <app-filter (onClose)="openMoreFilterModal.set(false)" [fields]="filterPropertyModel" (onFilter)="handleOnFilter($event)"/>
 }
 
 <router-outlet></router-outlet>

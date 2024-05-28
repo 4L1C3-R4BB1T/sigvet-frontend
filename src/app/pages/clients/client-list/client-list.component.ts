@@ -1,5 +1,5 @@
 import { AsyncPipe } from '@angular/common';
-import { Component, EventEmitter, OnInit, Output, inject, signal } from '@angular/core';
+import { Component, EventEmitter, OnInit, Output, computed, inject, signal } from '@angular/core';
 import BaseStoreComponent from '../../../base/base-store.component';
 import { FadeInDirective } from '../../../directives/fade-in.directive';
 import { ClientCardComponent } from '../client-card/client-card.component';
@@ -30,7 +30,7 @@ export class ClientListComponent extends BaseStoreComponent  implements OnInit {
     @Output()
     onEdit = new EventEmitter();
 
-    userId = signal<number | null>(null);
+    userId = computed(() => this.userInfo()?.id);
 
     data = signal([] as User[]);
 
@@ -51,7 +51,10 @@ export class ClientListComponent extends BaseStoreComponent  implements OnInit {
     }
 
     async reload() {
-      const data = await this.#clientService.findAll({ size: this.pageSize, page: this.pageIndex });
+      this.setData(await this.#clientService.findAll({ size: this.pageSize, page: this.pageIndex }));
+    }
+
+    setData(data: User[]) {
       this.length = data.length;
       this.data.set(data);
     }
