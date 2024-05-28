@@ -1,4 +1,4 @@
-import { Component, inject, signal } from '@angular/core';
+import { Component, computed, inject, signal } from '@angular/core';
 
 import { MatPaginatorModule, PageEvent } from '@angular/material/paginator';
 import { FadeInDirective } from '../../../directives/fade-in.directive';
@@ -11,6 +11,8 @@ import { User } from '../../../models/user';
 import autoTable from 'jspdf-autotable';
 import jsPDF from 'jspdf';
 import { ToastrService } from 'ngx-toastr';
+import BaseStoreComponent from '../../../base/base-store.component';
+import { selectUserInfo } from '../../../store/reducers/user.reducer';
 
 @Component({
   selector: 'app-animal-list',
@@ -19,7 +21,7 @@ import { ToastrService } from 'ngx-toastr';
   templateUrl: './animal-list.component.html',
   styleUrl: './animal-list.component.scss'
 })
-export class AnimalListComponent {
+export class AnimalListComponent extends BaseStoreComponent {
 
   #animalService = inject(AnimalService);
 
@@ -32,6 +34,8 @@ export class AnimalListComponent {
   #toastrService = inject(ToastrService);
 
   elements = signal<Animal[]>([]);
+
+  userId = computed(() => this.store.selectSignal(selectUserInfo)()?.id);
 
   length = 50; // Quantidade de dados trazidos
   pageSize = 6;

@@ -4,7 +4,12 @@
       <i class="bi bi-info-lg text-xl"></i>
     </span>
     <p class="text-sm">
-      Você está atualmente visualizando os animais de {{ client().name }}
+      Você está atualmente visualizando
+      @if (userId() == clientId()) {
+        seus animais
+      } @else {
+        os animais de {{ client().name }}
+      }
     </p>
   </div>
 }
