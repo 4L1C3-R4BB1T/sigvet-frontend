@@ -1,11 +1,9 @@
 <div class="bg-black bg-opacity-60 pt-5 absolute top-0 left-0 w-full h-full z-[999] flex items-center justify-center">
-  <section *ngIf="diagnostic && consult"
-    class="p-5 overflow-auto max-h-[90vh] bg-white mat-elevation-z4 rounded-md animate-slide-in flex gap-2 max-w-[700px] w-full">
-    <!-- 'id', 'name', 'manufacturer', 'lot', 'unitPrice', 'stock', 'expirationDate']; -->
+  <section *ngIf="diagnostic && consult" class="p-5 overflow-auto max-h-[90vh] bg-white mat-elevation-z4 rounded-md animate-slide-in flex gap-2 max-w-[700px] w-full">
     <aside class="flex-1 pb-4">
       <div class="flex justify-between mb-6 gap-2">
-        <span class="text-2xl font-semibold flex items-center gap-2">
-          <i class="bi bi-info-square-fill text-[#4758B8]"></i>
+        <span class="text-2xl font-semibold flex items-center gap-2 text-gray-600">
+          <i class="bi bi-info-square-fill"></i>
           Detalhes do Diagnóstico
         </span>
         <button mat-raised-button color="primary" routerLink="/dashboard/diagnosticos">Fechar</button>
@@ -17,20 +15,19 @@
         </li>
         <mat-divider></mat-divider>
         <li class="flex gap-2">
-          <span class="font-medium text-lg">Diagnóstico:</span>
-          <span class="text-lg">{{ diagnostic.diagnosis }}</span>
+          <span class="font-medium text-base">Diagnóstico:</span>
+          <span class="text-base">{{ diagnostic.diagnosis }}</span>
         </li>
         <mat-divider></mat-divider>
         <li class="flex gap-2">
-          <span class="font-medium text-lg">Comentários:</span>
-          <span class="text-lg">{{ diagnostic.comments }}</span>
+          <span class="font-medium text-base">Comentários:</span>
+          <span class="text-base">{{ diagnostic.comments }}</span>
         </li>
         <mat-divider></mat-divider>
         <li class="flex flex-col gap-2">
-          <div class="flex items-center gap-2  cursor-pointer bg-blue-50 hover:bg-blue-100 px-2"
-            [routerLink]="['/dashboard', 'consultas', 'visualizar', diagnostic.consult.id]">
-            <span class="text-lg font-medium">ID Consulta:</span>
-            <span class="text-lg">{{ diagnostic.consult.id }}</span>
+          <div class="flex items-center gap-2 cursor-pointer bg-gray-100 px-2" [routerLink]="['/dashboard', 'consultas', 'visualizar', diagnostic.consult.id]">
+            <span class="text-base font-medium">ID Consulta:</span>
+            <span class="text-base">{{ diagnostic.consult.id }}</span>
           </div>
           <div class="ms-4">
             <ul class="list-outside flex flex-col gap-2">
