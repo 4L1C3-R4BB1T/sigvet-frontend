@@ -26,7 +26,7 @@ export class ViewVaccinationComponent implements OnInit {
 
   async ngOnInit() {
     this.vaccination = (await this.#vaccinationService.findById(this.id()))!;
-    const fullDateString = new Date(this.vaccination.date).toLocaleDateString('pt-BR', { dateStyle: 'full'});
+    const fullDateString = new Date(this.vaccination.date + "T00:00:00").toLocaleDateString('pt-BR', { dateStyle: 'full'});
     const hour = parseInt(this.vaccination.hour.split(':')[0]);
     const period = hour >= 12 ? 'da tarde' : 'da manhã';
     this.dateFormatted = `${fullDateString[0].toUpperCase() + fullDateString.substring(1)}, às ${this.vaccination.hour.split(':')[0]}:${this.vaccination.hour.split(':')[1]} ${period}`;
