@@ -13,7 +13,7 @@ import { DialogModule } from 'primeng/dialog';
 import { User } from '../../../models/user';
 import { ClientService } from '../../../services/client.service';
 import ClientsComponent from '../clients.component';
-import BaseStoreComponent from '../../../base/base-store.component';
+import BaseStoreComponent from '../../../base/base.component';
 import { selectUserInfo } from '../../../store/reducers/user.reducer';
 
 @Component({

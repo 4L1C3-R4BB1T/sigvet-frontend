@@ -1,18 +1,18 @@
-@if(clientId()) {
-  <div class="bg-yellow-100 p-3 mt-3 flex gap-4 items-center mb-2 custom-border">
-    <span class="bg-white rounded-full w-8 h-8 flex items-center justify-center">
-      <i class="bi bi-info-lg text-xl"></i>
-    </span>
-    <p class="text-sm">
-      Você está atualmente visualizando
-      @if (userId() == clientId()) {
-        seus animais
-      } @else {
-        os animais de {{ client().name }}
-      }
-    </p>
-  </div>
-}
+
+<div *ngIf="clientId() != null" class="bg-yellow-100 p-3 mt-3 flex gap-4 items-center mb-2 custom-border">
+  <span class="bg-white rounded-full w-8 h-8 flex items-center justify-center">
+    <i class="bi bi-info-lg text-xl"></i>
+  </span>
+  <p class="text-sm">
+    Você está atualmente visualizando
+    @if (userId() == clientId()) {
+      seus animais
+    } @else {
+      os animais de {{ client().name }}
+    }
+  </p>
+</div>
+
 <div>
     <mat-paginator #paginator
               class="!bg-transparent"
@@ -28,14 +28,18 @@
   </mat-paginator>
 </div>
 
-<div class="grid grid-cols-2 gap-4 px-2 py-3 pb-5 mt-3 relative max-h-[50vh] overflow-hidden overflow-y-auto h-screen">
-  @for (element of elements(); track element.id) {
-    <app-animal-card [animal]="element"/>
-  } @empty {
-    <div class="bg-orange-100 absolute top-0 left-0 w-full p-3 flex gap-4 items-center mb-2" style="border: 1px solid #33333330">
-      <p class="text-sm">
-        Não há nenhum animal cadastrado
-      </p>
-    </div>
-  }
-</div>
+@defer (on timer(200ms)) {
+  <div class="grid grid-cols-2 gap-4 px-2 py-3 pb-5 mt-3 relative max-h-[50vh] overflow-hidden overflow-y-auto h-screen">
+    @for (element of elements(); track element.id) {
+      <app-animal-card [animal]="element"/>
+    } @empty {
+      <div class="bg-orange-100 absolute top-0 left-0 w-full p-3 flex gap-4 items-center mb-2" style="border: 1px solid #33333330">
+        <p class="text-sm">
+          Não há nenhum animal cadastrado
+        </p>
+      </div>
+    }
+  </div>
+} @placeholder {
+  <app-loading/>
+}

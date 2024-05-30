@@ -16,13 +16,6 @@ import { DashboardStatusComponent } from '../components/dashboard-status/dashboa
   templateUrl: './home.component.html',
   styleUrl: './home.component.scss'
 })
-export default class HomeComponent implements OnInit {
+export default class HomeComponent {
 
-  public isLoading = signal(false);
-
-  public ngOnInit(): void {
-    this.isLoading.set(true);
-    setTimeout(() => this.isLoading.set(false), 200);
-  }
-  
 }

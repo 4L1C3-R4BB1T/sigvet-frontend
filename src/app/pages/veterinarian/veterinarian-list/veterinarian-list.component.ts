@@ -1,6 +1,6 @@
 import { AsyncPipe } from '@angular/common';
 import { Component, EventEmitter, OnInit, Output, inject, signal } from '@angular/core';
-import BaseStoreComponent from '../../../base/base-store.component';
+import BaseStoreComponent from '../../../base/base.component';
 import { FadeInDirective } from '../../../directives/fade-in.directive';
 import { VeterinarianCardComponent } from '../veterinarian-card/veterinarian-card.component';
 import {PageEvent, MatPaginatorModule} from '@angular/material/paginator';
@@ -10,15 +10,18 @@ import { selectUserInfo } from '../../../store/reducers/user.reducer';
 import jsPDF from 'jspdf';
 import autoTable from 'jspdf-autotable';
 import { ToastrService } from 'ngx-toastr';
+import { LoadingComponent } from '../../../components/loading/loading.component';
+import BaseComponent from '../../../base/base.component';
+import { PageModel } from '../../../models/page-model';
 
 @Component({
   selector: 'app-veterinarian-list',
   standalone: true,
-  imports: [FadeInDirective, AsyncPipe, VeterinarianCardComponent,  MatPaginatorModule],
+  imports: [FadeInDirective, AsyncPipe, VeterinarianCardComponent,  MatPaginatorModule, LoadingComponent],
   templateUrl: './veterinarian-list.component.html',
   styleUrl: './veterinarian-list.component.scss',
 })
-export class VeterinarianListComponent extends BaseStoreComponent  implements OnInit {
+export class VeterinarianListComponent extends BaseComponent implements OnInit {
 
     #veterinarianService = inject(VeterinarianService);
 
@@ -50,12 +53,21 @@ export class VeterinarianListComponent extends BaseStoreComponent  implements On
       await this.reload();
     }
 
-    async reload() {
-      const data = await this.#veterinarianService.findAll({ size: this.pageSize, page: this.pageIndex });
-      this.length = data.length;
-      this.data.set(data);
+    override async reload() {
+      this.setData(await this.#veterinarianService.findAll({ size: this.pageSize, page: this.pageIndex }));
     }
 
+    override setData(parameter: PageModel<User[]> | User[]) {
+      if (parameter instanceof Array) {
+        this.length = parameter.length;
+        this.data.set(parameter);
+      } else {
+        this.length = parameter.totalElements;
+        this.pageSize = parameter.pageSize;
+        this.pageIndex = parameter.currentPage;
+        this.data.set(parameter.elements);
+      }
+    }
     async handlePageEvent(e: PageEvent) {
       this.pageEvent = e;
       this.pageSize = e.pageSize;

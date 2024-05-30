@@ -11,9 +11,9 @@ import { PageModel } from '../models/page-model';
 export class ConsultService extends BaseService {
 
   public async findAll(filters?: FilterParams) {
-    return await lastValueFrom(this.http.get<PageModel<Consult>>(this.getEndpointV1(`consults${this.getFilterParams(filters)}`)));
+    return await lastValueFrom(this.http.get<PageModel<Consult[]>>(this.getEndpointV1(`consults${this.getFilterParams(filters)}`)));
   }
-
+ 
   public async findById(id: number) {
     try {
       return await lastValueFrom(this.http.get(this.getEndpointV1(`consults/${id}`))

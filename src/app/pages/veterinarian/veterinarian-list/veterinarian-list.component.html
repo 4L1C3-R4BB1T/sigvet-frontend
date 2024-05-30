@@ -13,14 +13,18 @@
   </mat-paginator>
 </div>
 
-<div class="grid grid-cols-2 gap-4 px-2 py-3 pb-5 mt-3 relative max-h-[60vh] overflow-hidden overflow-y-auto h-screen">
-  @for (user of data(); track user.id) {
-    <app-veterinarian-card [veterinarian]="user" (onEdit)="edit($event)" />
-  } @empty {
-    <div class="bg-orange-100 absolute top-0 left-0 w-full p-3 flex gap-4 items-center mb-2" style="border: 1px solid #33333330">
-      <p class="text-sm">
-        Não há nenhum veterinário cadastrado
-      </p>
-    </div>
-  }
-</div>
+@defer (on timer(300ms)) {
+  <div class="grid grid-cols-2 gap-4 px-2 py-3 pb-5 mt-3 relative max-h-[60vh] overflow-hidden overflow-y-auto h-screen">
+    @for (user of data(); track user.id) {
+      <app-veterinarian-card [veterinarian]="user" (onEdit)="edit($event)" />
+    } @empty {
+      <div class="bg-orange-100 absolute top-0 left-0 w-full p-3 flex gap-4 items-center mb-2" style="border: 1px solid #33333330">
+        <p class="text-sm">
+          Não há nenhum veterinário cadastrado
+        </p>
+      </div>
+    }
+  </div>
+} @placeholder {
+  <app-loading/>
+}

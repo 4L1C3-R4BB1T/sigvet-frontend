@@ -7,13 +7,16 @@ import { MatInputModule } from '@angular/material/input';
 import { MatTabsModule } from '@angular/material/tabs';
 import { MatTooltipModule } from '@angular/material/tooltip';
 import { RouterLink, RouterOutlet } from '@angular/router';
-import BaseStoreComponent from '../../base/base-store.component';
+import BaseComponent from '../../base/base.component';
 import { FilterComponent } from '../../components/filter/filter.component';
 import { PaginatorComponent } from '../../components/paginator/paginator.component';
 import { ClientListComponent } from './client-list/client-list.component';
 import { SearchService } from '../../services/search.service';
 import { FilterPropertyModel } from '../../components/filter/filter.model';
 import { ClientService } from '../../services/client.service';
+import { User } from '../../models/user';
+import { PageModel } from '../../models/page-model';
+import { ShowAppliedFiltersComponent } from '../../components/show-applied-filters/show-applied-filters.component';
 
 @Component({
   selector: 'app-clients',
@@ -30,11 +33,12 @@ import { ClientService } from '../../services/client.service';
     MatTabsModule,
     RouterLink,
     RouterOutlet,
+    ShowAppliedFiltersComponent
   ],
   templateUrl: './clients.component.html',
   styleUrl: './clients.component.scss',
 })
-export default class ClientsComponent extends BaseStoreComponent {
+export default class ClientsComponent extends BaseComponent {
 
   @ViewChild(ClientListComponent)
   clientListComponent!: ClientListComponent;
@@ -44,7 +48,7 @@ export default class ClientsComponent extends BaseStoreComponent {
 
   #clientService = inject(ClientService);
 
-  filterPropertyModel: FilterPropertyModel[] = [
+  override filterPropertyModel: FilterPropertyModel[] = [
     {
       property: 'name',
       propertyNickname: 'Nome',
@@ -77,45 +81,32 @@ export default class ClientsComponent extends BaseStoreComponent {
 
   #searchService = inject(SearchService);
 
-  appliedFilters = signal([] as FilterPropertyModel[]);
-
-  async reload() {
-    this.clearAppliedFilters();
-    await this.clientListComponent.reload();
-  }
-
   generatePDF() {
     this.clientListComponent?.generatePDF();
   }
 
-  async searchByName(name: string) {
+  override async searchByName(name: string) {
     this.clearAppliedFilters();
     const data = await this.#searchService.searchClientsByName(name);
     this.clientListComponent.setData(data);
   }
 
-  async handleOnFilter(properties: FilterPropertyModel[]) {
-    const equalFilters = properties.reduce((currentQueryParam, propertyFilter) => {
-      if (currentQueryParam.length !== 0) {
-        currentQueryParam += ';';
-      }
-      return currentQueryParam + `${propertyFilter.property}:=${propertyFilter.outputValue}`;
-    }, '');
-
-    this.appliedFilters.set(properties);
-
-    const data = await this.#clientService.findAll({
-      equal_filters: equalFilters,
-    })
+  override setData(data: PageModel<User[]>) {
     this.clientListComponent.setData(data);
   }
 
-  clearAppliedFilters() {
-    this.appliedFilters.set([]);
+  override async reload() {
+    this.clearAppliedFilters();
+    await this.clientListComponent.reload();
   }
 
-  clearFilters() {
-    this.searchInput.nativeElement.value = '';
-    this.reload();
+
+  override getEntityService() {
+    return this.#clientService;
   }
+
+  override getInput(): HTMLInputElement {
+    return this.searchInput.nativeElement;
+  }
+
 }

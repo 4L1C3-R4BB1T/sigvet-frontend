@@ -1,4 +1,4 @@
-import { AfterViewInit, Component, ViewChild, inject, signal } from '@angular/core';
+import { AfterViewInit, Component, ElementRef, ViewChild, inject, signal } from '@angular/core';
 
 import { MatAutocompleteModule } from '@angular/material/autocomplete';
 import { MatButtonModule } from '@angular/material/button';
@@ -12,6 +12,12 @@ import { ViewAnimalInfoComponent } from './view-animal-info/view-animal-info.com
 import { Router, RouterLink, RouterOutlet } from '@angular/router';
 import { FilterComponent } from '../../components/filter/filter.component';
 import { Animal } from '../../models/animal';
+import BaseComponent from '../../base/base.component';
+import { SearchService } from '../../services/search.service';
+import { AnimalService } from '../../services/animal.service';
+import { FilterPropertyModel } from '../../components/filter/filter.model';
+import { ShowAppliedFiltersComponent } from '../../components/show-applied-filters/show-applied-filters.component';
+import { PageModel } from '../../models/page-model';
 
 @Component({
   selector: 'app-animals',
@@ -28,18 +34,46 @@ import { Animal } from '../../models/animal';
     ViewAnimalInfoComponent,
     RouterOutlet,
     FilterComponent,
+    ShowAppliedFiltersComponent
   ],
   templateUrl: './animals.component.html',
   styleUrl: './animals.component.scss'
 })
-export default class AnimalsComponent {
+export default class AnimalsComponent extends BaseComponent {
 
   @ViewChild(AnimalListComponent)
   animalListComponent!: AnimalListComponent;
 
+  @ViewChild('searchInput')
+  searchInput!: ElementRef;
+
+  #animalService = inject(AnimalService);
+
+  #searchService = inject(SearchService);
+
   openMoreFilterModal = signal(false);
 
   #router = inject(Router);
+
+  protected override filterPropertyModel: FilterPropertyModel[] = [
+    {
+      property: 'name',
+      propertyNickname: 'Nome',
+    },
+    {
+      property: 'breed',
+      propertyNickname: 'Raça',
+    },
+    {
+      property: 'birthDate',
+      propertyNickname: 'Data de Nascimento',
+      type: 'date',
+    },
+    {
+      property: 'client.name',
+      propertyNickname: 'Nome do Cliente',
+    }
+  ];
 
   create() {
     if (this.animalListComponent.clientId()) {
@@ -48,7 +82,28 @@ export default class AnimalsComponent {
       this.#router.navigateByUrl('/dashboard/animais/novo');
     }
   }
-  reload(data?: Animal[]) {
-    this.animalListComponent.reload(data);
+
+  override async searchByName(name: string) {
+    this.clearAppliedFilters();
+    const data = await this.#searchService.searchAnimalsByName(name);
+    this.animalListComponent.setData(data);
+  }
+
+  override setData(data: Animal[]) {
+    this.animalListComponent.setData(data);
+  }
+
+  override async reload() {
+    this.clearAppliedFilters();
+    await this.animalListComponent.reload();
+  }
+
+
+  override getEntityService() {
+    return this.#animalService;
+  }
+
+  override getInput(): HTMLInputElement {
+    return this.searchInput.nativeElement;
   }
 }

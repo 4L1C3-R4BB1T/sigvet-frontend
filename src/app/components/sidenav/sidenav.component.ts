@@ -1,5 +1,5 @@
 import { JsonPipe, NgIf } from '@angular/common';
-import { Component, OnDestroy, OnInit, ViewChild, inject, signal } from '@angular/core';
+import { Component, OnDestroy, OnInit, ViewChild, effect, inject, signal } from '@angular/core';
 import { MatSidenavModule } from '@angular/material/sidenav';
 import { RouterLink, RouterLinkActive } from '@angular/router';
 
@@ -9,7 +9,7 @@ import { MatDialog } from '@angular/material/dialog';
 import { MatDividerModule } from '@angular/material/divider';
 import { MatListModule } from '@angular/material/list';
 import { MatMenu, MatMenuModule } from '@angular/material/menu';
-import BaseStoreComponent from '../../base/base-store.component';
+import BaseStoreComponent from '../../base/base.component';
 import { AccountService } from '../../services/account.service';
 import { DialogExitComponent } from '../../shared/components/dialog/dialog-exit.component';
 import {
@@ -60,7 +60,7 @@ export class SidenavComponent extends BaseStoreComponent implements OnInit, OnDe
   menuShowMore!: MatMenu;
 
   toggleMenu = signal(false);
-  
+
   toggleMenuShowMore = signal(false);
 
   menus = signal<SidenavMenu[]>(
@@ -115,7 +115,6 @@ export class SidenavComponent extends BaseStoreComponent implements OnInit, OnDe
   showMenuSidenav = this.store.selectSignal(selectMenuSidenavValue);
 
   userPhoto = this.store.selectSignal(selectUserPhoto);
-
 
   subscriptions: Subscription[] = [];
 

@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
-import BaseStoreComponent from '../../base/base-store.component';
+import BaseStoreComponent from '../../base/base.component';
 import { SidenavActions, selectMenuSidenavValue } from '../../store/reducers/menu-visibility.reducer';
 import { NgIf } from '@angular/common';
 

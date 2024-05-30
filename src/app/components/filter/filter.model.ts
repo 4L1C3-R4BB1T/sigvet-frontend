@@ -3,4 +3,6 @@ export interface FilterPropertyModel {
   propertyNickname: string;
   mask?: string;
   outputValue?: string;
+  type?: 'date' | null;
+  pattern?: string | RegExp;
 }

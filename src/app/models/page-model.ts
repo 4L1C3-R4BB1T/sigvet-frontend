@@ -3,5 +3,5 @@ export interface PageModel<T> {
   totalPages: number;
   totalElements: number;
   pageSize: number;
-  elements: Array<T>;
+  elements: T;
 }

@@ -1,4 +1,4 @@
-import { AfterViewInit, Component, OnInit, ViewChild, inject, signal } from '@angular/core';
+import { AfterViewInit, Component, ViewChild, inject, signal } from '@angular/core';
 import { MatAutocompleteModule } from '@angular/material/autocomplete';
 import { MatButtonModule } from '@angular/material/button';
 import { MatFormFieldModule } from '@angular/material/form-field';
@@ -6,15 +6,15 @@ import { MatInputModule } from '@angular/material/input';
 import { MatPaginator, MatPaginatorModule } from '@angular/material/paginator';
 import { MatTabsModule } from '@angular/material/tabs';
 import { MatTooltipModule } from '@angular/material/tooltip';
+import { RouterLink, RouterOutlet } from '@angular/router';
+import { ToastrService } from 'ngx-toastr';
 import { DialogModule } from 'primeng/dialog';
+import BaseComponent from '../../base/base.component';
 import { FilterComponent } from '../../components/filter/filter.component';
 import { PaginatorComponent } from '../../components/paginator/paginator.component';
-import { ToastrService } from 'ngx-toastr';
-import BaseStoreComponent from '../../base/base-store.component';
-import { RouterLink, RouterOutlet } from '@angular/router';
-import { DiagnosticsTableComponent } from './diagnostics-table/diagnostics-table.component';
-import { DiagnosticService } from '../../services/diagnostic.service';
 import { Diagnostic } from '../../models/diagnostic';
+import { DiagnosticService } from '../../services/diagnostic.service';
+import { DiagnosticsTableComponent } from './diagnostics-table/diagnostics-table.component';
 
 @Component({
   selector: 'app-diagnostics',
@@ -37,7 +37,7 @@ import { Diagnostic } from '../../models/diagnostic';
   templateUrl: './diagnostics.component.html',
   styleUrl: './diagnostics.component.scss'
 })
-export default class DiagnosticsComponent extends BaseStoreComponent implements AfterViewInit {
+export default class DiagnosticsComponent extends BaseComponent implements AfterViewInit {
 
 
   @ViewChild(MatPaginator) paginator!: MatPaginator;
@@ -63,7 +63,7 @@ export default class DiagnosticsComponent extends BaseStoreComponent implements 
     this.paginator.page.subscribe(event => this.reload({ size: event.pageSize, page: event.pageIndex }))
   }
 
-  async reload(params?:{ size: number; page: number;}) {
+  override async reload(params?:{ size: number; page: number;}) {
     const pageModel = await this.#diagnosticService.findAll(params)
     this.paginator.length = pageModel.totalElements;
     this.data.set(pageModel.elements);

@@ -1,11 +1,9 @@
 <app-sidenav>
-  @defer(when !isLoading()) {
+  @defer(on timer(500ms)) {
     <div>
       <router-outlet/>
     </div>
   } @placeholder {
-    <div class="flex justify-center items-center w-full h-full fixed left-0 top-0">
-      <p-progressSpinner/>
-    </div>
+    <app-loading/>
   }
 </app-sidenav>

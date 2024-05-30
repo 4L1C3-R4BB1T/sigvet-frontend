@@ -3,7 +3,7 @@ import { MatButtonModule } from '@angular/material/button';
 import { MatDividerModule } from '@angular/material/divider';
 import { MatListModule } from '@angular/material/list';
 import { MatTabsModule } from '@angular/material/tabs';
-import BaseStoreComponent from '../../base/base-store.component';
+import BaseStoreComponent from '../../base/base.component';
 import { ProfileActions } from '../../store/reducers/menu-visibility.reducer';
 import { selectUserInfo, selectUserPhoto } from '../../store/reducers/user.reducer';
 import { UserRolePipe } from '../../pipes/user-role.pipe';

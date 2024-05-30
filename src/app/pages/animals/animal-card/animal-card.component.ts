@@ -62,10 +62,8 @@ export class AnimalCardComponent{
   async remove() {
     await this.#animalService.deleteById(this.animal.id);
     this.#toastrService.success('Foi removido', 'Animal');
-
     if (this.clientId()) {
-      const data = await this.#animalService.findAllByClientId(this.clientId()!);
-      this.#animalComponent.reload(data);
+      this.#animalComponent.setData(await this.#animalService.findAllByClientId(this.clientId()!))
     } else {
       this.#animalComponent.reload();
     }

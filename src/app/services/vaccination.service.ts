@@ -11,7 +11,7 @@ import { PageModel } from '../models/page-model';
 export class VaccinationService extends BaseService {
 
   public async findAll(filters?: FilterParams) {
-    return await lastValueFrom(this.http.get<PageModel<Vaccination>>(this.getEndpointV1(`vaccinations${this.getFilterParams(filters)}`)));
+    return await lastValueFrom(this.http.get<PageModel<Vaccination[]>>(this.getEndpointV1(`vaccinations${this.getFilterParams(filters)}`)));
   }
 
   public async findById(id: number) {

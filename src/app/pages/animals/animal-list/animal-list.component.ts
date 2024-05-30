@@ -1,27 +1,30 @@
 import { Component, computed, inject, signal } from '@angular/core';
 
+import { NgIf } from '@angular/common';
 import { MatPaginatorModule, PageEvent } from '@angular/material/paginator';
-import { FadeInDirective } from '../../../directives/fade-in.directive';
-import { AnimalCardComponent } from '../animal-card/animal-card.component';
-import { AnimalService } from '../../../services/animal.service';
-import { Animal } from '../../../models/animal';
 import { ActivatedRoute } from '@angular/router';
-import { ClientService } from '../../../services/client.service';
-import { User } from '../../../models/user';
-import autoTable from 'jspdf-autotable';
 import jsPDF from 'jspdf';
+import autoTable from 'jspdf-autotable';
 import { ToastrService } from 'ngx-toastr';
-import BaseStoreComponent from '../../../base/base-store.component';
+import { LoadingComponent } from '../../../components/loading/loading.component';
+import { FadeInDirective } from '../../../directives/fade-in.directive';
+import { Animal } from '../../../models/animal';
+import { User } from '../../../models/user';
+import { AnimalService } from '../../../services/animal.service';
+import { ClientService } from '../../../services/client.service';
 import { selectUserInfo } from '../../../store/reducers/user.reducer';
+import { AnimalCardComponent } from '../animal-card/animal-card.component';
+import BaseComponent from '../../../base/base.component';
+import { PageModel } from '../../../models/page-model';
 
 @Component({
   selector: 'app-animal-list',
   standalone: true,
-  imports: [AnimalCardComponent, FadeInDirective, MatPaginatorModule],
+  imports: [AnimalCardComponent, FadeInDirective, MatPaginatorModule, NgIf, LoadingComponent],
   templateUrl: './animal-list.component.html',
   styleUrl: './animal-list.component.scss'
 })
-export class AnimalListComponent extends BaseStoreComponent {
+export class AnimalListComponent extends BaseComponent {
 
   #animalService = inject(AnimalService);
 
@@ -52,22 +55,15 @@ export class AnimalListComponent extends BaseStoreComponent {
   async ngOnInit() {
     if (this.clientId()) {
       this.client.set(await this.#clientService.findById(this.clientId()));
-      await this.reload(await this.#animalService.findAllByClientId(this.clientId()));
+      this.setData(await this.#animalService.findAllByClientId(this.clientId()));
       return;
     }
 
     await this.reload();
   }
 
-  async reload(data?: Animal[]) {
-    if (data) {
-      this.length = data.length;
-      this.elements.set(data);
-      return;
-    }
-    const pageModel = await this.#animalService.findAll({ size: this.pageSize, page: this.pageIndex });
-    this.length = pageModel.totalElements;
-    this.elements.set(pageModel.elements);
+  override async reload() {
+    this.setData(await this.#animalService.findAll({ size: 10, page: 0 }));
   }
 
   async handlePageEvent(e: PageEvent) {
@@ -75,6 +71,18 @@ export class AnimalListComponent extends BaseStoreComponent {
     this.pageSize = e.pageSize;
     this.pageIndex = e.pageIndex;
     await this.reload();
+  }
+
+  override setData(parameter: Animal[] | PageModel<Animal[]>): void {
+    if (parameter instanceof Array) {
+      this.length = parameter.length;
+      this.elements.set(parameter);
+    } else {
+      this.length = parameter.totalElements;
+      this.pageSize = parameter.totalPages
+      this.pageIndex = parameter.currentPage;
+      this.elements.set(parameter.elements);
+    }
   }
 
   setPageSizeOptions(setPageSizeOptionsInput: string) {

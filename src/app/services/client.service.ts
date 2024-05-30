@@ -4,6 +4,7 @@ import BaseService, { FilterParams } from '../base/base.service';
 import { CreateUser } from '../models/create-user';
 import { UpdateUser } from '../models/update-user';
 import { User } from '../models/user';
+import { PageModel } from '../models/page-model';
 
 
 @Injectable({
@@ -26,8 +27,7 @@ export class ClientService extends BaseService {
   }
 
   public async findAll(filters?: FilterParams) {
-    return await lastValueFrom(this.http.get(this.getEndpointV1(`clients${this.getFilterParams(filters)}`))
-      .pipe(map((response: any) => response.elements as User[])));
+    return await lastValueFrom(this.http.get<PageModel<User[]>>(this.getEndpointV1(`clients${this.getFilterParams(filters)}`)));
   }
 
   public async findById(id: number) {

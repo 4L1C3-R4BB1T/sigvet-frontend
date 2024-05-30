@@ -11,7 +11,7 @@ import { PageModel } from '../models/page-model';
 export class DiagnosticService extends BaseService {
 
   public async findAll(filters?: FilterParams) {
-    return await lastValueFrom(this.http.get<PageModel<Diagnostic>>(this.getEndpointV1(`diagnostics${this.getFilterParams(filters)}`)));
+    return await lastValueFrom(this.http.get<PageModel<Diagnostic[]>>(this.getEndpointV1(`diagnostics${this.getFilterParams(filters)}`)));
   }
 
   public async findById(id: number) {

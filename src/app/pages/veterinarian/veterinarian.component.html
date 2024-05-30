@@ -3,10 +3,10 @@
     <div class="flex gap-2 max-w-[500px] items-center w-full">
       <mat-form-field appearance="outline" class="flex-1 relative top-2.5">
         <mat-label>Pesquisar</mat-label>
-        <input type="text" placeholder="Pesquisar" aria-label="Pesquisar" matInput>
+        <input type="text" placeholder="Pesquisar" aria-label="Pesquisar" matInput #searchInput (input)="searchByName(searchInput.value)">
       </mat-form-field>
 
-      <button matTooltip="Limpar" mat-mini-fab color="none" class="h-full ms-2">
+      <button matTooltip="Limpar" mat-mini-fab color="none" class="h-full ms-2" (click)="clearFilters()">
         <i class="bi bi-eraser-fill text-xl"></i>
       </button>
       <button mat-mini-fab matTooltip="Mais Filtros" color="primary" class="ms-2" (click)="openMoreFilterModal.set(true)">
@@ -23,6 +23,7 @@
       </button>
     </div>
   </div>
+  <app-show-applied-filters [filters]="appliedFilters()"/>
 </header>
 
 <div class="mt-1 pb-5">
@@ -30,7 +31,8 @@
 </div>
 
 @if (openMoreFilterModal()) {
-  <app-filter (onClose)="openMoreFilterModal.set(false)" />
+  <app-filter (onClose)="openMoreFilterModal.set(false)" [fields]="filterPropertyModel" (onFilter)="handleOnFilter($event)"/>
 }
+
 
 <router-outlet></router-outlet>

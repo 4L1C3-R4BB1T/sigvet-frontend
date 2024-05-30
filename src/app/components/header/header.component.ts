@@ -2,7 +2,7 @@ import { Component, inject, OnInit, signal } from '@angular/core';
 import { ActivationStart, NavigationEnd, Router } from '@angular/router';
 import { filter, map, tap } from 'rxjs';
 
-import BaseStoreComponent from '../../base/base-store.component';
+import BaseStoreComponent from '../../base/base.component';
 import { selectUserInfo, selectUserPhoto } from '../../store/reducers/user.reducer';
 import { UserRolePipe } from '../../pipes/user-role.pipe';
 import { MenuHamburguerComponent } from '../menu-hamburguer/menu-hamburguer.component';

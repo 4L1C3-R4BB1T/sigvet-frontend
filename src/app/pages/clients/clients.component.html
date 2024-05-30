@@ -23,24 +23,7 @@
       </button>
     </div>
   </div>
-    <span class="block ps-2">
-      @if (appliedFilters().length) {
-        <span class="flex items-center gap-1">
-          <span class="text-sm font-medium ">Filtro aplicado para:</span>
-          <ul class="list-none flex items-center font-light">
-            @for (propertyFilter of appliedFilters(); let first = $first; let last = $last; track propertyFilter) {
-              @if (first) {
-                <li class="text-sm">{{ propertyFilter.propertyNickname + ' igual à ' + propertyFilter.outputValue }}</li>
-              } @else if (last) {
-                <li class="text-sm">, {{ propertyFilter.propertyNickname + ' igual à ' + propertyFilter.outputValue }}</li>
-              } @else {
-                <li class="text-sm">{{ propertyFilter.propertyNickname + ' igual à ' + propertyFilter.outputValue }}</li>
-              }
-            }
-          </ul>
-        </span>
-      }
-    </span>
+   <app-show-applied-filters [filters]="appliedFilters()"/>
 </header>
 
 <div class="mt-1 pb-5">

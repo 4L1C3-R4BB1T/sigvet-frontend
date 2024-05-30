@@ -12,7 +12,8 @@ import { JwtModule } from '@auth0/angular-jwt';
 import { provideToastr } from 'ngx-toastr';
 import { USER_FEATURE_KEY, userReducer } from './store/reducers/user.reducer';
 import { authInterceptor } from './interceptors/auth.interceptor';
-import { provideNativeDateAdapter } from '@angular/material/core';
+import { MAT_DATE_LOCALE, provideNativeDateAdapter } from '@angular/material/core';
+import { MAT_MOMENT_DATE_ADAPTER_OPTIONS, provideMomentDateAdapter } from '@angular/material-moment-adapter';
 
 export const appConfig: ApplicationConfig = {
   providers: [
@@ -32,8 +33,7 @@ export const appConfig: ApplicationConfig = {
       [USER_FEATURE_KEY]: userReducer,
     }),
     provideAnimationsAsync(),
-    provideAnimationsAsync(),
-    provideAnimationsAsync(),
-    provideNativeDateAdapter(),
+    { provide: MAT_DATE_LOCALE, useValue: 'pt-BR' },
+    provideMomentDateAdapter(),
   ],
 };

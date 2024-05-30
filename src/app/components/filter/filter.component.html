@@ -19,20 +19,62 @@
       </div>
       <span [formGroup]="form" class="mt-5 flex flex-col gap-1">
 
+
         @for (field of fields; track field) {
             @if (fieldsSelect().includes(field)) {
-             <div class="flex flex-1 gap-2">
-                <mat-form-field appearance="outline" class="flex-1">
-                  <mat-label>{{ field.propertyNickname }}</mat-label>
-                  <input [formControlName]="field.property" matInput [mask]="field.mask" [placeholder]="field.propertyNickname" [name]="field.property">
-                </mat-form-field>
-                <button mat-mini-fab color="warn" class="mt-2" (click)="removeFilter(field.property)">
-                  <i class="bi bi-trash3-fill"></i>
-                </button>
-             </div>
-          }
-        }
+              @if (field.type && field.type === 'date') {
+                <div class="flex flex-1 gap-2">
+                  @if (isFormGroup(field.property)) {
+                    <mat-form-field appearance="outline" class="flex-1"  [formGroupName]="getFormGroup(field.property)[0]">
+                      <mat-label>{{ field.propertyNickname }}</mat-label>
+                      <input matInput [matDatepicker]="picker" [formControlName]="getFormGroup(field.property)[1]">
+                      <mat-datepicker-toggle matIconSuffix [for]="picker"></mat-datepicker-toggle>
+                      <mat-datepicker #picker></mat-datepicker>
+                      @if (form.get(field.property)?.hasError('matDatepickerParse')) {
+                        <mat-error>
+                          O campo precisa estar no formato MM/DD/YYYY
+                        </mat-error>
+                      }
+                    </mat-form-field>
+                  } @else {
+                    <mat-form-field appearance="outline" class="flex-1">
+                      <mat-label>{{ field.propertyNickname }}</mat-label>
+                      <input matInput [matDatepicker]="picker"  [formControlName]="field.property">
+                      <mat-datepicker-toggle matIconSuffix [for]="picker"></mat-datepicker-toggle>
+                      <mat-datepicker #picker></mat-datepicker>
+                      @if (form.get(field.property)?.hasError('matDatepickerParse')) {
+                        <mat-error>
+                          O campo precisa estar no formato MM/DD/YYYY
+                        </mat-error>
+                      }
+                    </mat-form-field>
+                  }
 
+                  <button mat-mini-fab color="warn" class="mt-2" (click)="removeFilter(field.property)">
+                    <i class="bi bi-trash3-fill"></i>
+                  </button>
+                </div>
+              } @else {
+                <div class="flex flex-1 gap-2">
+                  @if (isFormGroup(field.property)) {
+                    <mat-form-field appearance="outline" class="flex-1" [formGroupName]="getFormGroup(field.property)[0]">
+                      <mat-label>{{ field.propertyNickname }}</mat-label>
+                      <input [formControlName]="getFormGroup(field.property)[1]" matInput [mask]="field.mask" [placeholder]="field.propertyNickname">
+                    </mat-form-field>
+                  } @else {
+                    <mat-form-field appearance="outline" class="flex-1">
+                      <mat-label>{{ field.propertyNickname }}</mat-label>
+                      <input [formControlName]="field.property" matInput [mask]="field.mask" [placeholder]="field.propertyNickname">
+                    </mat-form-field>
+                  }
+
+                  <button mat-mini-fab color="warn" class="mt-2" (click)="removeFilter(field.property)">
+                    <i class="bi bi-trash3-fill"></i>
+                  </button>
+                </div>
+              }
+            }
+        }
       </span>
       <div class="flex gap-3 text-sm">
         <button mat-raised-button class="flex-1" (click)="clearFilter()" class="flex-1 !h-12">Limpar Filtro</button>

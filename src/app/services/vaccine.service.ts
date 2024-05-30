@@ -20,7 +20,7 @@ export class VaccineService extends BaseService {
   }
 
   public async findAll(filters?: FilterParams) {
-    return await lastValueFrom(this.http.get<PageModel<Vaccine>>(this.getEndpointV1(`vaccines${this.getFilterParams(filters)}`)));
+    return await lastValueFrom(this.http.get<PageModel<Vaccine[]>>(this.getEndpointV1(`vaccines${this.getFilterParams(filters)}`)));
   }
 
   public async findById(id: number) {
@@ -29,7 +29,7 @@ export class VaccineService extends BaseService {
       .pipe(map((response: any) => response?.result as Vaccine)))
     } catch (ex: any) {
       return null;
-    }
+    } 
   }
 
   public async create(content: UpdateVaccine) {

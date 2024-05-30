@@ -82,7 +82,7 @@ export class UpdateAnimalComponent extends BaseFormComponent implements OnInit, 
   });
 
   async ngOnInit() {
-    this.clients.set(await this.#clientService.findAll());
+    this.clients.set((await this.#clientService.findAll()).elements);
     this.filteredClients.set(this.clients());
     this.subscription = this.form.controls.client.valueChanges.subscribe(() => {
       const typed = this.form.controls.client.controls.name.value!;
@@ -126,7 +126,7 @@ export class UpdateAnimalComponent extends BaseFormComponent implements OnInit, 
 
     if (this.clientId()) {
       data = await this.#animalService.findAllByClientId(this.clientId()!);
-      this.#animalComponent.reload(data);
+      await this.#animalComponent.reload();
       console.log('oii')
       this.#router.navigate(['/dashboard/animais'], { queryParams: { clientId: this.clientId() }});
     } else {
@@ -158,7 +158,7 @@ export class UpdateAnimalComponent extends BaseFormComponent implements OnInit, 
 
     if (this.clientId()) {
       data = await this.#animalService.findAllByClientId(this.clientId()!);
-      this.#animalComponent.reload(data);
+      await this.#animalComponent.reload();
       this.#router.navigate(['/dashboard/animais'], { queryParams: { clientId: this.clientId() }});
     } else {
       this.#animalComponent.reload();
@@ -196,5 +196,5 @@ export class UpdateAnimalComponent extends BaseFormComponent implements OnInit, 
     this.previewPhotoUrl.set('');
     this.file.set(null);
   }
-  
+
 }

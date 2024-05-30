@@ -9,7 +9,7 @@ import { MatTooltipModule } from '@angular/material/tooltip';
 import { RouterLink, RouterOutlet } from '@angular/router';
 import { ToastrService } from 'ngx-toastr';
 import { DialogModule } from 'primeng/dialog';
-import BaseStoreComponent from '../../base/base-store.component';
+import BaseComponent from '../../base/base.component';
 import { FilterComponent } from '../../components/filter/filter.component';
 import { PaginatorComponent } from '../../components/paginator/paginator.component';
 import { Consult } from '../../models/consult';
@@ -37,7 +37,7 @@ import { ConsultTableComponent } from './consult-table/consult-table.component';
   templateUrl: './consults.component.html',
   styleUrl: './consults.component.scss'
 })
-export default class ConsultsComponent extends BaseStoreComponent implements AfterViewInit {
+export default class ConsultsComponent extends BaseComponent implements AfterViewInit {
 
   @ViewChild(MatPaginator) paginator!: MatPaginator;
 
@@ -61,7 +61,7 @@ export default class ConsultsComponent extends BaseStoreComponent implements Aft
     this.paginator.page.subscribe(event => this.reload({ size: event.pageSize, page: event.pageIndex }))
   }
 
-  async reload(params?:{ size: number; page: number;}) {
+  override async reload(params?:{ size: number; page: number;}) {
     const pageModel = await this.#consultService.findAll(params)
     this.paginator.length = pageModel.totalElements;
     this.data.set(pageModel.elements);

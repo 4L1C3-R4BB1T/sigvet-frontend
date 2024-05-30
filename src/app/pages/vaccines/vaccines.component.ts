@@ -13,7 +13,7 @@ import { Vaccine } from '../../models/vaccine';
 import { VaccineService } from '../../services/vaccine.service';
 import { VaccineTableComponent } from './components/vaccine-table/vaccine-table.component';
 import { ToastrService } from 'ngx-toastr';
-import BaseStoreComponent from '../../base/base-store.component';
+import BaseComponent from '../../base/base.component';
 import { RouterLink, RouterOutlet } from '@angular/router';
 
 @Component({
@@ -37,7 +37,7 @@ import { RouterLink, RouterOutlet } from '@angular/router';
   templateUrl: './vaccines.component.html',
   styleUrl: './vaccines.component.scss'
 })
-export default class VaccinesComponent extends BaseStoreComponent implements OnInit, AfterViewInit {
+export default class VaccinesComponent extends BaseComponent implements OnInit, AfterViewInit {
 
 
   @ViewChild(MatPaginator) paginator!: MatPaginator;
@@ -67,7 +67,7 @@ export default class VaccinesComponent extends BaseStoreComponent implements OnI
     this.paginator.page.subscribe(event => this.reload({ size: event.pageSize, page: event.pageIndex }))
   }
 
-  async reload(params?:{ size: number; page: number;}) {
+  override async reload(params?:{ size: number; page: number;}) {
     const pageModel = await this.#vaccineService.findAll(params)
     this.paginator.length = pageModel.totalElements;
     this.data.set(pageModel.elements);

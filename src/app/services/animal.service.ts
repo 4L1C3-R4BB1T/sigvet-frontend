@@ -31,7 +31,7 @@ export class AnimalService extends BaseService {
   }
 
   public async findAll(filters?: FilterParams) {
-    return await lastValueFrom(this.http.get<PageModel<Animal>>(this.getEndpointV1(`animals${this.getFilterParams(filters)}`)));
+    return await lastValueFrom(this.http.get<PageModel<Animal[]>>(this.getEndpointV1(`animals${this.getFilterParams(filters)}`)));
   }
 
   public async findById(id: number) {
