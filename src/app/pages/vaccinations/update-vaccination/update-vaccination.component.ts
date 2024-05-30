@@ -72,11 +72,8 @@ export class UpdateVaccinationComponent
   vaccines = signal([] as Vaccine[]);
 
   async ngOnInit() {
+    this.form.controls.date.addValidators(CustomValidators.presentOrFuture);
     await this.checkIfEdition();
-    if (!this.isEdition()) {
-      this.form.controls.date.addValidators(CustomValidators.presentOrFuture);
-    }
-
   }
 
   private isEmpty(value: string | null) {
@@ -149,16 +146,6 @@ export class UpdateVaccinationComponent
 
     this.form.controls.animalId.setValue(<any>data?.animal.id);
     this.form.controls.vaccineId.setValue(<any>data?.vaccine.id);
-
-    this.form.controls.date.valueChanges.pipe(first()).subscribe(value => {
-      this.form.controls.date.addValidators(CustomValidators.presentOrFuture);
-      this.form.controls.date.setValue('');
-      setTimeout(() => {
-        this.form.controls.date.setValue(value);
-      }, 100);
-      this.form.updateValueAndValidity();
-    });
-
     return true;
   }
 
