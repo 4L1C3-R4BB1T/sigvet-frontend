@@ -32,7 +32,7 @@ export class AnimalListComponent extends BaseComponent {
 
   #activatedRoute = inject(ActivatedRoute);
 
-  clientId = signal(this.#activatedRoute.snapshot.queryParams['clientId'] as number);
+  clientId = signal(this.#activatedRoute.snapshot.queryParams['clientId'] as number | null);
   client = signal({} as User);
   #toastrService = inject(ToastrService);
 
@@ -41,7 +41,7 @@ export class AnimalListComponent extends BaseComponent {
   userId = computed(() => this.store.selectSignal(selectUserInfo)()?.id);
 
   length = 50; // Quantidade de dados trazidos
-  pageSize = 6;
+  pageSize = 10;
   pageIndex = 0;
   pageSizeOptions = [5, 10, 25];
 
@@ -54,20 +54,28 @@ export class AnimalListComponent extends BaseComponent {
 
   async ngOnInit() {
     if (this.clientId()) {
-      this.client.set(await this.#clientService.findById(this.clientId()));
-      this.setData(await this.#animalService.findAllByClientId(this.clientId()));
+      this.client.set(await this.#clientService.findById(this.clientId()!));
+      this.reload(true);
       return;
     }
 
     await this.reload();
   }
 
-  override async reload() {
-    this.setData(await this.#animalService.findAll({ size: 10, page: 0 }));
+  override async reload(strict = false) {
+    let pageInfo: any = strict ? { size: 10, page: 0 } : { size: this.pageSize, page: this.pageIndex };
+    if (this.clientId()) {
+      pageInfo = {
+        ...pageInfo,
+        equal_filters: `client.id:=${this.clientId()}`,
+      };
+    }
+    this.setData(await this.#animalService.findAll(pageInfo)); // botar um equal filter
   }
 
   async handlePageEvent(e: PageEvent) {
     this.pageEvent = e;
+    console.log(e)
     this.pageSize = e.pageSize;
     this.pageIndex = e.pageIndex;
     await this.reload();

@@ -126,8 +126,7 @@ export class UpdateAnimalComponent extends BaseFormComponent implements OnInit, 
 
     if (this.clientId()) {
       data = await this.#animalService.findAllByClientId(this.clientId()!);
-      await this.#animalComponent.reload();
-      console.log('oii')
+      this.#animalComponent.animalListComponent.setData(data);
       this.#router.navigate(['/dashboard/animais'], { queryParams: { clientId: this.clientId() }});
     } else {
       this.#animalComponent.reload();
@@ -158,7 +157,7 @@ export class UpdateAnimalComponent extends BaseFormComponent implements OnInit, 
 
     if (this.clientId()) {
       data = await this.#animalService.findAllByClientId(this.clientId()!);
-      await this.#animalComponent.reload();
+      this.#animalComponent.animalListComponent.setData(data);
       this.#router.navigate(['/dashboard/animais'], { queryParams: { clientId: this.clientId() }});
     } else {
       this.#animalComponent.reload();

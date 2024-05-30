@@ -85,17 +85,22 @@ export default class AnimalsComponent extends BaseComponent {
 
   override async searchByName(name: string) {
     this.clearAppliedFilters();
-    const data = await this.#searchService.searchAnimalsByName(name);
+    let data = await this.#searchService.searchAnimalsByName(name);
+    if (this.animalListComponent.clientId()) {
+      data = data.filter(animal => {
+        return  animal.client.id == this.animalListComponent.clientId();
+      });
+    }
     this.animalListComponent.setData(data);
   }
 
-  override setData(data: Animal[]) {
+  override setData(data: Animal[] | PageModel<Animal[]>) {
     this.animalListComponent.setData(data);
   }
 
   override async reload() {
     this.clearAppliedFilters();
-    await this.animalListComponent.reload();
+    await this.animalListComponent.reload(true);
   }
 
 
@@ -105,5 +110,28 @@ export default class AnimalsComponent extends BaseComponent {
 
   override getInput(): HTMLInputElement {
     return this.searchInput.nativeElement;
+  }
+
+ override async handleOnFilter(properties: FilterPropertyModel[])  {
+  let initialParams = '';
+  if (this.animalListComponent.clientId()) {
+    initialParams = `client.id:=${this.animalListComponent.clientId()}`;
+  }
+
+  const equalFilters = properties.reduce((currentQueryParam, propertyFilter) => {
+    if (currentQueryParam.length !== 0) {
+      currentQueryParam += ';';
+    }
+    return currentQueryParam + `${propertyFilter.property}:=${propertyFilter.outputValue}`;
+  }, initialParams);
+
+    this.appliedFilters.set(properties);
+
+
+    const data = await this.getEntityService().findAll({
+      equal_filters: equalFilters,
+    })
+
+    this.setData(data);
   }
 }
