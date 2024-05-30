@@ -39,7 +39,7 @@ import { PageModel } from '../../models/page-model';
   templateUrl: './animals.component.html',
   styleUrl: './animals.component.scss'
 })
-export default class AnimalsComponent extends BaseComponent {
+export default class AnimalsComponent extends BaseComponent implements AfterViewInit {
 
   @ViewChild(AnimalListComponent)
   animalListComponent!: AnimalListComponent;
@@ -74,6 +74,12 @@ export default class AnimalsComponent extends BaseComponent {
       propertyNickname: 'Nome do Cliente',
     }
   ];
+
+  ngAfterViewInit() {
+      if (this.animalListComponent.clientId()) {
+        this.filterPropertyModel = this.filterPropertyModel.filter(property => property.property !== 'client.name');
+      }
+  }
 
   create() {
     if (this.animalListComponent.clientId()) {
