@@ -56,6 +56,8 @@ export class AnimalListComponent extends BaseComponent {
     if (this.clientId()) {
       this.client.set(await this.#clientService.findById(this.clientId()!));
       this.reload(true);
+      this.showFirstLastButtons = false;
+      this.showPageSizeOptions = false;
       return;
     }
 
