@@ -29,7 +29,10 @@ export class ViewVaccineComponent implements OnInit {
   }
 
   isExpirationDate() {
-    return moment(this.vaccine().expirationDate).isBefore(moment(new Date()));
+    const expirationDate = moment(this.vaccine().expirationDate).startOf('day');
+    const currentDate = moment(new Date()).startOf('day');
+    return expirationDate.isSameOrBefore(currentDate);
   }
+
 
 }

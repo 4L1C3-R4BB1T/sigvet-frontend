@@ -109,15 +109,16 @@ export class UpdateVaccinationComponent
       return;
     }
 
-    this.form.controls.hour.setValue(this.formatStringToUTCHour(this.form.controls.hour.value!));
+    const payload = { ...this.form.value };
+    payload['hour'] = this.formatStringToUTCHour(this.form.controls.hour.value!);
 
-    if (this.isEdition() && (await this.#vaccinationService.update(this.id(), <any>this.form.value))) {
+    if (this.isEdition() && (await this.#vaccinationService.update(this.id(), <any>payload))) {
       this.toastrService.success('Atualizada', 'Vacinação');
       await this.#table.reload();
       this.router.navigate(['/dashboard', 'vacinacoes']);
     }
 
-    if (!this.isEdition() && (await this.#vaccinationService.create(<any>this.form.value))) {
+    if (!this.isEdition() && (await this.#vaccinationService.create(<any>payload))) {
       this.toastrService.success('Criada', 'Vacinação');
       await this.#table.reload();
       this.router.navigate(['/dashboard', 'vacinacoes']);
