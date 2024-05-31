@@ -38,11 +38,21 @@
             </div>
           </mat-list-item>
         }
+        @if (authService.hasRole('CLIENT') && !authService.hasRole('ADMIN')) {
+          @for (menu of otherMenus(); track menu) {
+            <button mat-menu-item class="!p-0 relative">
+              <div routerLink="{{menu.routeLink}}" routerLinkActive="active-link" [routerLinkActiveOptions]="{ exact: true }" matRipple  class="hover-after-h  cursor-pointer py-3 px-2 flex w-full font-light text-white text-sm gap-5 items-center border border-white">
+                <img src="{{menu.iconUrl}}" class="w-5 ms-2">
+                <span>{{ menu.label }}</span>
+              </div>
+            </button>
+          }
+        }
       </mat-list>
 
       <div class="h-[0.07rem] w-full mt-3 bg-white bg-opacity-70"></div>
 
-      <div (click)="toggleMenuShowMore.set(true)" [matMenuTriggerFor]="menuShowMore" matRipple class="cursor-pointer py-2 px-2 hover:opacity-50 mt-3 flex justify-between items-center">
+      <div *ngIf="authService.hasRole('ADMIN')" (click)="toggleMenuShowMore.set(true)" [matMenuTriggerFor]="menuShowMore" matRipple class="cursor-pointer py-2 px-2 hover:opacity-50 mt-3 flex justify-between items-center">
         <span class="text-sm ps-1 text-white">Mais opções</span>
         <span class="absolute right-0 block me-3">
           <i class="bi {{ !toggleMenuShowMore() ? 'bi-caret-right-fill' : 'bi-caret-down-fill'}} text-white text-sm"></i>
@@ -52,7 +62,11 @@
         @for (menu of otherMenus(); track menu) {
           <button mat-menu-item class="!p-0 relative">
             <div routerLink="{{menu.routeLink}}" routerLinkActive [routerLinkActiveOptions]="{ exact: true }" matRipple  class="cursor-pointer py-3 px-2 flex w-full font-light text-white text-sm gap-5 items-center border border-white">
-              <img src="{{menu.iconUrl}}" class="w-5 ms-2">
+              @if (menu.externIcon) {
+                <i class="{{menu.iconUrl}} ms-3"></i>
+              } @else {
+                <img src="{{menu.iconUrl}}" class="w-5 ms-2">
+              }
               <span class="font-medium">{{ menu.label }}</span>
             </div>
           </button>
@@ -72,7 +86,7 @@
   </mat-drawer>
   <mat-drawer-content>
     <app-header #trigger></app-header>
-    <div class="bg-white">
+    <div class="!bg-white">
       <div class="pt-3 px-5 pb-5">
         <ng-content></ng-content>
       </div>

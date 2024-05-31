@@ -3,7 +3,7 @@
     <aside class="flex-1 p-4">
       <mat-tab-group>
         <mat-tab label="Informações">
-          <div class="flex flex-col gap-5 mt-5 py-2">
+          <div class="flex flex-col gap-7 mt-5 py-2">
             <span class="flex gap-2 items-center ps-2">
               <span class="font-semibold flex-1">Nome: </span>
               <span class="w-[20rem] base">{{ animal.name }}</span>
@@ -17,20 +17,32 @@
                 <span class="font-semibold flex-1">Data Nascimento: </span>
                 <span class="w-[20rem] base">{{ animal.birthDate | date: 'dd/MM/YYYY'}}</span>
               </span>
+
             }
-            <span [routerLink]="['/dashboard', 'clientes', 'visualizar', animal.client.id]" class="flex gap-2 items-center ps-2 bg-gray-100 cursor-pointer py-2">
-              <span class="font-semibold flex-1">Nome do Dono: </span>
-              <span class="w-[20rem] base">{{ animal.client.name }}</span>
-            </span>
+            @if (authService.hasRole('CLIENT') && !authService.hasRole('ADMIN')) {
+              <span  class="flex gap-2 items-center ps-2">
+                <span class="font-semibold flex-1">Nome do Dono: </span>
+                <span class="w-[20rem] base">{{ animal.client.name }}</span>
+              </span>
+
+            } @else {
+              <span [routerLink]="['/dashboard', 'clientes', 'visualizar', animal.client.id]" class="flex gap-2 items-center ps-2 bg-gray-100 cursor-pointer py-2">
+                <span class="font-semibold flex-1">Nome do Dono: </span>
+                <span class="w-[20rem] base">{{ animal.client.name }}</span>
+              </span>
+
+            }
             @if (animal.client.address; as address) {
               <span class="flex gap-2 items-center ps-2">
                 <span class="font-semibold flex-1">Munícipio/Estado: </span>
                 <span class="w-[20rem] base">{{ address.city.name + ', ' + address.city.state.name }}</span>
               </span>
+
               <span class="flex gap-2 items-center ps-2">
                 <span class="font-semibold flex-1">Rua/Número: </span>
                 <span class="w-[20rem] base">{{ address.street + ', ' + address.number }}</span>
               </span>
+
               <span class="flex gap-2 items-center ps-2">
                 <span class="font-semibold flex-1">Bairro: </span>
                 <span class="w-[20rem] base">{{ address.neighborhood }}</span>

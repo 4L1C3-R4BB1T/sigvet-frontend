@@ -1,4 +1,4 @@
-import { JsonPipe } from '@angular/common';
+import { JsonPipe, NgIf } from '@angular/common';
 import { Component, OnInit, inject, signal } from '@angular/core';
 import { FormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
 import { MatAutocompleteModule } from '@angular/material/autocomplete';
@@ -16,6 +16,7 @@ import { ConsultService } from '../../../services/consult.service';
 import { SearchService } from '../../../services/search.service';
 import { CustomValidators } from '../../../validators/custom-validators';
 import ConsultsComponent from '../consults.component';
+import { MatSelectModule } from '@angular/material/select';
 
 @Component({
   selector: 'app-update-consult',
@@ -29,7 +30,9 @@ import ConsultsComponent from '../consults.component';
     MatDatepickerModule,
     MatFormFieldModule,
     MatInputModule,
-    RouterLink
+    RouterLink,
+    MatSelectModule,
+    NgIf,
   ],
   templateUrl: './update-consult.component.html',
   styleUrl: './update-consult.component.scss',
@@ -46,19 +49,36 @@ export class UpdateConsultComponent
 
   id = signal(inject(ActivatedRoute).snapshot.params['id']);
 
+  consultStatus = [
+    {
+      name: 'SCHEDULED',
+      brName: 'Agendada',
+    },
+    {
+      name: 'COMPLETED',
+      brName: 'Finalizada',
+    },
+    {
+      name: 'CANCELED',
+      brName: 'Cancelada',
+    },
+  ]
+
   protected override form = this.#formBuilder.group({
     date: ['', [Validators.required]],
     hour: ['', [Validators.pattern(/^(?:[01]\d|2[0-3])[0-5]\d$/), Validators.required]],
     veterinarian: this.#formBuilder.group({
       name: ['', Validators.required],
     }),
+    status: [''],
     animal: this.#formBuilder.group({
       name: ['', Validators.required],
     }),
     veterinarianId: ['', [Validators.required]],
     animalId: ['', [Validators.required]],
-    status: 'SCHEDULED'
   });
+
+  isCompleted = signal(false);
 
   animals = signal([] as Animal[]);
 
@@ -96,15 +116,18 @@ export class UpdateConsultComponent
       return;
     }
 
-    this.form.controls.hour.setValue(this.formatStringToUTCHour(this.form.controls.hour.value!));
+    const payload = {
+      ...this.form.value,
+      hour: this.formatStringToUTCHour(this.form.controls.hour.value!),
+    };
 
-    if (this.isEdition() && (await this.#consultService.update(this.id(), <any>this.form.value))) {
+    if (this.isEdition() && (await this.#consultService.update(this.id(), payload as any))) {
       this.toastrService.success('Atualizada', 'Consulta');
       await this.#table.reload();
       this.router.navigate(['/dashboard', 'consultas']);
     }
 
-    if (!this.isEdition() && (await this.#consultService.create(<any>this.form.value))) {
+    if (!this.isEdition() && (await this.#consultService.create(payload as any))) {
       this.toastrService.success('Criada', 'Consulta');
       await this.#table.reload();
       this.router.navigate(['/dashboard', 'consultas']);
@@ -141,6 +164,12 @@ export class UpdateConsultComponent
       }, 100);
       this.form.updateValueAndValidity();
     });
+
+    if (data.status === 'CANCELED' || data.status === 'COMPLETED') {
+      this.form.disable();
+      this.isCompleted.set(true);
+      return;
+    }
 
     return true;
   }

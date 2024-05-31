@@ -21,6 +21,10 @@ export class AccountService extends BaseService {
   private store = inject<Store<AppState>>(Store);
   private userInfo = this.store.selectSignal(selectUserInfo);
 
+  public async allowAccess(id: number) {
+    return lastValueFrom(this.http.post(this.getEndpointV1('account/allow-access/'+id), {}));
+  }
+
   public async update(id: number, record: UpdateUser) {
     return await lastValueFrom(this.http.put(this.getEndpointV1('account/profile/'+ id +'/update'), record)
     .pipe(

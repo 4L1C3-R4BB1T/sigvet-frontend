@@ -1,0 +1,57 @@
+<header class="relative">
+  <div class="flex justify-between mt-3 flex-wrap gap-2 ps-2">
+    <div class="flex gap-2 max-w-[500px] items-center w-full">
+      <mat-form-field appearance="outline" class="flex-1 relative top-2.5">
+        <mat-label>Pesquisar</mat-label>
+        <input type="text" #searchInput placeholder="Pesquisar" aria-label="Pesquisar" matInput (input)="searchByTerm(searchInput.value)">
+      </mat-form-field>
+      <button matTooltip="Limpar" mat-mini-fab color="none" class="h-full ms-2" (click)="clear(searchInput)">
+        <i class="bi bi-eraser-fill text-xl"></i>
+      </button>
+
+    </div>
+
+    <div class=" flex items-center mr-2">
+      <button matTooltip="Aceitar" mat-mini-fab color="primary" class="mr-2" (click)="openPermitAllDialog.set(true)">
+        <i class="bi bi-shield-fill-check text-xl"></i>
+      </button>
+      <button mat-mini-fab matTooltip="Recusar" color="warn" class="ms-2" (click)="openRemoveAllDialog.set(true)">
+        <i class="bi bi-trash3-fill text-2xl"></i>
+      </button>
+    </div>
+  </div>
+   <app-show-applied-filters/>
+</header>
+
+<div class="mt-5 pb-5">
+  <app-user-access-table [data]="data()"/>
+</div>
+
+<p-dialog [showHeader]="false" [modal]="true" #removeAllDialog [visible]="openRemoveAllDialog()" [style]="{ width: '25rem' }">
+  <div class="p-4">
+    <div class="flex flex-col gap-2">
+      <span class="font-semibold text-lg">Aviso</span>
+      <span class="text-sm">Você tem certeza que deseja recusar?</span>
+    </div>
+    <div class="flex justify-end gap-3 mt-5">
+      <button mat-button color="warn" (click)="openRemoveAllDialog.set(false)">Cancelar</button>
+      <button mat-button color="primary" (click)="removeAll()">Confirmar</button>
+    </div>
+  </div>
+</p-dialog>
+
+<p-dialog [showHeader]="false" [modal]="true" #permitAllDialog [visible]="openPermitAllDialog()" [style]="{ width: '25rem' }">
+  <div class="p-4">
+    <div class="flex flex-col gap-2">
+      <span class="font-semibold text-lg">Aviso</span>
+      <span class="text-sm">Você tem certeza que deseja permitir?</span>
+    </div>
+    <div class="flex justify-end gap-3 mt-5">
+      <button mat-button color="warn" (click)="openPermitAllDialog.set(false)">Cancelar</button>
+      <button mat-button color="primary" (click)="permitAll()">Confirmar</button>
+    </div>
+  </div>
+</p-dialog>
+
+
+<router-outlet></router-outlet>

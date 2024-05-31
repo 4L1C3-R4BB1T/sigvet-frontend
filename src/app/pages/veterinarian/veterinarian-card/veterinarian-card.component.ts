@@ -1,4 +1,4 @@
-import { DatePipe } from '@angular/common';
+import { DatePipe, JsonPipe, NgIf } from '@angular/common';
 import { Component, EventEmitter, Input, Output, inject, signal } from '@angular/core';
 import { MatButtonModule } from '@angular/material/button';
 import { MatCardModule } from '@angular/material/card';
@@ -28,7 +28,9 @@ import VeterinarianComponent from '../veterinarian.component';
     MatFormFieldModule,
     DatePipe,
     DialogModule,
-    RouterLink
+    RouterLink,
+    JsonPipe,
+    NgIf
   ],
   templateUrl: './veterinarian-card.component.html',
   styleUrl: './veterinarian-card.component.scss',

@@ -18,6 +18,7 @@ import { ButtonModule } from 'primeng/button';
 import { TagModule } from 'primeng/tag';
 import { Consult } from '../../../models/consult';
 import { ConsultStatusPipe } from '../../../pipes/consult-status.pipe';
+import { LoadingComponent } from '../../../components/loading/loading.component';
 
 @Component({
   selector: 'app-consult-table',
@@ -37,6 +38,7 @@ import { ConsultStatusPipe } from '../../../pipes/consult-status.pipe';
     MatCheckboxModule,
     RouterLink,
     ConsultStatusPipe,
+    LoadingComponent,
   ],
   templateUrl: './consult-table.component.html',
   styleUrl: './consult-table.component.scss',

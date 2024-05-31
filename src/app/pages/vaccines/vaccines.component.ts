@@ -15,6 +15,7 @@ import { VaccineTableComponent } from './components/vaccine-table/vaccine-table.
 import { ToastrService } from 'ngx-toastr';
 import BaseComponent from '../../base/base.component';
 import { RouterLink, RouterOutlet } from '@angular/router';
+import { LoadingComponent } from '../../components/loading/loading.component';
 
 @Component({
   selector: 'app-vaccines',

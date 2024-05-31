@@ -18,6 +18,7 @@ import { ButtonModule } from 'primeng/button';
 import { TagModule } from 'primeng/tag';
 import { Diagnostic } from '../../../models/diagnostic';
 import { ConsultStatusPipe } from '../../../pipes/consult-status.pipe';
+import { LoadingComponent } from '../../../components/loading/loading.component';
 
 @Component({
   selector: 'app-diagnostics-table',
@@ -36,7 +37,8 @@ import { ConsultStatusPipe } from '../../../pipes/consult-status.pipe';
     MatPaginatorModule,
     MatCheckboxModule,
     RouterLink,
-    ConsultStatusPipe
+    ConsultStatusPipe,
+    LoadingComponent,
   ],
   templateUrl: './diagnostics-table.component.html',
   styleUrl: './diagnostics-table.component.scss',

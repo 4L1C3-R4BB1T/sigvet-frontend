@@ -7,6 +7,8 @@ import { TagModule } from 'primeng/tag';
 import { Animal } from '../../../models/animal';
 import { AnimalService } from '../../../services/animal.service';
 import { DatePipe, NgIf } from '@angular/common';
+import { AuthService } from '../../../services/auth.service';
+import { MatDividerModule } from '@angular/material/divider';
 
 @Component({
   selector: 'app-view-animal-info',
@@ -19,6 +21,7 @@ import { DatePipe, NgIf } from '@angular/common';
     DatePipe,
     NgIf,
     RouterLink,
+    MatDividerModule,
   ],
   templateUrl: './view-animal-info.component.html',
   styleUrl: './view-animal-info.component.scss'
@@ -29,6 +32,8 @@ export class ViewAnimalInfoComponent implements OnInit {
   #router = inject(Router);
   animal!: Animal;
   #animalService = inject(AnimalService);
+
+  authService = inject(AuthService);
 
   async ngOnInit() {
     const result = await this.#animalService.findById(this.#route.snapshot.params['id']);

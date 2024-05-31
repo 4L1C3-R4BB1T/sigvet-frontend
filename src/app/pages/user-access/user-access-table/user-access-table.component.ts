@@ -17,10 +17,13 @@ import { RouterLink } from '@angular/router';
 import { ButtonModule } from 'primeng/button';
 import { TagModule } from 'primeng/tag';
 import { Vaccination } from '../../../models/vaccination';
+import { User } from '../../../models/user';
 import { LoadingComponent } from '../../../components/loading/loading.component';
 
+type PartialUser = Pick<User, 'id'| 'name' |'username' | 'email' | 'document' | 'phone' | 'createdAt'>;
+
 @Component({
-  selector: 'app-vaccination-table',
+  selector: 'app-user-access-table',
   standalone: true,
   imports: [
     MatMenuModule,
@@ -38,35 +41,29 @@ import { LoadingComponent } from '../../../components/loading/loading.component'
     RouterLink,
     LoadingComponent,
   ],
-  templateUrl: './vaccination-table.component.html',
-  styleUrl: './vaccination-table.component.scss',
+  templateUrl: './user-access-table.component.html',
+  styleUrl: './user-access-table.component.scss',
 })
-export class VaccinationTableComponent implements OnChanges {
+export class UserAccessTableComponent implements OnChanges {
   displayedColumns: string[] = [
     'select',
-    'date',
-    'hour',
-    'veterinaryName',
-    'vaccineName',
-    'manufacturer',
-    'lot',
-    'animalName',
-    'breed',
-    'clientName',
-    'actions',
+    'id',
+    'name',
+    'username',
+    'email',
+    'document',
+    'phone',
+    'createdAt'
   ];
 
   @Input()
-  data: Vaccination[] = [];
+  data: PartialUser[] = [];
 
-  dataSource!: MatTableDataSource<Vaccination>;
-  selection = new SelectionModel<Vaccination>(true, []);
-
-  @ViewChild(MatSort) sort!: MatSort;
+  dataSource!: MatTableDataSource<PartialUser>;
+  selection = new SelectionModel<PartialUser>(true, []);
 
   ngOnChanges() {
     this.dataSource = new MatTableDataSource(this.data);
-    this.dataSource.sort = this.sort;
   }
 
   isAllSelected() {

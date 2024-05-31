@@ -151,7 +151,7 @@ export class UpdateVeterinarianComponent
       this.form.value as UpdateUser
     );
     if (this.savedPhoto() && this.previewsPhoto()) {
-      this.#accountService.addUserPhoto(
+      await this.#accountService.addUserPhoto(
         this.savedPhoto()!,
         this.veterinarianId()
       );

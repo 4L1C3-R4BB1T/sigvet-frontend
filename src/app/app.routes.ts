@@ -90,6 +90,11 @@ export const routes: Routes = [
         ]
       },
       {
+        path: 'usuarios-acesso',
+        loadComponent: () => import('./pages/user-access/user-access.component'),
+        title: 'Permissões',
+      },
+      {
         path: 'veterinarios',
         loadComponent: () => import('./pages/veterinarian/veterinarian.component'),
         title: 'Veterinários',

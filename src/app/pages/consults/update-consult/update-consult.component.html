@@ -44,6 +44,29 @@
         }
       </mat-form-field>
 
+
+      <mat-form-field appearance="outline" class="col-span-2">
+        <mat-label>Status</mat-label>
+        <mat-select formControlName="status">
+          @for (status of consultStatus; track status) {
+            @if (!isEdition()) {
+              @if (status.name !== 'SCHEDULED') {
+                <mat-option [value]="status.name" disabled>{{  status.brName }}</mat-option>
+              } @else {
+                <mat-option [value]="status.name">{{  status.brName }}</mat-option>
+              }
+            } @else {
+              @if (status.name === 'SCHEDULED') {
+                <mat-option [value]="status.name" disabled>{{  status.brName }}</mat-option>
+              } @else {
+                <mat-option [value]="status.name">{{  status.brName }}</mat-option>
+              }
+            }
+
+          }
+        </mat-select>
+      </mat-form-field>
+
       <mat-form-field appearance="outline">
         <mat-label>Data</mat-label>
         <input formControlName="date" #dateTime matInput [matDatepicker]="picker">
@@ -54,7 +77,7 @@
         }
       </mat-form-field>
 
-      <mat-form-field appearance="fill" appearance="outline">
+      <mat-form-field appearance="outline">
         <mat-label>Hora</mat-label>
         <input formControlName="hour" [specialCharacters]="[':']" matInput placeholder="HH:mm" mask="00:00">
         @if (getControlError('hour')) {

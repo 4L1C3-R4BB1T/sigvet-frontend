@@ -26,6 +26,8 @@ interface SidenavMenu {
   iconStyles?: string;
   submenus?: SidenavMenu[];
   openSubmenu?: boolean;
+  role?: string[];
+  externIcon?: boolean;
 }
 
 @Component({
@@ -35,7 +37,6 @@ interface SidenavMenu {
     RouterLink,
     NgIf,
     RouterLinkActive,
-    NgIf,
     MatSidenavModule,
     HeaderComponent,
     MatListModule,
@@ -53,6 +54,8 @@ export class SidenavComponent extends BaseStoreComponent implements OnInit, OnDe
   userInfo = this.store.selectSignal(selectUserInfo);
   #accountService = inject(AccountService);
 
+  authService = inject(AuthService);
+
   @ViewChild('menu', { static: true })
   menu!: MatMenu;
 
@@ -69,31 +72,37 @@ export class SidenavComponent extends BaseStoreComponent implements OnInit, OnDe
         iconUrl: 'assets/icons/sidenav/home.svg',
         routeLink: '/dashboard',
         label: 'Home',
+        role: ['ADMIN']
       },
       {
         iconUrl: 'assets/icons/sidenav/client.svg',
         routeLink: '/dashboard/clientes',
         label: 'Clientes',
+        role: ['ADMIN'],
       },
       {
         iconUrl: 'assets/icons/sidenav/animal.svg',
         routeLink: '/dashboard/animais',
         label: 'Animais',
+        role: ['CLIENT', 'ADMIN'],
       },
       {
         iconUrl: 'assets/icons/sidenav/veterinary.svg',
         routeLink: '/dashboard/veterinarios',
         label: 'Veterinários',
+        role: ['ADMIN'],
       },
       {
         iconUrl: 'assets/icons/sidenav/vaccine.svg',
         routeLink: '/dashboard/vacinas',
         label: 'Vacinas',
+        role: ['ADMIN'],
       },
       {
         iconUrl: 'assets/icons/sidenav/vaccination.svg',
         label: 'Vacinações',
         routeLink: '/dashboard/vacinacoes',
+        role: ['CLIENT', 'ADMIN'],
       },
     ]
   );
@@ -104,11 +113,20 @@ export class SidenavComponent extends BaseStoreComponent implements OnInit, OnDe
       iconUrl: 'assets/icons/sidenav/consult.svg',
       routeLink: '/dashboard/consultas',
       label: 'Consultas',
+      role: ['CLIENT', 'ADMIN'],
     },
     {
       iconUrl: 'assets/icons/sidenav/diagnoses.svg',
       label: 'Diagnóstico',
-      routeLink: '/dashboard/diagnosticos'
+      routeLink: '/dashboard/diagnosticos',
+      role: ['CLIENT', 'ADMIN'],
+    },
+    {
+      iconUrl: 'bi bi-shield-lock-fill',
+      label: 'Liberações',
+      routeLink: '/dashboard/usuarios-acesso',
+      role: ['ADMIN'],
+      externIcon: true,
     }
   ]);
 
@@ -121,6 +139,8 @@ export class SidenavComponent extends BaseStoreComponent implements OnInit, OnDe
   ngOnInit() {
     this.subscriptions.push(this.menu.closed.subscribe(() => this.toggleMenu.set(false)));
     this.subscriptions.push(this.menuShowMore.closed.subscribe(() => this.toggleMenuShowMore.set(false)));
+    this.menus.update(oldMenus => oldMenus.filter(({ role }) => !role || role?.some(name => this.authService.hasRole(name))));
+    this.otherMenus.update(oldMenus => oldMenus.filter(({ role }) => !role || role?.some(name => this.authService.hasRole(name))));
   }
 
   public openExitDialog() {

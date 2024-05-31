@@ -17,6 +17,7 @@ import { RouterLink } from '@angular/router';
 import { ButtonModule } from 'primeng/button';
 import { TagModule } from 'primeng/tag';
 import { Vaccine } from '../../../../models/vaccine';
+import { LoadingComponent } from '../../../../components/loading/loading.component';
 
 @Component({
   selector: 'app-vaccine-table',
@@ -35,6 +36,7 @@ import { Vaccine } from '../../../../models/vaccine';
     MatPaginatorModule,
     MatCheckboxModule,
     RouterLink,
+    LoadingComponent,
   ],
   templateUrl: './vaccine-table.component.html',
   styleUrl: './vaccine-table.component.scss',

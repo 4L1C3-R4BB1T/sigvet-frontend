@@ -16,6 +16,7 @@ import { selectUserInfo } from '../../../store/reducers/user.reducer';
 import { AnimalCardComponent } from '../animal-card/animal-card.component';
 import BaseComponent from '../../../base/base.component';
 import { PageModel } from '../../../models/page-model';
+import { AuthService } from '../../../services/auth.service';
 
 @Component({
   selector: 'app-animal-list',
@@ -36,6 +37,8 @@ export class AnimalListComponent extends BaseComponent {
   client = signal({} as User);
   #toastrService = inject(ToastrService);
 
+  #authService = inject(AuthService);
+
   elements = signal<Animal[]>([]);
 
   userId = computed(() => this.store.selectSignal(selectUserInfo)()?.id);
@@ -53,6 +56,11 @@ export class AnimalListComponent extends BaseComponent {
   pageEvent!: PageEvent;
 
   async ngOnInit() {
+
+    if (!this.#authService.hasRole('ADMIN')) {
+      this.clientId.set(this.store.selectSignal(selectUserInfo)()!.id);
+    }
+
     if (this.clientId()) {
       this.client.set(await this.#clientService.findById(this.clientId()!));
       this.reload(true);

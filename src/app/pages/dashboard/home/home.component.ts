@@ -1,8 +1,10 @@
-import { Component, OnInit, signal } from '@angular/core';
+import { Component, OnInit, inject, signal } from '@angular/core';
 
 import { ChartLineStylesComponent } from '../../../components/charts/chart-line-styles/chart-line-styles.component';
 import { SharedModule } from '../../../shared/shared.module';
 import { DashboardStatusComponent } from '../components/dashboard-status/dashboard-status.component';
+import { AuthService } from '../../../services/auth.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-home',
@@ -16,6 +18,16 @@ import { DashboardStatusComponent } from '../components/dashboard-status/dashboa
   templateUrl: './home.component.html',
   styleUrl: './home.component.scss'
 })
-export default class HomeComponent {
+export default class HomeComponent implements OnInit {
+
+  authService = inject(AuthService);
+
+  router = inject(Router);
+
+  ngOnInit() {
+    if (this.authService.hasRole('CLIENT') && !this.authService.hasRole('ADMIN')) {
+      this.router.navigateByUrl('/dashboard/animais');
+    }
+  }
 
 }

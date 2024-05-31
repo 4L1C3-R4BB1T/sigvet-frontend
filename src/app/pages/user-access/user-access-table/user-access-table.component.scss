@@ -1,0 +1,35 @@
+::ng-deep {
+
+  .mat-mdc-header-row {
+    background-color: #3F51B5 !important; /* Cor de fundo */
+  }
+
+  .mat-mdc-header-cell {
+    color: white; /* Cor do texto */
+    font-weight: bold; /* Texto em negrito */
+  }
+
+  .mat-sort-header-arrow {
+    color: white !important;
+  }
+
+
+  th  .mdc-checkbox__background {
+    border: 2px solid white !important;
+  }
+
+}
+
+tr:nth-child(2n+1) {
+  background-color: #eee;
+}
+
+
+.example-container {
+  height: 400px;
+  overflow: auto;
+}
+
+table {
+  width: 100%;
+}

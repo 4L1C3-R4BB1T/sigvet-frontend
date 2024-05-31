@@ -1,4 +1,4 @@
-import { AfterViewInit, Component, ElementRef, ViewChild, inject, signal } from '@angular/core';
+import { AfterViewInit, Component, ElementRef, OnInit, ViewChild, computed, inject, signal } from '@angular/core';
 
 import { MatAutocompleteModule } from '@angular/material/autocomplete';
 import { MatButtonModule } from '@angular/material/button';
@@ -18,6 +18,8 @@ import { AnimalService } from '../../services/animal.service';
 import { FilterPropertyModel } from '../../components/filter/filter.model';
 import { ShowAppliedFiltersComponent } from '../../components/show-applied-filters/show-applied-filters.component';
 import { PageModel } from '../../models/page-model';
+import { AuthService } from '../../services/auth.service';
+import { selectUserInfo } from '../../store/reducers/user.reducer';
 
 @Component({
   selector: 'app-animals',
@@ -39,10 +41,12 @@ import { PageModel } from '../../models/page-model';
   templateUrl: './animals.component.html',
   styleUrl: './animals.component.scss'
 })
-export default class AnimalsComponent extends BaseComponent implements AfterViewInit {
+export default class AnimalsComponent extends BaseComponent implements AfterViewInit, OnInit {
 
   @ViewChild(AnimalListComponent)
   animalListComponent!: AnimalListComponent;
+
+  userId = computed(() => this.store.selectSignal(selectUserInfo)()?.id);
 
   @ViewChild('searchInput')
   searchInput!: ElementRef;
@@ -52,6 +56,8 @@ export default class AnimalsComponent extends BaseComponent implements AfterView
   #searchService = inject(SearchService);
 
   openMoreFilterModal = signal(false);
+
+  authService = inject(AuthService);
 
   #router = inject(Router);
 
@@ -74,6 +80,15 @@ export default class AnimalsComponent extends BaseComponent implements AfterView
       propertyNickname: 'Nome do Cliente',
     }
   ];
+
+  ngOnInit() {
+    if (this.authService.hasSingleRole('CLIENT')) { // User não é cliente
+      this.#router.navigate(['/dashboard/animais'], { queryParams: {
+        clientId: this.userId(),
+      }})
+      return;
+    }
+  }
 
   ngAfterViewInit() {
       if (this.animalListComponent.clientId()) {

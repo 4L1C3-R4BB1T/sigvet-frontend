@@ -1,101 +1,106 @@
-<div class="mat-elevation-z8 max-h-[60vh] overflow-auto" tabindex="0">
-  <table mat-table [dataSource]="dataSource" matSort>
-    <ng-container matColumnDef="select">
-      <th mat-header-cell *matHeaderCellDef>
-        <mat-checkbox (change)="$event ? toggleAllRows() : null"
-                      [checked]="selection.hasValue() && isAllSelected()"
-                      [indeterminate]="selection.hasValue() && !isAllSelected()" color="primary">
-        </mat-checkbox>
-      </th>
-      <td mat-cell *matCellDef="let row">
-        <mat-checkbox (click)="$event.stopPropagation()"
-                      (change)="$event ? selection.toggle(row) : null"
-                      [checked]="selection.isSelected(row)" color="primary">
-        </mat-checkbox>
-      </td>
-    </ng-container>
+@defer (on timer(300ms)) {
+  <div class="mat-elevation-z8 max-h-[60vh] overflow-auto" tabindex="0">
+    <table mat-table [dataSource]="dataSource" matSort>
+      <ng-container matColumnDef="select">
+        <th mat-header-cell *matHeaderCellDef>
+          <mat-checkbox (change)="$event ? toggleAllRows() : null"
+                        [checked]="selection.hasValue() && isAllSelected()"
+                        [indeterminate]="selection.hasValue() && !isAllSelected()" color="primary">
+          </mat-checkbox>
+        </th>
+        <td mat-cell *matCellDef="let row">
+          <mat-checkbox (click)="$event.stopPropagation()"
+                        (change)="$event ? selection.toggle(row) : null"
+                        [checked]="selection.isSelected(row)" color="primary">
+          </mat-checkbox>
+        </td>
+      </ng-container>
 
-    <ng-container matColumnDef="date">
-      <th mat-header-cell *matHeaderCellDef mat-sort-header> Data </th>
-      <td mat-cell *matCellDef="let row"> {{ row.date | date: 'dd/MM/YYYY'}} </td>
-    </ng-container>
+      <ng-container matColumnDef="date">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header> Data </th>
+        <td mat-cell *matCellDef="let row"> {{ row.date | date: 'dd/MM/YYYY'}} </td>
+      </ng-container>
 
-    <ng-container matColumnDef="hour">
-      <th mat-header-cell *matHeaderCellDef mat-sort-header> Horário </th>
-      <td mat-cell *matCellDef="let row"> {{ row.hour }} </td>
-    </ng-container>
+      <ng-container matColumnDef="hour">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header> Horário </th>
+        <td mat-cell *matCellDef="let row"> {{ row.hour }} </td>
+      </ng-container>
 
-    <ng-container matColumnDef="veterinarianName">
-      <th mat-header-cell *matHeaderCellDef mat-sort-header> Veterinário </th>
-      <td mat-cell *matCellDef="let row"> {{ row.veterinarian.name }}</td>
-    </ng-container>
+      <ng-container matColumnDef="veterinarianName">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header> Veterinário </th>
+        <td mat-cell *matCellDef="let row"> {{ row.veterinarian.name }}</td>
+      </ng-container>
 
-    <ng-container matColumnDef="specialty">
-      <th mat-header-cell *matHeaderCellDef mat-sort-header> Especialidade </th>
-      <td mat-cell *matCellDef="let row"> {{ row.veterinarian.specialty }} </td>
-    </ng-container>
+      <ng-container matColumnDef="specialty">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header> Especialidade </th>
+        <td mat-cell *matCellDef="let row"> {{ row.veterinarian.specialty }} </td>
+      </ng-container>
 
-    <ng-container matColumnDef="animalName">
-      <th mat-header-cell *matHeaderCellDef mat-sort-header> Nome do Animal </th>
-      <td mat-cell *matCellDef="let row"> {{ row.animal.name }} </td>
-    </ng-container>
+      <ng-container matColumnDef="animalName">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header> Nome do Animal </th>
+        <td mat-cell *matCellDef="let row"> {{ row.animal.name }} </td>
+      </ng-container>
 
-    <ng-container matColumnDef="breed">
-      <th mat-header-cell *matHeaderCellDef mat-sort-header> Raça do Animal </th>
-      <td mat-cell *matCellDef="let row">
-          <span class="block px-2">{{ row.animal.breed }}</span>
-    </ng-container>
+      <ng-container matColumnDef="breed">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header> Raça do Animal </th>
+        <td mat-cell *matCellDef="let row">
+            <span class="block px-2">{{ row.animal.breed }}</span>
+      </ng-container>
 
-    <ng-container matColumnDef="clientName">
-      <th mat-header-cell *matHeaderCellDef mat-sort-header> Cliente </th>
-      <td mat-cell *matCellDef="let row">
-        <span class="block px-2">{{ row.animal.client.name }}</span>
-     </td>
-    </ng-container>
+      <ng-container matColumnDef="clientName">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header> Cliente </th>
+        <td mat-cell *matCellDef="let row">
+          <span class="block px-2">{{ row.animal.client.name }}</span>
+       </td>
+      </ng-container>
 
-    <ng-container matColumnDef="status">
-      <th mat-header-cell *matHeaderCellDef mat-sort-header> Status</th>
-      <td mat-cell *matCellDef="let row">
-          <span class="block px-2">{{ row.status | consultStatus }}</span>
-      </td>
-    </ng-container>
+      <ng-container matColumnDef="status">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header> Status</th>
+        <td mat-cell *matCellDef="let row">
+            <span class="block px-2">{{ row.status | consultStatus }}</span>
+        </td>
+      </ng-container>
 
-    <ng-container matColumnDef="actions">
-      <th mat-header-cell *matHeaderCellDef mat-sort-header> Ações </th>
-      <td mat-cell *matCellDef="let row">
-        <div>
-          <button
-          pButton
-          pRipple
-          severity="secondary" text rounded [matMenuTriggerFor]="menu">
-          <i class="bi bi-three-dots-vertical"></i>
-        </button>
-        <mat-menu #menu="matMenu">
-          <button mat-menu-item [routerLink]="['/dashboard', 'consultas', 'atualizar', row.id]">
-            <span class="text-sm flex items-center gap-2">
-              <i class="bi bi-pencil-square text-black"></i>
-              Editar
-            </span>
+      <ng-container matColumnDef="actions">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header> Ações </th>
+        <td mat-cell *matCellDef="let row">
+          <div>
+            <button
+            pButton
+            pRipple
+            severity="secondary" text rounded [matMenuTriggerFor]="menu">
+            <i class="bi bi-three-dots-vertical"></i>
           </button>
-          <button mat-menu-item [routerLink]="['/dashboard', 'consultas', 'visualizar', row.id]">
-            <span class="text-sm flex items-center gap-2">
-              <i class="bi bi-eye-fill text-black"></i>
-              Visualizar
-            </span>
-          </button>
-        </mat-menu>
+          <mat-menu #menu="matMenu">
+            <button mat-menu-item [routerLink]="['/dashboard', 'consultas', 'atualizar', row.id]">
+              <span class="text-sm flex items-center gap-2">
+                <i class="bi bi-pencil-square text-black"></i>
+                Editar
+              </span>
+            </button>
+            <button mat-menu-item [routerLink]="['/dashboard', 'consultas', 'visualizar', row.id]">
+              <span class="text-sm flex items-center gap-2">
+                <i class="bi bi-eye-fill text-black"></i>
+                Visualizar
+              </span>
+            </button>
+          </mat-menu>
 
-        </div>
-     </td>
-    </ng-container>
+          </div>
+       </td>
+      </ng-container>
 
-    <tr mat-header-row *matHeaderRowDef="displayedColumns; sticky: true"></tr>
-    <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
-  </table>
-  @if (!data.length) {
-    <p class="text-sm justify-center py-5 font-light flex items-center gap-2">
-      <i class="bi bi-database-fill-x text-lg text-[#005691]"></i>
-      Não há nenhuma consulta cadastrada
-    </p>
-  }
-</div>
+      <tr mat-header-row *matHeaderRowDef="displayedColumns; sticky: true"></tr>
+      <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+    </table>
+    @if (!data.length) {
+      <p class="text-sm justify-center py-5 font-light flex items-center gap-2">
+        <i class="bi bi-database-fill-x text-lg text-[#005691]"></i>
+        Não há nenhuma consulta cadastrada
+      </p>
+    }
+  </div>
+
+} @placeholder {
+  <app-loading/>
+}
