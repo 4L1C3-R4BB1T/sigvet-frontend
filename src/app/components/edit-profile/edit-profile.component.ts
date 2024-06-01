@@ -17,6 +17,8 @@ import { AccountService } from '../../services/account.service';
 import CityService from '../../services/city.service';
 import { VeterinarianService } from '../../services/veterinarian.service';
 import { selectUserInfo } from '../../store/reducers/user.reducer';
+import { AuthService } from '../../services/auth.service';
+import { JsonPipe } from '@angular/common';
 @Component({
   selector: 'app-edit-profile',
   standalone: true,
@@ -27,7 +29,8 @@ import { selectUserInfo } from '../../store/reducers/user.reducer';
     MatTabsModule,
     ReactiveFormsModule,
     NgxMaskDirective,
-    MatSelectModule
+    MatSelectModule,
+    JsonPipe,
   ],
   templateUrl: './edit-profile.component.html',
   styleUrl: './edit-profile.component.scss',
@@ -43,7 +46,9 @@ export class EditProfileComponent extends BaseFormComponent implements OnInit {
   cities = signal([] as City[]);
   #router = inject(Router);
   #veterinarianService = inject(VeterinarianService);
+  authService = inject(AuthService);
 
+  buttonDisabled = signal(false);
 
   @Output()
   onClose = new EventEmitter();
@@ -71,6 +76,11 @@ export class EditProfileComponent extends BaseFormComponent implements OnInit {
     if (!this.userInfo()) return;
     await this.findAllCities();
     this.form.patchValue(this.userInfo() as any);
+    if (this.authService.hasRole('CLIENT')) {
+      this.form.disable();
+      this.form.controls.phone.enable();
+    }
+
     this.form.controls.address.controls.cityId.setValue(this.userInfo()?.address?.city.id as any);
   }
 
@@ -81,6 +91,10 @@ export class EditProfileComponent extends BaseFormComponent implements OnInit {
 
   async save() {
     this.checkFormAddressControls();
+    if (this.authService.hasRole('CLIENT')) {
+      this.form.enable();
+      this.buttonDisabled.set(true);
+    }
     if (this.form.invalid) return;
     let payload = { ...this.form.value };
     if (!this.form.controls.address.controls.cityId.value) {

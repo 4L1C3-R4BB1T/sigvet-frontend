@@ -16,5 +16,10 @@ export const onlyAdminGuard: CanActivateFn = async (route, state) => {
     return false;
   }
 
+  if (authService.hasRole('VET')) {
+    router.navigateByUrl('/dashboard/bloqueado');
+    return false;
+  }
+
   return authService.hasRole('ADMIN');
 };

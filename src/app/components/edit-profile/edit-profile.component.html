@@ -112,7 +112,7 @@
           <div class="flex gap-4 mt-2">
             <mat-form-field  appearance="outline" floatLabel="always" class="flex-1">
               <mat-label>CEP</mat-label>
-              <input mask="00000-000" type="text" matInput placeholder="CEP" formControlName="zipCode" >
+              <input mask="00000-000" type="text" matInput placeholder="CEP" formControlName="zipCode">
               @if (getControlError('address.zipCode')) {
                 <mat-error>{{  getControlError('address.zipCode') }}</mat-error>
               }
@@ -129,6 +129,8 @@
       </mat-tab>
 
     </mat-tab-group>
-    <button mat-raised-button color="primary" class="mt-4 !h-12 w-full">Salvar</button>
+    <button mat-raised-button color="primary" class="mt-4 !h-12 w-full" [disabled]="buttonDisabled()">Salvar</button>
   </form>
 </div>
+
+{{ form.value | json }}
