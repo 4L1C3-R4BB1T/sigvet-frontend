@@ -11,6 +11,8 @@ import { ProfileActions, selectMenuSidenavValue } from '../../store/reducers/men
 import { selectUserInfo, selectUserPhoto } from '../../store/reducers/user.reducer';
 import { MenuHamburguerComponent } from '../menu-hamburguer/menu-hamburguer.component';
 import BaseComponent from '../../base/base.component';
+import { MatDialog } from '@angular/material/dialog';
+import { DialogExitComponent } from '../../shared/components/dialog/dialog-exit.component';
 
 @Component({
   selector: 'app-header',
@@ -23,6 +25,7 @@ export class HeaderComponent extends BaseComponent implements OnInit {
 
   openMenu = signal(false);
   #router = inject(Router);
+  dialog = inject<MatDialog>(MatDialog);
 
   currentTitle = signal('Home');
   userInfo = this.store.selectSignal(selectUserInfo);
@@ -42,5 +45,11 @@ export class HeaderComponent extends BaseComponent implements OnInit {
 
   showProfileMenu() {
     this.store.dispatch(ProfileActions.toggleModal());
+  }
+
+  public openExitDialog() {
+    this.dialog.open(DialogExitComponent, {
+      width: '400px',
+    });
   }
 }
