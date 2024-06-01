@@ -70,7 +70,7 @@ export class UpdateConsultComponent
     veterinarian: this.#formBuilder.group({
       name: ['', Validators.required],
     }),
-    status: [''],
+    status: ['', [Validators.required]],
     animal: this.#formBuilder.group({
       name: ['', Validators.required],
     }),
@@ -88,6 +88,8 @@ export class UpdateConsultComponent
     await this.checkIfEdition();
     if (!this.isEdition()) {
       this.form.controls.date.addValidators(CustomValidators.presentOrFuture);
+      this.form.controls.status.setValue('SCHEDULED');
+      this.form.controls.status.disable();
     }
   }
 
@@ -143,8 +145,6 @@ export class UpdateConsultComponent
     this.form.controls.veterinarian.patchValue({
       name: this.toPrettyString(data.veterinarian.document, data.veterinarian.name),
     });
-
-    this.form.controls.veterinarian.disable();
 
     this.form.controls.veterinarianId.setValue(<any>data?.veterinarian.id);
 

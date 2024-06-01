@@ -1,5 +1,5 @@
 @defer (on timer(300ms)) {
-  <div class="mat-elevation-z8 max-h-[60vh] overflow-auto" tabindex="0">
+  <div class="mat-elevation-z8 max-h-[60dvh] overflow-auto" tabindex="0">
     <table mat-table [dataSource]="dataSource" matSort>
       <!-- 'id', 'name', 'manufacturer', 'lot', 'unitPrice', 'stock', 'expirationDate']; -->
 
@@ -37,26 +37,35 @@
 
       <ng-container matColumnDef="lot">
         <th mat-header-cell *matHeaderCellDef mat-sort-header> Lote </th>
-        <td mat-cell *matCellDef="let row"> {{row.lot}} </td>
+        <td mat-cell *matCellDef="let row">
+          <span class="p-1 px-2 bg-gray-300 rounded-lg font-mono text-sm">{{row.lot}}</span>
+        </td>
       </ng-container>
 
       <ng-container matColumnDef="unitPrice">
         <th mat-header-cell *matHeaderCellDef mat-sort-header> Preço Unitário </th>
         <td mat-cell *matCellDef="let row">
-            <span class="block px-2">{{ row.unitPrice.toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' }) }}</span>
+            <span class="text-green-700">{{ row.unitPrice.toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' }) }}</span>
       </ng-container>
 
       <ng-container matColumnDef="stock">
         <th mat-header-cell *matHeaderCellDef mat-sort-header> Estoque </th>
         <td mat-cell *matCellDef="let row">
-          <span class="block px-2">{{ row.stock }}</span>
+          <span class="text-yellow-700 bg-opacity-80">{{ row.stock }}</span>
        </td>
       </ng-container>
 
       <ng-container matColumnDef="expirationDate">
         <th mat-header-cell *matHeaderCellDef mat-sort-header> Data de Expiração </th>
         <td mat-cell *matCellDef="let row">
-            <span class="block px-2">{{row.expirationDate | date: 'dd/MM/YYYY'}}</span>
+          @if (isNearExpiry(row.expirationDate)) {
+            <span class="p-1 rounded-md px-2 bg-orange-500 text-xs text-white">{{row.expirationDate | date: 'dd/MM/YYYY'}}</span>
+          } @else if (hasExpired(row.expirationDate)) {
+            <span class="p-1 rounded-md px-2 bg-red-500 text-white text-xs">{{row.expirationDate | date: 'dd/MM/YYYY'}}</span>
+          } @else {
+            <span class="p-1 rounded-md px-2 bg-green-600 text-white text-xs">{{row.expirationDate | date: 'dd/MM/YYYY'}}</span>
+          }
+
         </td>
       </ng-container>
 

@@ -16,6 +16,7 @@ import { ToastrService } from 'ngx-toastr';
 import BaseComponent from '../../base/base.component';
 import { RouterLink, RouterOutlet } from '@angular/router';
 import { LoadingComponent } from '../../components/loading/loading.component';
+import { SearchService } from '../../services/search.service';
 
 @Component({
   selector: 'app-vaccines',
@@ -54,6 +55,8 @@ export default class VaccinesComponent extends BaseComponent implements OnInit, 
   openMoreFilterModal = signal(false);
   data = signal([] as Vaccine[]);
 
+  #searchService = inject(SearchService);
+
 
   async ngOnInit() {
     // this.data.set(await this.#vaccineService.findAll());
@@ -68,10 +71,27 @@ export default class VaccinesComponent extends BaseComponent implements OnInit, 
     this.paginator.page.subscribe(event => this.reload({ size: event.pageSize, page: event.pageIndex }))
   }
 
+  async searchByTerm(term: string) {
+    if (term === '') {
+      await this.reload();
+      this.paginator.disabled = false;
+      return;
+    }
+    this.data.set(await this.#searchService.searchVaccinesByName(term));
+    this.paginator.disabled = true;
+  }
+
+
   override async reload(params?:{ size: number; page: number;}) {
     const pageModel = await this.#vaccineService.findAll(params)
     this.paginator.length = pageModel.totalElements;
     this.data.set(pageModel.elements);
+    this.paginator.disabled = false;
+  }
+
+  async clear(input: HTMLInputElement) {
+    input.value = '';
+    await this.reload();
   }
 
   async removeAll() {

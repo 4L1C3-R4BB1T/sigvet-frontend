@@ -18,6 +18,7 @@ import { ButtonModule } from 'primeng/button';
 import { TagModule } from 'primeng/tag';
 import { Vaccine } from '../../../../models/vaccine';
 import { LoadingComponent } from '../../../../components/loading/loading.component';
+import moment from 'moment';
 
 @Component({
   selector: 'app-vaccine-table',
@@ -80,5 +81,18 @@ export class VaccineTableComponent implements OnChanges {
     }
 
     this.selection.select(...this.dataSource.data);
+  }
+
+  hasExpired(date: Date) {
+    const today = moment().startOf('day');
+    const target = moment(date).startOf('day');
+    return target.isBefore(today);
+  }
+
+  isNearExpiry(date: Date) {
+    const today = moment().startOf('day');
+    const target = moment(date).startOf('day');
+    const daysBeforeExpiry = moment(date).subtract(10, 'days').startOf('day');
+    return today.isSameOrAfter(daysBeforeExpiry) && today.isBefore(target);
   }
 }

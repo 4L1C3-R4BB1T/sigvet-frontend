@@ -16,16 +16,14 @@ import { ViewVaccineComponent } from './pages/vaccines/components/view-vaccine/v
 import { UpdateVeterinarianComponent } from './pages/veterinarian/update-veterinarian/update-veterinarian.component';
 import { ViewVeterinarianComponent } from './pages/veterinarian/view-veterinarian/view-veterinarian.component';
 import { UpdateDiagnosticComponent } from './pages/diagnostics/update-diagnostic/update-diagnostic.component';
+import { AwaitingReleaseComponent } from './pages/awaiting-release/awaiting-release.component';
+import { onlyAdminGuard } from './guards/only-admin.guard';
 
 export const routes: Routes = [
   {
     path: '',
     pathMatch: 'full',
-    redirectTo: 'welcome',
-  },
-  {
-    path: 'welcome',
-    loadComponent: () => import('./pages/welcome/welcome.component'),
+    redirectTo: 'login',
   },
   {
     path: 'login',
@@ -39,9 +37,14 @@ export const routes: Routes = [
     canActivateChild: [authGuard],
     children: [
       {
+        path: 'bloqueado',
+        component: AwaitingReleaseComponent,
+      },
+      {
         path: '',
         loadComponent: () => import('./pages/dashboard/home/home.component'),
-        title: 'Home'
+        title: 'Home',
+        canActivate: [onlyAdminGuard]
       },
       {
         path: 'clientes',
@@ -51,17 +54,17 @@ export const routes: Routes = [
           {
             path: 'novo',
             component: UpdateClientComponent,
-            title: 'Clientes/Novo',
+            title: 'Clientes',
           },
           {
             path: 'atualizar/:id',
             component: UpdateClientComponent,
-            title: 'Clientes/Atualizar',
+            title: 'Clientes',
           },
           {
             path: 'visualizar/:id',
             component: ViewClientComponent,
-            title: 'Clientes/Visualizar',
+            title: 'Clientes',
           }
         ]
       },
@@ -102,17 +105,17 @@ export const routes: Routes = [
           {
             path: 'novo',
             component: UpdateVeterinarianComponent,
-            title: 'Veterinários/Novo',
+            title: 'Veterinários',
           },
           {
             path: 'atualizar/:id',
             component: UpdateVeterinarianComponent,
-            title: 'Veterinários/Atualizar',
+            title: 'Veterinários',
           },
           {
             path: 'visualizar/:id',
             component: ViewVeterinarianComponent,
-            title: 'Veterinários/Visualizar',
+            title: 'Veterinários',
           },
         ]
       },
@@ -126,17 +129,17 @@ export const routes: Routes = [
           {
             path: 'novo',
             component: UpdateVaccineComponent,
-            title: 'Vacinas/Novo',
+            title: 'Vacinas',
           },
           {
             path: 'atualizar/:id',
             component: UpdateVaccineComponent,
-            title: 'Vacinas/Atualizar',
+            title: 'Vacinas',
           },
           {
             path: 'visualizar/:id',
             component: ViewVaccineComponent,
-            title: 'Vacinas/Visualizar',
+            title: 'Vacinas',
           }
         ],
       },
@@ -148,17 +151,17 @@ export const routes: Routes = [
           {
             path: 'novo',
             component: UpdateVaccinationComponent,
-            title: 'Vacinações/Novo'
+            title: 'Vacinações'
           },
           {
             path: 'atualizar/:id',
             component: UpdateVaccinationComponent,
-            title: 'Vacinações/Atualizar'
+            title: 'Vacinações'
           },
           {
             path: 'visualizar/:id',
             component: ViewVaccinationComponent,
-            title: 'Vacinações/Visualizar'
+            title: 'Vacinações'
           }
         ]
       },
@@ -170,17 +173,17 @@ export const routes: Routes = [
           {
             path: 'novo',
             component: UpdateConsultComponent,
-            title: 'Consultas/Novo'
+            title: 'Consultas'
           },
           {
             path: 'atualizar/:id',
             component: UpdateConsultComponent,
-            title: 'Consultas/Atualizar'
+            title: 'Consultas'
           },
           {
             path: 'visualizar/:id',
             component: ViewConsultComponent,
-            title: 'Consultas/Visualizar'
+            title: 'Consultas'
           }
         ]
       },
@@ -192,17 +195,17 @@ export const routes: Routes = [
           {
             path: 'novo',
             component: UpdateDiagnosticComponent,
-            title: 'Diagnósticos/Novo'
+            title: 'Diagnósticos'
           },
           {
             path: 'atualizar/:id',
             component: UpdateDiagnosticComponent,
-            title: 'Diagnósticos/Atualizar'
+            title: 'Diagnósticos'
           },
           {
             path: 'visualizar/:id',
             component: ViewDiagnosticComponent,
-            title: 'Diagnósticos/Visualizar'
+            title: 'Diagnósticos'
           }
         ]
       }

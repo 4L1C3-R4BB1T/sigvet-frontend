@@ -49,12 +49,12 @@ export class DiagnosticsTableComponent implements OnChanges {
   displayedColumns: string[] = [
     'select',
     'id',
-    'createdAt',
+    'responsible',
+    'createdDate',
+    'createdHour',
     'diagnosis',
     'comments',
     'date',
-    'hour',
-    'status',
     'actions',
   ];
 

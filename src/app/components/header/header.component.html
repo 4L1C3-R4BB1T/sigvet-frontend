@@ -24,29 +24,28 @@
         </div>
       </div>
       <mat-menu #menu="matMenu" class="menu mt-4 mr-2">
-        <button *ngIf="!authService.hasSingleRole('VIEWER')" mat-menu-item class="hover-after-h" (click)="showProfileMenu()">
+        <button mat-menu-item class="hover-after-h" (click)="showProfileMenu()">
           <div class="flex gap-3 items-center text-white">
-            <i class="bi bi-person ms-3 text-lg"></i>
+            <div class="bg-white flex justify-center items-center rounded-full w-6 h-6">
+              <i class="bi bi-person text-lg text-black"></i>
+            </div>
             <span class="font-light">Perfil</span>
           </div>
         </button>
         <button mat-menu-item class="hover-after-h">
           <div class="flex gap-3 items-center text-white">
-            <i class="bi bi-person-raised-hand ms-3 text-lg"></i>
-            <span class="font-light">Contato</span>
-          </div>
-        </button>
-        <button mat-menu-item class="hover-after-h">
-          <div class="flex gap-3 items-center text-white">
-            <i class="bi bi-box-arrow-right ms-3 text-lg"></i>
+            <div class="bg-white flex justify-center items-center rounded-full w-6 h-6">
+              <i class="bi bi-box-arrow-right text-base relative left-0.5 text-black"></i>
+            </div>
+
             <span class="font-light">Sair</span>
           </div>
         </button>
       </mat-menu>
     </div>
     @if (authService.hasRole('ADMIN') && solicitationCount()) {
-      <div class="mr-3 ms-2 relative top-0.5" routerLink="/dashboard/usuarios-acesso">
-        <i class="bi bi-bell-fill text-white text-2xl cursor-pointer" pBadge severity="info" [value]="solicitationCount()"></i>
+      <div class="mr-3 ms-2 relative top-0.5 right-2 cursor-pointer" routerLink="/dashboard/usuarios-acesso">
+        <i class="bi bi-bell-fill text-white text-xl cursor-pointer" pBadge severity="info" [value]="solicitationCount()"></i>
       </div>
     }
 

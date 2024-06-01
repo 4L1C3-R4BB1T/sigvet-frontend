@@ -1,6 +1,6 @@
 <mat-drawer-container class="h-full">
   <mat-drawer mode="side" #drawer [opened]="drawerOpen()">
-    <div class="h-screen p-5  bg-base-to-bottom">
+    <div class="h-screen p-5  bg-base-to-bottom min-w-[12vw]">
       <div class="block w-[100px] h-[100px] mt-3 rounded-full bg-white mx-auto relative">
 
         <img src="{{ !userPhoto() ? 'assets/images/sem-foto.png' : userPhoto() }}" class="rounded-full object-cover h-full w-full">
@@ -60,16 +60,32 @@
       </div>
       <mat-menu #menuShowMore="matMenu" class="menu  relative left-20">
         @for (menu of otherMenus(); track menu) {
-          <button mat-menu-item class="!p-0 relative">
-            <div routerLink="{{menu.routeLink}}" routerLinkActive [routerLinkActiveOptions]="{ exact: true }" matRipple  class="cursor-pointer py-3 px-2 flex w-full font-light text-white text-sm gap-5 items-center border border-white">
-              @if (menu.externIcon) {
-                <i class="{{menu.iconUrl}} ms-3"></i>
-              } @else {
-                <img src="{{menu.iconUrl}}" class="w-5 ms-2">
-              }
-              <span class="font-medium">{{ menu.label }}</span>
-            </div>
-          </button>
+          @if (menu.label === 'Liberações') {
+            @if (countSolicitation() > 0) {
+              <button mat-menu-item class="!p-0 relative">
+                <div routerLink="{{menu.routeLink}}" routerLinkActive [routerLinkActiveOptions]="{ exact: true }" matRipple  class="cursor-pointer py-3 px-2 flex w-full font-light text-white text-sm gap-5 items-center border border-white">
+                  @if (menu.externIcon) {
+                    <i class="{{menu.iconUrl}} ms-3"></i>
+                  } @else {
+                    <img src="{{menu.iconUrl}}" class="w-5 ms-2">
+                  }
+                  <span class="font-medium">{{ menu.label }}</span>
+                </div>
+              </button>
+            }
+          } @else if (menu.label !== 'Liberações') {
+            <button mat-menu-item class="!p-0 relative">
+              <div routerLink="{{menu.routeLink}}" routerLinkActive [routerLinkActiveOptions]="{ exact: true }" matRipple  class="cursor-pointer py-3 px-2 flex w-full font-light text-white text-sm gap-5 items-center border border-white">
+                @if (menu.externIcon) {
+                  <i class="{{menu.iconUrl}} ms-3"></i>
+                } @else {
+                  <img src="{{menu.iconUrl}}" class="w-5 ms-2">
+                }
+                <span class="font-medium">{{ menu.label }}</span>
+              </div>
+            </button>
+          }
+
         }
 
       </mat-menu>

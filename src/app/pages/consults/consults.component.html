@@ -3,23 +3,20 @@
     <div class="flex gap-2 max-w-[500px] items-center w-full">
       <mat-form-field appearance="outline" class="flex-1 relative top-2.5">
         <mat-label>Pesquisar</mat-label>
-        <input type="text" placeholder="Pesquisar" aria-label="Pesquisar" matInput>
+        <input type="text" placeholder="Pesquisar" aria-label="Pesquisar" matInput #searchInput (input)="searchByTerm(searchInput.value)">
       </mat-form-field>
 
-      <button matTooltip="Limpar" mat-mini-fab color="none" class="h-full ms-2">
+      <button matTooltip="Limpar" mat-mini-fab color="none" class="h-full ms-2" (click)="clear(searchInput)">
         <i class="bi bi-eraser-fill text-xl"></i>
-      </button>
-      <button mat-mini-fab matTooltip="Mais Filtros" color="primary" class="ms-2" (click)="openMoreFilterModal.set(true)">
-        <i class="bi bi-filter text-2xl"></i>
-      </button>
-      <button mat-mini-fab matTooltip="Excluir Itens" color="warn" class="ms-2" (click)="closeDialog.set(false)">
-        <i class="bi bi-trash3-fill text-2xl"></i>
       </button>
   </div>
 
     <div class=" flex items-center mr-2">
       <button matTooltip="Adicionar" mat-mini-fab color="primary" class="mr-2" routerLink="/dashboard/consultas/novo">
         <i class="bi bi-plus-circle-fill text-xl"></i>
+      </button>
+      <button mat-mini-fab matTooltip="Excluir" color="warn" class="ms-2" (click)="closeDialog.set(false)">
+        <i class="bi bi-trash2-fill text-2xl"></i>
       </button>
     </div>
   </div>

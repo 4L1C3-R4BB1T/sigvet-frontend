@@ -2,8 +2,11 @@ import { inject, signal } from "@angular/core";
 import { Store } from "@ngrx/store";
 import { AppState } from "../store";
 import { FilterPropertyModel } from "../components/filter/filter.model";
+import { AuthService } from "../services/auth.service";
 
 export default class BaseComponent {
+
+  authService = inject(AuthService);
 
   protected store: Store<AppState> = inject(Store);
 
@@ -19,7 +22,7 @@ export default class BaseComponent {
     throw new Error('Needs implementantion');
   }
 
-  protected reload(): void {
+  protected reload(): void | Promise<any> {
     throw new Error('Needs implementantion');
   }
 
@@ -31,9 +34,9 @@ export default class BaseComponent {
     this.appliedFilters.set([]);
   }
 
-  clearFilters() {
+  async clearFilters() {
     this.getInput().value = '';
-    this.reload();
+    await this.reload();
   }
 
   protected searchByName(name: string) {

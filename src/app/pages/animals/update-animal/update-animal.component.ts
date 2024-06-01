@@ -115,7 +115,7 @@ export class UpdateAnimalComponent extends BaseFormComponent implements OnInit, 
     const animal = await this.#animalService.create(this.form.value as UpdateAnimal);
     if (!animal) return;
     this.toastrService.success('Foi criado', 'Animal');
-    if (this.file() && this.previewPhotoUrl()) {
+    if (this.hasKey(this.file()!) && this.previewPhotoUrl()) {
       const saved = await this.#animalService.savePhoto(animal.id, this.file()!);
       if (!saved) {
         this.toastrService.info('Não foi possível salvar a foto', 'Animal');
@@ -127,9 +127,11 @@ export class UpdateAnimalComponent extends BaseFormComponent implements OnInit, 
     if (this.clientId()) {
       data = await this.#animalService.findAllByClientId(this.clientId()!);
       this.#animalComponent.animalListComponent.setData(data);
+      this.#animalComponent.clearFilters();
       this.#router.navigate(['/dashboard/animais'], { queryParams: { clientId: this.clientId() }});
     } else {
-      this.#animalComponent.reload();
+      this.#animalComponent.clearFilters();
+      await this.#animalComponent.reload();
       this.#router.navigate(['/dashboard/animais']);
     }
   }
@@ -146,7 +148,8 @@ export class UpdateAnimalComponent extends BaseFormComponent implements OnInit, 
     if (await this.#animalService.update(this.animalId()!, this.form.value as UpdateAnimal)) {
       this.toastrService.success('Atualizado', 'Animal');
     }
-    if (this.file() && this.previewPhotoUrl()) {
+
+    if (this.hasKey(this.file()!) && this.previewPhotoUrl()) {
       const saved = await this.#animalService.savePhoto(this.animalId()!, this.file()!);
       if (!saved) {
         this.toastrService.info('Não foi possível salvar a foto', 'Animal');
@@ -157,12 +160,20 @@ export class UpdateAnimalComponent extends BaseFormComponent implements OnInit, 
 
     if (this.clientId()) {
       data = await this.#animalService.findAllByClientId(this.clientId()!);
-      this.#animalComponent.animalListComponent.setData(data);
+      await this.#animalComponent.clearFilters();
       this.#router.navigate(['/dashboard/animais'], { queryParams: { clientId: this.clientId() }});
     } else {
-      this.#animalComponent.reload();
+      await this.#animalComponent.clearFilters();
+      await this.#animalComponent.reload();
       this.#router.navigate(['/dashboard/animais']);
     }
+  }
+
+  hasKey(obj: object) {
+    for (const key in obj) {
+      return true;
+    }
+    return false;
   }
 
   async checkIfEdition() {

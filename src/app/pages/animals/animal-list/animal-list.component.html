@@ -32,7 +32,7 @@
 
 
 @defer (on timer(200ms)) {
-  <div class="grid grid-cols-2 gap-4 px-2 py-3 pb-5 mt-3 relative max-h-[50vh] overflow-hidden overflow-y-auto h-screen">
+  <div class="grid grid-cols-2 gap-4 px-2 py-3 pb-5 mt-3 relative h-screen max-h-[58vh] overflow-hidden overflow-y-auto">
     @for (element of elements(); track element.id) {
       <app-animal-card [animal]="element"/>
     } @empty {

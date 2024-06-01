@@ -1,0 +1,16 @@
+<div class="h-screen flex justify-center items-start pt-5 fixed z-[999] bg-black bg-opacity-60 w-full top-0 left-0">
+  <!-- <img src="assets/images/ad.png" class="w-44"> -->
+
+  <div class="flex items-center flex-col gap-3 justify-center bg-white p-5 mat-elevation-z2 rounded-md animate-slide-in">
+    <i class="bi bi-ban text-8xl text-gray-600"></i>
+    <h1 class="text-2xl text-gray-600">Acesso negado</h1>
+    <p class="text-center leading-6 text-sm text-gray-500">
+      Você não tem permissão para visualizar essa página. <br> Por favor, aguarde a liberação por um administrador e tente novamente.
+    </p>
+    <div class="flex gap-2">
+      <span class="font-medium text-gray-600">Atenciosamente: </span>
+      <span class="text-sm">Equipe {{'@'}}Sigvet</span>
+    </div>
+    <button mat-raised-button color="primary" class="w-full mt-3 !h-12" (click)="authService.signOut()">Sair</button>
+  </div>
+</div>

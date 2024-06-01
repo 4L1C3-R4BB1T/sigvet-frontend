@@ -5,13 +5,12 @@ import { MatMenuModule } from '@angular/material/menu';
 import { ActivationStart, Router, RouterLink } from '@angular/router';
 import { BadgeModule } from 'primeng/badge';
 import { filter, map } from 'rxjs';
-import BaseStoreComponent from '../../base/base.component';
 import { UserRolePipe } from '../../pipes/user-role.pipe';
-import { AuthService } from '../../services/auth.service';
 import { UserService } from '../../services/user-service.service';
 import { ProfileActions, selectMenuSidenavValue } from '../../store/reducers/menu-visibility.reducer';
 import { selectUserInfo, selectUserPhoto } from '../../store/reducers/user.reducer';
 import { MenuHamburguerComponent } from '../menu-hamburguer/menu-hamburguer.component';
+import BaseComponent from '../../base/base.component';
 
 @Component({
   selector: 'app-header',
@@ -20,7 +19,7 @@ import { MenuHamburguerComponent } from '../menu-hamburguer/menu-hamburguer.comp
   templateUrl: './header.component.html',
   styleUrl: './header.component.scss'
 })
-export class HeaderComponent extends BaseStoreComponent implements OnInit {
+export class HeaderComponent extends BaseComponent implements OnInit {
 
   openMenu = signal(false);
   #router = inject(Router);
@@ -29,7 +28,6 @@ export class HeaderComponent extends BaseStoreComponent implements OnInit {
   userInfo = this.store.selectSignal(selectUserInfo);
   userPhoto = this.store.selectSignal(selectUserPhoto);
   isOpenMenuSidenav = this.store.selectSignal(selectMenuSidenavValue);
-  authService = inject(AuthService);
   userService = inject(UserService);
 
   solicitationCount = signal(0);

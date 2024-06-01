@@ -37,8 +37,6 @@ export class AnimalListComponent extends BaseComponent {
   client = signal({} as User);
   #toastrService = inject(ToastrService);
 
-  #authService = inject(AuthService);
-
   elements = signal<Animal[]>([]);
 
   userId = computed(() => this.store.selectSignal(selectUserInfo)()?.id);
@@ -57,7 +55,7 @@ export class AnimalListComponent extends BaseComponent {
 
   async ngOnInit() {
 
-    if (!this.#authService.hasRole('ADMIN')) {
+    if (!this.authService.hasRole('ADMIN')) {
       this.clientId.set(this.store.selectSignal(selectUserInfo)()!.id);
     }
 

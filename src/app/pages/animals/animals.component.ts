@@ -41,7 +41,7 @@ import { selectUserInfo } from '../../store/reducers/user.reducer';
   templateUrl: './animals.component.html',
   styleUrl: './animals.component.scss'
 })
-export default class AnimalsComponent extends BaseComponent implements AfterViewInit, OnInit {
+export default class AnimalsComponent extends BaseComponent implements AfterViewInit {
 
   @ViewChild(AnimalListComponent)
   animalListComponent!: AnimalListComponent;
@@ -56,8 +56,6 @@ export default class AnimalsComponent extends BaseComponent implements AfterView
   #searchService = inject(SearchService);
 
   openMoreFilterModal = signal(false);
-
-  authService = inject(AuthService);
 
   #router = inject(Router);
 
@@ -81,14 +79,6 @@ export default class AnimalsComponent extends BaseComponent implements AfterView
     }
   ];
 
-  ngOnInit() {
-    if (this.authService.hasSingleRole('CLIENT')) { // User não é cliente
-      this.#router.navigate(['/dashboard/animais'], { queryParams: {
-        clientId: this.userId(),
-      }})
-      return;
-    }
-  }
 
   ngAfterViewInit() {
       if (this.animalListComponent.clientId()) {

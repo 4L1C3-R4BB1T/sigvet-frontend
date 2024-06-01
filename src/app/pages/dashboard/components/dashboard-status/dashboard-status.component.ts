@@ -56,4 +56,9 @@ export class DashboardStatusComponent implements OnInit {
     this.#reportService.downloadReports();
   }
 
+  formatNumber(value: number) {
+    if (!value) return;
+    return value.toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' });
+  }
+
 }

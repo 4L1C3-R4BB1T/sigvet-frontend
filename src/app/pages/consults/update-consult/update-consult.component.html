@@ -49,22 +49,12 @@
         <mat-label>Status</mat-label>
         <mat-select formControlName="status">
           @for (status of consultStatus; track status) {
-            @if (!isEdition()) {
-              @if (status.name !== 'SCHEDULED') {
-                <mat-option [value]="status.name" disabled>{{  status.brName }}</mat-option>
-              } @else {
-                <mat-option [value]="status.name">{{  status.brName }}</mat-option>
-              }
-            } @else {
-              @if (status.name === 'SCHEDULED') {
-                <mat-option [value]="status.name" disabled>{{  status.brName }}</mat-option>
-              } @else {
-                <mat-option [value]="status.name">{{  status.brName }}</mat-option>
-              }
-            }
-
+            <mat-option [value]="status.name">{{  status.brName }}</mat-option>
           }
         </mat-select>
+        @if (getControlError('status')) {
+          <mat-error>{{  getControlError('status') }}</mat-error>
+        }
       </mat-form-field>
 
       <mat-form-field appearance="outline">
@@ -85,6 +75,6 @@
         }
       </mat-form-field>
     </span>
-    <button type="submit" mat-raised-button color="primary" class="w-full !h-12 mt-3 !uppercase">Salvar</button>
+    <button [disabled]="isCompleted()" type="submit" mat-raised-button color="primary" class="w-full !h-12 mt-3 !uppercase">Salvar</button>
   </form>
 </section>

@@ -11,8 +11,10 @@ export class UserRolePipe implements PipeTransform {
       return 'Administrador';
     } else if (value.includes('CLIENT')) {
       return 'Cliente';
-    } else if (value.includes('VIEWER')) {
-      return 'Visualizador';
+    } else if (value.includes('UNKNOWN')) {
+      return 'Aguardando liberação';
+    } else if (value.includes('VET')) {
+      return 'Veterinário';
     } else {
       return 'Visitante';
     }

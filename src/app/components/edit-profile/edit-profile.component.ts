@@ -5,6 +5,7 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { MatSelectModule } from '@angular/material/select';
 import { MatTabsModule } from '@angular/material/tabs';
+import { Router } from '@angular/router';
 import { Store } from '@ngrx/store';
 import { NgxMaskDirective, provideNgxMask } from 'ngx-mask';
 import { ToastrService } from 'ngx-toastr';
@@ -12,11 +13,10 @@ import { lastValueFrom } from 'rxjs';
 import BaseFormComponent from '../../base/base-form.component';
 import { City } from '../../models/city';
 import { UpdateUser } from '../../models/update-user';
-import CityService from '../../services/city.service';
-import { ClientService } from '../../services/client.service';
-import { selectUserInfo } from '../../store/reducers/user.reducer';
 import { AccountService } from '../../services/account.service';
-import { Router } from '@angular/router';
+import CityService from '../../services/city.service';
+import { VeterinarianService } from '../../services/veterinarian.service';
+import { selectUserInfo } from '../../store/reducers/user.reducer';
 @Component({
   selector: 'app-edit-profile',
   standalone: true,
@@ -42,6 +42,7 @@ export class EditProfileComponent extends BaseFormComponent implements OnInit {
   userInfo = this.#store.selectSignal(selectUserInfo);
   cities = signal([] as City[]);
   #router = inject(Router);
+  #veterinarianService = inject(VeterinarianService);
 
 
   @Output()
@@ -54,6 +55,7 @@ export class EditProfileComponent extends BaseFormComponent implements OnInit {
     document: ['', [Validators.maxLength(14), Validators.required]],
     email: ['', [Validators.email, Validators.required]],
     phone: ['', [Validators.required]],
+    specialty: [''],
     crmv: [''],
     crmvUf: [''],
     address: this.#formBuilder.group({
@@ -92,7 +94,10 @@ export class EditProfileComponent extends BaseFormComponent implements OnInit {
       }
 
     } else {
-      this.toastrService.info('Ainda não foi implementado', 'Veterinário');
+      if (await this.#veterinarianService.update(this.userInfo()?.id!, payload as UpdateUser)) {
+        this.toastrService.info('Atualizado', 'Perfil');
+        this.reloadPage();
+      }
     }
   }
 

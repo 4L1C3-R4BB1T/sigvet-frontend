@@ -18,16 +18,4 @@ import { Router } from '@angular/router';
   templateUrl: './home.component.html',
   styleUrl: './home.component.scss'
 })
-export default class HomeComponent implements OnInit {
-
-  authService = inject(AuthService);
-
-  router = inject(Router);
-
-  ngOnInit() {
-    if (this.authService.hasRole('CLIENT') && !this.authService.hasRole('ADMIN')) {
-      this.router.navigateByUrl('/dashboard/animais');
-    }
-  }
-
-}
+export default class HomeComponent {}

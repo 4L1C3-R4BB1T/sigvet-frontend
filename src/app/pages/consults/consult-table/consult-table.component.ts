@@ -49,7 +49,6 @@ export class ConsultTableComponent implements OnChanges {
   displayedColumns: string[] = [
     'select',
     'date',
-    'hour',
     'veterinarianName',
     'specialty',
     'animalName',

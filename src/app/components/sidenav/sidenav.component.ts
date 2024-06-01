@@ -1,5 +1,5 @@
-import { JsonPipe, NgIf } from '@angular/common';
-import { Component, OnDestroy, OnInit, ViewChild, effect, inject, signal } from '@angular/core';
+import { NgIf } from '@angular/common';
+import { Component, OnDestroy, OnInit, ViewChild, inject, signal } from '@angular/core';
 import { MatSidenavModule } from '@angular/material/sidenav';
 import { RouterLink, RouterLinkActive } from '@angular/router';
 
@@ -9,16 +9,16 @@ import { MatDialog } from '@angular/material/dialog';
 import { MatDividerModule } from '@angular/material/divider';
 import { MatListModule } from '@angular/material/list';
 import { MatMenu, MatMenuModule } from '@angular/material/menu';
-import BaseStoreComponent from '../../base/base.component';
+import { Subscription } from 'rxjs';
+import BaseComponent from '../../base/base.component';
 import { AccountService } from '../../services/account.service';
+import { UserService } from '../../services/user-service.service';
 import { DialogExitComponent } from '../../shared/components/dialog/dialog-exit.component';
 import {
   selectMenuSidenavValue
 } from '../../store/reducers/menu-visibility.reducer';
 import { selectUserInfo, selectUserPhoto } from '../../store/reducers/user.reducer';
 import { HeaderComponent } from '../header/header.component';
-import { AuthService } from '../../services/auth.service';
-import { Subscription } from 'rxjs';
 interface SidenavMenu {
   iconUrl: string;
   routeLink: string;
@@ -48,13 +48,11 @@ interface SidenavMenu {
   templateUrl: './sidenav.component.html',
   styleUrl: './sidenav.component.scss',
 })
-export class SidenavComponent extends BaseStoreComponent implements OnInit, OnDestroy {
+export class SidenavComponent extends BaseComponent implements OnInit, OnDestroy {
   dialog = inject<MatDialog>(MatDialog);
   drawerOpen = this.store.selectSignal(selectMenuSidenavValue);
   userInfo = this.store.selectSignal(selectUserInfo);
   #accountService = inject(AccountService);
-
-  authService = inject(AuthService);
 
   @ViewChild('menu', { static: true })
   menu!: MatMenu;
@@ -102,7 +100,7 @@ export class SidenavComponent extends BaseStoreComponent implements OnInit, OnDe
         iconUrl: 'assets/icons/sidenav/vaccination.svg',
         label: 'Vacinações',
         routeLink: '/dashboard/vacinacoes',
-        role: ['CLIENT', 'ADMIN'],
+        role: ['ADMIN'],
       },
     ]
   );
@@ -113,13 +111,13 @@ export class SidenavComponent extends BaseStoreComponent implements OnInit, OnDe
       iconUrl: 'assets/icons/sidenav/consult.svg',
       routeLink: '/dashboard/consultas',
       label: 'Consultas',
-      role: ['CLIENT', 'ADMIN'],
+      role: ['ADMIN'],
     },
     {
       iconUrl: 'assets/icons/sidenav/diagnoses.svg',
       label: 'Diagnóstico',
       routeLink: '/dashboard/diagnosticos',
-      role: ['CLIENT', 'ADMIN'],
+      role: ['ADMIN'],
     },
     {
       iconUrl: 'bi bi-shield-lock-fill',
@@ -130,13 +128,18 @@ export class SidenavComponent extends BaseStoreComponent implements OnInit, OnDe
     }
   ]);
 
+  countSolicitation = signal(0);
+
+  userService = inject(UserService);
+
   showMenuSidenav = this.store.selectSignal(selectMenuSidenavValue);
 
   userPhoto = this.store.selectSignal(selectUserPhoto);
 
   subscriptions: Subscription[] = [];
 
-  ngOnInit() {
+  async ngOnInit() {
+    this.countSolicitation.set((await this.userService.findByViewerRole()).length ?? 0);
     this.subscriptions.push(this.menu.closed.subscribe(() => this.toggleMenu.set(false)));
     this.subscriptions.push(this.menuShowMore.closed.subscribe(() => this.toggleMenuShowMore.set(false)));
     this.menus.update(oldMenus => oldMenus.filter(({ role }) => !role || role?.some(name => this.authService.hasRole(name))));

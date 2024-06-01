@@ -14,6 +14,10 @@ import { ConsultService } from '../../../services/consult.service';
 import { DiagnosticService } from '../../../services/diagnostic.service';
 import DiagnosticsComponent from '../diagnostics.component';
 import { Consult } from './../../../models/consult';
+import { ConsultStatusPipe } from '../../../pipes/consult-status.pipe';
+import { SearchService } from '../../../services/search.service';
+
+const onlyConsultScheduled = (consult: Consult) => consult.status === 'SCHEDULED';
 
 @Component({
   selector: 'app-update-consult',
@@ -28,7 +32,8 @@ import { Consult } from './../../../models/consult';
     MatFormFieldModule,
     MatInputModule,
     MatSelectModule,
-    RouterLink
+    RouterLink,
+    ConsultStatusPipe,
   ],
   templateUrl: './update-diagnostic.component.html',
   styleUrl: './update-diagnostic.component.scss',
@@ -40,29 +45,43 @@ export class UpdateDiagnosticComponent
   #formBuilder = inject(FormBuilder);
   #consultService = inject(ConsultService);
   #diagnosticService = inject(DiagnosticService);
+  #searchService = inject(SearchService);
 
   #table = inject(DiagnosticsComponent);
+
+  consults = signal([] as Consult[]);
 
   id = signal(inject(ActivatedRoute).snapshot.params['id']);
 
   protected override form = this.#formBuilder.group({
     diagnosis: ['', [Validators.required]],
-    comments: ['', [Validators.required]],
+    comments: [''],
     consults: this.#formBuilder.group({
       name: ['', Validators.required],
     }),
     consultId: ['', Validators.required],
   });
 
-  consults = signal([] as Consult[]);
-
   async ngOnInit() {
     await this.checkIfEdition();
-    this.consults.set((await this.#consultService.findAll()).elements);
+    this.consults.set((await this.#consultService.findAll()).elements.filter(onlyConsultScheduled));
   }
 
   private isEmpty(value: string | null | undefined) {
     return value === '' || !value;
+  }
+
+  async searchConsultByTerm(term: string) {
+    this.form.controls.consultId.setValue('');
+    if (term.trim() === '') {
+      this.consults.set((await this.#consultService.findAll()).elements);
+      return;
+    }
+    this.consults.set(await this.#searchService.searchConsultsByTerm(term));
+  }
+
+  setConsultId(id: number) {
+    this.form.controls.consultId.setValue(id.toString());
   }
 
   private checkIfRequiredFieldsIsValid() {
@@ -111,8 +130,6 @@ export class UpdateDiagnosticComponent
       name: this.toPrettyString(consult.id.toString(), consult.date.toString(), consult.hour,
         consult.veterinarian.name, consult.veterinarian.crmv, consult.animal.name, consult.animal.breed)
     });
-
-    console.log(this.form.controls.consults.get('name')?.value)
 
     this.form.controls.consults.disable();
 

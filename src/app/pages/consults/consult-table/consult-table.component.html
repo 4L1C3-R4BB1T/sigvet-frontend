@@ -18,12 +18,9 @@
 
       <ng-container matColumnDef="date">
         <th mat-header-cell *matHeaderCellDef mat-sort-header> Data </th>
-        <td mat-cell *matCellDef="let row"> {{ row.date | date: 'dd/MM/YYYY'}} </td>
-      </ng-container>
-
-      <ng-container matColumnDef="hour">
-        <th mat-header-cell *matHeaderCellDef mat-sort-header> Horário </th>
-        <td mat-cell *matCellDef="let row"> {{ row.hour }} </td>
+        <td mat-cell *matCellDef="let row">
+          <span class="bg-blue-500 text-white p-1 rounded-md">{{ row.date | date: 'dd/MM/YYYY'}} às {{ row.hour }}</span>
+        </td>
       </ng-container>
 
       <ng-container matColumnDef="veterinarianName">
@@ -57,7 +54,7 @@
       <ng-container matColumnDef="status">
         <th mat-header-cell *matHeaderCellDef mat-sort-header> Status</th>
         <td mat-cell *matCellDef="let row">
-            <span class="block px-2">{{ row.status | consultStatus }}</span>
+            <span [class]="{ 'bg-red-700': row.status === 'CANCELED', 'bg-green-700': row.status === 'COMPLETED', 'bg-orange-500': row.status === 'SCHEDULED'}" class="block px-2  bg-red-700 text-white rounded-md uppercase text-sm text-center">{{ row.status | consultStatus }}</span>
         </td>
       </ng-container>
 

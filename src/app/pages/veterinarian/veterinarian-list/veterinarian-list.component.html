@@ -14,7 +14,7 @@
 </div>
 
 @defer (on timer(300ms)) {
-  <div class="grid grid-cols-2 gap-4 px-2 py-3 pb-5 mt-3 relative max-h-[60vh] overflow-hidden overflow-y-auto h-screen">
+  <div class="grid grid-cols-2 gap-4 px-2 py-4 pb-5 mt-3 relative max-h-[60vh] overflow-hidden overflow-y-auto h-screen">
     @for (user of data(); track user.id) {
       <app-veterinarian-card [veterinarian]="user" (onEdit)="edit($event)" />
     } @empty {

@@ -51,6 +51,10 @@ export class AuthService extends BaseService {
     return this.#jwtHelperService.decodeToken(obj.token)?.user_id ?? null;
   }
 
+  public getUserId() {
+    return this.extractUserId(this.getToken()!);
+  }
+
   public getRoles() {
     if (!this.getToken()) return [];
     const { token } = this.getToken()!;

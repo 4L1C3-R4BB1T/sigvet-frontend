@@ -15,6 +15,8 @@ import { PaginatorComponent } from '../../components/paginator/paginator.compone
 import { Vaccination } from '../../models/vaccination';
 import { VaccinationService } from '../../services/vaccination.service';
 import { VaccinationTableComponent } from './vaccination-table/vaccination-table.component';
+import { SearchService } from '../../services/search.service';
+import { AuthService } from '../../services/auth.service';
 
 @Component({
   selector: 'app-vaccinations',
@@ -53,6 +55,8 @@ export default class VaccinationsComponent extends BaseComponent implements Afte
   openMoreFilterModal = signal(false);
   data = signal([] as Vaccination[]);
 
+  #searchService = inject(SearchService);
+
   ngAfterViewInit() {
     this.vaccinationTable.dataSource.paginator = this.paginator;
     this.paginator.pageSize = 10;
@@ -60,6 +64,21 @@ export default class VaccinationsComponent extends BaseComponent implements Afte
     this.paginator.pageIndex = 0;
     this.reload();
     this.paginator.page.subscribe(event => this.reload({ size: event.pageSize, page: event.pageIndex }))
+  }
+
+  async searchByTerm(term: string) {
+    if (!term.trim().length) {
+      this.paginator.disabled = false;
+      await this.reload();
+      return;
+    }
+    this.paginator.disabled = true;
+    this.data.set(await this.#searchService.searchVaccinationsByTerm(term));
+  }
+
+  clear(input: HTMLInputElement) {
+    input.value = '';
+    this.reload();
   }
 
   override async reload(params?:{ size: number; page: number;}) {

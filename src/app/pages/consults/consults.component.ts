@@ -1,4 +1,4 @@
-import { AfterViewInit, Component, ViewChild, inject, signal } from '@angular/core';
+import { AfterViewInit, Component, OnDestroy, ViewChild, inject, signal } from '@angular/core';
 import { MatAutocompleteModule } from '@angular/material/autocomplete';
 import { MatButtonModule } from '@angular/material/button';
 import { MatFormFieldModule } from '@angular/material/form-field';
@@ -15,6 +15,8 @@ import { PaginatorComponent } from '../../components/paginator/paginator.compone
 import { Consult } from '../../models/consult';
 import { ConsultService } from '../../services/consult.service';
 import { ConsultTableComponent } from './consult-table/consult-table.component';
+import { SearchService } from '../../services/search.service';
+import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-consults',
@@ -37,12 +39,14 @@ import { ConsultTableComponent } from './consult-table/consult-table.component';
   templateUrl: './consults.component.html',
   styleUrl: './consults.component.scss'
 })
-export default class ConsultsComponent extends BaseComponent implements AfterViewInit {
+export default class ConsultsComponent extends BaseComponent implements AfterViewInit, OnDestroy {
 
   @ViewChild(MatPaginator) paginator!: MatPaginator;
 
   @ViewChild(ConsultTableComponent)
   consultTable!: ConsultTableComponent;
+
+  #searchService = inject(SearchService);
 
   #toastrService = inject(ToastrService);
 
@@ -52,13 +56,30 @@ export default class ConsultsComponent extends BaseComponent implements AfterVie
   openMoreFilterModal = signal(false);
   data = signal([] as Consult[]);
 
+  subscriptions: Subscription[] = [];
+
   ngAfterViewInit() {
     this.consultTable.dataSource.paginator = this.paginator;
     this.paginator.pageSize = 10;
     this.paginator.pageSizeOptions = [5, 10, 25];
     this.paginator.pageIndex = 0;
     this.reload();
-    this.paginator.page.subscribe(event => this.reload({ size: event.pageSize, page: event.pageIndex }))
+    this.subscriptions.push(this.paginator.page.subscribe(event => this.reload({ size: event.pageSize, page: event.pageIndex })));
+  }
+
+  async searchByTerm(term: string) {
+    if (term.trim() === '') {
+      await this.reload();
+      this.paginator.disabled = false;
+      return;
+    }
+    this.paginator.disabled = true;
+    this.data.set(await this.#searchService.searchConsultsByTerm(term));
+  }
+
+  async clear(input: HTMLInputElement) {
+    input.value = '';
+    await this.reload();
   }
 
   override async reload(params?:{ size: number; page: number;}) {
@@ -80,6 +101,10 @@ export default class ConsultsComponent extends BaseComponent implements AfterVie
     setTimeout(() => this.reload(), 200);
 
     this.closeDialog.set(true);
+  }
+
+  ngOnDestroy(): void {
+      this.subscriptions.forEach(subscription => subscription.unsubscribe());
   }
 
 }

@@ -15,6 +15,7 @@ import { PaginatorComponent } from '../../components/paginator/paginator.compone
 import { Diagnostic } from '../../models/diagnostic';
 import { DiagnosticService } from '../../services/diagnostic.service';
 import { DiagnosticsTableComponent } from './diagnostics-table/diagnostics-table.component';
+import { SearchService } from '../../services/search.service';
 
 @Component({
   selector: 'app-diagnostics',
@@ -53,6 +54,8 @@ export default class DiagnosticsComponent extends BaseComponent implements After
   openMoreFilterModal = signal(false);
   data = signal([] as Diagnostic[]);
 
+  #searchService = inject(SearchService);
+
 
   ngAfterViewInit() {
     this.diagnosticTable.dataSource.paginator = this.paginator;
@@ -61,6 +64,22 @@ export default class DiagnosticsComponent extends BaseComponent implements After
     this.paginator.pageIndex = 0;
     this.reload();
     this.paginator.page.subscribe(event => this.reload({ size: event.pageSize, page: event.pageIndex }))
+  }
+
+  async searchByTerm(term: string) {
+    if (term.trim() === '') {
+      await this.reload();
+      this.paginator.disabled = false;
+      return;
+    }
+    this.paginator.disabled = true;
+    this.data.set(await this.#searchService.searchDiagnosticsByTerm(term));
+  }
+
+  async clear(input: HTMLInputElement) {
+    input.value = '';
+    await this.reload();
+    this.paginator.disabled = false;
   }
 
   override async reload(params?:{ size: number; page: number;}) {

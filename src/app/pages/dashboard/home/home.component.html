@@ -1,27 +1,9 @@
-@if (authService.hasSingleRole('VIEWER')) {
+<div id="home" class="flex flex-col px-3 gap-6">
+  <app-dashboard-status />
+  <app-chart-line-styles />
+</div>
 
-  <div class="flex flex-col h-[85vh] overflow-hidden">
-    <div class="bg-orange-100 p-3 mt-3 flex gap-4 items-center mb-2 custom-border">
-      <span class="bg-white rounded-full w-8 h-8 flex items-center justify-center">
-        <i class="bi bi-stopwatch text-lg"></i>
-      </span>
-      <p class="text-sm">
-        Seu acesso ainda não foi liberado. Por favor, aguarde a liberação por um administrador.
-      </p>
-    </div>
 
-    <div class="flex flex-1 justify-center items-center">
-      <i class="bi bi-shield-fill-exclamation text-[150px] text-[#3a4898dc] loading"></i>
-    </div>
-  </div>
-
-} @else {
-  <div id="home" class="flex flex-col px-3 gap-6">
-    <app-dashboard-status />
-    <app-chart-line-styles />
-  </div>
-
-}
 
 
 
