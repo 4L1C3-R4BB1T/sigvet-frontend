@@ -6,6 +6,10 @@ export const onlyAdminGuard: CanActivateFn = async (route, state) => {
   const router = inject(Router);
   const authService = inject(AuthService);
 
+  if (authService.hasRole('ADMIN')) {
+    return true;
+  }
+
   if (authService.hasSingleRole('UNKNOWN')) {
     router.navigateByUrl('/dashboard/bloqueado');
     return false;
@@ -21,5 +25,5 @@ export const onlyAdminGuard: CanActivateFn = async (route, state) => {
     return false;
   }
 
-  return authService.hasRole('ADMIN');
+  return false;
 };
