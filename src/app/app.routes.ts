@@ -18,6 +18,7 @@ import { ViewVeterinarianComponent } from './pages/veterinarian/view-veterinaria
 import { UpdateDiagnosticComponent } from './pages/diagnostics/update-diagnostic/update-diagnostic.component';
 import { AwaitingReleaseComponent } from './pages/awaiting-release/awaiting-release.component';
 import { onlyAdminGuard } from './guards/only-admin.guard';
+import { NotFoundComponent } from './pages/not-found/not-found.component';
 
 export const routes: Routes = [
   {
@@ -44,12 +45,14 @@ export const routes: Routes = [
         path: '',
         loadComponent: () => import('./pages/dashboard/home/home.component'),
         title: 'Home',
-        canActivate: [onlyAdminGuard]
+        canActivate: [onlyAdminGuard],
       },
       {
         path: 'clientes',
         loadComponent: () => import('./pages/clients/clients.component'),
         title: 'Clientes',
+        canActivate: [onlyAdminGuard],
+        canActivateChild: [onlyAdminGuard],
         children: [
           {
             path: 'novo',
@@ -71,8 +74,6 @@ export const routes: Routes = [
       {
         path: 'animais',
         loadComponent: () => import('./pages/animals/animals.component'),
-        canActivate: [authGuard],
-        canActivateChild: [authGuard],
         title: 'Animais',
         children: [
           {
@@ -96,11 +97,14 @@ export const routes: Routes = [
         path: 'usuarios-acesso',
         loadComponent: () => import('./pages/user-access/user-access.component'),
         title: 'Permissões',
+        canActivate: [onlyAdminGuard],
       },
       {
         path: 'veterinarios',
         loadComponent: () => import('./pages/veterinarian/veterinarian.component'),
         title: 'Veterinários',
+        canActivate: [onlyAdminGuard],
+        canActivateChild: [onlyAdminGuard],
         children: [
           {
             path: 'novo',
@@ -123,8 +127,8 @@ export const routes: Routes = [
         path: 'vacinas',
         loadComponent: () => import('./pages/vaccines/vaccines.component'),
         title: 'Vacinas',
-        canActivate: [authGuard],
-        canActivateChild: [authGuard],
+        canActivate: [onlyAdminGuard],
+        canActivateChild: [onlyAdminGuard],
         children: [
           {
             path: 'novo',
@@ -147,6 +151,8 @@ export const routes: Routes = [
         path: 'vacinacoes',
         loadComponent: () => import('./pages/vaccinations/vaccinations.component'),
         title: 'Vacinações',
+        canActivate: [onlyAdminGuard],
+        canActivateChild: [onlyAdminGuard],
         children: [
           {
             path: 'novo',
@@ -169,6 +175,8 @@ export const routes: Routes = [
         path: 'consultas',
         loadComponent: () => import('./pages/consults/consults.component'),
         title: 'Consultas',
+        canActivate: [onlyAdminGuard],
+        canActivateChild: [onlyAdminGuard],
         children: [
           {
             path: 'novo',
@@ -191,6 +199,8 @@ export const routes: Routes = [
         path: 'diagnosticos',
         loadComponent: () => import('./pages/diagnostics/diagnostics.component'),
         title: 'Diagnósticos',
+        canActivate: [onlyAdminGuard],
+        canActivateChild: [onlyAdminGuard],
         children: [
           {
             path: 'novo',
@@ -210,5 +220,9 @@ export const routes: Routes = [
         ]
       }
     ],
+  },
+  {
+    path: '**',
+    component: NotFoundComponent,
   },
 ];
