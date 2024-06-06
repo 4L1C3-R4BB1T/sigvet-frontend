@@ -13,6 +13,8 @@ Clone esse repositório, logo após entre na pasta do projeto e execute o comand
     npm install 
 ```
 
+Após isso basta executar o projeto:
+
 ```bash
     npm start
 ```
