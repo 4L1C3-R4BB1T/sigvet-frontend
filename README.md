@@ -1,4 +1,4 @@
-# 🐾 SIGVet
+# 🐾 SIGVet - 1.0.0
 
 O SIGVet consiste em um Sistema de Gerenciamento para Clínicas Veterinárias.
 
