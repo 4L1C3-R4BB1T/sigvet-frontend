@@ -1,4 +1,4 @@
-# 🐾 SIGVet - 1.0.0
+# 🐾 SIGVet
 
 O SIGVet consiste em um Sistema de Gerenciamento para Clínicas Veterinárias.
 
@@ -9,14 +9,14 @@ O SIGVet consiste em um Sistema de Gerenciamento para Clínicas Veterinárias.
 Clone esse repositório, logo após entre na pasta do projeto e execute o comando abaixo:
 
 ```bash
-    # instalar dependências
-    npm install 
+# instalar dependências
+npm install 
 ```
 
 Após isso basta executar o projeto:
 
 ```bash
-    npm start
+npm start
 ```
 
 ---
